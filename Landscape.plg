@@ -1,0 +1,38 @@
+<html>
+<body>
+<pre>
+<h1>Erstellungsprotokoll</h1>
+<h3>
+--------------------Konfiguration: Landscape - Win32 Release--------------------
+</h3>
+<h3>Befehlszeilen</h3>
+Creating command line "rc.exe /l 0x407 /fo"Release/Landscape.res" /d "NDEBUG" "F:\dp-programme\Landscape\Landscape.rc"" 
+Erstellen der temporären Datei  "F:\DOKUME~1\Roger.DP\LOKALE~1\Temp\RSP30.tmp" mit Inhalten
+[
+/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /Fr"Release/" /Fp"Release/Landscape.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"F:\dp-programme\Landscape\ddutil.cpp"
+"F:\dp-programme\Landscape\Landscape.cpp"
+]
+Creating command line "cl.exe @F:\DOKUME~1\Roger.DP\LOKALE~1\Temp\RSP30.tmp" 
+Erstellen der temporären Datei  "F:\DOKUME~1\Roger.DP\LOKALE~1\Temp\RSP31.tmp" mit Inhalten
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib dxguid.lib ddraw.lib dinput.lib dsound.lib winmm.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Schiffbruch.pdb" /machine:I386 /out:"Release/Schiffbruch.exe" 
+".\Release\ddutil.obj"
+".\Release\Landscape.obj"
+".\Release\Landscape.res"
+]
+Erstellen der Befehlzeile "link.exe @F:\DOKUME~1\Roger.DP\LOKALE~1\Temp\RSP31.tmp"
+<h3>Ausgabefenster</h3>
+Ressourcen werden kompiliert...
+Kompilierung läuft...
+ddutil.cpp
+Landscape.cpp
+Linker-Vorgang läuft...
+
+
+
+<h3>Ergebnisse</h3>
+Schiffbruch.exe - 0 Fehler, 0 Warnung(en)
+</pre>
+</body>
+</html>
