@@ -299,6 +299,7 @@ extern "C"
 #define INITGUID
 
 #define DIRECTINPUT_VERSION 0x0700
+//#define DIRECTSOUND_VERSION 0x0700
 #define DIRECTDRAW_VERSION 0x0500
 
 #include <windows.h>
@@ -313,10 +314,11 @@ extern "C"
 #include <stdarg.h>
 #include <math.h>
 
-#include <fstream.h>
+#include <fstream>
 #include <fcntl.h>
 #include <io.h>
 
+using namespace std;
 
 #include "ddutil.h"
 #include "resource.h"
@@ -472,7 +474,7 @@ HINSTANCE				g_hInst			= NULL;
 BOOL					MouseInit		= false;
 
 // DirectSound
-LPDIRECTSOUND			lpds;			//DirectSoundObjekt
+LPDIRECTSOUND8			lpds;			//DirectSoundObjekt
 DSBUFFERDESC            dsbdesc;
 LPDIRECTSOUNDBUFFER     lpdsb;
 LPDIRECTSOUNDBUFFER     lpdsbPrimary;
@@ -775,13 +777,12 @@ void InitDDraw()
     if (ddrval != DD_OK)
         goto error;;
 	// Get exclusive mode
-    ddrval = lpDD->SetCooperativeLevel( hwnd,DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN );
+	ddrval = lpDD->SetCooperativeLevel(hwnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN );
     if(ddrval != DD_OK )
         goto error;
 
     // Set the video mode to 800x600x16
-
-	ddrval = lpDD->SetDisplayMode( MAXX, MAXY, 16, 0, 0);
+	ddrval = lpDD->SetDisplayMode( MAXX, MAXY, 32, 0, 0);
     if(ddrval != DD_OK)
     {
 		switch(ddrval)
@@ -931,7 +932,7 @@ void InitDInput()
 	DirectInputCreate(g_hInst, DIRECTINPUT_VERSION, &g_pDI, NULL); //DirectInput
 	g_pDI->CreateDevice(GUID_SysMouse, &g_pMouse, NULL);		   //Mousepointer
 	g_pMouse->SetDataFormat(&c_dfDIMouse);						//MausDateninformation einstellen
-	g_pMouse->SetCooperativeLevel(hwnd,DISCL_EXCLUSIVE | DISCL_FOREGROUND); //Exklusive Maus
+	g_pMouse->SetCooperativeLevel(hwnd,DISCL_NONEXCLUSIVE | DISCL_FOREGROUND); //Exklusive Maus
 
 	g_pDI->CreateDevice(GUID_SysKeyboard, &g_pKey, NULL);			//Keyboard einrichten
 	g_pKey->SetDataFormat(&c_dfDIKeyboard);							//Datenformat auf KeyBoard umschalten
@@ -945,7 +946,7 @@ void InitDSound()
 
 	Soundzustand = 1;  //Sound anschalten
 
-	hr = DirectSoundCreate(NULL, &lpds, NULL); //DirectSound-Objekt machen
+	hr = DirectSoundCreate8(NULL, &lpds, NULL); //DirectSound-Objekt machen
     if (hr != DD_OK) 
 	{
 		Soundzustand = -1;
@@ -1080,7 +1081,7 @@ void SaveGame()
 	short i;
 
 	ofstream ofs( "save.dat", ios::binary );
-	if (ofs == NULL) return;
+	if (!ofs) return;
 
 	ofs.write( (char*)Scape, sizeof(Scape) );
 	ofs.write( (char*)&Guy, sizeof(Guy) );
@@ -1111,8 +1112,8 @@ bool LoadGame()
 {
 	short i;
 	
-	ifstream ifs( "save.dat", ios::binary | ios::nocreate);
-	if (ifs == NULL) return(false);
+	ifstream ifs( "save.dat", ios::binary); // | ios::nocreate);
+	if (!ifs) return(false);
 	
 	ifs.read( (char*)Scape, sizeof(Scape) );
 	ifs.read( (char*)&Guy, sizeof(Guy) );
@@ -3409,7 +3410,7 @@ void InitStructs()
 	Frage = -1;
 	LastBild = 100;
 	Bild = 0;
-	time(&Zeit);
+	Zeit = time(nullptr);
 	Spielbeenden = false;
 	MousePosition.x = MAXX /2;
 	MousePosition.y = MAXY /2;
@@ -10305,13 +10306,13 @@ short Refresh()
 	
 	if (Spielzustand == SZNICHTS) 
 	{
-		Spielzustand = SZLOGO; 
+		Spielzustand = SZLOGO;
 		InitStructs(); //Nur zum Wavinitialisieren
 	}
 	while(1)
 	{
 		Bild++;
-		time(&Zeitsave);
+		Zeitsave = time(nullptr);
 		if (Zeit+5 < Zeitsave)
 		{
 			Zeit = Zeitsave;
@@ -10337,7 +10338,7 @@ short Refresh()
 
 			Animationen();  //Animationen weiterschalten
 			if (!Guy.Aktiv) Event(Guy.Aktion); //Aktionen starten
-			if (Guy.Pos.x != RouteStart.x) ZeigeIntro(); //Bild auffrischen (if-Abfrage nötig (seltsamerweise))
+			if (Guy.Pos.x == RouteStart.x) ZeigeIntro(); //Bild auffrischen (if-Abfrage nötig (seltsamerweise))
 						
 		}
 		else if (Spielzustand == SZSPIEL)
@@ -10378,7 +10379,8 @@ long FAR PASCAL WindowProc( HWND hWnd, UINT message,
     switch( message )
     {
     case WM_ACTIVATEAPP:
-        bActive = wParam;
+		bActive = wParam;
+		SetAcquire();
 		break;
     
 	case WM_ACTIVATE:   // sent when window changes active state
@@ -10432,11 +10434,11 @@ static BOOL doInit( HINSTANCE hInstance, int nCmdShow )
         WS_EX_TOPMOST,
         NAME,
         TITLE,
-        WS_POPUP,
+		WS_POPUP,
         0,
         0,
-        GetSystemMetrics( SM_CXSCREEN ),
-        GetSystemMetrics( SM_CYSCREEN ),
+		GetSystemMetrics(SM_CXSCREEN),
+		GetSystemMetrics(SM_CYSCREEN),
         NULL,
         NULL,
         hInstance,
