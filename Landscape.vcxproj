@@ -153,11 +153,35 @@
     <CustomBuild Include="Textfeld.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Action.cpp" />
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="ddutil.cpp" />
-    <ClCompile Include="Landscape.cpp" />
+    <ClCompile Include="Direct.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="globals.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Routing.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Action.hpp" />
+    <ClInclude Include="Application.hpp" />
+    <ClInclude Include="constants.hpp" />
     <ClInclude Include="ddutil.h" />
+    <ClInclude Include="Direct.hpp" />
+    <ClInclude Include="extern.hpp" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="headers.hpp" />
+    <ClInclude Include="Math.hpp" />
+    <ClInclude Include="Renderer.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Routing.hpp" />
+    <ClInclude Include="Sound.hpp" />
+    <ClInclude Include="types.hpp" />
+    <ClInclude Include="World.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Landscape.rc" />
