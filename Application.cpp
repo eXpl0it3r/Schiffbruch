@@ -124,10 +124,10 @@ bool Application::create_window()
 		0,
 		GetSystemMetrics(SM_CXSCREEN),
 		GetSystemMetrics(SM_CYSCREEN),
-		nullptr,
-		nullptr,
+		NULL,
+		NULL,
 		m_hInstance,
-		nullptr);
+		this);
 
 	return m_hWnd != nullptr;
 }
