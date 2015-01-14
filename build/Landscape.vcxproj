@@ -10,6 +10,58 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Action.cpp" />
+    <ClCompile Include="..\src\Application.cpp" />
+    <ClCompile Include="..\src\ddutil.cpp" />
+    <ClCompile Include="..\src\Direct.cpp" />
+    <ClCompile Include="..\src\Game.cpp" />
+    <ClCompile Include="..\src\globals.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Math.cpp" />
+    <ClCompile Include="..\src\Renderer.cpp" />
+    <ClCompile Include="..\src\Routing.cpp" />
+    <ClCompile Include="..\src\Sound.cpp" />
+    <ClCompile Include="..\src\World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Action.hpp" />
+    <ClInclude Include="..\src\Application.hpp" />
+    <ClInclude Include="..\src\constants.hpp" />
+    <ClInclude Include="..\src\ddutil.h" />
+    <ClInclude Include="..\src\Direct.hpp" />
+    <ClInclude Include="..\src\extern.hpp" />
+    <ClInclude Include="..\src\Game.hpp" />
+    <ClInclude Include="..\src\headers.hpp" />
+    <ClInclude Include="..\src\Math.hpp" />
+    <ClInclude Include="..\src\Renderer.hpp" />
+    <ClInclude Include="..\src\resource.h" />
+    <ClInclude Include="..\src\Routing.hpp" />
+    <ClInclude Include="..\src\Sound.hpp" />
+    <ClInclude Include="..\src\types.hpp" />
+    <ClInclude Include="..\src\World.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bin\images\Animation.BMP" />
+    <Image Include="..\bin\images\Bau.bmp" />
+    <Image Include="..\bin\images\Baum.bmp" />
+    <Image Include="..\bin\images\Buttons.bmp" />
+    <Image Include="..\bin\images\Credits.bmp" />
+    <Image Include="..\bin\images\Cursor.BMP" />
+    <Image Include="..\bin\images\GuyAni.bmp" />
+    <Image Include="..\bin\images\Inventar.bmp" />
+    <Image Include="..\bin\images\Landscape.ico" />
+    <Image Include="..\bin\images\Logo.bmp" />
+    <Image Include="..\bin\images\Misc.BMP" />
+    <Image Include="..\bin\images\Panel.bmp" />
+    <Image Include="..\bin\images\Papier.bmp" />
+    <Image Include="..\bin\images\Schrift1.BMP" />
+    <Image Include="..\bin\images\Schrift2.bmp" />
+    <Image Include="..\bin\images\Textfeld.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\src\Landscape.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <SccProjectName />
     <SccLocalPath />
@@ -42,11 +94,13 @@
     <OutDir>.\Debug\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>Schiffbruch</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Release\</OutDir>
     <IntDir>.\Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>Schiffbruch</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -86,7 +140,8 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>.\Debug\Landscape.exe</OutputFile>
+      <OutputFile>
+      </OutputFile>
       <AdditionalDependencies>dsound.lib;winmm.lib;dxguid.lib;ddraw.lib;dinput.lib;xinput.lib;dinput8.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x86;C:\Users\Lukas\Downloads\S;</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -127,66 +182,12 @@
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>Release/Schiffbruch.exe</OutputFile>
+      <OutputFile>
+      </OutputFile>
       <AdditionalDependencies>dsound.lib;winmm.lib;dxguid.lib;ddraw.lib;dinput.lib;xinput.lib;dinput8.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <CustomBuild Include="Animation.BMP" />
-    <CustomBuild Include="Bau.BMP" />
-    <CustomBuild Include="Baum.bmp" />
-    <CustomBuild Include="Buttons.bmp" />
-    <CustomBuild Include="credits.bmp" />
-    <CustomBuild Include="Cursor.BMP" />
-    <CustomBuild Include="GuyAni.BMP" />
-    <CustomBuild Include="icon1.ico" />
-    <CustomBuild Include="Inventar.bmp" />
-    <CustomBuild Include="Landscape.ico" />
-    <CustomBuild Include="Logo.bmp" />
-    <CustomBuild Include="Misc.BMP" />
-    <CustomBuild Include="Panel.BMP" />
-    <CustomBuild Include="Papier.BMP" />
-    <CustomBuild Include="Schrift.BMP" />
-    <CustomBuild Include="Schrift1.BMP" />
-    <CustomBuild Include="Schrift2.bmp" />
-    <CustomBuild Include="Sonne.BMP" />
-    <CustomBuild Include="Textfeld.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Action.cpp" />
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="ddutil.cpp" />
-    <ClCompile Include="Direct.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="globals.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Math.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Routing.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="World.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Action.hpp" />
-    <ClInclude Include="Application.hpp" />
-    <ClInclude Include="constants.hpp" />
-    <ClInclude Include="ddutil.h" />
-    <ClInclude Include="Direct.hpp" />
-    <ClInclude Include="extern.hpp" />
-    <ClInclude Include="Game.hpp" />
-    <ClInclude Include="headers.hpp" />
-    <ClInclude Include="Math.hpp" />
-    <ClInclude Include="Renderer.hpp" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Routing.hpp" />
-    <ClInclude Include="Sound.hpp" />
-    <ClInclude Include="types.hpp" />
-    <ClInclude Include="World.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Landscape.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
