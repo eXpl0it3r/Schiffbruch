@@ -140,10 +140,9 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>
-      </OutputFile>
+      <OutputFile>.\Debug\Schiffbruch.exe</OutputFile>
       <AdditionalDependencies>dsound.lib;winmm.lib;dxguid.lib;ddraw.lib;dinput.lib;xinput.lib;dinput8.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x86;C:\Users\Lukas\Downloads\S;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x86</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -182,8 +181,7 @@
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>
-      </OutputFile>
+      <OutputFile>.\Release\Schiffbruch.exe</OutputFile>
       <AdditionalDependencies>dsound.lib;winmm.lib;dxguid.lib;ddraw.lib;dinput.lib;xinput.lib;dinput8.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
