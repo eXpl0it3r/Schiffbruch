@@ -127,7 +127,6 @@ namespace World
 
 	void Generate()
 	{
-
 		short				x, y;
 		short				i;
 
@@ -254,7 +253,6 @@ namespace World
 				}
 				lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 			}
-
 	}
 
 	void CheckSpzButton()
@@ -1370,6 +1368,7 @@ namespace World
 		{
 			x = rand() % (MAXXKACH - 1);
 			y = rand() % (MAXYKACH - 1);
+
 			// nur auf flachen Kacheln ohne Objekt
 			if ((Scape[x][y].Objekt == -1) && (Scape[x][y].Typ == 0)
 				&& (Scape[x][y].Art != 3))

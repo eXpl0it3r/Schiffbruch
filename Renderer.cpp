@@ -98,6 +98,14 @@ namespace Renderer
 			Erg = Erg << 5;
 			Erg = Erg | (DWORD)((b & 0xF8) >> 3);
 		}
+		else if (ddpf.dwRBitMask = 16711680)
+		{
+			Erg = (DWORD)(r & 0xFF);
+			Erg = Erg << 8;
+			Erg = Erg | (DWORD)(g & 0xFF);
+			Erg = Erg << 8;
+			Erg = Erg | (DWORD)(b & 0xFF);
+		}
 		else
 		{
 			Erg = 0;
@@ -119,6 +127,12 @@ namespace Renderer
 			rgbStruct.r = (byte)((color & 0x7C00) >> 7);
 			rgbStruct.g = (byte)((color & 0x03E0) >> 2);
 			rgbStruct.b = (byte)((color & 0x001F) << 3);
+		}
+		else if (ddpf.dwRBitMask == 16711680)
+		{
+			rgbStruct.r = (byte)((color & 0xFF0000) >> 8);
+			rgbStruct.g = (byte)((color & 0x00FF00) >> 8);
+			rgbStruct.b = (byte)((color & 0x0000FF));
 		}
 	}
 
@@ -240,7 +254,8 @@ namespace Renderer
 					|| (Scape[x][y].Objekt == SOS))
 				{
 					// Sound abspielen
-					if (((Guy.Pos.x - 1 <= x) && (x <= Guy.Pos.x + 1)) &&
+					if (Scape[x][y].Objekt != -1 &&
+						((Guy.Pos.x - 1 <= x) && (x <= Guy.Pos.x + 1)) &&
 						((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1)))
 					{
 						if ((x == Guy.Pos.x) && (y == Guy.Pos.y))
@@ -263,7 +278,8 @@ namespace Renderer
 						(Scape[x][y].Objekt >= ZELT)) // Bäume und Früchte (und alle anderen Objekte) malen
 					{
 						// Sound abspielen
-						if (((Guy.Pos.x - 1 <= x) && (x <= Guy.Pos.x + 1)) &&
+						if (Scape[x][y].Objekt != -1 &&
+							((Guy.Pos.x - 1 <= x) && (x <= Guy.Pos.x + 1)) &&
 							((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1)))
 						{
 							if ((x == Guy.Pos.x) && (y == Guy.Pos.y))

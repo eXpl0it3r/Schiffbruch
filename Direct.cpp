@@ -9,6 +9,8 @@
 #include "Sound.hpp"
 #include "World.hpp"
 
+#include <sstream>
+
 namespace Direct
 {
 	void InitDDraw()
@@ -171,12 +173,15 @@ namespace Direct
 		ddpf.dwSize = sizeof(ddpf);
 		lpDDSSchrift->GetPixelFormat(&ddpf);
 
-	error:;
-		/*
-		finiObjects();
-		MessageBox( hwnd, "DirectDraw Init FAILED", TITLE, MB_OK );
-		DestroyWindow( hwnd );
-		*/
+	error:
+		if (ddrval != DD_OK)
+		{
+			std::stringstream ss;
+			ss << "DirectDraw Init FAILED: " << ddrval;
+			finiObjects();
+			MessageBox(hwnd, ss.str().c_str(), "Landscape", MB_OK);
+			DestroyWindow(hwnd);
+		}
 	}
 
 	void InitDInput()

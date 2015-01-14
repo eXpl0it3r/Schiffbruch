@@ -1,7 +1,5 @@
 #include "Sound.hpp"
 
-
-
 #include "Direct.hpp"
 
 namespace Sound
@@ -82,8 +80,7 @@ namespace Sound
 	{
 		short z;
 
-		if ((Sound == 0) || (Soundzustand <= 0)) return;
-
+		if ((Sound == 0) || (Soundzustand <= 0) || lpdsbWav[Sound] == nullptr) return;
 		z = -10000 + 100 * Wav[Sound].Volume;
 		lpdsbWav[Sound]->SetVolume((long)(-10000 + (10000 + z)*Volume / 100));
 		if (Wav[Sound].Loop) lpdsbWav[Sound]->Play(NULL, NULL, DSBPLAY_LOOPING);

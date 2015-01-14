@@ -50,7 +50,7 @@ namespace Game
 
 		std::ifstream ifs("save.dat", std::ios::binary); // | ios::nocreate);
 		if (!ifs) return(false);
-
+		
 		ifs.read((char*)Scape, sizeof(Scape));
 		ifs.read((char*)&Guy, sizeof(Guy));
 		ifs.read((char*)&BootsFahrt, sizeof(BootsFahrt));
@@ -67,7 +67,7 @@ namespace Game
 		ifs.read((char*)&Tag, sizeof(Tag));
 		ifs.read((char*)TextBereich, sizeof(TextBereich));
 		ifs.read((char*)&SchatzGef, sizeof(SchatzGef));
-
+		
 		for (i = 0; i<BILDANZ; i++)
 		{
 			ifs.read((char*)&Bmp[i].Animation, sizeof(Bmp[i].Animation));
@@ -2343,9 +2343,9 @@ namespace Game
 	{
 		short x, y;
 		bool LoadOK;
-
+		
 		Game::InitStructs();
-
+		
 		if (!neu) LoadOK = Game::LoadGame();
 
 		if ((!LoadOK) || (neu))
@@ -2442,8 +2442,10 @@ namespace Game
 			Entdeckttmp[x][y] = Scape[x][y].Entdeckt;
 			Scape[x][y].Entdeckt = true;
 		}
+		
 		World::Generate(); // Einmal vor dem Schatz schon entdeckt malen
 		World::Schatz();
+
 		for (y = 0; y<MAXYKACH; y++) for (x = 0; x<MAXXKACH; x++) Scape[x][y].Entdeckt = Entdeckttmp[x][y];
 		World::Entdecken();
 		LAnimation = Anitmp;

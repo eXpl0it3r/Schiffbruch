@@ -4,6 +4,7 @@
 #include "Direct.hpp"
 #include "Game.hpp"
 #include "Math.hpp"
+#include "Sound.hpp"
 #include "Renderer.hpp"
 #include "Routing.hpp"
 #include "World.hpp"
@@ -164,17 +165,17 @@ short Application::Refresh()
 			if (LastBild == 0) LastBild = 50;
 
 			// BilderproSec ausgeben
-			/*Textloeschen(TXTFPS);
+			/*
+			Renderer::Textloeschen(TXTFPS);
 			TextBereich[TXTFPS].Aktiv = true;
 			std::sprintf(StdString, "%d", LastBild);
-			DrawString(StdString,(short)TextBereich[TXTFPS].rcText.left,(short)TextBereich[TXTFPS].rcText.top,1);
+			Renderer::DrawString(StdString,(short)TextBereich[TXTFPS].rcText.left,(short)TextBereich[TXTFPS].rcText.top,1);
 			*/
 		}
 		if (Spielzustand == SZLOGO)
 		{
-			if (Direct::CheckKey() == 2) break; // Das Keyboard abfragen
-			Renderer::ZeigeLogo(); //Bild auffrischen
-
+			if (Direct::CheckKey() == 2) break;	// Das Keyboard abfragen
+			Renderer::ZeigeLogo();				// Bild auffrischen
 		}
 		else if ((Spielzustand == SZINTRO) || (Spielzustand == SZGERETTET))
 		{
@@ -183,10 +184,12 @@ short Application::Refresh()
 			Math::Animationen();									// Animationen weiterschalten
 			if (!Guy.Aktiv) Event(Guy.Aktion);						// Aktionen starten
 			if (Guy.Pos.x == RouteStart.x) Renderer::ZeigeIntro();	// Bild auffrischen (if-Abfrage nötig (seltsamerweise))
-
 		}
 		else if (Spielzustand == SZSPIEL)
 		{
+			// Hide system cursor
+			SetCursor(NULL);
+
 			if ((Stunden >= 12) && (Minuten != 0) && (Guy.Aktion != Action::DAY_END)) // Hier ist der Tag zuende
 			{
 				if (Guy.Aktion == Action::LOOKOUT) Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Hoehe;
