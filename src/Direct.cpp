@@ -9,6 +9,8 @@
 #include "Sound.hpp"
 #include "World.hpp"
 
+#include <SFML/Window.hpp>
+
 #include <sstream>
 
 namespace Direct
@@ -184,18 +186,6 @@ namespace Direct
 		}
 	}
 
-	void InitDInput()
-	{
-		DirectInputCreate(g_hInst, DIRECTINPUT_VERSION, &g_pDI, nullptr);			// DirectInput
-		g_pDI->CreateDevice(GUID_SysMouse, &g_pMouse, nullptr);						// Mousepointer
-		g_pMouse->SetDataFormat(&c_dfDIMouse);										// MausDateninformation einstellen
-		g_pMouse->SetCooperativeLevel(hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);	// Exklusive Maus
-
-		g_pDI->CreateDevice(GUID_SysKeyboard, &g_pKey, nullptr);					// Keyboard einrichten
-		g_pKey->SetDataFormat(&c_dfDIKeyboard);										// Datenformat auf KeyBoard umschalten
-		g_pKey->SetCooperativeLevel(hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);	// KeyBoard geht nicht exklusive
-	}
-
 	void InitDSound()
 	{
 		HRESULT hr;
@@ -242,40 +232,19 @@ namespace Direct
 		}
 	}
 
-	void SetAcquire()
-	{
-		if (!MouseInit) return;
-		if (bActive)
-		{
-			g_pMouse->Acquire();
-			if (g_pKey)g_pKey->Acquire();
-
-		}
-		else
-		{
-			g_pMouse->Unacquire();
-			if (g_pKey)g_pKey->Unacquire();
-
-		}
-	}
-
 	void CheckMouse()
 	{
-		DIMOUSESTATE	dims;			// Da werden die Daten der Maus gespeichert
 		short			Button;			// Welcher Knopf ist gedrückt worden			
 		short			Push;			// Knopf gedrückt(1) oder losgelassen(-1) oder gedrückt(0) gehalten
 		short			xDiff, yDiff;	// Die Differenz zur vorherigen Position ((Für Scrollen)
 
-		g_pMouse->GetDeviceState(sizeof(DIMOUSESTATE), &dims);
 		// Mausbewegung
-		xDiff = MousePosition.x;
-		MousePosition.x += (short)dims.lX;
-		xDiff -= MousePosition.x;
+		xDiff = MousePosition.x - sf::Mouse::getPosition().x;
+		MousePosition.x = sf::Mouse::getPosition().x;
 		if (MousePosition.x < 0) MousePosition.x = 0;
 		if (MousePosition.x > MAXX - 2) MousePosition.x = MAXX - 2;
-		yDiff = MousePosition.y;
-		MousePosition.y += (short)dims.lY;
-		yDiff -= MousePosition.y;
+		yDiff = MousePosition.y - sf::Mouse::getPosition().y;
+		MousePosition.y = sf::Mouse::getPosition().y;
 		if (MousePosition.y < 0) MousePosition.y = 0;
 		if (MousePosition.y > MAXY - 2) MousePosition.y = MAXY - 2;
 
@@ -291,7 +260,7 @@ namespace Direct
 		}
 		Button = -1;
 
-		if (dims.rgbButtons[0] & 0x80)
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			Button = 0;
 			if (Button0down) Push = 0;
@@ -312,7 +281,7 @@ namespace Direct
 		}
 
 
-		if (dims.rgbButtons[1] & 0x80)
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
 			Button = 1;
 			if (Button1down) Push = 0;
@@ -391,28 +360,16 @@ namespace Direct
 		// die Maus ist im Panel ->
 		if (Math::InRect(MousePosition.x, MousePosition.y, rcPanel))
 			Math::MouseInPanel(Button, Push);
-		/*
-		dims.lX, dims.lY, dims.lZ,
-		(dims.rgbButtons[0] & 0x80) ? '0' : ' ',
-		(dims.rgbButtons[1] & 0x80) ? '1' : ' ',
-		(dims.rgbButtons[2] & 0x80) ? '2' : ' ',
-		(dims.rgbButtons[3] & 0x80) ? '3' : ' ');
-		*/
 	}
 
 	short CheckKey()
 	{
-#define KEYDOWN(name,key) (name[key] & 0x80) 
-		char     buffer[256];
-		short	 x;
-
-		g_pKey->GetDeviceState(sizeof(buffer), (LPVOID)&buffer);
-
+		short x;
 
 		if (Spielzustand == SZLOGO)
 		{
-			if ((KEYDOWN(buffer, DIK_ESCAPE)) || (KEYDOWN(buffer, DIK_RETURN)) ||
-				(KEYDOWN(buffer, DIK_SPACE))) // Logo Abbrechen
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Logo Abbrechen
 			{
 				Sound::StopSound(WAVLOGO);
 				Game::NeuesSpiel(false);
@@ -421,8 +378,8 @@ namespace Direct
 		}
 		else if (Spielzustand == SZINTRO)
 		{
-			if ((KEYDOWN(buffer, DIK_ESCAPE)) || (KEYDOWN(buffer, DIK_RETURN)) ||
-				(KEYDOWN(buffer, DIK_SPACE)))	// Intro Abbrechen
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Intro Abbrechen
 			{
 				Sound::StopSound(WAVSTURM);		// Sound hier sofort stoppen
 				Sound::StopSound(WAVSCHWIMMEN);	// Sound hier sofort stoppen
@@ -460,8 +417,8 @@ namespace Direct
 		}
 		else if (Spielzustand == SZGERETTET)
 		{
-			if ((KEYDOWN(buffer, DIK_ESCAPE)) || (KEYDOWN(buffer, DIK_RETURN)) ||
-				(KEYDOWN(buffer, DIK_SPACE)))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
 				Spielzustand = SZABSPANN;
 				return(1);
@@ -469,35 +426,36 @@ namespace Direct
 		}
 		else if (Spielzustand == SZSPIEL)
 		{
-			if (KEYDOWN(buffer, DIK_RIGHT)) Camera.x += 10;
-			if (KEYDOWN(buffer, DIK_LEFT))  Camera.x -= 10;
-			if (KEYDOWN(buffer, DIK_DOWN))	Camera.y += 10;
-			if (KEYDOWN(buffer, DIK_UP))    Camera.y -= 10;
-			if (KEYDOWN(buffer, DIK_ESCAPE))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) Camera.x += 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))  Camera.x -= 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))	 Camera.y += 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))    Camera.y -= 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
 				Guy.AkNummer = 0;
 				Guy.Aktiv = false;
 				Guy.Aktion = Action::QUIT;
 			}
-			if (KEYDOWN(buffer, DIK_F11))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11))
 			{
 				Guy.AkNummer = 0;
 				Guy.Aktiv = false;
 				Guy.Aktion = Action::RESTART;
 			}
-			if (KEYDOWN(buffer, DIK_G))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 			{
 				Gitter = !Gitter;
 				World::Generate();
 			}
-			if (KEYDOWN(buffer, DIK_A))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
 				LAnimation = !LAnimation;
 				World::Generate();
 			}
 
+			// Development
 			/*
-			if (KEYDOWN(buffer, DIK_C)) // Zum testen
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 			{
 				short x,y;
 				for (y=0;y<MAXYKACH;y++)
@@ -506,7 +464,7 @@ namespace Direct
 				World::Generate();
 			}
 
-			if (KEYDOWN(buffer, DIK_I))	// Zum testen
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 			{
 				Guy.Inventar[ROHAST] = 10;
 				Guy.Inventar[ROHSTEIN] = 10;
@@ -514,7 +472,7 @@ namespace Direct
 				Guy.Inventar[ROHLIANE] = 10;
 				Guy.Inventar[ROHSTAMM] = 9;
 			}
-			if (KEYDOWN(buffer, DIK_W))	// Zum testen
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			{
 				Guy.Inventar[ROHAXT]   = 1;
 				Guy.Inventar[ROHEGGE]  = 1;
@@ -539,10 +497,9 @@ namespace Direct
 				Bmp[BUTTHAUS1].Phase = 0;
 				Bmp[BUTTHAUS2].Phase = 0;
 				Bmp[BUTTHAUS3].Phase = 0;
-			}
-			*/
+			}*/
 
-			if (KEYDOWN(buffer, DIK_S))	// Sound ausschalten
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				if (Soundzustand == 0) Soundzustand = 1;
 				else if (Soundzustand == 1) Soundzustand = 0;
@@ -550,8 +507,8 @@ namespace Direct
 		}
 		else if (Spielzustand == SZABSPANN)
 		{
-			if ((KEYDOWN(buffer, DIK_ESCAPE)) || (KEYDOWN(buffer, DIK_RETURN)) ||
-				(KEYDOWN(buffer, DIK_SPACE)))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
 				Sound::StopSound(WAVABSPANN);
 				return(0);

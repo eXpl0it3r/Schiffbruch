@@ -287,7 +287,7 @@ namespace Math
 				case FELD: Guy.Aktion = Action::FIELD; break;
 				case BOOT: Guy.Aktion = Action::BOAT; break;
 				case ROHR: Guy.Aktion = Action::PIPE; break;
-				case SOS:  Guy.Aktion = Action::SOS;  break;
+				case SOS:  Guy.Aktion = Action::SOS_SIGN;  break;
 				case HAUS1:Guy.Aktion = Action::HOUSE1; break;
 				case HAUS2:Guy.Aktion = Action::HOUSE2; break;
 				case HAUS3:Guy.Aktion = Action::HOUSE3; break;
@@ -652,7 +652,7 @@ namespace Math
 				{
 					Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
 					Bmp[BUTTSTOP].Phase = 0;
-					Guy.Aktion = Action::SOS;
+					Guy.Aktion = Action::SOS_SIGN;
 				}
 				else if ((Bmp[BUTTWEITER].Phase != -1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt == SOS))
@@ -661,7 +661,7 @@ namespace Math
 					Guy.PosAlt = Guy.PosScreen;
 					Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
 						Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-					Guy.Aktion = Action::SOS;
+					Guy.Aktion = Action::SOS_SIGN;
 				}
 				else PapierText = Renderer::DrawText(SOSBEDINGUNGEN, TXTPAPIER, 1);
 			}
