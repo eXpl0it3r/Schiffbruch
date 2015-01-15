@@ -454,6 +454,7 @@ namespace Direct
 			}
 
 			// Development
+			/*
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 			{
 				short x,y;
@@ -496,7 +497,7 @@ namespace Direct
 				Bmp[BUTTHAUS1].Phase = 0;
 				Bmp[BUTTHAUS2].Phase = 0;
 				Bmp[BUTTHAUS3].Phase = 0;
-			}
+			}*/
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{

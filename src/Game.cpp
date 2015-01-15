@@ -1298,7 +1298,7 @@ namespace Game
 		Bmp[BUTTAKTION].rcSrc.right = 28 + 35;
 		Bmp[BUTTAKTION].rcSrc.bottom = 35;
 		Bmp[BUTTAKTION].rcDes.left = rcPanel.left + 29;
-		Bmp[BUTTAKTION].rcDes.top = rcPanel.top + 157;
+		Bmp[BUTTAKTION].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTAKTION].rcDes.right = Bmp[BUTTAKTION].rcDes.left + 35;
 		Bmp[BUTTAKTION].rcDes.bottom = Bmp[BUTTAKTION].rcDes.top + 35;
 		Bmp[BUTTAKTION].Breite = (short)(Bmp[BUTTAKTION].rcSrc.right - Bmp[BUTTAKTION].rcSrc.left);
@@ -1312,7 +1312,7 @@ namespace Game
 		Bmp[BUTTBAUEN].rcSrc.right = 203 + 35;
 		Bmp[BUTTBAUEN].rcSrc.bottom = 35;
 		Bmp[BUTTBAUEN].rcDes.left = rcPanel.left + 70;
-		Bmp[BUTTBAUEN].rcDes.top = rcPanel.top + 157;
+		Bmp[BUTTBAUEN].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTBAUEN].rcDes.right = Bmp[BUTTBAUEN].rcDes.left + 35;
 		Bmp[BUTTBAUEN].rcDes.bottom = Bmp[BUTTBAUEN].rcDes.top + 35;
 		Bmp[BUTTBAUEN].Breite = (short)(Bmp[BUTTBAUEN].rcSrc.right - Bmp[BUTTBAUEN].rcSrc.left);
@@ -1327,7 +1327,7 @@ namespace Game
 		Bmp[BUTTINVENTAR].rcSrc.right = 168 + 35;
 		Bmp[BUTTINVENTAR].rcSrc.bottom = 35;
 		Bmp[BUTTINVENTAR].rcDes.left = rcPanel.left + 152;
-		Bmp[BUTTINVENTAR].rcDes.top = rcPanel.top + 157;
+		Bmp[BUTTINVENTAR].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTINVENTAR].rcDes.right = Bmp[BUTTINVENTAR].rcDes.left + 35;
 		Bmp[BUTTINVENTAR].rcDes.bottom = Bmp[BUTTINVENTAR].rcDes.top + 35;
 		Bmp[BUTTINVENTAR].Breite = (short)(Bmp[BUTTINVENTAR].rcSrc.right - Bmp[BUTTINVENTAR].rcSrc.left);
@@ -1341,7 +1341,7 @@ namespace Game
 		Bmp[BUTTWEITER].rcSrc.right = 343 + 35;
 		Bmp[BUTTWEITER].rcSrc.bottom = 35;
 		Bmp[BUTTWEITER].rcDes.left = rcPanel.left + 111;
-		Bmp[BUTTWEITER].rcDes.top = rcPanel.top + 157;
+		Bmp[BUTTWEITER].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTWEITER].rcDes.right = Bmp[BUTTWEITER].rcDes.left + 35;
 		Bmp[BUTTWEITER].rcDes.bottom = Bmp[BUTTWEITER].rcDes.top + 35;
 		Bmp[BUTTWEITER].Breite = (short)(Bmp[BUTTWEITER].rcSrc.right - Bmp[BUTTWEITER].rcSrc.left);
@@ -1356,7 +1356,7 @@ namespace Game
 		Bmp[BUTTSTOP].rcSrc.right = 378 + 35;
 		Bmp[BUTTSTOP].rcSrc.bottom = 35;
 		Bmp[BUTTSTOP].rcDes.left = rcPanel.left + 111;
-		Bmp[BUTTSTOP].rcDes.top = rcPanel.top + 157;
+		Bmp[BUTTSTOP].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTSTOP].rcDes.right = Bmp[BUTTSTOP].rcDes.left + 35;
 		Bmp[BUTTSTOP].rcDes.bottom = Bmp[BUTTSTOP].rcDes.top + 35;
 		Bmp[BUTTSTOP].Breite = (short)(Bmp[BUTTSTOP].rcSrc.right - Bmp[BUTTSTOP].rcSrc.left);
@@ -1371,7 +1371,7 @@ namespace Game
 		Bmp[BUTTABLEGEN].rcSrc.right = 483 + 35;
 		Bmp[BUTTABLEGEN].rcSrc.bottom = 35;
 		Bmp[BUTTABLEGEN].rcDes.left = rcPanel.left + 111;
-		Bmp[BUTTABLEGEN].rcDes.top = rcPanel.top + 157;
+		Bmp[BUTTABLEGEN].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTABLEGEN].rcDes.right = Bmp[BUTTABLEGEN].rcDes.left + 35;
 		Bmp[BUTTABLEGEN].rcDes.bottom = Bmp[BUTTABLEGEN].rcDes.top + 35;
 		Bmp[BUTTABLEGEN].Breite = (short)(Bmp[BUTTABLEGEN].rcSrc.right - Bmp[BUTTABLEGEN].rcSrc.left);
@@ -1386,7 +1386,7 @@ namespace Game
 		Bmp[BUTTSUCHEN].rcSrc.right = 63 + 35;
 		Bmp[BUTTSUCHEN].rcSrc.bottom = 35;
 		Bmp[BUTTSUCHEN].rcDes.left = rcPanel.left + 29;
-		Bmp[BUTTSUCHEN].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTSUCHEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTSUCHEN].rcDes.right = Bmp[BUTTSUCHEN].rcDes.left + 35;
 		Bmp[BUTTSUCHEN].rcDes.bottom = Bmp[BUTTSUCHEN].rcDes.top + 35;
 		Bmp[BUTTSUCHEN].Breite = (short)(Bmp[BUTTSUCHEN].rcSrc.right - Bmp[BUTTSUCHEN].rcSrc.left);
@@ -1400,7 +1400,7 @@ namespace Game
 		Bmp[BUTTESSEN].rcSrc.right = 133 + 35;
 		Bmp[BUTTESSEN].rcSrc.bottom = 35;
 		Bmp[BUTTESSEN].rcDes.left = rcPanel.left + 70;
-		Bmp[BUTTESSEN].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTESSEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTESSEN].rcDes.right = Bmp[BUTTESSEN].rcDes.left + 35;
 		Bmp[BUTTESSEN].rcDes.bottom = Bmp[BUTTESSEN].rcDes.top + 35;
 		Bmp[BUTTESSEN].Breite = (short)(Bmp[BUTTESSEN].rcSrc.right - Bmp[BUTTESSEN].rcSrc.left);
@@ -1414,7 +1414,7 @@ namespace Game
 		Bmp[BUTTSCHLAFEN].rcSrc.right = 308 + 35;
 		Bmp[BUTTSCHLAFEN].rcSrc.bottom = 35;
 		Bmp[BUTTSCHLAFEN].rcDes.left = rcPanel.left + 111;
-		Bmp[BUTTSCHLAFEN].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTSCHLAFEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTSCHLAFEN].rcDes.right = Bmp[BUTTSCHLAFEN].rcDes.left + 35;
 		Bmp[BUTTSCHLAFEN].rcDes.bottom = Bmp[BUTTSCHLAFEN].rcDes.top + 35;
 		Bmp[BUTTSCHLAFEN].Breite = (short)(Bmp[BUTTSCHLAFEN].rcSrc.right - Bmp[BUTTSCHLAFEN].rcSrc.left);
@@ -1428,7 +1428,7 @@ namespace Game
 		Bmp[BUTTFAELLEN].rcSrc.right = 98 + 35;
 		Bmp[BUTTFAELLEN].rcSrc.bottom = 35;
 		Bmp[BUTTFAELLEN].rcDes.left = rcPanel.left + 152;
-		Bmp[BUTTFAELLEN].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTFAELLEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTFAELLEN].rcDes.right = Bmp[BUTTFAELLEN].rcDes.left + 35;
 		Bmp[BUTTFAELLEN].rcDes.bottom = Bmp[BUTTFAELLEN].rcDes.top + 35;
 		Bmp[BUTTFAELLEN].Breite = (short)(Bmp[BUTTFAELLEN].rcSrc.right - Bmp[BUTTFAELLEN].rcSrc.left);
@@ -1443,7 +1443,7 @@ namespace Game
 		Bmp[BUTTANGELN].rcSrc.right = 413 + 35;
 		Bmp[BUTTANGELN].rcSrc.bottom = 35;
 		Bmp[BUTTANGELN].rcDes.left = rcPanel.left + 29;
-		Bmp[BUTTANGELN].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTANGELN].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTANGELN].rcDes.right = Bmp[BUTTANGELN].rcDes.left + 35;
 		Bmp[BUTTANGELN].rcDes.bottom = Bmp[BUTTANGELN].rcDes.top + 35;
 		Bmp[BUTTANGELN].Breite = (short)(Bmp[BUTTANGELN].rcSrc.right - Bmp[BUTTANGELN].rcSrc.left);
@@ -1458,7 +1458,7 @@ namespace Game
 		Bmp[BUTTANZUENDEN].rcSrc.right = 28 + 35;
 		Bmp[BUTTANZUENDEN].rcSrc.bottom = 175 + 35;
 		Bmp[BUTTANZUENDEN].rcDes.left = rcPanel.left + 70;
-		Bmp[BUTTANZUENDEN].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTANZUENDEN].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTANZUENDEN].rcDes.right = Bmp[BUTTANZUENDEN].rcDes.left + 35;
 		Bmp[BUTTANZUENDEN].rcDes.bottom = Bmp[BUTTANZUENDEN].rcDes.top + 35;
 		Bmp[BUTTANZUENDEN].Breite = (short)(Bmp[BUTTANZUENDEN].rcSrc.right - Bmp[BUTTANZUENDEN].rcSrc.left);
@@ -1473,7 +1473,7 @@ namespace Game
 		Bmp[BUTTAUSSCHAU].rcSrc.right = 63 + 35;
 		Bmp[BUTTAUSSCHAU].rcSrc.bottom = 175 + 35;
 		Bmp[BUTTAUSSCHAU].rcDes.left = rcPanel.left + 111;
-		Bmp[BUTTAUSSCHAU].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTAUSSCHAU].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTAUSSCHAU].rcDes.right = Bmp[BUTTAUSSCHAU].rcDes.left + 35;
 		Bmp[BUTTAUSSCHAU].rcDes.bottom = Bmp[BUTTAUSSCHAU].rcDes.top + 35;
 		Bmp[BUTTAUSSCHAU].Breite = (short)(Bmp[BUTTAUSSCHAU].rcSrc.right - Bmp[BUTTAUSSCHAU].rcSrc.left);
@@ -1488,7 +1488,7 @@ namespace Game
 		Bmp[BUTTSCHATZKARTE].rcSrc.right = 98 + 35;
 		Bmp[BUTTSCHATZKARTE].rcSrc.bottom = 175 + 35;
 		Bmp[BUTTSCHATZKARTE].rcDes.left = rcPanel.left + 152;
-		Bmp[BUTTSCHATZKARTE].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTSCHATZKARTE].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTSCHATZKARTE].rcDes.right = Bmp[BUTTSCHATZKARTE].rcDes.left + 35;
 		Bmp[BUTTSCHATZKARTE].rcDes.bottom = Bmp[BUTTSCHATZKARTE].rcDes.top + 35;
 		Bmp[BUTTSCHATZKARTE].Breite = (short)(Bmp[BUTTSCHATZKARTE].rcSrc.right - Bmp[BUTTSCHATZKARTE].rcSrc.left);
@@ -1503,7 +1503,7 @@ namespace Game
 		Bmp[BUTTSCHATZ].rcSrc.right = 133 + 35;
 		Bmp[BUTTSCHATZ].rcSrc.bottom = 175 + 35;
 		Bmp[BUTTSCHATZ].rcDes.left = rcPanel.left + 29;
-		Bmp[BUTTSCHATZ].rcDes.top = rcPanel.top + 316;
+		Bmp[BUTTSCHATZ].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTSCHATZ].rcDes.right = Bmp[BUTTSCHATZ].rcDes.left + 35;
 		Bmp[BUTTSCHATZ].rcDes.bottom = Bmp[BUTTSCHATZ].rcDes.top + 35;
 		Bmp[BUTTSCHATZ].Breite = (short)(Bmp[BUTTSCHATZ].rcSrc.right - Bmp[BUTTSCHATZ].rcSrc.left);
@@ -1518,7 +1518,7 @@ namespace Game
 		Bmp[BUTTSCHLEUDER].rcSrc.right = 168 + 35;
 		Bmp[BUTTSCHLEUDER].rcSrc.bottom = 175 + 35;
 		Bmp[BUTTSCHLEUDER].rcDes.left = rcPanel.left + 70;
-		Bmp[BUTTSCHLEUDER].rcDes.top = rcPanel.top + 316;
+		Bmp[BUTTSCHLEUDER].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTSCHLEUDER].rcDes.right = Bmp[BUTTSCHLEUDER].rcDes.left + 35;
 		Bmp[BUTTSCHLEUDER].rcDes.bottom = Bmp[BUTTSCHLEUDER].rcDes.top + 35;
 		Bmp[BUTTSCHLEUDER].Breite = (short)(Bmp[BUTTSCHLEUDER].rcSrc.right - Bmp[BUTTSCHLEUDER].rcSrc.left);
@@ -1533,7 +1533,7 @@ namespace Game
 		Bmp[BUTTFELD].rcSrc.right = 238 + 35;
 		Bmp[BUTTFELD].rcSrc.bottom = 35;
 		Bmp[BUTTFELD].rcDes.left = rcPanel.left + 70;
-		Bmp[BUTTFELD].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTFELD].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTFELD].rcDes.right = Bmp[BUTTFELD].rcDes.left + 35;
 		Bmp[BUTTFELD].rcDes.bottom = Bmp[BUTTFELD].rcDes.top + 35;
 		Bmp[BUTTFELD].Breite = (short)(Bmp[BUTTFELD].rcSrc.right - Bmp[BUTTFELD].rcSrc.left);
@@ -1548,7 +1548,7 @@ namespace Game
 		Bmp[BUTTZELT].rcSrc.right = 273 + 35;
 		Bmp[BUTTZELT].rcSrc.bottom = 35;
 		Bmp[BUTTZELT].rcDes.left = rcPanel.left + 29;
-		Bmp[BUTTZELT].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTZELT].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTZELT].rcDes.right = Bmp[BUTTZELT].rcDes.left + 35;
 		Bmp[BUTTZELT].rcDes.bottom = Bmp[BUTTZELT].rcDes.top + 35;
 		Bmp[BUTTZELT].Breite = (short)(Bmp[BUTTZELT].rcSrc.right - Bmp[BUTTZELT].rcSrc.left);
@@ -1563,7 +1563,7 @@ namespace Game
 		Bmp[BUTTBOOT].rcSrc.right = 448 + 35;
 		Bmp[BUTTBOOT].rcSrc.bottom = 35;
 		Bmp[BUTTBOOT].rcDes.left = rcPanel.left + 111;
-		Bmp[BUTTBOOT].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTBOOT].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTBOOT].rcDes.right = Bmp[BUTTBOOT].rcDes.left + 35;
 		Bmp[BUTTBOOT].rcDes.bottom = Bmp[BUTTBOOT].rcDes.top + 35;
 		Bmp[BUTTBOOT].Breite = (short)(Bmp[BUTTBOOT].rcSrc.right - Bmp[BUTTBOOT].rcSrc.left);
@@ -1578,7 +1578,7 @@ namespace Game
 		Bmp[BUTTROHR].rcSrc.right = 518 + 35;
 		Bmp[BUTTROHR].rcSrc.bottom = 35;
 		Bmp[BUTTROHR].rcDes.left = rcPanel.left + 152;
-		Bmp[BUTTROHR].rcDes.top = rcPanel.top + 220;
+		Bmp[BUTTROHR].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTROHR].rcDes.right = Bmp[BUTTROHR].rcDes.left + 35;
 		Bmp[BUTTROHR].rcDes.bottom = Bmp[BUTTROHR].rcDes.top + 35;
 		Bmp[BUTTROHR].Breite = (short)(Bmp[BUTTROHR].rcSrc.right - Bmp[BUTTROHR].rcSrc.left);
@@ -1593,7 +1593,7 @@ namespace Game
 		Bmp[BUTTSOS].rcSrc.right = 588 + 35;
 		Bmp[BUTTSOS].rcSrc.bottom = 35;
 		Bmp[BUTTSOS].rcDes.left = rcPanel.left + 29;
-		Bmp[BUTTSOS].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTSOS].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTSOS].rcDes.right = Bmp[BUTTSOS].rcDes.left + 35;
 		Bmp[BUTTSOS].rcDes.bottom = Bmp[BUTTSOS].rcDes.top + 35;
 		Bmp[BUTTSOS].Breite = (short)(Bmp[BUTTSOS].rcSrc.right - Bmp[BUTTSOS].rcSrc.left);
@@ -1607,7 +1607,7 @@ namespace Game
 		Bmp[BUTTHAUS1].rcSrc.right = 623 + 35;
 		Bmp[BUTTHAUS1].rcSrc.bottom = 35;
 		Bmp[BUTTHAUS1].rcDes.left = rcPanel.left + 70;
-		Bmp[BUTTHAUS1].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTHAUS1].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTHAUS1].rcDes.right = Bmp[BUTTHAUS1].rcDes.left + 35;
 		Bmp[BUTTHAUS1].rcDes.bottom = Bmp[BUTTHAUS1].rcDes.top + 35;
 		Bmp[BUTTHAUS1].Breite = (short)(Bmp[BUTTHAUS1].rcSrc.right - Bmp[BUTTHAUS1].rcSrc.left);
@@ -1622,7 +1622,7 @@ namespace Game
 		Bmp[BUTTHAUS2].rcSrc.right = 658 + 35;
 		Bmp[BUTTHAUS2].rcSrc.bottom = 35;
 		Bmp[BUTTHAUS2].rcDes.left = rcPanel.left + 111;
-		Bmp[BUTTHAUS2].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTHAUS2].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTHAUS2].rcDes.right = Bmp[BUTTHAUS2].rcDes.left + 35;
 		Bmp[BUTTHAUS2].rcDes.bottom = Bmp[BUTTHAUS2].rcDes.top + 35;
 		Bmp[BUTTHAUS2].Breite = (short)(Bmp[BUTTHAUS2].rcSrc.right - Bmp[BUTTHAUS2].rcSrc.left);
@@ -1637,7 +1637,7 @@ namespace Game
 		Bmp[BUTTHAUS3].rcSrc.right = 693 + 35;
 		Bmp[BUTTHAUS3].rcSrc.bottom = 35;
 		Bmp[BUTTHAUS3].rcDes.left = rcPanel.left + 152;
-		Bmp[BUTTHAUS3].rcDes.top = rcPanel.top + 268;
+		Bmp[BUTTHAUS3].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTHAUS3].rcDes.right = Bmp[BUTTHAUS3].rcDes.left + 35;
 		Bmp[BUTTHAUS3].rcDes.bottom = Bmp[BUTTHAUS3].rcDes.top + 35;
 		Bmp[BUTTHAUS3].Breite = (short)(Bmp[BUTTHAUS3].rcSrc.right - Bmp[BUTTHAUS3].rcSrc.left);
@@ -1652,7 +1652,7 @@ namespace Game
 		Bmp[BUTTFEUERST].rcSrc.right = 728 + 35;
 		Bmp[BUTTFEUERST].rcSrc.bottom = 35;
 		Bmp[BUTTFEUERST].rcDes.left = rcPanel.left + 29;
-		Bmp[BUTTFEUERST].rcDes.top = rcPanel.top + 316;
+		Bmp[BUTTFEUERST].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTFEUERST].rcDes.right = Bmp[BUTTFEUERST].rcDes.left + 35;
 		Bmp[BUTTFEUERST].rcDes.bottom = Bmp[BUTTFEUERST].rcDes.top + 35;
 		Bmp[BUTTFEUERST].Breite = (short)(Bmp[BUTTFEUERST].rcSrc.right - Bmp[BUTTFEUERST].rcSrc.left);
@@ -1680,7 +1680,7 @@ namespace Game
 		Bmp[BUTTDESTROY].rcSrc.right = 553 + 35;
 		Bmp[BUTTDESTROY].rcSrc.bottom = 35;
 		Bmp[BUTTDESTROY].rcDes.left = rcPanel.left + 152;
-		Bmp[BUTTDESTROY].rcDes.top = rcPanel.top + 316;
+		Bmp[BUTTDESTROY].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTDESTROY].rcDes.right = Bmp[BUTTDESTROY].rcDes.left + 35;
 		Bmp[BUTTDESTROY].rcDes.bottom = Bmp[BUTTDESTROY].rcDes.top + 35;
 		Bmp[BUTTDESTROY].Breite = (short)(Bmp[BUTTDESTROY].rcSrc.right - Bmp[BUTTDESTROY].rcSrc.left);
@@ -1740,11 +1740,11 @@ namespace Game
 		Bmp[SAEULE1].rcSrc.left = 205;
 		Bmp[SAEULE1].rcSrc.top = 115;
 		Bmp[SAEULE1].rcSrc.right = Bmp[SAEULE1].rcSrc.left + 11;
-		Bmp[SAEULE1].rcSrc.bottom = Bmp[SAEULE1].rcSrc.top + 95;
+		Bmp[SAEULE1].rcSrc.bottom = Bmp[SAEULE1].rcSrc.top + 115;
 		Bmp[SAEULE1].rcDes.left = rcPanel.left + 52;
-		Bmp[SAEULE1].rcDes.top = rcPanel.top + 393;
+		Bmp[SAEULE1].rcDes.top = rcPanel.top + 471;
 		Bmp[SAEULE1].rcDes.right = Bmp[SAEULE1].rcDes.left + 11;
-		Bmp[SAEULE1].rcDes.bottom = Bmp[SAEULE1].rcDes.top + 95;
+		Bmp[SAEULE1].rcDes.bottom = Bmp[SAEULE1].rcDes.top + 115;
 		Bmp[SAEULE1].Breite = (short)(Bmp[SAEULE1].rcSrc.right - Bmp[SAEULE1].rcSrc.left);
 		Bmp[SAEULE1].Hoehe = (short)(Bmp[SAEULE1].rcSrc.bottom - Bmp[SAEULE1].rcSrc.top);
 		Bmp[SAEULE1].Surface = lpDDSPanel;
@@ -1754,11 +1754,11 @@ namespace Game
 		Bmp[SAEULE2].rcSrc.left = 216;
 		Bmp[SAEULE2].rcSrc.top = 115;
 		Bmp[SAEULE2].rcSrc.right = Bmp[SAEULE2].rcSrc.left + 11;
-		Bmp[SAEULE2].rcSrc.bottom = Bmp[SAEULE2].rcSrc.top + 95;
+		Bmp[SAEULE2].rcSrc.bottom = Bmp[SAEULE2].rcSrc.top + 115;
 		Bmp[SAEULE2].rcDes.left = rcPanel.left + 114;
-		Bmp[SAEULE2].rcDes.top = rcPanel.top + 393;
+		Bmp[SAEULE2].rcDes.top = rcPanel.top + 471;
 		Bmp[SAEULE2].rcDes.right = Bmp[SAEULE2].rcDes.left + 11;
-		Bmp[SAEULE2].rcDes.bottom = Bmp[SAEULE2].rcDes.top + 95;
+		Bmp[SAEULE2].rcDes.bottom = Bmp[SAEULE2].rcDes.top + 115;
 		Bmp[SAEULE2].Breite = (short)(Bmp[SAEULE2].rcSrc.right - Bmp[SAEULE2].rcSrc.left);
 		Bmp[SAEULE2].Hoehe = (short)(Bmp[SAEULE2].rcSrc.bottom - Bmp[SAEULE2].rcSrc.top);
 		Bmp[SAEULE2].Surface = lpDDSPanel;
@@ -1768,11 +1768,11 @@ namespace Game
 		Bmp[SAEULE3].rcSrc.left = 227;
 		Bmp[SAEULE3].rcSrc.top = 115;
 		Bmp[SAEULE3].rcSrc.right = Bmp[SAEULE3].rcSrc.left + 11;
-		Bmp[SAEULE3].rcSrc.bottom = Bmp[SAEULE3].rcSrc.top + 95;
+		Bmp[SAEULE3].rcSrc.bottom = Bmp[SAEULE3].rcSrc.top + 115;
 		Bmp[SAEULE3].rcDes.left = rcPanel.left + 175;
-		Bmp[SAEULE3].rcDes.top = rcPanel.top + 393;
+		Bmp[SAEULE3].rcDes.top = rcPanel.top + 471;
 		Bmp[SAEULE3].rcDes.right = Bmp[SAEULE3].rcDes.left + 11;
-		Bmp[SAEULE3].rcDes.bottom = Bmp[SAEULE3].rcDes.top + 95;
+		Bmp[SAEULE3].rcDes.bottom = Bmp[SAEULE3].rcDes.top + 115;
 		Bmp[SAEULE3].Breite = (short)(Bmp[SAEULE3].rcSrc.right - Bmp[SAEULE3].rcSrc.left);
 		Bmp[SAEULE3].Hoehe = (short)(Bmp[SAEULE3].rcSrc.bottom - Bmp[SAEULE3].rcSrc.top);
 		Bmp[SAEULE3].Surface = lpDDSPanel;
@@ -1791,72 +1791,72 @@ namespace Game
 		}
 		// RohAst
 		Bmp[ROHAST].rcDes.left = rcPanel.left + 34;
-		Bmp[ROHAST].rcDes.top = rcPanel.top + 230;
+		Bmp[ROHAST].rcDes.top = rcPanel.top + 280;
 		Bmp[ROHAST].rcDes.right = Bmp[ROHAST].rcDes.left + 16;
 		Bmp[ROHAST].rcDes.bottom = Bmp[ROHAST].rcDes.top + 15;
 		// ROHSTEIN
 		Bmp[ROHSTEIN].rcDes.left = rcPanel.left + 34;
-		Bmp[ROHSTEIN].rcDes.top = rcPanel.top + 250;
+		Bmp[ROHSTEIN].rcDes.top = rcPanel.top + 300;
 		Bmp[ROHSTEIN].rcDes.right = Bmp[ROHSTEIN].rcDes.left + 16;
 		Bmp[ROHSTEIN].rcDes.bottom = Bmp[ROHSTEIN].rcDes.top + 15;
 		// ROHSTAMM
 		Bmp[ROHSTAMM].rcDes.left = rcPanel.left + 34;
-		Bmp[ROHSTAMM].rcDes.top = rcPanel.top + 310;
+		Bmp[ROHSTAMM].rcDes.top = rcPanel.top + 360;
 		Bmp[ROHSTAMM].rcDes.right = Bmp[ROHSTAMM].rcDes.left + 16;
 		Bmp[ROHSTAMM].rcDes.bottom = Bmp[ROHSTAMM].rcDes.top + 15;
 		// ROHAXT
 		Bmp[ROHAXT].rcDes.left = rcPanel.left + 150;
-		Bmp[ROHAXT].rcDes.top = rcPanel.top + 230;
+		Bmp[ROHAXT].rcDes.top = rcPanel.top + 280;
 		Bmp[ROHAXT].rcDes.right = Bmp[ROHAXT].rcDes.left + 16;
 		Bmp[ROHAXT].rcDes.bottom = Bmp[ROHAXT].rcDes.top + 15;
 		// ROHBLATT
 		Bmp[ROHBLATT].rcDes.left = rcPanel.left + 34;
-		Bmp[ROHBLATT].rcDes.top = rcPanel.top + 270;
+		Bmp[ROHBLATT].rcDes.top = rcPanel.top + 320;
 		Bmp[ROHBLATT].rcDes.right = Bmp[ROHBLATT].rcDes.left + 16;
 		Bmp[ROHBLATT].rcDes.bottom = Bmp[ROHBLATT].rcDes.top + 15;
 		// ROHEGGE
 		Bmp[ROHEGGE].rcDes.left = rcPanel.left + 150;
-		Bmp[ROHEGGE].rcDes.top = rcPanel.top + 250;
+		Bmp[ROHEGGE].rcDes.top = rcPanel.top + 300;
 		Bmp[ROHEGGE].rcDes.right = Bmp[ROHEGGE].rcDes.left + 16;
 		Bmp[ROHEGGE].rcDes.bottom = Bmp[ROHEGGE].rcDes.top + 15;
 		// ROHLIANE
 		Bmp[ROHLIANE].rcDes.left = rcPanel.left + 34;
-		Bmp[ROHLIANE].rcDes.top = rcPanel.top + 290;
+		Bmp[ROHLIANE].rcDes.top = rcPanel.top + 340;
 		Bmp[ROHLIANE].rcDes.right = Bmp[ROHLIANE].rcDes.left + 16;
 		Bmp[ROHLIANE].rcDes.bottom = Bmp[ROHLIANE].rcDes.top + 15;
 		// ROHANGEL
 		Bmp[ROHANGEL].rcDes.left = rcPanel.left + 150;
-		Bmp[ROHANGEL].rcDes.top = rcPanel.top + 270;
+		Bmp[ROHANGEL].rcDes.top = rcPanel.top + 320;
 		Bmp[ROHANGEL].rcDes.right = Bmp[ROHANGEL].rcDes.left + 16;
 		Bmp[ROHANGEL].rcDes.bottom = Bmp[ROHANGEL].rcDes.top + 15;
 		// ROHHAMMER
 		Bmp[ROHHAMMER].rcDes.left = rcPanel.left + 150;
-		Bmp[ROHHAMMER].rcDes.top = rcPanel.top + 290;
+		Bmp[ROHHAMMER].rcDes.top = rcPanel.top + 340;
 		Bmp[ROHHAMMER].rcDes.right = Bmp[ROHHAMMER].rcDes.left + 16;
 		Bmp[ROHHAMMER].rcDes.bottom = Bmp[ROHHAMMER].rcDes.top + 15;
 		// ROHFERNROHR
 		Bmp[ROHFERNROHR].rcDes.left = rcPanel.left + 150;
-		Bmp[ROHFERNROHR].rcDes.top = rcPanel.top + 310;
+		Bmp[ROHFERNROHR].rcDes.top = rcPanel.top + 360;
 		Bmp[ROHFERNROHR].rcDes.right = Bmp[ROHFERNROHR].rcDes.left + 16;
 		Bmp[ROHFERNROHR].rcDes.bottom = Bmp[ROHFERNROHR].rcDes.top + 15;
 		// ROHSTREICHHOLZ
 		Bmp[ROHSTREICHHOLZ].rcDes.left = rcPanel.left + 105;
-		Bmp[ROHSTREICHHOLZ].rcDes.top = rcPanel.top + 230;
+		Bmp[ROHSTREICHHOLZ].rcDes.top = rcPanel.top + 280;
 		Bmp[ROHSTREICHHOLZ].rcDes.right = Bmp[ROHSTREICHHOLZ].rcDes.left + 16;
 		Bmp[ROHSTREICHHOLZ].rcDes.bottom = Bmp[ROHSTREICHHOLZ].rcDes.top + 15;
 		// ROHSCHAUFEL
 		Bmp[ROHSCHAUFEL].rcDes.left = rcPanel.left + 105;
-		Bmp[ROHSCHAUFEL].rcDes.top = rcPanel.top + 250;
+		Bmp[ROHSCHAUFEL].rcDes.top = rcPanel.top + 320;
 		Bmp[ROHSCHAUFEL].rcDes.right = Bmp[ROHSCHAUFEL].rcDes.left + 16;
 		Bmp[ROHSCHAUFEL].rcDes.bottom = Bmp[ROHSCHAUFEL].rcDes.top + 15;
 		// ROHKARTE
 		Bmp[ROHKARTE].rcDes.left = rcPanel.left + 105;
-		Bmp[ROHKARTE].rcDes.top = rcPanel.top + 270;
+		Bmp[ROHKARTE].rcDes.top = rcPanel.top + 320;
 		Bmp[ROHKARTE].rcDes.right = Bmp[ROHKARTE].rcDes.left + 16;
 		Bmp[ROHKARTE].rcDes.bottom = Bmp[ROHKARTE].rcDes.top + 15;
 		// ROHSCHLEUDER
 		Bmp[ROHSCHLEUDER].rcDes.left = rcPanel.left + 105;
-		Bmp[ROHSCHLEUDER].rcDes.top = rcPanel.top + 290;
+		Bmp[ROHSCHLEUDER].rcDes.top = rcPanel.top + 340;
 		Bmp[ROHSCHLEUDER].rcDes.right = Bmp[ROHSCHLEUDER].rcDes.left + 16;
 		Bmp[ROHSCHLEUDER].rcDes.bottom = Bmp[ROHSCHLEUDER].rcDes.top + 15;
 
@@ -1895,7 +1895,7 @@ namespace Game
 		Bmp[INVPAPIER].rcSrc.right = Bmp[INVPAPIER].rcSrc.left + 178;
 		Bmp[INVPAPIER].rcSrc.bottom = Bmp[INVPAPIER].rcSrc.top + 114;
 		Bmp[INVPAPIER].rcDes.left = rcPanel.left + 15;
-		Bmp[INVPAPIER].rcDes.top = rcPanel.top + 220;
+		Bmp[INVPAPIER].rcDes.top = rcPanel.top + 270;
 		Bmp[INVPAPIER].rcDes.right = Bmp[INVPAPIER].rcDes.left + 178;
 		Bmp[INVPAPIER].rcDes.bottom = Bmp[INVPAPIER].rcDes.top + 114;
 		Bmp[INVPAPIER].Breite = (short)(Bmp[INVPAPIER].rcSrc.right - Bmp[INVPAPIER].rcSrc.left);
@@ -1905,7 +1905,7 @@ namespace Game
 		// RING
 		Bmp[RING].Anzahl = 1;
 		Bmp[RING].rcSrc.left = 205;
-		Bmp[RING].rcSrc.top = 210;
+		Bmp[RING].rcSrc.top = 230;
 		Bmp[RING].rcSrc.right = Bmp[RING].rcSrc.left + 37;
 		Bmp[RING].rcSrc.bottom = Bmp[RING].rcSrc.top + 150;
 		Bmp[RING].rcDes.left = rcPanel.left + 5;
@@ -1919,7 +1919,7 @@ namespace Game
 		// KREUZ
 		Bmp[KREUZ].Anzahl = 1;
 		Bmp[KREUZ].rcSrc.left = 205;
-		Bmp[KREUZ].rcSrc.top = 360;
+		Bmp[KREUZ].rcSrc.top = 380;
 		Bmp[KREUZ].rcSrc.right = Bmp[KREUZ].rcSrc.left + 40;
 		Bmp[KREUZ].rcSrc.bottom = Bmp[KREUZ].rcSrc.top + 22;
 		Bmp[KREUZ].Breite = (short)(Bmp[KREUZ].rcSrc.right - Bmp[KREUZ].rcSrc.left);
@@ -1953,7 +1953,7 @@ namespace Game
 		Bmp[SONNE].rcSrc.right = Bmp[SONNE].rcSrc.left + 51;
 		Bmp[SONNE].rcSrc.bottom = Bmp[SONNE].rcSrc.top + 50;
 		Bmp[SONNE].rcDes.left = rcPanel.left + 30;
-		Bmp[SONNE].rcDes.top = rcPanel.top + 518;
+		Bmp[SONNE].rcDes.top = rcPanel.top + 630;
 		Bmp[SONNE].rcDes.right = Bmp[SONNE].rcDes.left + 152;
 		Bmp[SONNE].rcDes.bottom = Bmp[SONNE].rcDes.top + 55;
 		Bmp[SONNE].Breite = (short)(Bmp[SONNE].rcSrc.right - Bmp[SONNE].rcSrc.left);
@@ -2299,10 +2299,10 @@ namespace Game
 		TextBereich[TXTTAGESZEIT].rcText.bottom = TextBereich[TXTTAGESZEIT].rcText.top + S2YPIXEL;
 
 		TextBereich[TXTPAPIER].Aktiv = false;
-		TextBereich[TXTPAPIER].rcText.left = 150;
-		TextBereich[TXTPAPIER].rcText.top = 100;
-		TextBereich[TXTPAPIER].rcText.right = 530;
-		TextBereich[TXTPAPIER].rcText.bottom = 500;
+		TextBereich[TXTPAPIER].rcText.left = 450;
+		TextBereich[TXTPAPIER].rcText.top = 160;
+		TextBereich[TXTPAPIER].rcText.right = 830;
+		TextBereich[TXTPAPIER].rcText.bottom = 560;
 
 		TextBereich[TXTCHANCE].Aktiv = false;
 		TextBereich[TXTCHANCE].rcText.left = Bmp[RING].rcDes.left + 5;
