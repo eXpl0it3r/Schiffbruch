@@ -26,9 +26,7 @@ namespace Direct
 	}
 
 	void InitDDraw();	// DirectDraw initialisieren
-	void InitDInput();	// DirectInput initialisieren
 	void InitDSound();	// DirectSound initialisieren
-	void SetAcquire();	// Maus aktivieren
 	void CheckMouse();	// Maus abfragen
 	short CheckKey();	// Tastatur abfragen
 

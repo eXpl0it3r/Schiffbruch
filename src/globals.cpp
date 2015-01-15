@@ -190,13 +190,8 @@ LPDIRECTDRAWGAMMACONTROL lpDDGammaControl = NULL;	// Die drei sind für das Gamm
 DDGAMMARAMP				 DDGammaRamp;
 DDGAMMARAMP				 DDGammaOld;
 
-// Directinput 
-IDirectInput*           g_pDI = NULL;
-IDirectInputDevice*     g_pMouse = NULL;
-IDirectInputDevice*     g_pKey = NULL;
-HANDLE                  g_hMouseEvent = NULL;
+// Directinput
 HINSTANCE				g_hInst = NULL;
-BOOL					MouseInit = false;
 
 // DirectSound
 LPDIRECTSOUND8			lpds;				// DirectSoundObjekt
