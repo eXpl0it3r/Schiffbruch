@@ -398,7 +398,7 @@ namespace Renderer
 		rcRectsrc.left = 0;
 		rcRectsrc.top = 0;
 		rcRectsrc.right = 205;
-		rcRectsrc.bottom = 600;
+		rcRectsrc.bottom = 720;
 		rcRectdes.left = rcPanel.left;
 		rcRectdes.top = rcPanel.top;
 		rcRectdes.right = rcPanel.right;

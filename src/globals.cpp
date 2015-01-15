@@ -43,12 +43,12 @@ short	Step, Steps;
 int  	LenMap[MAXXKACH][MAXYKACH];
 
 //Bereiche
-//                             links,      oben,                      rechts,                      unten
-RECT   rcGesamt =       {          0,         0,                        MAXX,                       MAXY };
-RECT   rcSpielflaeche = {          0,         0,                  MAXX - 195,                  MAXY - 20 };
-RECT   rcPanel =        { MAXX - 205,         0,                        MAXX,                       MAXY };
-RECT   rcKarte =        { MAXX - 158,        23, rcKarte.left + MAXXKACH * 2, rcKarte.top + MAXYKACH * 2 };
-RECT   rcTextFeld1 =    {          0, MAXY - 20,                  MAXX - 195,                       MAXY };
+//                             links,      oben,                      rechts,                             unten
+RECT   rcGesamt =       {          0,         0,                        MAXX,                              MAXY };
+RECT   rcSpielflaeche = {          0,         0,                  MAXX - 195,                         MAXY - 20 };
+RECT   rcPanel =        { MAXX - 205,         0,                        MAXX,                              MAXY };
+RECT   rcKarte =        { MAXX - 158,        27, rcKarte.left + MAXXKACH * 2, rcKarte.top + (MAXYKACH + 13) * 2 };
+RECT   rcTextFeld1 =    {          0, MAXY - 20,                  MAXX - 195,                              MAXY };
 
 //Die Eckkoordinaten der Kacheln (Achtung: mit überlappendem Rand)
 ZWEID EckKoor[13][4] =

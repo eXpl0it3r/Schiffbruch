@@ -213,7 +213,7 @@ void Application::Event(short Eventnr)
 	case Action::DESTROY:
 		Action::destroy();
 		break;
-	case Action::SOS:
+	case Action::SOS_SIGN:
 		Action::sos();
 		break;
 	case Action::HOUSE1:

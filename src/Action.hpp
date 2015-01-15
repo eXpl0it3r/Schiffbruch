@@ -25,7 +25,7 @@ namespace Action
 		DOCK = 14,
 		PIPE = 15,
 		DESTROY = 16,
-		SOS = 17,
+		SOS_SIGN = 17,
 		HOUSE1 = 18,
 		HOUSE2 = 19,
 		HOUSE3 = 20,
