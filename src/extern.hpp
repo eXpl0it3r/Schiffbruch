@@ -102,13 +102,8 @@ extern LPDIRECTDRAWGAMMACONTROL lpDDGammaControl;	// Die drei sind für das Gamm
 extern DDGAMMARAMP				DDGammaRamp;
 extern DDGAMMARAMP				 DDGammaOld;
 
-// Directinput 
-extern IDirectInput*		g_pDI;
-extern IDirectInputDevice*	g_pMouse;
-extern IDirectInputDevice*	g_pKey;
-extern HANDLE				g_hMouseEvent;
+// Directinput
 extern HINSTANCE			g_hInst;
-extern BOOL					MouseInit;
 
 // DirectSound
 extern LPDIRECTSOUND8		lpds;				// DirectSoundObjekt
