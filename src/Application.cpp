@@ -16,132 +16,67 @@
 #include <exception>
 
 Application::Application(const std::string& name, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-: m_name(name)
+: m_window({ MAXX, MAXY }, name, sf::Style::Fullscreen)
+, m_name(name)
+, m_hWnd(m_window.getSystemHandle())
 , m_hInstance(hInstance)
 , m_hPrevInstance(hPrevInstance)
 , m_lpCmdLine(lpCmdLine)
 , m_nCmdShow(nCmdShow)
 {
+	// Set globals
 	g_hInst = m_hInstance;
-
-	if (!create_window())
-		throw std::runtime_error("Failed to create a valid window.");
-
 	hwnd = m_hWnd;
-
-	Direct::InitDInput();
-	MouseInit = true;
-
-	ShowWindow(m_hWnd, m_nCmdShow);
-	UpdateWindow(m_hWnd);
 
 	Direct::InitDDraw();
 	Direct::InitDSound();
 
-	SetTimer(hwnd, 0, 1000, nullptr);	// Provisorisch
 	srand((unsigned)time(nullptr));		// Random initialisieren
 }
 
-LRESULT CALLBACK Application::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+void Application::process_events()
 {
-	Application* pApp = nullptr;
-
-	if (uMsg == WM_NCCREATE)
+	sf::Event event;
+	while (m_window.pollEvent(event))
 	{
-		// Get the pointer to the window from lpCreateParams which was set in create_window
-		SetWindowLong(hWnd, GWL_USERDATA, (long)((LPCREATESTRUCT(lParam))->lpCreateParams));
+		if (event.type == sf::Event::Closed)
+		{
+			Direct::finiObjects();
+			m_window.close();
+		}
+		else if (event.type == sf::Event::GainedFocus)
+		{
+			bActive = TRUE;
+		}
+		else if (event.type == sf::Event::KeyReleased)
+		{
+			if (event.key.code == sf::Keyboard::F4)
+			{
+				Direct::finiObjects();
+				m_window.close();
+			}
+		}
 	}
-
-	// Get the pointer to the application
-	pApp = Application::ptr(hWnd);
-
-	// If we have the pointer, go to the message handler of the window else, use DefWindowProc
-	if (pApp)
-		return pApp->process_events(hWnd, uMsg, wParam, lParam);
-	else
-		return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
-LRESULT CALLBACK Application::process_events(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	m_hWnd = hWnd;
-
-	static BYTE phase = 0;
-
-	switch (uMsg)
-	{
-	case WM_ACTIVATEAPP:
-		bActive = wParam;
-		Direct::SetAcquire();
-		break;
-
-	case WM_ACTIVATE: // Sent when window changes active state
-		bActive = wParam;
-		Direct::SetAcquire();
-		break;
-
-	case WM_CREATE:
-		break;
-
-	case WM_TIMER:
-		if (Refresh() == 0)
-			PostMessage(hwnd, WM_DESTROY, 0, 0);
-		break;
-
-	case WM_QUIT:
-	case WM_DESTROY:
-		Direct::finiObjects();
-		PostQuitMessage(0);
-		break;
-	}
-
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
-bool Application::create_window()
-{
-	WNDCLASS wc;
-
-	// Set up and register window class
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = &Application::WindowProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = m_hInstance;
-	wc.hIcon = LoadIcon(m_hInstance, IDI_APPLICATION);
-	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wc.hbrBackground = nullptr;
-	wc.lpszMenuName = m_name.c_str();
-	wc.lpszClassName = m_name.c_str();
-	RegisterClass(&wc);
-
-	// Create a window
-	m_hWnd = CreateWindowEx(
-		WS_EX_TOPMOST,
-		m_name.c_str(),
-		m_name.c_str(),
-		WS_POPUP,
-		0,
-		0,
-		GetSystemMetrics(SM_CXSCREEN),
-		GetSystemMetrics(SM_CYSCREEN),
-		NULL,
-		NULL,
-		m_hInstance,
-		this);
-
-	return m_hWnd != nullptr;
 }
 
 int Application::run()
 {
-	while (GetMessage(&m_msg, nullptr, 0, 0))
+	sf::Clock timer;
+
+	while (m_window.isOpen())
 	{
-		TranslateMessage(&m_msg);
-		DispatchMessage(&m_msg);
+		process_events();
+
+		if (timer.getElapsedTime() > sf::milliseconds(1000))
+		{
+			if (Refresh() == 0)
+				m_window.close();
+
+			timer.restart();
+		}
 	}
 
-	return m_msg.wParam;
+	return 0;
 }
 
 short Application::Refresh()
