@@ -78,7 +78,7 @@
 #define BAUMZUGROSS                     74
 #define BEGINNHAUS1                     75
 #define HAUS1TEXT                       76
-#define HAMMER                          77
+#define HAMMERTEXT                      77
 #define BEGINNHAUS2                     78
 #define HAUS2TEXT                       79
 #define HAUS3TEXT                       80

@@ -984,7 +984,7 @@ namespace Renderer
 		HRESULT				ddrval;
 		short				z;
 
-		Sound::PlaySound(WAVABSPANN, 100);
+		Sound::PlaySound(Sound::OUTRO, 100);
 
 		rcRectdes.left = 0;
 		rcRectdes.top = 0;
@@ -1110,7 +1110,7 @@ namespace Renderer
 
 		Renderer::Blitten(lpDDSLogo, lpDDSBack, false);
 
-		Sound::PlaySound(WAVLOGO, 100);
+		Sound::PlaySound(Sound::LOGO, 100);
 
 		// Flippen
 		while (1)

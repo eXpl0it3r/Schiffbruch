@@ -61,11 +61,11 @@ NewPos,								// Nur innerhalb des Pathfindings benutzt
 GuyPosScreenStart,					// Absolute StartPosition bei einem Schritt (Für CalcGuyKoor)
 SchatzPos;							// Hier ist der Schatz vergraben
 
-extern RGBSTRUCT rgbStruct;			// Hier werden die Farben eines Pixels zwischengespeichert
+extern RGBSTRUCT rgbStruct;				// Hier werden die Farben eines Pixels zwischengespeichert
 extern GUY Guy;
 extern BMP Bmp[BILDANZ];
-extern WAV Wav[WAVANZ];
-extern ABSPANN AbspannListe[10][10]; // Namenabfolge im Abspann
+extern WAV Wav[25];						// Sound::COUNT;
+extern ABSPANN AbspannListe[10][10];	// Namenabfolge im Abspann
 extern SCAPE Scape[MAXXKACH][MAXYKACH];
 extern FLUSSLAUF Flusslauf[FLUSSANZAHL][MAXFLUSS];
 
@@ -110,4 +110,4 @@ extern LPDIRECTSOUND8		lpds;				// DirectSoundObjekt
 extern DSBUFFERDESC			dsbdesc;
 extern LPDIRECTSOUNDBUFFER	lpdsb;
 extern LPDIRECTSOUNDBUFFER	lpdsbPrimary;
-extern LPDIRECTSOUNDBUFFER	lpdsbWav[WAVANZ];	// Wavedateispeicher
+extern LPDIRECTSOUNDBUFFER	lpdsbWav[25];		// Sound::COUNT - Wavedateispeicher

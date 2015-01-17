@@ -153,7 +153,7 @@ SchatzPos;							// Hier ist der Schatz vergraben
 RGBSTRUCT rgbStruct;				// Hier werden die Farben eines Pixels zwischengespeichert
 GUY Guy;
 BMP Bmp[BILDANZ];
-WAV Wav[WAVANZ];
+WAV Wav[25];						// Sound::COUNT
 ABSPANN AbspannListe[10][10];		// Namenabfolge im Abspann
 SCAPE Scape[MAXXKACH][MAXYKACH];
 FLUSSLAUF Flusslauf[FLUSSANZAHL][MAXFLUSS];
@@ -198,4 +198,4 @@ LPDIRECTSOUND8			lpds;				// DirectSoundObjekt
 DSBUFFERDESC            dsbdesc;
 LPDIRECTSOUNDBUFFER     lpdsb;
 LPDIRECTSOUNDBUFFER     lpdsbPrimary;
-LPDIRECTSOUNDBUFFER     lpdsbWav[WAVANZ];	// Wavedateispeicher
+LPDIRECTSOUNDBUFFER     lpdsbWav[25];		// Sound::COUNT - Wavedateispeicher

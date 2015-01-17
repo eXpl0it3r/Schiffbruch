@@ -37,8 +37,8 @@ namespace Action
 			Guy.PosScreen.y -= 10;
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYSCHIFFDOWN;
-			Sound::PlaySound(WAVPLATSCH, 100);
-			Sound::PlaySound(WAVCRASH, 100);
+			Sound::PlaySound(Sound::SPLAT, 100);
+			Sound::PlaySound(Sound::CRASH, 100);
 			break;
 		case 3:
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = WRACK;
@@ -55,7 +55,7 @@ namespace Action
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y) / 2));
 			break;
 		case 4:
-			Sound::StopSound(WAVSCHWIMMEN); // Sound hier sofort stoppen
+			Sound::StopSound(Sound::SWIM); // Sound hier sofort stoppen
 			Guy.Zustand = GUYLINKS;
 			Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
 				Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2),
@@ -80,21 +80,30 @@ namespace Action
 		{
 		case 1:
 			Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
-			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
-			else if (RoutePunkt % 2 == 0) Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
-			else Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+				Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
+			else if (RoutePunkt % 2 == 0)
+				Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
+			else
+				Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
 			TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
 			break;
 		case 2:
 			Guy.Aktiv = true;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTWARTEN;
-			else Guy.Zustand = GUYWARTEN;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTWARTEN;
+			else
+				Guy.Zustand = GUYWARTEN;
+
 			PapierText = Renderer::DrawText(NEUBEGINNEN, TXTPAPIER, 1);
 			break;
 		case 3:
 			Guy.Aktion = Action::NOTHING;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTLINKS;
-			else Guy.Zustand = GUYLINKS;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTLINKS;
+			else
+				Guy.Zustand = GUYLINKS;
+
 			if (Frage == 1)
 			{
 				Game::NeuesSpiel(true);
@@ -113,21 +122,31 @@ namespace Action
 		{
 		case 1:
 			Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
-			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
-			else if (RoutePunkt % 2 == 0) Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
-			else Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+				Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
+			else if (RoutePunkt % 2 == 0)
+				Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
+			else
+				Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+
 			TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
 			break;
 		case 2:
 			Guy.Aktiv = true;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTWARTEN;
-			else Guy.Zustand = GUYWARTEN;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTWARTEN;
+			else
+				Guy.Zustand = GUYWARTEN;
+
 			PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
 			break;
 		case 3:
 			Guy.Aktion = Action::NOTHING;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTLINKS;
-			else Guy.Zustand = GUYLINKS;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTLINKS;
+			else
+				Guy.Zustand = GUYLINKS;
+
 			if (Frage == 1)
 			{
 				Game::NeuesSpiel(false);
@@ -146,24 +165,36 @@ namespace Action
 		{
 		case 1:
 			Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
-			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
-			else if (RoutePunkt % 2 == 0) Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
-			else Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+				Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
+			else if (RoutePunkt % 2 == 0)
+				Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
+			else
+				Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+
 			TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
 			break;
 		case 2:
 			Guy.Aktiv = true;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTWARTEN;
-			else Guy.Zustand = GUYWARTEN;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTWARTEN;
+			else
+				Guy.Zustand = GUYWARTEN;
+
 			PapierText = Renderer::DrawText(SPIELVERLASSEN, TXTPAPIER, 1);
 			break;
 		case 3:
 			Guy.Aktion = Action::NOTHING;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTLINKS;
-			else Guy.Zustand = GUYLINKS;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTLINKS;
+			else
+				Guy.Zustand = GUYLINKS;
+
 			if (Frage == 1)
 			{
-				if (Guy.Resource[GESUNDHEIT] > 10) Game::SaveGame();
+				if (Guy.Resource[GESUNDHEIT] > 10)
+					Game::SaveGame();
+
 				Spielzustand = SZABSPANN;
 			}
 			Frage = -1;
@@ -178,8 +209,11 @@ namespace Action
 		{
 		case 1:
 			Guy.Aktiv = true;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTWARTEN;
-			else Guy.Zustand = GUYWARTEN;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTWARTEN;
+			else
+				Guy.Zustand = GUYWARTEN;
+
 			PapierText = Renderer::DrawText(TOD, TXTPAPIER, 1);
 			break;
 		case 2:
@@ -193,8 +227,11 @@ namespace Action
 			Guy.Aktiv = true;
 			Nacht = false;
 			Renderer::Fade(100, 100, 100);
-			if (BootsFahrt) Guy.Zustand = GUYBOOTTOD;
-			else Guy.Zustand = GUYTOD;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTTOD;
+			else
+				Guy.Zustand = GUYTOD;
+
 			break;
 		case 4:
 			Guy.Aktiv = true;
@@ -204,14 +241,17 @@ namespace Action
 			break;
 		case 5:
 			Nacht = false;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTLINKS;
-			else Guy.Zustand = GUYLINKS;
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTLINKS;
+			else
+				Guy.Zustand = GUYLINKS;
+
 			Guy.Aktion = Action::NOTHING;
 			if (Frage == 2)
-			{
 				Spielzustand = SZABSPANN;
-			}
-			else  Game::NeuesSpiel(false);
+			else
+				Game::NeuesSpiel(false);
+
 			Frage = -1;
 			break;
 		}
@@ -242,9 +282,8 @@ namespace Action
 		short i; // Um sich kurz das Objekt zu merken 
 
 		if (Guy.AkNummer == 0)
-		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
-		}
+
 		Guy.AkNummer++;
 		switch (Guy.AkNummer)
 		{
@@ -269,9 +308,13 @@ namespace Action
 			World::AddTime(0, 5);
 			break;
 		case 6:
-			if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == SOS) Chance -= 0.1f;
+			if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == SOS)
+				Chance -= 0.1f;
+
 			i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt;
-			if ((i >= HAUS1) && (i <= HAUS3)) Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BAUMGROSS;
+			
+			if ((i >= HAUS1) && (i <= HAUS3))
+				Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BAUMGROSS;
 			else
 			{
 				Scape[Guy.Pos.x][Guy.Pos.y].Objekt = -1;
@@ -280,7 +323,10 @@ namespace Action
 				Scape[Guy.Pos.x][Guy.Pos.y].Phase = -1;
 			}
 			Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-			if (i == ROHR) World::FillRohr();
+
+			if (i == ROHR)
+				World::FillRohr();
+
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			break;
 		case 7:
@@ -304,7 +350,8 @@ namespace Action
 			Ziel.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % KXPIXEL;
 			Ziel.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % KYPIXEL;
 			Erg = Renderer::GetKachel(Ziel.x, Ziel.y);
-			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) break; // Wenn das gefundene Ziel in der Kachel, dann fertig
+			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+				break; // Wenn das gefundene Ziel in der Kachel, dann fertig
 		}
 		Guy.AkNummer++;
 		switch (Guy.AkNummer)
@@ -317,22 +364,25 @@ namespace Action
 					Guy.Aktiv = true;
 					Guy.PosScreen.y -= 2;
 					Guy.Zustand = GUYTAUCHEN1;
-					Sound::PlaySound(WAVPLATSCH, 100);
+					Sound::PlaySound(Sound::SPLAT, 100);
 				}
 			}
-			else Routing::ShortRoute(Ziel.x, Ziel.y);
+			else
+				Routing::ShortRoute(Ziel.x, Ziel.y);
+
 			break;
 		case 2: case 4: case 6: case 8:
 			Guy.Aktiv = true;
 			if (BootsFahrt)
 			{
 				if (Guy.AkNummer == 2)
-				{
 					Guy.PosScreen.y += 5;
-				}
+
 				Guy.Zustand = GUYTAUCHEN2;
 			}
-			else            Guy.Zustand = GUYSUCHEN;
+			else
+				Guy.Zustand = GUYSUCHEN;
+
 			World::AddTime(0, 4);
 			break;
 		case 9:
@@ -340,7 +390,7 @@ namespace Action
 			{
 				Guy.Aktiv = true;
 				Guy.Zustand = GUYTAUCHEN3;
-				Sound::PlaySound(WAVPLATSCH, 100);
+				Sound::PlaySound(Sound::SPLAT, 100);
 			}
 			break;
 		case 10:
@@ -348,20 +398,22 @@ namespace Action
 			break;
 		case 11:
 			Guy.Aktiv = true;
-			if (BootsFahrt) Guy.Zustand = GUYBOOTLINKS;
-			//Auf Strand und Fluss
-			if ((Scape[Guy.Pos.x][Guy.Pos.y].Art == 2) ||
-				((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FLUSS1) &&
-				(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= SCHLEUSE6)))
-			{
+			if (BootsFahrt)
+				Guy.Zustand = GUYBOOTLINKS;
 
+			// Auf Strand und Fluss
+			if ((Scape[Guy.Pos.x][Guy.Pos.y].Art == 2) || ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FLUSS1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= SCHLEUSE6)))
+			{
 				if (Guy.Inventar[ROHSTEIN] < 10)
 				{
 					PapierText = Renderer::DrawText(ROHSTEINGEFUNDEN, TXTPAPIER, 1);
 					Guy.Inventar[ROHSTEIN] += 3;
-					if (Guy.Inventar[ROHSTEIN] > 10) Guy.Inventar[ROHSTEIN] = 10;
+
+					if (Guy.Inventar[ROHSTEIN] > 10)
+						Guy.Inventar[ROHSTEIN] = 10;
 				}
-				else PapierText = Renderer::DrawText(ROHSTEINZUVIEL, TXTPAPIER, 1);
+				else
+					PapierText = Renderer::DrawText(ROHSTEINZUVIEL, TXTPAPIER, 1);
 
 			}
 			else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BUSCH)
@@ -383,14 +435,13 @@ namespace Action
 						PapierText = Renderer::DrawText(ROHBLATTGEFUNDEN, TXTPAPIER, 1);
 						Guy.Inventar[ROHBLATT]++;
 					}
-					else PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
+					else
+						PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
 					break;
 				}
 			}
-			else if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
-				(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUMGROSS)) ||
-				((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= HAUS1) &&
-				(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= HAUS3)))
+			else if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUMGROSS)) ||
+					((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= HAUS1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= HAUS3)))
 			{
 				i = rand() % 3;
 				switch (i)
@@ -401,7 +452,9 @@ namespace Action
 						PapierText = Renderer::DrawText(ROHASTGEFUNDEN, TXTPAPIER, 1);
 						Guy.Inventar[ROHAST]++;
 					}
-					else PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
+					else
+						PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
+
 					break;
 				case 1:
 					if (Guy.Inventar[ROHBLATT] < 10)
@@ -409,7 +462,9 @@ namespace Action
 						PapierText = Renderer::DrawText(ROHBLATTGEFUNDEN, TXTPAPIER, 1);
 						Guy.Inventar[ROHBLATT]++;
 					}
-					else PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
+					else
+						PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
+
 					break;
 				case 2:
 					if (Guy.Inventar[ROHLIANE] < 10)
@@ -417,7 +472,9 @@ namespace Action
 						PapierText = Renderer::DrawText(ROHLIANEGEFUNDEN, TXTPAPIER, 1);
 						Guy.Inventar[ROHLIANE]++;
 					}
-					else PapierText = Renderer::DrawText(ROHLIANEZUVIEL, TXTPAPIER, 1);
+					else
+						PapierText = Renderer::DrawText(ROHLIANEZUVIEL, TXTPAPIER, 1);
+
 					break;
 				}
 			}
@@ -435,7 +492,8 @@ namespace Action
 						Bmp[BUTTHAUS2].Phase = 0;
 						Bmp[BUTTHAUS3].Phase = 0;
 					}
-					else PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
+					else
+						PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
 				}
 				else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == WRACK2)
 				{
@@ -447,14 +505,15 @@ namespace Action
 						Guy.Inventar[ROHSCHAUFEL] = 1;
 						Bmp[BUTTSCHATZ].Phase = 0;
 					}
-					else PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
+					else
+						PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
 				}
-				else PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
+				else
+					PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
 			}
 			else
-			{
 				PapierText = Renderer::DrawText(NICHTSGEFUNDEN, TXTPAPIER, 1);
-			}
+
 			break;
 		case 12:
 			Guy.Aktion = Action::NOTHING;
@@ -513,7 +572,7 @@ namespace Action
 			Guy.Zustand = GUYSCHLEUDER;
 			Guy.PosScreen.x += 5;
 			World::AddTime(0, 2);
-			Sound::PlaySound(WAVSCHLEUDER, 100);
+			Sound::PlaySound(Sound::SLINGSHOT, 100);
 			break;
 		case 3:
 			Guy.PosScreen.x -= 5;
@@ -596,7 +655,7 @@ namespace Action
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = i;
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
 			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x -= 17;
-			Sound::PlaySound(WAVBAUMFAELLT, 100);
+			Sound::PlaySound(Sound::TIMBER, 100);
 			break;
 		case 8:
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -665,7 +724,7 @@ namespace Action
 			break;
 		case 2:
 			Guy.Aktiv = true;
-			Sound::PlaySound(WAVANGEL, 100);
+			Sound::PlaySound(Sound::FISH, 100);
 			if (BootsFahrt)
 			{
 				Guy.PosScreen.y -= 2;
@@ -1111,7 +1170,7 @@ namespace Action
 			Nacht = true;
 			Stunden = 12;
 			Minuten = 0;
-			Sound::PlaySound(WAVWOLF, 100);
+			Sound::PlaySound(Sound::WOLF, 100);
 			// Falsche Objekte Löschen
 			if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1DOWN) &&
 				(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4DOWN))
@@ -1213,7 +1272,7 @@ namespace Action
 			Renderer::Fade(70, 60, 60);
 			Stunden = 0;
 			Minuten = 0;
-			Sound::StopSound(WAVSCHNARCHEN);
+			Sound::StopSound(Sound::SNORE);
 			Guy.Aktiv = true;
 			if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
 				(Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
@@ -2061,7 +2120,7 @@ namespace Action
 			break;
 		case 6:
 			Guy.Aktiv = true;
-			Sound::StopSound(WAVSCHNARCHEN);
+			Sound::StopSound(Sound::SNORE);
 			if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
 				(Scape[Guy.Pos.x][Guy.Pos.y].Phase <  Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
 			{

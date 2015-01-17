@@ -137,7 +137,7 @@ namespace Game
 		Bmp[GUYSUCHEN].rcSrc.bottom = 14;
 		Bmp[GUYSUCHEN].Breite = 11;
 		Bmp[GUYSUCHEN].Hoehe = 14;
-		Bmp[GUYSUCHEN].Sound = WAVKNISTERN;
+		Bmp[GUYSUCHEN].Sound = Sound::CRACKLE;
 
 		Bmp[GUYESSEN].Anzahl = 4;
 		Bmp[GUYESSEN].Geschwindigkeit = 4;
@@ -147,7 +147,7 @@ namespace Game
 		Bmp[GUYESSEN].rcSrc.bottom = 17;
 		Bmp[GUYESSEN].Breite = 7;
 		Bmp[GUYESSEN].Hoehe = 17;
-		Bmp[GUYESSEN].Sound = WAVKNISTERN;
+		Bmp[GUYESSEN].Sound = Sound::CRACKLE;
 
 		Bmp[GUYTRINKEN].Anzahl = 5;
 		Bmp[GUYTRINKEN].Geschwindigkeit = 4;
@@ -157,7 +157,7 @@ namespace Game
 		Bmp[GUYTRINKEN].rcSrc.bottom = 13;
 		Bmp[GUYTRINKEN].Breite = 9;
 		Bmp[GUYTRINKEN].Hoehe = 13;
-		Bmp[GUYTRINKEN].Sound = WAVTRINKEN;
+		Bmp[GUYTRINKEN].Sound = Sound::DRINK;
 
 		Bmp[GUYFAELLEN].Anzahl = 4;
 		Bmp[GUYFAELLEN].Geschwindigkeit = 6;
@@ -167,7 +167,7 @@ namespace Game
 		Bmp[GUYFAELLEN].rcSrc.bottom = 19;
 		Bmp[GUYFAELLEN].Breite = 15;
 		Bmp[GUYFAELLEN].Hoehe = 19;
-		Bmp[GUYFAELLEN].Sound = WAVFAELLEN;
+		Bmp[GUYFAELLEN].Sound = Sound::LOG;
 
 		Bmp[GUYWARTEN].Anzahl = 4;
 		Bmp[GUYWARTEN].Geschwindigkeit = 2;
@@ -213,7 +213,7 @@ namespace Game
 		Bmp[GUYSCHLAFZELT].rcSrc.bottom = 54 + 10;
 		Bmp[GUYSCHLAFZELT].Breite = 20;
 		Bmp[GUYSCHLAFZELT].Hoehe = 10;
-		Bmp[GUYSCHLAFZELT].Sound = WAVSCHNARCHEN;
+		Bmp[GUYSCHLAFZELT].Sound = Sound::SNORE;
 
 		Bmp[GUYSCHLAFEN].Anzahl = 2;
 		Bmp[GUYSCHLAFEN].Geschwindigkeit = 1;
@@ -223,7 +223,7 @@ namespace Game
 		Bmp[GUYSCHLAFEN].rcSrc.bottom = 36 + 18;
 		Bmp[GUYSCHLAFEN].Breite = 17;
 		Bmp[GUYSCHLAFEN].Hoehe = 18;
-		Bmp[GUYSCHLAFEN].Sound = WAVSCHNARCHEN;
+		Bmp[GUYSCHLAFEN].Sound = Sound::SNORE;
 
 		Bmp[GUYGEHINZELT].Anzahl = 3;
 		Bmp[GUYGEHINZELT].Geschwindigkeit = 4;
@@ -368,7 +368,7 @@ namespace Game
 		Bmp[GUYSCHLAGEN].rcSrc.bottom = 0 + 24;
 		Bmp[GUYSCHLAGEN].Breite = 12;
 		Bmp[GUYSCHLAGEN].Hoehe = 24;
-		Bmp[GUYSCHLAGEN].Sound = WAVSCHLAGEN;
+		Bmp[GUYSCHLAGEN].Sound = Sound::HIT;
 
 		Bmp[GUYBOOTLINKS].Anzahl = 6;
 		Bmp[GUYBOOTLINKS].Geschwindigkeit = 10;
@@ -468,7 +468,7 @@ namespace Game
 		Bmp[GUYHAMMER].rcSrc.bottom = 0 + 18;
 		Bmp[GUYHAMMER].Breite = 9;
 		Bmp[GUYHAMMER].Hoehe = 18;
-		Bmp[GUYHAMMER].Sound = WAVHAMMER;
+		Bmp[GUYHAMMER].Sound = Sound::HAMMER;
 
 		Bmp[GUYKLETTERN1].Anzahl = 6;
 		Bmp[GUYKLETTERN1].Geschwindigkeit = 2;
@@ -496,7 +496,7 @@ namespace Game
 		Bmp[GUYHAMMER2].rcSrc.bottom = 0 + 34;
 		Bmp[GUYHAMMER2].Breite = 7;
 		Bmp[GUYHAMMER2].Hoehe = 34;
-		Bmp[GUYHAMMER2].Sound = WAVHAMMER;
+		Bmp[GUYHAMMER2].Sound = Sound::HAMMER;
 
 		Bmp[GUYGEHINHAUS].Anzahl = 3;
 		Bmp[GUYGEHINHAUS].Geschwindigkeit = 2;
@@ -515,7 +515,7 @@ namespace Game
 		Bmp[GUYSCHLAFHAUS].rcSrc.bottom = 0 + 34;
 		Bmp[GUYSCHLAFHAUS].Breite = 10;
 		Bmp[GUYSCHLAFHAUS].Hoehe = 34;
-		Bmp[GUYSCHLAFHAUS].Sound = WAVSCHNARCHEN;
+		Bmp[GUYSCHLAFHAUS].Sound = Sound::SNORE;
 
 		Bmp[GUYGEHAUSHAUS].Anzahl = 3;
 		Bmp[GUYGEHAUSHAUS].Geschwindigkeit = 2;
@@ -552,7 +552,7 @@ namespace Game
 		Bmp[GUYSCHAUFELN].rcSrc.bottom = 0 + 19;
 		Bmp[GUYSCHAUFELN].Breite = 17;
 		Bmp[GUYSCHAUFELN].Hoehe = 19;
-		Bmp[GUYSCHAUFELN].Sound = WAVSCHAUFELN;
+		Bmp[GUYSCHAUFELN].Sound = Sound::DIG;
 
 		Bmp[GUYSCHIFF].Anzahl = 4;
 		Bmp[GUYSCHIFF].Geschwindigkeit = 10;
@@ -563,7 +563,7 @@ namespace Game
 		Bmp[GUYSCHIFF].Breite = 48;
 		Bmp[GUYSCHIFF].Hoehe = 38;
 		Bmp[GUYSCHIFF].Surface = lpDDSBau;
-		Bmp[GUYSCHIFF].Sound = WAVSTURM;
+		Bmp[GUYSCHIFF].Sound = Sound::STORM;
 
 		Bmp[GUYSCHIFFDOWN].Anzahl = 6;
 		Bmp[GUYSCHIFFDOWN].Geschwindigkeit = 3;
@@ -574,7 +574,7 @@ namespace Game
 		Bmp[GUYSCHIFFDOWN].Breite = 46;
 		Bmp[GUYSCHIFFDOWN].Hoehe = 40;
 		Bmp[GUYSCHIFFDOWN].Surface = lpDDSBau;
-		Bmp[GUYSCHIFFDOWN].Sound = WAVPLATSCH;
+		Bmp[GUYSCHIFFDOWN].Sound = Sound::SPLAT;
 
 		Bmp[GUYSCHWIMMEN].Anzahl = 4;
 		Bmp[GUYSCHWIMMEN].Geschwindigkeit = 10;
@@ -584,7 +584,7 @@ namespace Game
 		Bmp[GUYSCHWIMMEN].rcSrc.bottom = 0 + 9;
 		Bmp[GUYSCHWIMMEN].Breite = 15;
 		Bmp[GUYSCHWIMMEN].Hoehe = 9;
-		Bmp[GUYSCHWIMMEN].Sound = WAVSCHWIMMEN;
+		Bmp[GUYSCHWIMMEN].Sound = Sound::SWIM;
 
 		Bmp[GUYTOD].Anzahl = 6;
 		Bmp[GUYTOD].Geschwindigkeit = 1;
@@ -646,7 +646,7 @@ namespace Game
 			Bmp[i].Geschwindigkeit = 7;
 			Bmp[i].Phase = 0;
 			Bmp[i].Surface = lpDDSAnimation;
-			Bmp[i].Sound = WAVFLUSS;
+			Bmp[i].Sound = Sound::RIVER;
 		}
 
 		Bmp[MEERWELLEN].Geschwindigkeit = 3;
@@ -660,7 +660,7 @@ namespace Game
 		Bmp[MEERWELLEN].rcDes.right = Bmp[MEERWELLEN].rcDes.left + Bmp[MEERWELLEN].Breite;
 		Bmp[MEERWELLEN].rcDes.top = 23;
 		Bmp[MEERWELLEN].rcDes.bottom = Bmp[MEERWELLEN].rcDes.top + Bmp[MEERWELLEN].Hoehe;
-		Bmp[MEERWELLEN].Sound = WAVBRANDUNG;
+		Bmp[MEERWELLEN].Sound = Sound::SURF;
 
 		Bmp[FLUSS1].Breite = 34;
 		Bmp[FLUSS1].Hoehe = 8;
@@ -1024,7 +1024,7 @@ namespace Game
 		Bmp[HAUS1].rcDes.bottom = Bmp[HAUS1].rcDes.top + Bmp[HAUS1].Hoehe;
 		Bmp[HAUS1].Rohstoff[ROHAST] = 4;
 		Bmp[HAUS1].AkAnzahl = 19;
-		Bmp[HAUS1].Sound = WAVWALD;
+		Bmp[HAUS1].Sound = Sound::FOREST;
 
 		Bmp[HAUS2].Anzahl = 1;
 		Bmp[HAUS2].Surface = lpDDSBau;
@@ -1041,7 +1041,7 @@ namespace Game
 		Bmp[HAUS2].Rohstoff[ROHAST] = 3;
 		Bmp[HAUS2].Rohstoff[ROHSTAMM] = 3;
 		Bmp[HAUS2].AkAnzahl = 21;
-		Bmp[HAUS2].Sound = WAVWALD;
+		Bmp[HAUS2].Sound = Sound::FOREST;
 
 		Bmp[HAUS3].Anzahl = 1;
 		Bmp[HAUS3].Surface = lpDDSBau;
@@ -1059,7 +1059,7 @@ namespace Game
 		Bmp[HAUS3].Rohstoff[ROHSTAMM] = 4;
 		Bmp[HAUS3].Rohstoff[ROHBLATT] = 5;
 		Bmp[HAUS3].AkAnzahl = 21;
-		Bmp[HAUS3].Sound = WAVWALD;
+		Bmp[HAUS3].Sound = Sound::FOREST;
 
 		Bmp[FEUERSTELLE].Anzahl = 1;
 		Bmp[FEUERSTELLE].Surface = lpDDSBau;
@@ -1085,7 +1085,7 @@ namespace Game
 			Bmp[i].Geschwindigkeit = 4;
 			Bmp[i].Phase = 0;
 			Bmp[i].Surface = lpDDSBaum;
-			Bmp[i].Sound = WAVWALD;
+			Bmp[i].Sound = Sound::FOREST;
 		}
 		// Baum1
 		Bmp[BAUM1].rcSrc.left = 0;
@@ -1131,7 +1131,7 @@ namespace Game
 		Bmp[BAUMGROSS].Geschwindigkeit = 0;
 		Bmp[BAUMGROSS].Phase = 0;
 		Bmp[BAUMGROSS].Surface = lpDDSBaum;
-		Bmp[BAUMGROSS].Sound = WAVWALD;
+		Bmp[BAUMGROSS].Sound = Sound::FOREST;
 
 		// Feuer
 		Bmp[FEUER].Anzahl = 3;
@@ -1149,7 +1149,7 @@ namespace Game
 		Bmp[FEUER].Animation = true;
 		Bmp[FEUER].Geschwindigkeit = 6;
 		Bmp[FEUER].Phase = 0;
-		Bmp[FEUER].Sound = WAVFEUER;
+		Bmp[FEUER].Sound = Sound::FIRE;
 
 		// WRACK
 		Bmp[WRACK].Anzahl = 3;
@@ -2195,89 +2195,89 @@ namespace Game
 		AbspannListe[6][1].Bild = DPSOFTWARE;
 
 		// Sounds
-		for (i = 0; i<WAVANZ; i++)
+		for (i = 0; i<Sound::COUNT; i++)
 		{
 			Wav[i].Dateiname = "sounds\\klick.wav";
 			Wav[i].Loop = false;
 			Wav[i].Volume = 100;
 		}
 
-		Wav[WAVSTURM].Dateiname = "sounds\\sturm.wav";
-		Wav[WAVSTURM].Volume = 85;
+		Wav[Sound::STORM].Dateiname = "sounds\\sturm.wav";
+		Wav[Sound::STORM].Volume = 85;
 
-		Wav[WAVSCHWIMMEN].Dateiname = "sounds\\schwimmen.wav";
-		Wav[WAVSCHWIMMEN].Volume = 90;
+		Wav[Sound::SWIM].Dateiname = "sounds\\schwimmen.wav";
+		Wav[Sound::SWIM].Volume = 90;
 
-		Wav[WAVPLATSCH].Dateiname = "sounds\\platsch.wav";
-		Wav[WAVPLATSCH].Volume = 95;
+		Wav[Sound::SPLAT].Dateiname = "sounds\\platsch.wav";
+		Wav[Sound::SPLAT].Volume = 95;
 
-		Wav[WAVFAELLEN].Dateiname = "sounds\\faellen.wav";
-		Wav[WAVFAELLEN].Volume = 100;
+		Wav[Sound::LOG].Dateiname = "sounds\\faellen.wav";
+		Wav[Sound::LOG].Volume = 100;
 
-		Wav[WAVSCHLAGEN].Dateiname = "sounds\\schlagen.wav";
-		Wav[WAVSCHLAGEN].Volume = 100;
+		Wav[Sound::HIT].Dateiname = "sounds\\schlagen.wav";
+		Wav[Sound::HIT].Volume = 100;
 
-		Wav[WAVSCHLEUDER].Dateiname = "sounds\\schleuder.wav";
-		Wav[WAVSCHLEUDER].Volume = 100;
+		Wav[Sound::SLINGSHOT].Dateiname = "sounds\\schleuder.wav";
+		Wav[Sound::SLINGSHOT].Volume = 100;
 
-		Wav[WAVSCHAUFELN].Dateiname = "sounds\\schaufeln.wav";
-		Wav[WAVSCHAUFELN].Volume = 90;
+		Wav[Sound::DIG].Dateiname = "sounds\\schaufeln.wav";
+		Wav[Sound::DIG].Volume = 90;
 
-		Wav[WAVHAMMER].Dateiname = "sounds\\hammer.wav";
-		Wav[WAVHAMMER].Volume = 100;
+		Wav[Sound::HAMMER].Dateiname = "sounds\\hammer.wav";
+		Wav[Sound::HAMMER].Volume = 100;
 
-		Wav[WAVCRASH].Dateiname = "sounds\\crash.wav";
-		Wav[WAVCRASH].Volume = 100;
+		Wav[Sound::CRASH].Dateiname = "sounds\\crash.wav";
+		Wav[Sound::CRASH].Volume = 100;
 
-		Wav[WAVSCHNARCHEN].Dateiname = "sounds\\schnarchen.wav";
-		Wav[WAVSCHNARCHEN].Volume = 90;
+		Wav[Sound::SNORE].Dateiname = "sounds\\schnarchen.wav";
+		Wav[Sound::SNORE].Volume = 90;
 
-		Wav[WAVTRINKEN].Dateiname = "sounds\\trinken.wav";
-		Wav[WAVTRINKEN].Volume = 95;
+		Wav[Sound::DRINK].Dateiname = "sounds\\trinken.wav";
+		Wav[Sound::DRINK].Volume = 95;
 
-		Wav[WAVKNISTERN].Dateiname = "sounds\\knistern.wav";
-		Wav[WAVKNISTERN].Volume = 90;
+		Wav[Sound::CRACKLE].Dateiname = "sounds\\knistern.wav";
+		Wav[Sound::CRACKLE].Volume = 90;
 
-		Wav[WAVANGEL].Dateiname = "sounds\\angel.wav";
-		Wav[WAVANGEL].Volume = 100;
+		Wav[Sound::FISH].Dateiname = "sounds\\angel.wav";
+		Wav[Sound::FISH].Volume = 100;
 
-		Wav[WAVWALD].Dateiname = "sounds\\wald.wav";
-		Wav[WAVWALD].Volume = 90;
+		Wav[Sound::FOREST].Dateiname = "sounds\\wald.wav";
+		Wav[Sound::FOREST].Volume = 90;
 
-		Wav[WAVFEUER].Dateiname = "sounds\\feuer.wav";
-		Wav[WAVFEUER].Volume = 100;
+		Wav[Sound::FIRE].Dateiname = "sounds\\feuer.wav";
+		Wav[Sound::FIRE].Volume = 100;
 
-		Wav[WAVBRANDUNG].Dateiname = "sounds\\brandung.wav";
-		Wav[WAVBRANDUNG].Volume = 100;
+		Wav[Sound::SURF].Dateiname = "sounds\\brandung.wav";
+		Wav[Sound::SURF].Volume = 100;
 
-		Wav[WAVBAUMFAELLT].Dateiname = "sounds\\baumfaellt.wav";
-		Wav[WAVBAUMFAELLT].Volume = 100;
+		Wav[Sound::TIMBER].Dateiname = "sounds\\baumfaellt.wav";
+		Wav[Sound::TIMBER].Volume = 100;
 
-		Wav[WAVFLUSS].Dateiname = "sounds\\fluss.wav";
-		Wav[WAVFLUSS].Volume = 85;
+		Wav[Sound::RIVER].Dateiname = "sounds\\fluss.wav";
+		Wav[Sound::RIVER].Volume = 85;
 
-		Wav[WAVKLICK].Dateiname = "sounds\\klick.wav";
-		Wav[WAVKLICK].Volume = 95;
+		Wav[Sound::CLICK].Dateiname = "sounds\\klick.wav";
+		Wav[Sound::CLICK].Volume = 95;
 
-		Wav[WAVKLICK2].Dateiname = "sounds\\klick2.wav";
-		Wav[WAVKLICK2].Volume = 95;
+		Wav[Sound::CLICK2].Dateiname = "sounds\\klick2.wav";
+		Wav[Sound::CLICK2].Volume = 95;
 
-		Wav[WAVABSPANN].Dateiname = "sounds\\abspann.wav";
-		Wav[WAVABSPANN].Volume = 100;
-		Wav[WAVABSPANN].Loop = true;
+		Wav[Sound::OUTRO].Dateiname = "sounds\\abspann.wav";
+		Wav[Sound::OUTRO].Volume = 100;
+		Wav[Sound::OUTRO].Loop = true;
 
-		Wav[WAVLOGO].Dateiname = "sounds\\logo.wav";
-		Wav[WAVLOGO].Volume = 100;
-		Wav[WAVLOGO].Loop = true;
+		Wav[Sound::LOGO].Dateiname = "sounds\\logo.wav";
+		Wav[Sound::LOGO].Volume = 100;
+		Wav[Sound::LOGO].Loop = true;
 
-		Wav[WAVWOLF].Dateiname = "sounds\\wolf.wav";
-		Wav[WAVWOLF].Volume = 90;
+		Wav[Sound::WOLF].Dateiname = "sounds\\wolf.wav";
+		Wav[Sound::WOLF].Volume = 90;
 
-		Wav[WAVERFINDUNG].Dateiname = "sounds\\erfindung.wav";
-		Wav[WAVERFINDUNG].Volume = 95;
+		Wav[Sound::INVENTION].Dateiname = "sounds\\erfindung.wav";
+		Wav[Sound::INVENTION].Volume = 95;
 
 		// Testweise alle Sounds gleich in den Speicher laden
-		for (i = 1; i<WAVANZ; i++) Sound::LoadSound(i);
+		for (i = 1; i<Sound::COUNT; i++) Sound::LoadSound(i);
 
 		// Textausgabe
 		TextBereich[TXTTEXTFELD].Aktiv = false;

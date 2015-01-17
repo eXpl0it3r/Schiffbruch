@@ -11,13 +11,10 @@
 
 #include <SFML/Window.hpp>
 
-#include <sstream>
-
 namespace Direct
 {
 	void InitDDraw()
 	{
-
 		DDSCAPS2     ddscaps;
 		HRESULT      ddrval;
 		LPDIRECTDRAW pDD;
@@ -64,9 +61,7 @@ namespace Direct
 		ZeroMemory(&ddsd, sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);
 		ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
-		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE |
-			DDSCAPS_FLIP |
-			DDSCAPS_COMPLEX;
+		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
 		ddsd.dwBackBufferCount = 1; // Anzahl ??
 		ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, nullptr);
 		if (ddrval != DD_OK)
@@ -82,7 +77,6 @@ namespace Direct
 
 		if (ddrval != DD_OK)
 			goto error;
-
 
 		ddsd.dwSize = sizeof(ddsd);  // Tell DirectDraw which members are valid. 
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
@@ -147,7 +141,6 @@ namespace Direct
 		lpDD->CreateSurface(&ddsd, &lpDDSLogo, nullptr);
 		lpDDSLogo = DDLoadBitmap(lpDD, Logo, 0, 0);
 
-
 		ZeroMemory(&ddsd, sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);  // Tell DirectDraw which members are valid. 
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
@@ -178,10 +171,8 @@ namespace Direct
 	error:
 		if (ddrval != DD_OK)
 		{
-			std::stringstream ss;
-			ss << "DirectDraw Init FAILED: " << ddrval;
 			finiObjects();
-			MessageBox(hwnd, ss.str().c_str(), "Landscape", MB_OK);
+			MessageBox(hwnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
 			DestroyWindow(hwnd);
 		}
 	}
@@ -241,29 +232,36 @@ namespace Direct
 		// Mausbewegung
 		xDiff = MousePosition.x - sf::Mouse::getPosition().x;
 		MousePosition.x = sf::Mouse::getPosition().x;
-		if (MousePosition.x < 0) MousePosition.x = 0;
-		if (MousePosition.x > MAXX - 2) MousePosition.x = MAXX - 2;
+		if (MousePosition.x < 0)
+			MousePosition.x = 0;
+		if (MousePosition.x > MAXX - 2)
+			MousePosition.x = MAXX - 2;
 		yDiff = MousePosition.y - sf::Mouse::getPosition().y;
 		MousePosition.y = sf::Mouse::getPosition().y;
-		if (MousePosition.y < 0) MousePosition.y = 0;
-		if (MousePosition.y > MAXY - 2) MousePosition.y = MAXY - 2;
+		if (MousePosition.y < 0)
+			MousePosition.y = 0;
+		if (MousePosition.y > MAXY - 2)
+			MousePosition.y = MAXY - 2;
 
 		if (TwoClicks == -1)
 		{
 			if (Guy.Aktiv)
 			{
-				if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes) &&
-					(Bmp[BUTTSTOP].Phase != -1)) CursorTyp = CUPFEIL;
-				else CursorTyp = CUUHR;
+				if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes) && (Bmp[BUTTSTOP].Phase != -1))
+					CursorTyp = CUPFEIL;
+				else
+					CursorTyp = CUUHR;
 			}
-			else CursorTyp = CUPFEIL;
+			else
+				CursorTyp = CUPFEIL;
 		}
 		Button = -1;
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			Button = 0;
-			if (Button0down) Push = 0;
+			if (Button0down)
+				Push = 0;
 			else
 			{
 				Push = 1;
@@ -284,7 +282,8 @@ namespace Direct
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
 			Button = 1;
-			if (Button1down) Push = 0;
+			if (Button1down)
+				Push = 0;
 			else
 			{
 				Push = 1;
@@ -315,7 +314,7 @@ namespace Direct
 						Renderer::Textloeschen(TXTPAPIER);
 						PapierText = -1;
 						Guy.Aktiv = false;
-						Sound::PlaySound(WAVKLICK2, 100);
+						Sound::PlaySound(Sound::CLICK2, 100);
 					}
 				}
 				else if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[NEIN].rcDes))
@@ -327,10 +326,11 @@ namespace Direct
 						Renderer::Textloeschen(TXTPAPIER);
 						PapierText = -1;
 						Guy.Aktiv = false;
-						Sound::PlaySound(WAVKLICK2, 100);
+						Sound::PlaySound(Sound::CLICK2, 100);
 					}
 				}
-				else if ((Button == 0) && (Push == 1)) Sound::PlaySound(WAVKLICK, 100);
+				else if ((Button == 0) && (Push == 1))
+					Sound::PlaySound(Sound::CLICK, 100);
 			}
 			else if ((Button != -1) && (Push == 1))
 			{
@@ -351,7 +351,8 @@ namespace Direct
 		{
 			if ((Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes)) &&
 				(Bmp[BUTTSTOP].Phase != -1));
-			else Button = -1;
+			else
+				Button = -1;
 		}
 
 		// die Maus ist in der Spielflaeche ->
@@ -371,9 +372,9 @@ namespace Direct
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Logo Abbrechen
 			{
-				Sound::StopSound(WAVLOGO);
+				Sound::StopSound(Sound::LOGO);
 				Game::NeuesSpiel(false);
-				return(2);
+				return 2;
 			}
 		}
 		else if (Spielzustand == SZINTRO)
@@ -381,14 +382,15 @@ namespace Direct
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Intro Abbrechen
 			{
-				Sound::StopSound(WAVSTURM);		// Sound hier sofort stoppen
-				Sound::StopSound(WAVSCHWIMMEN);	// Sound hier sofort stoppen
+				Sound::StopSound(Sound::STORM);		// Sound hier sofort stoppen
+				Sound::StopSound(Sound::SWIM);	// Sound hier sofort stoppen
 				Guy.Aktiv = false;
 				for (x = Guy.Pos.x; x<MAXXKACH; x++)
 				{
 					Guy.Pos.x = x;
 					World::Entdecken();
-					if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1) break;
+					if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1)
+						break;
 				}
 				Scape[Guy.Pos.x - 2][Guy.Pos.y].Objekt = WRACK;
 				Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.x = (short)Bmp[WRACK].rcDes.left;
@@ -412,7 +414,7 @@ namespace Direct
 				Spielzustand = SZSPIEL;
 				Guy.PosAlt = Guy.PosScreen;
 				Game::SaveGame();
-				return(1);
+				return 1;
 			}
 		}
 		else if (Spielzustand == SZGERETTET)
@@ -421,15 +423,19 @@ namespace Direct
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
 				Spielzustand = SZABSPANN;
-				return(1);
+				return 1;
 			}
 		}
 		else if (Spielzustand == SZSPIEL)
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) Camera.x += 10;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))  Camera.x -= 10;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))	 Camera.y += 10;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))    Camera.y -= 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+				Camera.x += 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+				Camera.x -= 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+				Camera.y += 10;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				Camera.y -= 10;
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
 				Guy.AkNummer = 0;
@@ -501,8 +507,10 @@ namespace Direct
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
-				if (Soundzustand == 0) Soundzustand = 1;
-				else if (Soundzustand == 1) Soundzustand = 0;
+				if (Soundzustand == 0)
+					Soundzustand = 1;
+				else if (Soundzustand == 1)
+					Soundzustand = 0;
 			}
 		}
 		else if (Spielzustand == SZABSPANN)
@@ -510,11 +518,11 @@ namespace Direct
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				Sound::StopSound(WAVABSPANN);
-				return(0);
+				Sound::StopSound(Sound::OUTRO);
+				return 0;
 			}
 		}
-		return(1);
+		return 1;
 	}
 
 } // namespace Direct

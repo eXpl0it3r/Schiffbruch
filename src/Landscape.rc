@@ -223,7 +223,7 @@ BEGIN
     BAUMZUGROSS             "Der ist mir eine Nummer zu gross."
     BEGINNHAUS1             "Leiter fuer Baumhaus bauen"
     HAUS1TEXT               "Baum und Leiter"
-    HAMMER                  "Hammer"
+    HAMMERTEXT              "Hammer"
     BEGINNHAUS2             "Plattform fuer Baumhaus bauen"
     HAUS2TEXT               "Baum und Plattform"
 END

@@ -1246,8 +1246,12 @@ namespace World
 							if (Scape[x1][y1].Art == 2) Scape[x1][y1].Objekt = MUENDUNG2; // Mündung
 							else
 							{
-								if ((x1 == x2) && (y1 > y2)) Scape[x1][y1].Objekt = FLUSS6;
-								if ((x1 > x2) && (y1 == y2)) Scape[x1][y1].Objekt = FLUSS7;
+								if ((x1 == x2) && (y1 > y2))
+									Scape[x1][y1].Objekt = FLUSS6;
+
+								if ((x1 > x2) && (y1 == y2))
+									Scape[x1][y1].Objekt = FLUSS7;
+
 								Scape[x1][y1].Reverse = true;
 								if ((x1 < x2) && (y1 == y2))
 								{
@@ -1276,10 +1280,13 @@ namespace World
 		for (y = 0; y<MAXYKACH; y++)//Alle Kacheln durchgehen
 			for (x = 0; x<MAXXKACH; x++)
 			{
-				if ((Scape[x][y].Objekt != -1) ||
-					((Scape[x][y].Art == 3) && (Scape[x][y].Typ == 0))) continue;
+				if ((Scape[x][y].Objekt != -1) || ((Scape[x][y].Art == 3) && (Scape[x][y].Typ == 0)))
+					continue;
+
 				// Wenn schon ein Objekt da ist oder Treibsand ist, dann mit nächsten Teil weitermachen
-				if (rand() % (100 / Prozent) != 0) continue; // Die Wahrscheinlichkeit für einen Baum bestimmen
+				if (rand() % (100 / Prozent) != 0)  // Die Wahrscheinlichkeit für einen Baum bestimmen
+					continue;
+
 				while (1)
 				{
 					Pos.x = rand() % KXPIXEL;
@@ -1370,8 +1377,7 @@ namespace World
 			y = rand() % (MAXYKACH - 1);
 
 			// nur auf flachen Kacheln ohne Objekt
-			if ((Scape[x][y].Objekt == -1) && (Scape[x][y].Typ == 0)
-				&& (Scape[x][y].Art != 3))
+			if ((Scape[x][y].Objekt == -1) && (Scape[x][y].Typ == 0) && (Scape[x][y].Art != 3))
 			{
 				if (SchatzPos.x == -1)
 				{
@@ -1434,8 +1440,7 @@ namespace World
 
 	void CheckBenutze(short Objekt)
 	{
-		if (((Objekt == ROHSTEIN) && (TwoClicks == ROHAST)) ||
-			((Objekt == ROHAST) && (TwoClicks == ROHSTEIN)))
+		if (((Objekt == ROHSTEIN) && (TwoClicks == ROHAST)) || ((Objekt == ROHAST) && (TwoClicks == ROHSTEIN)))
 		{
 			if (Guy.Inventar[ROHAXT]<1)
 			{
@@ -1446,7 +1451,7 @@ namespace World
 				Bmp[BUTTBOOT].Phase = 0;
 				Bmp[BUTTROHR].Phase = 0;
 				PapierText = Renderer::DrawText(BAUEAXT, TXTPAPIER, 1);
-				Sound::PlaySound(WAVERFINDUNG, 100);
+				Sound::PlaySound(Sound::INVENTION, 100);
 			}
 			else if (Guy.Inventar[ROHEGGE]<1)
 			{
@@ -1455,15 +1460,14 @@ namespace World
 				Guy.Inventar[ROHEGGE] = 1;
 				Bmp[BUTTFELD].Phase = 0;
 				PapierText = Renderer::DrawText(BAUEEGGE, TXTPAPIER, 1);
-				Sound::PlaySound(WAVERFINDUNG, 100);
+				Sound::PlaySound(Sound::INVENTION, 100);
 			}
 			else
 			{
 				PapierText = Renderer::DrawText(STEINPLUSASTNICHTS, TXTPAPIER, 1);
 			}
 		}
-		else if (((Objekt == ROHLIANE) && (TwoClicks == ROHAST)) ||
-			((Objekt == ROHAST) && (TwoClicks == ROHLIANE)))
+		else if (((Objekt == ROHLIANE) && (TwoClicks == ROHAST)) || ((Objekt == ROHAST) && (TwoClicks == ROHLIANE)))
 		{
 			if (Guy.Inventar[ROHANGEL]<1)
 			{
@@ -1472,15 +1476,14 @@ namespace World
 				Guy.Inventar[ROHANGEL] = 1;
 				Bmp[BUTTANGELN].Phase = 0;
 				PapierText = Renderer::DrawText(BAUEANGEL, TXTPAPIER, 1);
-				Sound::PlaySound(WAVERFINDUNG, 100);
+				Sound::PlaySound(Sound::INVENTION, 100);
 			}
 			else
 			{
 				PapierText = Renderer::DrawText(ASTPLUSLIANENICHTS, TXTPAPIER, 1);
 			}
 		}
-		else if (((Objekt == ROHLIANE) && (TwoClicks == ROHSTEIN)) ||
-			((Objekt == ROHSTEIN) && (TwoClicks == ROHLIANE)))
+		else if (((Objekt == ROHLIANE) && (TwoClicks == ROHSTEIN)) || ((Objekt == ROHSTEIN) && (TwoClicks == ROHLIANE)))
 		{
 			if (Guy.Inventar[ROHSCHLEUDER]<1)
 			{
@@ -1489,7 +1492,7 @@ namespace World
 				Guy.Inventar[ROHSCHLEUDER] = 1;
 				Bmp[BUTTSCHLEUDER].Phase = 0;
 				PapierText = Renderer::DrawText(BAUESCHLEUDER, TXTPAPIER, 1);
-				Sound::PlaySound(WAVERFINDUNG, 100);
+				Sound::PlaySound(Sound::INVENTION, 100);
 			}
 			else
 			{
@@ -1518,7 +1521,8 @@ namespace World
 				}
 			}
 
-		if (Aenderung) Generate();
+		if (Aenderung)
+			Generate();
 	}
 
 } // namespace World

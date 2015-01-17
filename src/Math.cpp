@@ -101,7 +101,7 @@ namespace Math
 				(Erg.y > 0) && (Erg.y < MAXYKACH - 1))
 			{
 				// Klicksound abspielen
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Erg.x == RouteZiel.x) && (Erg.y == RouteZiel.y))
 				{
 					Routing::MarkRoute(false);
@@ -129,7 +129,7 @@ namespace Math
 					}
 				}
 			}
-			else Sound::PlaySound(WAVKLICK, 100);
+			else Sound::PlaySound(Sound::CLICK, 100);
 		}
 	}
 
@@ -154,7 +154,7 @@ namespace Math
 
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Gitter = !Gitter;
 				World::Generate();
 			}
@@ -166,7 +166,7 @@ namespace Math
 
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				LAnimation = !LAnimation;
 				World::Generate();
 			}
@@ -181,15 +181,15 @@ namespace Math
 			{
 				if (Soundzustand == 1)
 				{
-					for (i = 1; i<WAVANZ; i++) Sound::StopSound(i);
+					for (i = 1; i<Sound::COUNT; i++) Sound::StopSound(i);
 					Soundzustand = 0;
 				}
 				else if (Soundzustand == 0)
 				{
 					Soundzustand = 1;
-					Sound::PlaySound(WAVKLICK2, 100);
+					Sound::PlaySound(Sound::CLICK2, 100);
 				}
-				else Sound::PlaySound(WAVKLICK, 100);
+				else Sound::PlaySound(Sound::CLICK, 100);
 			}
 		}
 		else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTBEENDEN].rcDes))
@@ -198,7 +198,7 @@ namespace Math
 			Bmp[BUTTBEENDEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				Guy.Aktiv = false;
 				Guy.Aktion = Action::QUIT;
@@ -210,7 +210,7 @@ namespace Math
 			Bmp[BUTTNEU].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				Guy.Aktiv = false;
 				Guy.Aktion = Action::RESTART;
@@ -222,7 +222,7 @@ namespace Math
 			Bmp[BUTTTAGNEU].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				Guy.Aktiv = false;
 				Guy.Aktion = Action::DAY_RESTART;
@@ -235,7 +235,7 @@ namespace Math
 			Bmp[BUTTAKTION].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if (HauptMenue == MEAKTION) HauptMenue = MEKEINS;
 				else HauptMenue = MEAKTION;
 			}
@@ -248,7 +248,7 @@ namespace Math
 			Bmp[BUTTBAUEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if (HauptMenue == MEBAUEN) HauptMenue = MEKEINS;
 				else HauptMenue = MEBAUEN;
 			}
@@ -260,7 +260,7 @@ namespace Math
 			Bmp[BUTTINVENTAR].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if (HauptMenue == MEINVENTAR) HauptMenue = MEKEINS;
 				else HauptMenue = MEINVENTAR;
 			}
@@ -273,7 +273,7 @@ namespace Math
 			Bmp[BUTTWEITER].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Bmp[BUTTSTOP].Phase = 0;
 				Routing::MarkRoute(false);
 				RouteZiel.x = -1;
@@ -303,7 +303,7 @@ namespace Math
 			Bmp[BUTTSTOP].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				Guy.Aktion = Action::CANCEL;
 				Bmp[BUTTSTOP].Phase = -1;
@@ -317,7 +317,7 @@ namespace Math
 			Bmp[BUTTABLEGEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1) Guy.Aktion = Action::UNDOCK;
 				else Guy.Aktion = Action::DOCK;
@@ -331,7 +331,7 @@ namespace Math
 			Bmp[BUTTSUCHEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				Guy.Aktion = Action::SEARCH;
 			}
@@ -343,7 +343,7 @@ namespace Math
 			Bmp[BUTTESSEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BUSCH) ||
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt == FELD)) &&
@@ -363,7 +363,7 @@ namespace Math
 			Bmp[BUTTSCHLAFEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1)
 				{
 					Guy.AkNummer = 0;
@@ -379,7 +379,7 @@ namespace Math
 			Bmp[BUTTFAELLEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if (Guy.Inventar[ROHSTAMM] <= 10)
 				{
@@ -404,7 +404,7 @@ namespace Math
 			Bmp[BUTTANGELN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FLUSS1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= SCHLEUSE6)) ||
@@ -419,7 +419,7 @@ namespace Math
 			Bmp[BUTTANZUENDEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == FEUERSTELLE) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
@@ -434,7 +434,7 @@ namespace Math
 			Bmp[BUTTAUSSCHAU].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1)
 				{
@@ -451,7 +451,7 @@ namespace Math
 			Bmp[BUTTSCHATZ].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Art != 1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0) &&
@@ -470,7 +470,7 @@ namespace Math
 			Bmp[BUTTSCHLEUDER].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Guy.AkNummer = 0;
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
@@ -492,7 +492,7 @@ namespace Math
 			Bmp[BUTTSCHATZKARTE].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				Renderer::DrawSchatzkarte();
 			}
 		}
@@ -509,7 +509,7 @@ namespace Math
 			Bmp[BUTTFELD].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Art == 4))
@@ -542,7 +542,7 @@ namespace Math
 			Bmp[BUTTZELT].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Art != -1))
@@ -576,7 +576,7 @@ namespace Math
 			Bmp[BUTTBOOT].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Art == 2) &&
 					((Scape[Guy.Pos.x - 1][Guy.Pos.y].Art == 1) ||
@@ -613,7 +613,7 @@ namespace Math
 			Bmp[BUTTROHR].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0))
 				{
@@ -646,7 +646,7 @@ namespace Math
 			Bmp[BUTTSOS].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0))
 				{
@@ -679,7 +679,7 @@ namespace Math
 			Bmp[BUTTHAUS1].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
 					PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
@@ -714,7 +714,7 @@ namespace Math
 			Bmp[BUTTHAUS2].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
 					PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
@@ -751,7 +751,7 @@ namespace Math
 			Bmp[BUTTHAUS3].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
 					PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
@@ -789,7 +789,7 @@ namespace Math
 			Bmp[BUTTFEUERST].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0))
 				{
@@ -816,7 +816,7 @@ namespace Math
 			Bmp[BUTTDESTROY].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
-				Sound::PlaySound(WAVKLICK2, 100);
+				Sound::PlaySound(Sound::CLICK2, 100);
 				if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FELD) &&
 					(Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= FEUERSTELLE))
 				{
@@ -851,7 +851,7 @@ namespace Math
 					case ROHEGGE: Renderer::DrawText(EGGE, TXTTEXTFELD, 2); break;
 					case ROHLIANE: Renderer::DrawText(LIANE, TXTTEXTFELD, 2); break;
 					case ROHANGEL: Renderer::DrawText(ANGEL, TXTTEXTFELD, 2); break;
-					case ROHHAMMER: Renderer::DrawText(HAMMER, TXTTEXTFELD, 2); break;
+					case ROHHAMMER: Renderer::DrawText(HAMMERTEXT, TXTTEXTFELD, 2); break;
 					case ROHFERNROHR: Renderer::DrawText(FERNROHR, TXTTEXTFELD, 2); break;
 					case ROHSTREICHHOLZ: Renderer::DrawText(STREICHHOLZ, TXTTEXTFELD, 2); break;
 					case ROHSCHAUFEL: Renderer::DrawText(SCHAUFEL, TXTTEXTFELD, 2); break;
@@ -869,7 +869,7 @@ namespace Math
 			Renderer::DrawText(CHANCETEXT, TXTTEXTFELD, 2);
 		else // TwoClicks löschen
 		{
-			if ((Button == 0) && (Push == 1)) Sound::PlaySound(WAVKLICK, 100);
+			if ((Button == 0) && (Push == 1)) Sound::PlaySound(Sound::CLICK, 100);
 			TwoClicks = -1;
 		}
 	}

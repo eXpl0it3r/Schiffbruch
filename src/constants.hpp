@@ -202,34 +202,6 @@ const unsigned int MUSIK = PROGRAMMIERUNG + 13;
 const unsigned int DPSOFTWARE = PROGRAMMIERUNG + 14;
 const unsigned int BILDANZ = DPSOFTWARE + 1; // Wieviele Bilder
 
-// Sounds
-const unsigned int WAVNICHTS = 0;
-const unsigned int WAVSTURM = 1;
-const unsigned int WAVSCHWIMMEN = WAVSTURM + 1;
-const unsigned int WAVPLATSCH = WAVSTURM + 2;
-const unsigned int WAVFAELLEN = WAVSTURM + 3;
-const unsigned int WAVSCHLAGEN = WAVSTURM + 4;
-const unsigned int WAVSCHLEUDER = WAVSTURM + 5;
-const unsigned int WAVSCHAUFELN = WAVSTURM + 6;
-const unsigned int WAVHAMMER = WAVSTURM + 7;
-const unsigned int WAVCRASH = WAVSTURM + 8;
-const unsigned int WAVSCHNARCHEN = WAVSTURM + 9;
-const unsigned int WAVTRINKEN = WAVSTURM + 10;
-const unsigned int WAVKNISTERN = WAVSTURM + 11;
-const unsigned int WAVANGEL = WAVSTURM + 12;
-const unsigned int WAVWALD = 14;
-const unsigned int WAVFEUER = WAVWALD + 1;
-const unsigned int WAVBRANDUNG = WAVWALD + 2;
-const unsigned int WAVBAUMFAELLT = WAVWALD + 3;
-const unsigned int WAVFLUSS = WAVWALD + 4;
-const unsigned int WAVKLICK = 19;
-const unsigned int WAVKLICK2 = WAVKLICK + 1;
-const unsigned int WAVLOGO = WAVKLICK + 2;
-const unsigned int WAVABSPANN = WAVKLICK + 3;
-const unsigned int WAVWOLF = WAVKLICK + 4;
-const unsigned int WAVERFINDUNG = WAVKLICK + 5;
-const unsigned int WAVANZ = WAVERFINDUNG + 1;	// Anzahl der Sounds
-
 // Menüs
 const unsigned int MEKEINS = 0;
 const unsigned int MEAKTION = 1;
