@@ -6,6 +6,7 @@
 #include "Renderer.hpp"
 #include "Routing.hpp"
 #include "Sound.hpp"
+#include "State.hpp"
 #include "World.hpp"
 
 namespace Action
@@ -64,7 +65,7 @@ namespace Action
 			break;
 		case 5:
 			Guy.PosAlt = Guy.PosScreen;
-			Spielzustand = SZSPIEL;
+			Spielzustand = State::GAME;
 			Guy.Aktion = Action::NOTHING;
 			PapierText = Renderer::DrawText(INTROTEXT, TXTPAPIER, 1);
 			Game::SaveGame();
@@ -195,7 +196,7 @@ namespace Action
 				if (Guy.Resource[GESUNDHEIT] > 10)
 					Game::SaveGame();
 
-				Spielzustand = SZABSPANN;
+				Spielzustand = State::OUTRO;
 			}
 			Frage = -1;
 			break;
@@ -248,7 +249,7 @@ namespace Action
 
 			Guy.Aktion = Action::NOTHING;
 			if (Frage == 2)
-				Spielzustand = SZABSPANN;
+				Spielzustand = State::OUTRO;
 			else
 				Game::NeuesSpiel(false);
 
@@ -1331,7 +1332,7 @@ namespace Action
 				Frage = -1;
 				break;
 			}
-			Spielzustand = SZGERETTET;
+			Spielzustand = State::RESCUED;
 			Frage = -1;
 			break;
 		case 4:
@@ -1397,7 +1398,7 @@ namespace Action
 		case 9:
 			Guy.Aktion = Action::NOTHING;
 			Guy.Zustand = GUYLINKS;
-			Spielzustand = SZABSPANN;
+			Spielzustand = State::OUTRO;
 			break;
 		}
 	}

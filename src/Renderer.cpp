@@ -4,6 +4,7 @@
 #include "Direct.hpp"
 #include "Game.hpp"
 #include "Math.hpp"
+#include "Menu.hpp"
 #include "Sound.hpp"
 #include "Routing.hpp"
 #include "World.hpp"
@@ -440,21 +441,21 @@ namespace Renderer
 			BUTTTAGNEU, rcPanel, false, -1);
 
 		// Aktionsknopf
-		if (HauptMenue == MEAKTION) Bmp[BUTTAKTION].Phase = Bmp[BUTTAKTION].Anzahl;
+		if (HauptMenue == Menu::ACTION) Bmp[BUTTAKTION].Phase = Bmp[BUTTAKTION].Anzahl;
 		else if (Bmp[BUTTAKTION].Phase == Bmp[BUTTAKTION].Anzahl) Bmp[BUTTAKTION].Phase = 0;
 		ZeichneBilder((short)Bmp[BUTTAKTION].rcDes.left,
 			(short)Bmp[BUTTAKTION].rcDes.top,
 			BUTTAKTION, rcPanel, false, -1);
 
 		// BauKnopf
-		if (HauptMenue == MEBAUEN) Bmp[BUTTBAUEN].Phase = Bmp[BUTTBAUEN].Anzahl;
+		if (HauptMenue == Menu::BUILD) Bmp[BUTTBAUEN].Phase = Bmp[BUTTBAUEN].Anzahl;
 		else if (Bmp[BUTTBAUEN].Phase == Bmp[BUTTBAUEN].Anzahl) Bmp[BUTTBAUEN].Phase = 0;
 		ZeichneBilder((short)Bmp[BUTTBAUEN].rcDes.left,
 			(short)Bmp[BUTTBAUEN].rcDes.top,
 			BUTTBAUEN, rcPanel, false, -1);
 
 		// Inventarknopf
-		if (HauptMenue == MEINVENTAR) Bmp[BUTTINVENTAR].Phase = Bmp[BUTTINVENTAR].Anzahl;
+		if (HauptMenue == Menu::INVENTORY) Bmp[BUTTINVENTAR].Phase = Bmp[BUTTINVENTAR].Anzahl;
 		else if (Bmp[BUTTINVENTAR].Phase == Bmp[BUTTINVENTAR].Anzahl) Bmp[BUTTINVENTAR].Phase = 0;
 		ZeichneBilder((short)Bmp[BUTTINVENTAR].rcDes.left,
 			(short)Bmp[BUTTINVENTAR].rcDes.top,
@@ -478,7 +479,7 @@ namespace Renderer
 		// Welches Menü zeichnen?
 		switch (HauptMenue)
 		{
-		case MEAKTION:
+		case Menu::ACTION:
 			for (i = BUTTSUCHEN; i <= BUTTSCHLEUDER; i++)
 			{
 				if (Bmp[i].Phase == -1)
@@ -493,7 +494,7 @@ namespace Renderer
 					i, rcPanel, false, -1);
 			}
 			break;
-		case MEBAUEN:
+		case Menu::BUILD:
 			for (i = BUTTZELT; i <= BUTTDESTROY; i++)
 			{
 				if (Bmp[i].Phase == -1)
@@ -508,7 +509,7 @@ namespace Renderer
 					i, rcPanel, false, -1);
 			}
 			break;
-		case MEINVENTAR:
+		case Menu::INVENTORY:
 			ZeichneBilder((short)Bmp[INVPAPIER].rcDes.left,
 				(short)Bmp[INVPAPIER].rcDes.top,
 				INVPAPIER, rcPanel, false, -1);
@@ -602,7 +603,7 @@ namespace Renderer
 		rcRectsrc.top = 0;
 		rcRectsrc.right = 605;
 		rcRectsrc.bottom = 20;
-		rcRectdes = rcTextFeld1;
+		rcRectdes = {0, MAXY - 20, MAXX - 195, MAXY};
 		Blitten(lpDDSTextFeld, lpDDSBack, false);
 	}
 

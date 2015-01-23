@@ -3,11 +3,11 @@
 #include "Action.hpp"
 #include "Direct.hpp"
 #include "Math.hpp"
-#include "Sound.hpp"
 #include "Renderer.hpp"
+#include "Sound.hpp"
+#include "State.hpp"
 #include "World.hpp"
 
-#include <ctime>
 #include <fstream>
 
 namespace Game
@@ -2320,7 +2320,6 @@ namespace Game
 		}
 		CursorTyp = CUPFEIL;
 		Gitter = false;
-		MouseAktiv = true;
 		PapierText = -1;
 		HauptMenue = 0;
 		TwoClicks = -1;
@@ -2328,8 +2327,6 @@ namespace Game
 		Frage = -1;
 		LastBild = 100;
 		Bild = 0;
-		Zeit = std::time(nullptr);
-		Spielbeenden = false;
 		MousePosition.x = MAXX / 2;
 		MousePosition.y = MAXY / 2;
 		Button0down = false;
@@ -2407,8 +2404,8 @@ namespace Game
 				(Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2;
 
-			Camera.x = Guy.PosScreen.x - rcGesamt.right / 2;
-			Camera.y = Guy.PosScreen.y - rcGesamt.bottom / 2;
+			Camera.x = Guy.PosScreen.x - static_cast<short>(rcGesamt.right / 2);
+			Camera.y = Guy.PosScreen.y - static_cast<short>(rcGesamt.bottom / 2);
 
 			Chance = 0;
 
@@ -2417,7 +2414,7 @@ namespace Game
 
 			Tag = 1; Stunden = 0; Minuten = 0;
 
-			Spielzustand = SZINTRO;
+			Spielzustand = State::INTRO;
 			Guy.Aktiv = false;
 			Guy.Zustand = GUYSCHIFF;
 			Guy.AkNummer = 0;

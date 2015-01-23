@@ -25,6 +25,7 @@
     <ClCompile Include="..\src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Menu.hpp" />
     <ClInclude Include="..\src\Action.hpp" />
     <ClInclude Include="..\src\Application.hpp" />
     <ClInclude Include="..\src\constants.hpp" />
@@ -34,10 +35,12 @@
     <ClInclude Include="..\src\Game.hpp" />
     <ClInclude Include="..\src\headers.hpp" />
     <ClInclude Include="..\src\Math.hpp" />
+    <ClInclude Include="..\src\Menu.hpp" />
     <ClInclude Include="..\src\Renderer.hpp" />
     <ClInclude Include="..\src\resource.h" />
     <ClInclude Include="..\src\Routing.hpp" />
     <ClInclude Include="..\src\Sound.hpp" />
+    <ClInclude Include="..\src\State.hpp" />
     <ClInclude Include="..\src\types.hpp" />
     <ClInclude Include="..\src\World.hpp" />
   </ItemGroup>
@@ -147,6 +150,9 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalOptions>/ignore:4204 %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PreBuildEvent>
+      <Command>del ..\bin\save.dat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

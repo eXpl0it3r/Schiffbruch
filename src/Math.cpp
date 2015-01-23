@@ -3,9 +3,11 @@
 #include "Action.hpp"
 #include "Direct.hpp"
 #include "Game.hpp"
-#include "Sound.hpp"
+#include "Menu.hpp"
 #include "Renderer.hpp"
 #include "Routing.hpp"
+#include "Sound.hpp"
+#include "State.hpp"
 #include "World.hpp"
 
 #include <cstdio>
@@ -143,9 +145,9 @@ namespace Math
 			mx = MousePosition.x - (short)rcKarte.left;
 			my = MousePosition.y - (short)rcKarte.top;
 			Camera.x = ((KXPIXEL / 4)*(mx - my) + MAXXKACH * KXPIXEL / 2)
-				- (rcSpielflaeche.right - rcSpielflaeche.left) / 2;
+				- static_cast<short>((rcSpielflaeche.right - rcSpielflaeche.left) / 2);
 			Camera.y = ((KXPIXEL / 7)*(my + mx))
-				- (rcSpielflaeche.bottom - rcSpielflaeche.top) / 2;
+				- static_cast<short>((rcSpielflaeche.bottom - rcSpielflaeche.top) / 2);
 		}
 		else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTGITTER].rcDes))
 		{
@@ -230,39 +232,39 @@ namespace Math
 		}
 		else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTAKTION].rcDes))
 		{
-			if (HauptMenue == MEAKTION) Renderer::DrawText(MEAKTIONZU, TXTTEXTFELD, 2);
+			if (HauptMenue == Menu::ACTION) Renderer::DrawText(MEAKTIONZU, TXTTEXTFELD, 2);
 			else Renderer::DrawText(MEAKTIONAUF, TXTTEXTFELD, 2);
 			Bmp[BUTTAKTION].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
 				Sound::PlaySound(Sound::CLICK2, 100);
-				if (HauptMenue == MEAKTION) HauptMenue = MEKEINS;
-				else HauptMenue = MEAKTION;
+				if (HauptMenue == Menu::ACTION) HauptMenue = Menu::NONE;
+				else HauptMenue = Menu::ACTION;
 			}
 		}
 		else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTBAUEN].rcDes) &&
 			(Bmp[BUTTBAUEN].Phase != -1))
 		{
-			if (HauptMenue == MEBAUEN) Renderer::DrawText(MEBAUENZU, TXTTEXTFELD, 2);
+			if (HauptMenue == Menu::BUILD) Renderer::DrawText(MEBAUENZU, TXTTEXTFELD, 2);
 			else Renderer::DrawText(MEBAUENAUF, TXTTEXTFELD, 2);
 			Bmp[BUTTBAUEN].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
 				Sound::PlaySound(Sound::CLICK2, 100);
-				if (HauptMenue == MEBAUEN) HauptMenue = MEKEINS;
-				else HauptMenue = MEBAUEN;
+				if (HauptMenue == Menu::BUILD) HauptMenue = Menu::NONE;
+				else HauptMenue = Menu::BUILD;
 			}
 		}
 		else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTINVENTAR].rcDes))
 		{
-			if (HauptMenue == MEINVENTAR) Renderer::DrawText(MEINVENTARZU, TXTTEXTFELD, 2);
+			if (HauptMenue == Menu::INVENTORY) Renderer::DrawText(MEINVENTARZU, TXTTEXTFELD, 2);
 			else Renderer::DrawText(MEINVENTARAUF, TXTTEXTFELD, 2);
 			Bmp[BUTTINVENTAR].Animation = true;
 			if ((Button == 0) && (Push == 1))
 			{
 				Sound::PlaySound(Sound::CLICK2, 100);
-				if (HauptMenue == MEINVENTAR) HauptMenue = MEKEINS;
-				else HauptMenue = MEINVENTAR;
+				if (HauptMenue == Menu::INVENTORY) HauptMenue = Menu::NONE;
+				else HauptMenue = Menu::INVENTORY;
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTWEITER].rcDes)) &&
@@ -325,7 +327,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSUCHEN].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTSUCHEN].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTSUCHEN].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNSUCHEN, TXTTEXTFELD, 2);
 			Bmp[BUTTSUCHEN].Animation = true;
@@ -337,7 +339,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTESSEN].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTESSEN].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTESSEN].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNESSEN, TXTTEXTFELD, 2);
 			Bmp[BUTTESSEN].Animation = true;
@@ -357,7 +359,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHLAFEN].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTSCHLAFEN].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHLAFEN].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNSCHLAFEN, TXTTEXTFELD, 2);
 			Bmp[BUTTSCHLAFEN].Animation = true;
@@ -373,7 +375,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTFAELLEN].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTFAELLEN].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTFAELLEN].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNFAELLEN, TXTTEXTFELD, 2);
 			Bmp[BUTTFAELLEN].Animation = true;
@@ -398,7 +400,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTANGELN].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTANGELN].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTANGELN].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNANGELN, TXTTEXTFELD, 2);
 			Bmp[BUTTANGELN].Animation = true;
@@ -413,7 +415,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTANZUENDEN].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTANZUENDEN].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTANZUENDEN].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNANZUENDEN, TXTTEXTFELD, 2);
 			Bmp[BUTTANZUENDEN].Animation = true;
@@ -428,7 +430,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTAUSSCHAU].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTAUSSCHAU].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTAUSSCHAU].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNAUSSCHAU, TXTTEXTFELD, 2);
 			Bmp[BUTTAUSSCHAU].Animation = true;
@@ -445,7 +447,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHATZ].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTSCHATZ].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHATZ].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNSCHATZ, TXTTEXTFELD, 2);
 			Bmp[BUTTSCHATZ].Animation = true;
@@ -464,7 +466,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHLEUDER].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTSCHLEUDER].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHLEUDER].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNSCHLEUDER, TXTTEXTFELD, 2);
 			Bmp[BUTTSCHLEUDER].Animation = true;
@@ -486,7 +488,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHATZKARTE].rcDes)) &&
-			(HauptMenue == MEAKTION) && (Bmp[BUTTSCHATZKARTE].Phase != -1))
+			(HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHATZKARTE].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNSCHATZKARTE, TXTTEXTFELD, 2);
 			Bmp[BUTTSCHATZKARTE].Animation = true;
@@ -497,7 +499,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTFELD].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTFELD].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTFELD].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNFELD, StdString, 1024);
 			World::MakeRohString(-1, -1, FELD);
@@ -530,7 +532,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTZELT].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTZELT].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTZELT].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNZELT, StdString, 1024);
 			World::MakeRohString(-1, -1, ZELT);
@@ -564,7 +566,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTBOOT].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTBOOT].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTBOOT].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNBOOT, StdString, 1024);
 			World::MakeRohString(-1, -1, BOOT);
@@ -601,7 +603,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTROHR].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTROHR].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTROHR].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNROHR, StdString, 1024);
 			World::MakeRohString(-1, -1, ROHR);
@@ -634,7 +636,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSOS].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTSOS].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTSOS].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNSOS, StdString, 1024);
 			World::MakeRohString(-1, -1, SOS);
@@ -667,7 +669,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTHAUS1].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTHAUS1].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTHAUS1].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNHAUS1, StdString, 1024);
 			World::MakeRohString(-1, -1, HAUS1);
@@ -702,7 +704,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTHAUS2].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTHAUS2].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTHAUS2].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNHAUS2, StdString, 1024);
 			World::MakeRohString(-1, -1, HAUS2);
@@ -739,7 +741,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTHAUS3].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTHAUS3].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTHAUS3].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNHAUS3, StdString, 1024);
 			World::MakeRohString(-1, -1, HAUS3);
@@ -777,7 +779,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTFEUERST].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTFEUERST].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTFEUERST].Phase != -1))
 		{
 			LoadString(g_hInst, BEGINNFEUERSTELLE, StdString, 1024);
 			World::MakeRohString(-1, -1, FEUERSTELLE);
@@ -810,7 +812,7 @@ namespace Math
 			}
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTDESTROY].rcDes)) &&
-			(HauptMenue == MEBAUEN) && (Bmp[BUTTDESTROY].Phase != -1))
+			(HauptMenue == Menu::BUILD) && (Bmp[BUTTDESTROY].Phase != -1))
 		{
 			Renderer::DrawText(BEGINNDESTROY, TXTTEXTFELD, 2);
 			Bmp[BUTTDESTROY].Animation = true;
@@ -826,7 +828,7 @@ namespace Math
 				else PapierText = Renderer::DrawText(KEINBAUWERK, TXTPAPIER, 1);
 			}
 		}
-		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[INVPAPIER].rcDes)) && (HauptMenue == MEINVENTAR))
+		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[INVPAPIER].rcDes)) && (HauptMenue == Menu::INVENTORY))
 		{
 			for (i = ROHAST; i <= ROHSCHLEUDER; i++)
 			{
@@ -983,10 +985,10 @@ namespace Math
 			}
 			Guy.PosScreen.x = GuyPosScreenStart.x + ROUND(Step*Schrittx);
 			Guy.PosScreen.y = GuyPosScreenStart.y + ROUND(Step*Schritty);
-			if ((Spielzustand == SZINTRO) || (Spielzustand == SZGERETTET)) // Beim Intro fährt die Kamera mit
+			if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED)) // Beim Intro fährt die Kamera mit
 			{
-				Camera.x = Guy.PosScreen.x - rcGesamt.right / 2;
-				Camera.y = Guy.PosScreen.y - rcGesamt.bottom / 2;
+				Camera.x = Guy.PosScreen.x - static_cast<short>(rcGesamt.right / 2);
+				Camera.y = Guy.PosScreen.y - static_cast<short>(rcGesamt.bottom / 2);
 			}
 		}
 	}

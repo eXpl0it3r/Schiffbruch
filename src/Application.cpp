@@ -7,6 +7,7 @@
 #include "Sound.hpp"
 #include "Renderer.hpp"
 #include "Routing.hpp"
+#include "State.hpp"
 #include "World.hpp"
 
 #include "types.hpp"
@@ -16,20 +17,20 @@
 #include <exception>
 
 Application::Application(const std::string& name, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-: m_window({ MAXX, MAXY }, name, sf::Style::Fullscreen)
+: m_window({MAXX, MAXY}, name, sf::Style::Fullscreen)
 , m_name(name)
 , m_hWnd(m_window.getSystemHandle())
 , m_hInstance(hInstance)
 , m_hPrevInstance(hPrevInstance)
 , m_lpCmdLine(lpCmdLine)
 , m_nCmdShow(nCmdShow)
+, m_time(std::time(NULL))
 {
 	// Set globals
 	g_hInst = m_hInstance;
-	hwnd = m_hWnd;
 
-	Direct::InitDDraw();
-	Direct::InitDSound();
+	Direct::InitDDraw(m_hWnd);
+	Direct::InitDSound(m_hWnd);
 
 	srand((unsigned)time(nullptr));		// Random initialisieren
 }
@@ -43,10 +44,6 @@ void Application::process_events()
 		{
 			Direct::finiObjects();
 			m_window.close();
-		}
-		else if (event.type == sf::Event::GainedFocus)
-		{
-			bActive = TRUE;
 		}
 		else if (event.type == sf::Event::KeyReleased)
 		{
@@ -81,20 +78,20 @@ int Application::run()
 
 short Application::Refresh()
 {
-	long Zeitsave;
+	std::time_t Zeitsave;
 
-	if (Spielzustand == SZNICHTS)
+	if (Spielzustand == State::NOTHING)
 	{
-		Spielzustand = SZLOGO;
+		Spielzustand = State::LOGO;
 		Game::InitStructs(); // Nur zum Wavinitialisieren
 	}
 	while (1)
 	{
 		Bild++;
-		Zeitsave = time(nullptr);
-		if (Zeit + 5 < Zeitsave)
+		Zeitsave = time(NULL);
+		if (m_time + 5 < Zeitsave)
 		{
-			Zeit = Zeitsave;
+			m_time = Zeitsave;
 			LastBild = (LastBild + Bild / 5) / 2;
 			Bild = 0;
 			if (LastBild == 0) LastBild = 50;
@@ -107,12 +104,12 @@ short Application::Refresh()
 			Renderer::DrawString(StdString,(short)TextBereich[TXTFPS].rcText.left,(short)TextBereich[TXTFPS].rcText.top,1);
 			*/
 		}
-		if (Spielzustand == SZLOGO)
+		if (Spielzustand == State::LOGO)
 		{
 			if (Direct::CheckKey() == 2) break;	// Das Keyboard abfragen
 			Renderer::ZeigeLogo();				// Bild auffrischen
 		}
-		else if ((Spielzustand == SZINTRO) || (Spielzustand == SZGERETTET))
+		else if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED))
 		{
 			if (Direct::CheckKey() == 0) return(0); // Das Keyboard abfragen
 
@@ -120,7 +117,7 @@ short Application::Refresh()
 			if (!Guy.Aktiv) Event(Guy.Aktion);	// Aktionen starten
 			Renderer::ZeigeIntro();				// Bild auffrischen
 		}
-		else if (Spielzustand == SZSPIEL)
+		else if (Spielzustand == State::GAME)
 		{
 			// Hide system cursor
 			SetCursor(NULL);
@@ -134,16 +131,14 @@ short Application::Refresh()
 			}
 
 			World::CheckSpzButton();				// Die Spezialknöpfe umschalten
-			if (MouseAktiv) Direct::CheckMouse();	// Den MouseZustand abchecken
+			Direct::CheckMouse();					// Den MouseZustand abchecken
 			if (Direct::CheckKey() == 0) return(0);	// Das Keyboard abfragen
 			Renderer::LimitScroll();				// Das Scrollen an die Grenzen der Landschaft anpassen
 			Math::Animationen();					// Die Animationsphasen weiterschalten
 			if (!Guy.Aktiv) Event(Guy.Aktion);		// Die Aktionen starten
 			Renderer::Zeige();						// Das Bild zeichnen
-			if (Spielbeenden) return(0);
-
 		}
-		else if (Spielzustand == SZABSPANN)
+		else if (Spielzustand == State::OUTRO)
 		{
 			if (Direct::CheckKey() == 0) return(0);
 			Math::AbspannCalc();

@@ -34,4 +34,5 @@ private:
 	HINSTANCE m_hPrevInstance;
 	LPSTR m_lpCmdLine;
 	int m_nCmdShow;
+	std::time_t m_time;			// Beginning of the second
 };

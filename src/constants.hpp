@@ -1,7 +1,7 @@
 #pragma once
 
-const unsigned int KXPIXEL = 54;		// Breite der Kacheln
-const unsigned int KYPIXEL = 44;		// Hoehe der Kacheln
+const int KXPIXEL = 54;					// Breite der Kacheln
+const int KYPIXEL = 44;					// Hoehe der Kacheln
 const unsigned int S1XPIXEL = 20;		// Breite der Schrift1
 const unsigned int S1YPIXEL = 20;		// Höhe der Schrift1
 const unsigned int S1ABSTAND = 13;		// Abstand zum nächsten Buchstaben
@@ -202,12 +202,6 @@ const unsigned int MUSIK = PROGRAMMIERUNG + 13;
 const unsigned int DPSOFTWARE = PROGRAMMIERUNG + 14;
 const unsigned int BILDANZ = DPSOFTWARE + 1; // Wieviele Bilder
 
-// Menüs
-const unsigned int MEKEINS = 0;
-const unsigned int MEAKTION = 1;
-const unsigned int MEBAUEN = 2;
-const unsigned int MEINVENTAR = 3;
-
 // Textfelder
 const unsigned int TXTTEXTFELD = 0;
 const unsigned int TXTFPS = 1;
@@ -220,14 +214,6 @@ const unsigned int TEXTANZ = 5;			// Wieviele Textbreiche
 const unsigned int WASSER = 0;
 const unsigned int NAHRUNG = 1;
 const unsigned int GESUNDHEIT = 2;
-
-// Spielzustände
-const unsigned int SZNICHTS = 0;
-const unsigned int SZINTRO = 1;
-const unsigned int SZSPIEL = 2;
-const unsigned int SZABSPANN = 3;
-const unsigned int SZGERETTET = 4;
-const unsigned int SZLOGO = 5;
 
 // Bilder
 static const char Misc[] = "MISC";

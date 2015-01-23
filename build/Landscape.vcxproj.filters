@@ -95,6 +95,11 @@
     <ClInclude Include="..\src\World.hpp">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\Menu.hpp" />
+    <ClInclude Include="..\src\Menu.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\State.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\bin\images\Animation.BMP">

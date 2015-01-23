@@ -7,13 +7,14 @@
 #include "Math.hpp"
 #include "Renderer.hpp"
 #include "Sound.hpp"
+#include "State.hpp"
 #include "World.hpp"
 
 #include <SFML/Window.hpp>
 
 namespace Direct
 {
-	void InitDDraw()
+	void InitDDraw(HWND hWnd)
 	{
 		DDSCAPS2     ddscaps;
 		HRESULT      ddrval;
@@ -28,7 +29,7 @@ namespace Direct
 			goto error;
 
 		// Get exclusive mode
-		ddrval = lpDD->SetCooperativeLevel(hwnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
+		ddrval = lpDD->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
 		if (ddrval != DD_OK)
 			goto error;
 
@@ -172,12 +173,12 @@ namespace Direct
 		if (ddrval != DD_OK)
 		{
 			finiObjects();
-			MessageBox(hwnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
-			DestroyWindow(hwnd);
+			MessageBox(hWnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
+			DestroyWindow(hWnd);
 		}
 	}
 
-	void InitDSound()
+	void InitDSound(HWND hWnd)
 	{
 		HRESULT hr;
 		WAVEFORMATEX Waveformat; // Zwischenspeicher des Bufferformats
@@ -190,7 +191,7 @@ namespace Direct
 			Soundzustand = -1;
 			return;
 		}
-		hr = IDirectSound_SetCooperativeLevel(lpds, hwnd, DSSCL_PRIORITY); // Prioritäten setzen
+		hr = IDirectSound_SetCooperativeLevel(lpds, hWnd, DSSCL_PRIORITY); // Prioritäten setzen
 		if (hr != DD_OK)
 		{
 			Soundzustand = -1;
@@ -367,7 +368,7 @@ namespace Direct
 	{
 		short x;
 
-		if (Spielzustand == SZLOGO)
+		if (Spielzustand == State::LOGO)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Logo Abbrechen
@@ -377,7 +378,7 @@ namespace Direct
 				return 2;
 			}
 		}
-		else if (Spielzustand == SZINTRO)
+		else if (Spielzustand == State::INTRO)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Intro Abbrechen
@@ -406,27 +407,27 @@ namespace Direct
 				RouteStart.y = -1;
 				RouteZiel.x = -1;
 				RouteZiel.y = -1;
-				Camera.x = Guy.PosScreen.x - rcSpielflaeche.right / 2;
-				Camera.y = Guy.PosScreen.y - rcSpielflaeche.bottom / 2;
+				Camera.x = Guy.PosScreen.x - static_cast<short>(rcSpielflaeche.right / 2);
+				Camera.y = Guy.PosScreen.y - static_cast<short>(rcSpielflaeche.bottom / 2);
 				if (BootsFahrt) World::ChangeBootsFahrt();
 				Guy.Zustand = GUYLINKS;
 				Guy.Aktion = Action::NOTHING;
-				Spielzustand = SZSPIEL;
+				Spielzustand = State::GAME;
 				Guy.PosAlt = Guy.PosScreen;
 				Game::SaveGame();
 				return 1;
 			}
 		}
-		else if (Spielzustand == SZGERETTET)
+		else if (Spielzustand == State::RESCUED)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				Spielzustand = SZABSPANN;
+				Spielzustand = State::OUTRO;
 				return 1;
 			}
 		}
-		else if (Spielzustand == SZSPIEL)
+		else if (Spielzustand == State::GAME)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 				Camera.x += 10;
@@ -513,7 +514,7 @@ namespace Direct
 					Soundzustand = 0;
 			}
 		}
-		else if (Spielzustand == SZABSPANN)
+		else if (Spielzustand == State::OUTRO)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space))

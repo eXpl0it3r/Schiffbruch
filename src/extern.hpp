@@ -3,21 +3,16 @@
 #include "headers.hpp"
 #include "types.hpp"
 
-extern BOOL		bActive;					// is application active?
 extern BOOL		Spielzustand;				// in welchem Zustand ist das Spiel?
-extern BOOL		MouseAktiv;					// Mouse angestellt?
 extern BOOL		LAnimation;					// Ist die Landschaftanimation angeschaltet?
-extern HWND		hwnd;
 extern BOOL		Gitter;						// Gitternetz an/aus
 extern RECT		ScapeGrenze;				// Diese Koordinaten zeigen die Größe der Landschaft an
-extern SHORT	Flusslaenge[FLUSSANZAHL];
 extern SHORT	CursorTyp;					// Welcher Cursortyp?
 extern BOOL		Button0down;				// linke Maustaste gedrückt gehalten
 extern BOOL		Button1down;				// rechte Maustaste gedrückt gehalten
 extern SHORT	RouteLaenge;				// Länge
 extern SHORT	RoutePunkt;					// Aktueller Index in RouteKoor
 extern FLOAT	Schrittx, Schritty;			// Zum Figur laufen lassen
-extern LONG		Zeit;						// Start der Sekunde
 extern SHORT	Bild, LastBild;				// Anzahl der Bilder in der Sekunde
 extern RECT		rcRectdes, rcRectsrc;		// Ständig benötigte Variable zum Blitten
 extern SHORT	Tag, Stunden, Minuten;		// Wieviel Uhr (0-12h)
@@ -30,7 +25,6 @@ extern FLOAT	Chance;						// Wie groß ist die Chance am Tag gerettet zu werden
 extern BOOL		BootsFahrt;					// Gerade mit dem Boot unterwegs?
 extern BOOL		Nacht;						// Wird die Tageszusammenfassung angezeigt?
 extern SHORT	Soundzustand;				// -1 = keine Soundkarte;0=kein Sound;1=Sound an
-extern BOOL		Spielbeenden;				// Wenn true wird das Spiel sofort beendet
 extern SHORT	Frage;						// -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
 extern DOUBLE	pi;							// pi, was sonst
 extern SHORT	AbspannNr;					// Zähler für Abspann
@@ -45,9 +39,8 @@ extern RECT		rcGesamt;
 extern RECT		rcSpielflaeche;
 extern RECT		rcPanel;
 extern RECT		rcKarte;
-extern RECT		rcTextFeld1;
+
 extern ZWEID	EckKoor[13][4];
-extern short	Vierecke[13][4][13];
 
 extern TEXTBEREICH TextBereich[TEXTANZ];
 
