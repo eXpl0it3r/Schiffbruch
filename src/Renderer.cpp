@@ -130,7 +130,7 @@ namespace Renderer
 		}
 		else if (ddpf.dwRBitMask == 16711680)
 		{
-			rgbStruct.r = (byte)((color & 0xFF0000) >> 8);
+			rgbStruct.r = (byte)((color & 0xFF0000) >> 10);
 			rgbStruct.g = (byte)((color & 0x00FF00) >> 8);
 			rgbStruct.b = (byte)((color & 0x0000FF));
 		}
@@ -162,7 +162,8 @@ namespace Renderer
 			z++;
 			if (Transp) hr = lpDDSNach->Blt(&rcRectdes, lpDDSVon, &rcRectsrc, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
 			else		hr = lpDDSNach->Blt(&rcRectdes, lpDDSVon, &rcRectsrc, DDBLT_WAIT, nullptr);
-			if (hr != DDERR_WASSTILLDRAWING) break;
+			if (hr != DDERR_WASSTILLDRAWING)
+				break;
 			if (z == 1000)
 			{
 				MessageBeep(MB_OK);
@@ -176,7 +177,7 @@ namespace Renderer
 		WORD *pixels = (WORD *)ddsd->lpSurface;
 		// DWORD pitch = ddsd->dwWidth+2;
 		DWORD pitch = ddsd->lPitch >> 1;
-		pixels[y*pitch + x] = (WORD)color;
+		pixels[y*pitch + x * 2] = (WORD)color;
 	}
 
 	void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd)
@@ -186,7 +187,7 @@ namespace Renderer
 		WORD *pixels = (WORD *)ddsd->lpSurface;
 		// DWORD pitch = ddsd->dwWidth;
 		DWORD pitch = ddsd->lPitch >> 1;
-		color = pixels[y*pitch + x];
+		color = pixels[y * pitch + x * 2];
 
 		DWORD2RGB(color);
 	}
