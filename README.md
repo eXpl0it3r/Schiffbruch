@@ -11,6 +11,12 @@ Author
 * Dirk Plate (@dplate) - Author of the original game
 * Lukas Dürrenberger (@eXpl0it3r) - Author of this port
 
+License
+-------
+
+[![Creative Commons License](https://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
+[Schiffbruch](https://github.com/eXpl0it3r/Schiffbruch) by [Lukas Dürrenberger](https://github.com/eXpl0it3r/Schiffbruch) is based on a work of [Dirk Plate](http://www.dplate.de/) and licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
+
 Downloads
 ---------
 
