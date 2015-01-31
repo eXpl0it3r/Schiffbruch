@@ -1402,7 +1402,6 @@ namespace World
 				rcRectdes.bottom = rcRectdes.top + Bmp[KREUZ].Hoehe;
 				Renderer::Blitten(Bmp[KREUZ].Surface, lpDDSSchatzkarte, true);
 
-
 				lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
 				// Weichzeichnen
