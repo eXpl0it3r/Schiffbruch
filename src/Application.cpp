@@ -116,9 +116,9 @@ short Application::Refresh()
 		{
 			if (Direct::CheckKey() == 0) return(0); // Das Keyboard abfragen
 
-			Math::Animationen();									// Animationen weiterschalten
-			if (!Guy.Aktiv) Event(Guy.Aktion);						// Aktionen starten
-			if (Guy.Pos.x == RouteStart.x) Renderer::ZeigeIntro();	// Bild auffrischen (if-Abfrage nötig (seltsamerweise))
+			Math::Animationen();				// Animationen weiterschalten
+			if (!Guy.Aktiv) Event(Guy.Aktion);	// Aktionen starten
+			Renderer::ZeigeIntro();				// Bild auffrischen
 		}
 		else if (Spielzustand == SZSPIEL)
 		{
