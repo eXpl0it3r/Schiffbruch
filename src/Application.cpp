@@ -29,8 +29,9 @@ Application::Application(const std::string& name, HINSTANCE hInstance, HINSTANCE
 	// Set globals
 	g_hInst = m_hInstance;
 
+	Soundzustand = 1; // Activate sound
+
 	Direct::InitDDraw(m_hWnd);
-	Direct::InitDSound(m_hWnd);
 
 	srand((unsigned)time(nullptr));		// Random initialisieren
 }
@@ -83,7 +84,7 @@ short Application::Refresh()
 	if (Spielzustand == State::NOTHING)
 	{
 		Spielzustand = State::LOGO;
-		Game::InitStructs(); // Nur zum Wavinitialisieren
+		Game::InitWaves(); // Nur zum Wavinitialisieren
 	}
 	while (1)
 	{

@@ -95,11 +95,12 @@
     <ClInclude Include="..\src\World.hpp">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Menu.hpp" />
     <ClInclude Include="..\src\Menu.hpp">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\State.hpp" />
+    <ClInclude Include="..\src\State.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\bin\images\Animation.BMP">

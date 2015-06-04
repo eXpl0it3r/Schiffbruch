@@ -2194,91 +2194,6 @@ namespace Game
 		AbspannListe[6][0].Bild = SCHWARZ;
 		AbspannListe[6][1].Bild = DPSOFTWARE;
 
-		// Sounds
-		for (i = 0; i<Sound::COUNT; i++)
-		{
-			Wav[i].Dateiname = "sounds\\klick.wav";
-			Wav[i].Loop = false;
-			Wav[i].Volume = 100;
-		}
-
-		Wav[Sound::STORM].Dateiname = "sounds\\sturm.wav";
-		Wav[Sound::STORM].Volume = 85;
-
-		Wav[Sound::SWIM].Dateiname = "sounds\\schwimmen.wav";
-		Wav[Sound::SWIM].Volume = 90;
-
-		Wav[Sound::SPLAT].Dateiname = "sounds\\platsch.wav";
-		Wav[Sound::SPLAT].Volume = 95;
-
-		Wav[Sound::LOG].Dateiname = "sounds\\faellen.wav";
-		Wav[Sound::LOG].Volume = 100;
-
-		Wav[Sound::HIT].Dateiname = "sounds\\schlagen.wav";
-		Wav[Sound::HIT].Volume = 100;
-
-		Wav[Sound::SLINGSHOT].Dateiname = "sounds\\schleuder.wav";
-		Wav[Sound::SLINGSHOT].Volume = 100;
-
-		Wav[Sound::DIG].Dateiname = "sounds\\schaufeln.wav";
-		Wav[Sound::DIG].Volume = 90;
-
-		Wav[Sound::HAMMER].Dateiname = "sounds\\hammer.wav";
-		Wav[Sound::HAMMER].Volume = 100;
-
-		Wav[Sound::CRASH].Dateiname = "sounds\\crash.wav";
-		Wav[Sound::CRASH].Volume = 100;
-
-		Wav[Sound::SNORE].Dateiname = "sounds\\schnarchen.wav";
-		Wav[Sound::SNORE].Volume = 90;
-
-		Wav[Sound::DRINK].Dateiname = "sounds\\trinken.wav";
-		Wav[Sound::DRINK].Volume = 95;
-
-		Wav[Sound::CRACKLE].Dateiname = "sounds\\knistern.wav";
-		Wav[Sound::CRACKLE].Volume = 90;
-
-		Wav[Sound::FISH].Dateiname = "sounds\\angel.wav";
-		Wav[Sound::FISH].Volume = 100;
-
-		Wav[Sound::FOREST].Dateiname = "sounds\\wald.wav";
-		Wav[Sound::FOREST].Volume = 90;
-
-		Wav[Sound::FIRE].Dateiname = "sounds\\feuer.wav";
-		Wav[Sound::FIRE].Volume = 100;
-
-		Wav[Sound::SURF].Dateiname = "sounds\\brandung.wav";
-		Wav[Sound::SURF].Volume = 100;
-
-		Wav[Sound::TIMBER].Dateiname = "sounds\\baumfaellt.wav";
-		Wav[Sound::TIMBER].Volume = 100;
-
-		Wav[Sound::RIVER].Dateiname = "sounds\\fluss.wav";
-		Wav[Sound::RIVER].Volume = 85;
-
-		Wav[Sound::CLICK].Dateiname = "sounds\\klick.wav";
-		Wav[Sound::CLICK].Volume = 95;
-
-		Wav[Sound::CLICK2].Dateiname = "sounds\\klick2.wav";
-		Wav[Sound::CLICK2].Volume = 95;
-
-		Wav[Sound::OUTRO].Dateiname = "sounds\\abspann.wav";
-		Wav[Sound::OUTRO].Volume = 100;
-		Wav[Sound::OUTRO].Loop = true;
-
-		Wav[Sound::LOGO].Dateiname = "sounds\\logo.wav";
-		Wav[Sound::LOGO].Volume = 100;
-		Wav[Sound::LOGO].Loop = true;
-
-		Wav[Sound::WOLF].Dateiname = "sounds\\wolf.wav";
-		Wav[Sound::WOLF].Volume = 90;
-
-		Wav[Sound::INVENTION].Dateiname = "sounds\\erfindung.wav";
-		Wav[Sound::INVENTION].Volume = 95;
-
-		// Testweise alle Sounds gleich in den Speicher laden
-		for (i = 1; i<Sound::COUNT; i++) Sound::LoadSound(i);
-
 		// Textausgabe
 		TextBereich[TXTTEXTFELD].Aktiv = false;
 		TextBereich[TXTTEXTFELD].rcText.left = 9;
@@ -2336,12 +2251,103 @@ namespace Game
 		SchatzGef = false;
 	}
 
+	void InitWaves()
+	{
+		short i = 0;
+
+		// Sounds
+		for(i = 0; i<Sound::COUNT; i++)
+		{
+			Wav[i].Dateiname = "sounds/klick.wav";
+			Wav[i].Loop = false;
+			Wav[i].Volume = 100;
+		}
+
+		Wav[Sound::STORM].Dateiname = "sounds/sturm.wav";
+		Wav[Sound::STORM].Volume = 85;
+
+		Wav[Sound::SWIM].Dateiname = "sounds/schwimmen.wav";
+		Wav[Sound::SWIM].Volume = 90;
+
+		Wav[Sound::SPLAT].Dateiname = "sounds/platsch.wav";
+		Wav[Sound::SPLAT].Volume = 95;
+
+		Wav[Sound::LOG].Dateiname = "sounds/faellen.wav";
+		Wav[Sound::LOG].Volume = 100;
+
+		Wav[Sound::HIT].Dateiname = "sounds/schlagen.wav";
+		Wav[Sound::HIT].Volume = 100;
+
+		Wav[Sound::SLINGSHOT].Dateiname = "sounds/schleuder.wav";
+		Wav[Sound::SLINGSHOT].Volume = 100;
+
+		Wav[Sound::DIG].Dateiname = "sounds/schaufeln.wav";
+		Wav[Sound::DIG].Volume = 90;
+
+		Wav[Sound::HAMMER].Dateiname = "sounds/hammer.wav";
+		Wav[Sound::HAMMER].Volume = 100;
+
+		Wav[Sound::CRASH].Dateiname = "sounds/crash.wav";
+		Wav[Sound::CRASH].Volume = 100;
+
+		Wav[Sound::SNORE].Dateiname = "sounds/schnarchen.wav";
+		Wav[Sound::SNORE].Volume = 90;
+
+		Wav[Sound::DRINK].Dateiname = "sounds/trinken.wav";
+		Wav[Sound::DRINK].Volume = 95;
+
+		Wav[Sound::CRACKLE].Dateiname = "sounds/knistern.wav";
+		Wav[Sound::CRACKLE].Volume = 90;
+
+		Wav[Sound::FISH].Dateiname = "sounds/angel.wav";
+		Wav[Sound::FISH].Volume = 100;
+
+		Wav[Sound::FOREST].Dateiname = "sounds/wald.wav";
+		Wav[Sound::FOREST].Volume = 90;
+
+		Wav[Sound::FIRE].Dateiname = "sounds/feuer.wav";
+		Wav[Sound::FIRE].Volume = 100;
+
+		Wav[Sound::SURF].Dateiname = "sounds/brandung.wav";
+		Wav[Sound::SURF].Volume = 100;
+
+		Wav[Sound::TIMBER].Dateiname = "sounds/baumfaellt.wav";
+		Wav[Sound::TIMBER].Volume = 100;
+
+		Wav[Sound::RIVER].Dateiname = "sounds/fluss.wav";
+		Wav[Sound::RIVER].Volume = 85;
+
+		Wav[Sound::CLICK].Dateiname = "sounds/klick.wav";
+		Wav[Sound::CLICK].Volume = 95;
+
+		Wav[Sound::CLICK2].Dateiname = "sounds/klick2.wav";
+		Wav[Sound::CLICK2].Volume = 95;
+
+		Wav[Sound::OUTRO].Dateiname = "sounds/abspann.wav";
+		Wav[Sound::OUTRO].Volume = 100;
+		Wav[Sound::OUTRO].Loop = true;
+
+		Wav[Sound::LOGO].Dateiname = "sounds/logo.wav";
+		Wav[Sound::LOGO].Volume = 100;
+		Wav[Sound::LOGO].Loop = true;
+
+		Wav[Sound::WOLF].Dateiname = "sounds/wolf.wav";
+		Wav[Sound::WOLF].Volume = 90;
+
+		Wav[Sound::INVENTION].Dateiname = "sounds/erfindung.wav";
+		Wav[Sound::INVENTION].Volume = 95;
+
+		// Testweise alle Sounds gleich in den Speicher laden
+		for(i = 1; i<Sound::COUNT; i++) Sound::LoadSound(i);
+	}
+
 	void NeuesSpiel(bool neu)
 	{
 		short x, y;
 		bool LoadOK;
 		
 		Game::InitStructs();
+		Game::InitWaves();
 		
 		if (!neu) LoadOK = Game::LoadGame();
 

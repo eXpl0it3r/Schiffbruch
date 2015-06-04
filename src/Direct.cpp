@@ -178,52 +178,6 @@ namespace Direct
 		}
 	}
 
-	void InitDSound(HWND hWnd)
-	{
-		HRESULT hr;
-		WAVEFORMATEX Waveformat; // Zwischenspeicher des Bufferformats
-
-		Soundzustand = 1; // Sound anschalten
-
-		hr = DirectSoundCreate8(nullptr, &lpds, nullptr); // DirectSound-Objekt machen
-		if (hr != DD_OK)
-		{
-			Soundzustand = -1;
-			return;
-		}
-		hr = IDirectSound_SetCooperativeLevel(lpds, hWnd, DSSCL_PRIORITY); // Prioritäten setzen
-		if (hr != DD_OK)
-		{
-			Soundzustand = -1;
-			return;
-		}
-
-		// Primary Buffer
-		ZeroMemory(&dsbdesc, sizeof(DSBUFFERDESC));
-		dsbdesc.dwSize = sizeof(DSBUFFERDESC);
-		dsbdesc.dwFlags = DSBCAPS_PRIMARYBUFFER;
-		hr = lpds->CreateSoundBuffer(&dsbdesc, &lpdsbPrimary, nullptr);
-		if (hr != DD_OK)
-		{
-			Soundzustand = -1;
-			return;
-		}
-
-		memset(&Waveformat, 0, sizeof(WAVEFORMATEX));
-		Waveformat.wFormatTag = WAVE_FORMAT_PCM;
-		Waveformat.nChannels = 1; // stereo oder mono (1 oder 2) 
-		Waveformat.nSamplesPerSec = 44100;
-		Waveformat.wBitsPerSample = 16;
-		Waveformat.nBlockAlign = Waveformat.wBitsPerSample / 8 * Waveformat.nChannels;
-		Waveformat.nAvgBytesPerSec = Waveformat.nSamplesPerSec * Waveformat.nBlockAlign;
-		hr = lpdsbPrimary->SetFormat(&Waveformat);
-		if (hr != DD_OK)
-		{
-			Soundzustand = -1;
-			return;
-		}
-	}
-
 	void CheckMouse()
 	{
 		short			Button;			// Welcher Knopf ist gedrückt worden			

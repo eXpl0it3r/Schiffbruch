@@ -3,6 +3,8 @@
 #include "headers.hpp"
 #include "types.hpp"
 
+#include <SFML/Audio.hpp>
+
 extern BOOL		Spielzustand;				// in welchem Zustand ist das Spiel?
 extern BOOL		LAnimation;					// Ist die Landschaftanimation angeschaltet?
 extern BOOL		Gitter;						// Gitternetz an/aus
@@ -98,9 +100,6 @@ extern DDGAMMARAMP				 DDGammaOld;
 // Directinput
 extern HINSTANCE			g_hInst;
 
-// DirectSound
-extern LPDIRECTSOUND8		lpds;				// DirectSoundObjekt
-extern DSBUFFERDESC			dsbdesc;
-extern LPDIRECTSOUNDBUFFER	lpdsb;
-extern LPDIRECTSOUNDBUFFER	lpdsbPrimary;
-extern LPDIRECTSOUNDBUFFER	lpdsbWav[25];		// Sound::COUNT - Wavedateispeicher
+// Sound	
+extern sf::SoundBuffer		sound_buffers[25]; // Sound::COUNT - Wavedateispeicher
+extern sf::Sound			sound_players[25]; // Sound::COUNT

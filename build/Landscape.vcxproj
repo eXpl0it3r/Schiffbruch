@@ -25,7 +25,6 @@
     <ClCompile Include="..\src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Menu.hpp" />
     <ClInclude Include="..\src\Action.hpp" />
     <ClInclude Include="..\src\Application.hpp" />
     <ClInclude Include="..\src\constants.hpp" />
@@ -145,7 +144,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OutputFile>.\Debug\Schiffbruch.exe</OutputFile>
-      <AdditionalDependencies>sfml-window-s-d.lib;sfml-system-s-d.lib;opengl32.lib;gdi32.lib;dsound.lib;winmm.lib;dxguid.lib;ddraw.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;sndfile.lib;openal32.lib;opengl32.lib;gdi32.lib;winmm.lib;dxguid.lib;ddraw.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x86;..\extlibs\lib</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalOptions>/ignore:4204 %(AdditionalOptions)</AdditionalOptions>
