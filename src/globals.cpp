@@ -6,33 +6,33 @@
 
 #include <SFML/Audio.hpp>
 
-BOOL	Spielzustand = 0;		// in welchem Zustand ist das Spiel?
-BOOL	LAnimation = true;		// Ist die Landschaftanimation angeschaltet?
-BOOL	Gitter;					// Gitternetz an/aus
+int		Spielzustand = 0;		// in welchem Zustand ist das Spiel?
+bool	LAnimation = true;		// Ist die Landschaftanimation angeschaltet?
+bool	Gitter;					// Gitternetz an/aus
 RECT	ScapeGrenze;			// Diese Koordinaten zeigen die Größe der Landschaft an
-SHORT	CursorTyp;				// Welcher Cursortyp?
-BOOL	Button0down;			// linke Maustaste gedrückt gehalten
-BOOL	Button1down;			// rechte Maustaste gedrückt gehalten
-SHORT	RouteLaenge;			// Länge
-SHORT	RoutePunkt;				// Aktueller Index in RouteKoor
-FLOAT	Schrittx, Schritty;		// Zum Figur laufen lassen
-SHORT	Bild, LastBild;			// Anzahl der Bilder in der Sekunde
+short	CursorTyp;				// Welcher Cursortyp?
+bool	Button0down;			// linke Maustaste gedrückt gehalten
+bool	Button1down;			// rechte Maustaste gedrückt gehalten
+short	RouteLaenge;			// Länge
+short	RoutePunkt;				// Aktueller Index in RouteKoor
+float	Schrittx, Schritty;		// Zum Figur laufen lassen
+short	Bild, LastBild;			// Anzahl der Bilder in der Sekunde
 RECT	rcRectdes, rcRectsrc;	// Ständig benötigte Variable zum Blitten
-SHORT	Tag, Stunden, Minuten;	// Wieviel Uhr (0-12h)
-CHAR	StdString[1024];		// Standard string
-CHAR	RohString[1024];		// Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
-SHORT	PapierText;				// Wieviel Papier? (in Pixel) -1 = Kein Text
-SHORT	HauptMenue;				// Welches Menü?
-SHORT	TwoClicks;				// Für Aktionen mit zwei Mausklicks
-FLOAT	Chance;					// Wie groß ist die Chance am Tag gerettet zu werden
-BOOL	BootsFahrt;				// Gerade mit dem Boot unterwegs?
-BOOL	Nacht;					// Wird die Tageszusammenfassung angezeigt?
-SHORT	Soundzustand;			// -1 = keine Soundkarte;0=kein Sound;1=Sound an
-SHORT	Frage;					// -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
-DOUBLE	pi = 3.1415926535;		// pi, was sonst
-SHORT	AbspannNr = 0;			// Zähler für Abspann
-SHORT	AbspannZustand = 0;		// Wo im Abspann
-BOOL	SchatzGef = false;		// wurde der Schatz gefunden
+short	Tag, Stunden, Minuten;	// Wieviel Uhr (0-12h)
+char	StdString[1024];		// Standard string
+char	RohString[1024];		// Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
+short	PapierText;				// Wieviel Papier? (in Pixel) -1 = Kein Text
+short	HauptMenue;				// Welches Menü?
+short	TwoClicks;				// Für Aktionen mit zwei Mausklicks
+float	Chance;					// Wie groß ist die Chance am Tag gerettet zu werden
+bool	BootsFahrt;				// Gerade mit dem Boot unterwegs?
+bool	Nacht;					// Wird die Tageszusammenfassung angezeigt?
+short	Soundzustand;			// -1 = keine Soundkarte;0=kein Sound;1=Sound an
+short	Frage;					// -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
+double	pi = 3.1415926535;		// pi, was sonst
+short	AbspannNr = 0;			// Zähler für Abspann
+short	AbspannZustand = 0;		// Wo im Abspann
+bool	SchatzGef = false;		// wurde der Schatz gefunden
 
 // Pathfinding
 short	Step, Steps;

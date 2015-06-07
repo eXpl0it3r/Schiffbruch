@@ -19,7 +19,7 @@ public:
 
 	short Refresh();
 	void Event(short Eventnr);
-	BOOL doInit();
+	bool doInit();
 
 private:
 	void process_events();

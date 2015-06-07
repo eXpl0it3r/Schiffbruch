@@ -1051,7 +1051,6 @@ namespace World
 	{
 		short i, j;
 
-
 		for (i = 0; i<FLUSSANZAHL; i++) for (j = 0; j<MAXFLUSS; j++)
 		{
 			if ((x == Flusslauf[i][j].x) && (y == Flusslauf[i][j].y)) return true;
@@ -1066,14 +1065,15 @@ namespace World
 		short		x0, y0, x1, x2, y1, y2;		// x2,y2 Koordinate des zu prüfenden Teils
 		bool		gefunden, fertig, Strand;
 		FLUSSLAUF	Flusstmp[MAXFLUSS];			// Zum zwischenspeichern des Versuchs
-		SHORT		Flusslaenge[FLUSSANZAHL];
+		short		Flusslaenge[FLUSSANZAHL];
 		short Laengetmp;
 
-		for (m = 0; m<FLUSSANZAHL; m++) for (j = 0; j<MAXFLUSS; j++)
-		{
-			Flusslauf[m][j].x = -1;
-			Flusslauf[m][j].y = -1;
-		}
+		for (m = 0; m<FLUSSANZAHL; m++)
+			for (j = 0; j<MAXFLUSS; j++)
+			{
+				Flusslauf[m][j].x = -1;
+				Flusslauf[m][j].y = -1;
+			}
 
 		for (m = 0; m<FLUSSANZAHL; m++)
 		{

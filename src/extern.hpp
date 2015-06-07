@@ -5,33 +5,33 @@
 
 #include <SFML/Audio.hpp>
 
-extern BOOL		Spielzustand;				// in welchem Zustand ist das Spiel?
-extern BOOL		LAnimation;					// Ist die Landschaftanimation angeschaltet?
-extern BOOL		Gitter;						// Gitternetz an/aus
+extern int		Spielzustand;				// in welchem Zustand ist das Spiel?
+extern bool		LAnimation;					// Ist die Landschaftanimation angeschaltet?
+extern bool		Gitter;						// Gitternetz an/aus
 extern RECT		ScapeGrenze;				// Diese Koordinaten zeigen die Größe der Landschaft an
-extern SHORT	CursorTyp;					// Welcher Cursortyp?
-extern BOOL		Button0down;				// linke Maustaste gedrückt gehalten
-extern BOOL		Button1down;				// rechte Maustaste gedrückt gehalten
-extern SHORT	RouteLaenge;				// Länge
-extern SHORT	RoutePunkt;					// Aktueller Index in RouteKoor
-extern FLOAT	Schrittx, Schritty;			// Zum Figur laufen lassen
-extern SHORT	Bild, LastBild;				// Anzahl der Bilder in der Sekunde
+extern short	CursorTyp;					// Welcher Cursortyp?
+extern bool		Button0down;				// linke Maustaste gedrückt gehalten
+extern bool		Button1down;				// rechte Maustaste gedrückt gehalten
+extern short	RouteLaenge;				// Länge
+extern short	RoutePunkt;					// Aktueller Index in RouteKoor
+extern float	Schrittx, Schritty;			// Zum Figur laufen lassen
+extern short	Bild, LastBild;				// Anzahl der Bilder in der Sekunde
 extern RECT		rcRectdes, rcRectsrc;		// Ständig benötigte Variable zum Blitten
-extern SHORT	Tag, Stunden, Minuten;		// Wieviel Uhr (0-12h)
-extern CHAR		StdString[1024];			// Standard string
-extern CHAR		RohString[1024];			// Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
-extern SHORT	PapierText;					// Wieviel Papier? (in Pixel) -1 = Kein Text
-extern SHORT	HauptMenue;					// Welches Menü?
-extern SHORT	TwoClicks;					// Für Aktionen mit zwei Mausklicks
-extern FLOAT	Chance;						// Wie groß ist die Chance am Tag gerettet zu werden
-extern BOOL		BootsFahrt;					// Gerade mit dem Boot unterwegs?
-extern BOOL		Nacht;						// Wird die Tageszusammenfassung angezeigt?
-extern SHORT	Soundzustand;				// -1 = keine Soundkarte;0=kein Sound;1=Sound an
-extern SHORT	Frage;						// -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
-extern DOUBLE	pi;							// pi, was sonst
-extern SHORT	AbspannNr;					// Zähler für Abspann
-extern SHORT	AbspannZustand;				// Wo im Abspann
-extern BOOL		SchatzGef;					// wurde der Schatz gefunden
+extern short	Tag, Stunden, Minuten;		// Wieviel Uhr (0-12h)
+extern char		StdString[1024];			// Standard string
+extern char		RohString[1024];			// Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
+extern short	PapierText;					// Wieviel Papier? (in Pixel) -1 = Kein Text
+extern short	HauptMenue;					// Welches Menü?
+extern short	TwoClicks;					// Für Aktionen mit zwei Mausklicks
+extern float	Chance;						// Wie groß ist die Chance am Tag gerettet zu werden
+extern bool		BootsFahrt;					// Gerade mit dem Boot unterwegs?
+extern bool		Nacht;						// Wird die Tageszusammenfassung angezeigt?
+extern short	Soundzustand;				// -1 = keine Soundkarte;0=kein Sound;1=Sound an
+extern short	Frage;						// -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
+extern double	pi;							// pi, was sonst
+extern short	AbspannNr;					// Zähler für Abspann
+extern short	AbspannZustand;				// Wo im Abspann
+extern bool		SchatzGef;					// wurde der Schatz gefunden
 
 extern short	Step, Steps;
 extern int  	LenMap[MAXXKACH][MAXYKACH];

@@ -2435,7 +2435,7 @@ namespace Game
 		ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
 		lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
-		BOOL Anitmp = LAnimation;
+		bool Anitmp = LAnimation;
 		bool Entdeckttmp[MAXXKACH][MAXYKACH];
 
 		LAnimation = false;
