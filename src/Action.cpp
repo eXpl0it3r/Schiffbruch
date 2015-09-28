@@ -11,6 +11,111 @@
 
 namespace Action
 {
+	void handler(short event)
+	{
+		if(event != Action::NOTHING)
+		{
+			Routing::MarkRoute(false);
+			RouteZiel.x = -1;
+			RouteZiel.y = -1;
+		}
+		switch(event)
+		{
+		case Action::NOTHING:
+			break;
+		case Action::SEARCH:
+			search();
+			break;
+		case Action::EAT:
+			eat();
+			break;
+		case Action::DRINK:
+			drink();
+			break;
+		case Action::LOG:
+			log();
+			break;
+		case Action::FIELD:
+			field();
+			break;
+		case Action::DAY_END:
+			day_end();
+			break;
+		case Action::RESCUED:
+			rescued();
+			break;
+		case Action::TENT:
+			tent();
+			break;
+		case Action::SLEEP:
+			sleep();
+			break;
+		case Action::CANCEL:
+			cancel();
+			break;
+		case Action::FISH:
+			fish();
+			break;
+		case Action::BOAT:
+			boat();
+			break;
+		case Action::UNDOCK:
+			undock();
+			break;
+		case Action::DOCK:
+			dock();
+			break;
+		case Action::PIPE:
+			pipe();
+			break;
+		case Action::DESTROY:
+			destroy();
+			break;
+		case Action::SOS_SIGN:
+			sos();
+			break;
+		case Action::HOUSE1:
+			house1();
+			break;
+		case Action::HOUSE2:
+			house2();
+			break;
+		case Action::HOUSE3:
+			house3();
+			break;
+		case Action::FIREPLACE:
+			fireplace();
+			break;
+		case Action::LIGHT:
+			light();
+			break;
+		case Action::LOOKOUT:
+			lookout();
+			break;
+		case Action::TREASURE:
+			treasure();
+			break;
+		case Action::INTRO:
+			intro();
+			break;
+		case Action::SLINGSHOT:
+			slingshot();
+			break;
+		case Action::QUIT:
+			quit();
+			break;
+		case Action::RESTART:
+			restart();
+			break;
+		case Action::DAY_RESTART:
+			day_restart();
+			break;
+		case Action::DEATH:
+			death();
+			break;
+		}
+	}
+
 	void intro()
 	{
 		short x;

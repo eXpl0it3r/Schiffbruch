@@ -41,6 +41,8 @@ namespace Action
 		DAY_RESTART = 30,
 	};
 
+	void handler(short event);
+
 	// Aktionen
 	void search();		// Kacheln durchsuchen					
 	void eat();			// Früchte essen		
