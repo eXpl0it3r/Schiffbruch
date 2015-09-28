@@ -24,6 +24,7 @@ Application::Application(const std::string& name, HINSTANCE instance_handle)
 	// Set globals
 	g_hInst = instance_handle;
 
+	Sound::Init();
 	Soundzustand = 1; // Activate sound
 
 	Direct::InitDDraw(m_window.getSystemHandle());

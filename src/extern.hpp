@@ -5,6 +5,8 @@
 
 #include <SFML/Audio.hpp>
 
+#include <vector>
+
 extern int		Spielzustand;				// in welchem Zustand ist das Spiel?
 extern bool		LAnimation;					// Ist die Landschaftanimation angeschaltet?
 extern bool		Gitter;						// Gitternetz an/aus
@@ -101,5 +103,5 @@ extern DDGAMMARAMP				 DDGammaOld;
 extern HINSTANCE			g_hInst;
 
 // Sound	
-extern sf::SoundBuffer		sound_buffers[25]; // Sound::COUNT - Wavedateispeicher
-extern sf::Sound			sound_players[25]; // Sound::COUNT
+extern std::vector<sf::SoundBuffer>	sound_buffers; // Sound::COUNT - Wavedateispeicher
+extern std::vector<sf::Sound>		sound_players; // Sound::COUNT

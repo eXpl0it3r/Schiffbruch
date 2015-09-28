@@ -2,6 +2,12 @@
 
 namespace Sound
 {
+	void Init()
+	{
+		sound_buffers.resize(25);
+		sound_players.resize(25);
+	}
+
 	void LoadSound(short Sound)
 	{
 		if(Soundzustand == -1) // Wenn keine Soundkarte vorhanden raus...
