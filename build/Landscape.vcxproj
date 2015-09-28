@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -73,12 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -144,7 +144,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OutputFile>.\Debug\Schiffbruch.exe</OutputFile>
-      <AdditionalDependencies>sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;sndfile.lib;openal32.lib;opengl32.lib;gdi32.lib;winmm.lib;dxguid.lib;ddraw.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;jpeg.lib;freetype.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;ogg.lib;vorbis.lib;vorbisfile.lib;vorbisenc.lib;flac.lib;sfml-system-s-d.lib;openal32.lib;opengl32.lib;winmm.lib;dxguid.lib;ddraw.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x86;..\extlibs\lib</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalOptions>/ignore:4204 %(AdditionalOptions)</AdditionalOptions>
@@ -190,7 +190,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <SubSystem>Windows</SubSystem>
       <OutputFile>.\Release\Schiffbruch.exe</OutputFile>
-      <AdditionalDependencies>sfml-window-s.lib;sfml-system-s.lib;opengl32.lib;gdi32.lib;dsound.lib;winmm.lib;dxguid.lib;ddraw.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s.lib;jpeg.lib;freetype.lib;sfml-window-s.lib;sfml-audio-s.lib;ogg.lib;vorbis.lib;vorbisfile.lib;vorbisenc.lib;flac.lib;sfml-system-s.lib;openal32.lib;opengl32.lib;winmm.lib;dxguid.lib;ddraw.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalLibraryDirectories>..\extlibs\lib</AdditionalLibraryDirectories>
     </Link>
