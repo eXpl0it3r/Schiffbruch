@@ -2,6 +2,9 @@
 
 namespace Sound
 {
+	std::vector<sf::SoundBuffer> sound_buffers; // Sound::COUNT - Wavedateispeicher
+	std::vector<sf::Sound>       sound_players; // Sound::COUNT
+
 	void Init()
 	{
 		sound_buffers.resize(25);

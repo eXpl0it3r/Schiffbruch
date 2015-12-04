@@ -4,6 +4,10 @@
 
 namespace Routing
 {
+	int LenMap[MAXXKACH][MAXYKACH];
+	ZWEID SaveRoute[MAXXKACH*MAXYKACH]; // Zum zwischenspeichern der Route
+	ZWEID NewPos; // Nur innerhalb des Pathfindings benutzt
+
 	void MarkRoute(bool Mark)
 	{
 		short i;

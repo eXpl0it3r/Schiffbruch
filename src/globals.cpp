@@ -13,11 +13,8 @@ bool	LAnimation = true;		// Ist die Landschaftanimation angeschaltet?
 bool	Gitter;					// Gitternetz an/aus
 RECT	ScapeGrenze;			// Diese Koordinaten zeigen die Größe der Landschaft an
 short	CursorTyp;				// Welcher Cursortyp?
-bool	Button0down;			// linke Maustaste gedrückt gehalten
-bool	Button1down;			// rechte Maustaste gedrückt gehalten
 short	RouteLaenge;			// Länge
 short	RoutePunkt;				// Aktueller Index in RouteKoor
-float	Schrittx, Schritty;		// Zum Figur laufen lassen
 short	Bild, LastBild;			// Anzahl der Bilder in der Sekunde
 RECT	rcRectdes, rcRectsrc;	// Ständig benötigte Variable zum Blitten
 short	Tag, Stunden, Minuten;	// Wieviel Uhr (0-12h)
@@ -31,14 +28,12 @@ bool	BootsFahrt;				// Gerade mit dem Boot unterwegs?
 bool	Nacht;					// Wird die Tageszusammenfassung angezeigt?
 short	Soundzustand;			// -1 = keine Soundkarte;0=kein Sound;1=Sound an
 short	Frage;					// -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
-double	pi = 3.1415926535;		// pi, was sonst
 short	AbspannNr = 0;			// Zähler für Abspann
 short	AbspannZustand = 0;		// Wo im Abspann
 bool	SchatzGef = false;		// wurde der Schatz gefunden
 
 // Pathfinding
 short	Step, Steps;
-int  	LenMap[MAXXKACH][MAXYKACH];
 
 //Bereiche
 //                             links,      oben,                      rechts,                             unten
@@ -73,9 +68,6 @@ MousePosition,						//     "    Mauskoordinaten
 RouteZiel, RouteStart,				// Koordinaten des Starts und des Endes der Route
 Route[MAXXKACH*MAXYKACH],			// Liste der Routenpunkte
 RouteKoor[2 * MAXXKACH*MAXYKACH],	// Liste der Routenkoordinaten
-SaveRoute[MAXXKACH*MAXYKACH],		// Zum zwischenspeichern der Route
-NewPos,								// Nur innerhalb des Pathfindings benutzt
-GuyPosScreenStart,					// Absolute StartPosition bei einem Schritt (Für CalcGuyKoor)
 SchatzPos;							// Hier ist der Schatz vergraben
 RGBSTRUCT rgbStruct;				// Hier werden die Farben eines Pixels zwischengespeichert
 GUY Guy;
@@ -83,10 +75,8 @@ BMP Bmp[BILDANZ];
 WAV Wav[25];						// Sound::COUNT
 ABSPANN AbspannListe[10][10];		// Namenabfolge im Abspann
 SCAPE Scape[MAXXKACH][MAXYKACH];
-FLUSSLAUF Flusslauf[FLUSSANZAHL][MAXFLUSS];
 
 // DirectDraw
-LPDIRECTDRAW4            lpDD = NULL;				// DirectDraw object
 LPDIRECTDRAWSURFACE4     lpDDSPrimary = NULL;		// DirectDraw primary surface
 LPDIRECTDRAWSURFACE4     lpDDSBack = NULL;			// DirectDraw back surface
 LPDIRECTDRAWSURFACE4     lpDDSMisc = NULL;			// DirectDraw Bilder surface
@@ -119,7 +109,3 @@ DDGAMMARAMP				 DDGammaOld;
 
 // Directinput
 HINSTANCE				g_hInst = NULL;
-
-// Sound
-std::vector<sf::SoundBuffer>	sound_buffers; // Sound::COUNT - Wavedateispeicher
-std::vector<sf::Sound>			sound_players; // Sound::COUNT

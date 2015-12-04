@@ -2244,8 +2244,7 @@ namespace Game
 		Bild = 0;
 		MousePosition.x = MAXX / 2;
 		MousePosition.y = MAXY / 2;
-		Button0down = false;
-		Button1down = false;
+		Direct::Reset();
 		SchatzPos.x = -1;
 		SchatzPos.y = -1;
 		SchatzGef = false;

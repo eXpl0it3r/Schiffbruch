@@ -15,6 +15,8 @@
 
 namespace Renderer
 {
+	double pi = 3.1415926535; // pi, was sonst
+
 	void Fade(short RP, short GP, short BP)
 	{
 		short blackloop;

@@ -11,6 +11,8 @@
 
 namespace World
 {
+	FLUSSLAUF Flusslauf[FLUSSANZAHL][MAXFLUSS];
+
 	void MakeRohString(short x, short y, short Objekt)
 	{
 		char TmpString[1024];

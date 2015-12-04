@@ -15,6 +15,9 @@
 
 namespace Math
 {
+	float Schrittx, Schritty; // Zum Figur laufen lassen
+	ZWEID GuyPosScreenStart; // Absolute StartPosition bei einem Schritt (Für CalcGuyKoor)
+
 	void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
 	{
 		ZWEID	Erg;						// Die angeklickte Kachel

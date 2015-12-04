@@ -14,6 +14,29 @@
 
 namespace Direct
 {
+	LPDIRECTDRAW4 lpDD = NULL; // DirectDraw object
+	bool          Button0down; // linke Maustaste gedrückt gehalten
+	bool          Button1down; // rechte Maustaste gedrückt gehalten
+
+	void finiObjects(void)
+	{
+		if(lpDD != nullptr)
+		{
+			if(lpDDSPrimary != nullptr)
+			{
+				lpDDSPrimary->Release();
+				lpDDSPrimary = nullptr;
+			}
+			if(lpDDPal != nullptr)
+			{
+				lpDDPal->Release();
+				lpDDPal = nullptr;
+			}
+			lpDD->Release();
+			lpDD = nullptr;
+		}
+	}
+
 	void InitDDraw(HWND hWnd)
 	{
 		DDSCAPS2     ddscaps;
@@ -176,6 +199,12 @@ namespace Direct
 			MessageBox(hWnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
 			DestroyWindow(hWnd);
 		}
+	}
+
+	void Reset()
+	{
+		Button0down = false;
+		Button1down = false;
 	}
 
 	void CheckMouse()

@@ -12,11 +12,8 @@ extern bool		LAnimation;					// Ist die Landschaftanimation angeschaltet?
 extern bool		Gitter;						// Gitternetz an/aus
 extern RECT		ScapeGrenze;				// Diese Koordinaten zeigen die Größe der Landschaft an
 extern short	CursorTyp;					// Welcher Cursortyp?
-extern bool		Button0down;				// linke Maustaste gedrückt gehalten
-extern bool		Button1down;				// rechte Maustaste gedrückt gehalten
 extern short	RouteLaenge;				// Länge
 extern short	RoutePunkt;					// Aktueller Index in RouteKoor
-extern float	Schrittx, Schritty;			// Zum Figur laufen lassen
 extern short	Bild, LastBild;				// Anzahl der Bilder in der Sekunde
 extern RECT		rcRectdes, rcRectsrc;		// Ständig benötigte Variable zum Blitten
 extern short	Tag, Stunden, Minuten;		// Wieviel Uhr (0-12h)
@@ -30,13 +27,11 @@ extern bool		BootsFahrt;					// Gerade mit dem Boot unterwegs?
 extern bool		Nacht;						// Wird die Tageszusammenfassung angezeigt?
 extern short	Soundzustand;				// -1 = keine Soundkarte;0=kein Sound;1=Sound an
 extern short	Frage;						// -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
-extern double	pi;							// pi, was sonst
 extern short	AbspannNr;					// Zähler für Abspann
 extern short	AbspannZustand;				// Wo im Abspann
 extern bool		SchatzGef;					// wurde der Schatz gefunden
 
 extern short	Step, Steps;
-extern int  	LenMap[MAXXKACH][MAXYKACH];
 
 // Should be const
 extern RECT		rcGesamt;
@@ -53,9 +48,6 @@ MousePosition,						//     "    Mauskoordinaten
 RouteZiel, RouteStart,				// Koordinaten des Starts und des Endes der Route
 Route[MAXXKACH*MAXYKACH],			// Liste der Routenpunkte
 RouteKoor[2 * MAXXKACH*MAXYKACH],	// Liste der Routenkoordinaten
-SaveRoute[MAXXKACH*MAXYKACH],		// Zum zwischenspeichern der Route
-NewPos,								// Nur innerhalb des Pathfindings benutzt
-GuyPosScreenStart,					// Absolute StartPosition bei einem Schritt (Für CalcGuyKoor)
 SchatzPos;							// Hier ist der Schatz vergraben
 
 extern RGBSTRUCT rgbStruct;				// Hier werden die Farben eines Pixels zwischengespeichert
@@ -64,11 +56,8 @@ extern BMP Bmp[BILDANZ];
 extern WAV Wav[25];						// Sound::COUNT;
 extern ABSPANN AbspannListe[10][10];	// Namenabfolge im Abspann
 extern SCAPE Scape[MAXXKACH][MAXYKACH];
-extern FLUSSLAUF Flusslauf[FLUSSANZAHL][MAXFLUSS];
-
 
 // DirectDraw
-extern LPDIRECTDRAW4            lpDD;				// DirectDraw object
 extern LPDIRECTDRAWSURFACE4     lpDDSPrimary;		// DirectDraw primary surface
 extern LPDIRECTDRAWSURFACE4     lpDDSBack;			// DirectDraw back surface
 extern LPDIRECTDRAWSURFACE4     lpDDSMisc;			// DirectDraw Bilder surface
@@ -101,7 +90,3 @@ extern DDGAMMARAMP				 DDGammaOld;
 
 // Directinput
 extern HINSTANCE			g_hInst;
-
-// Sound	
-extern std::vector<sf::SoundBuffer>	sound_buffers; // Sound::COUNT - Wavedateispeicher
-extern std::vector<sf::Sound>		sound_players; // Sound::COUNT
