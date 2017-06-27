@@ -22,5 +22,5 @@ private:
 	sf::Window m_window;
 
 	std::string m_name;
-	std::time_t m_time;			// Beginning of the second
+	time_t m_time; // Beginning of the second
 };

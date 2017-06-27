@@ -34,7 +34,7 @@ namespace Game
 		ofs.write(reinterpret_cast<char*>(TextBereich), sizeof(TextBereich));
 		ofs.write(reinterpret_cast<char*>(&SchatzGef), sizeof(SchatzGef));
 
-		for (short i = 0; i<BILDANZ; i++)
+		for (short i = 0; i < BILDANZ; i++)
 		{
 			ofs.write(reinterpret_cast<char*>(&Bmp[i].Animation), sizeof(Bmp[i].Animation));
 			ofs.write(reinterpret_cast<char*>(&Bmp[i].Phase), sizeof(Bmp[i].Phase));
@@ -45,8 +45,8 @@ namespace Game
 	bool LoadGame()
 	{
 		std::ifstream ifs("save.dat", std::ios::binary); // | ios::nocreate);
-		if (!ifs) return(false);
-		
+		if (!ifs) return (false);
+
 		ifs.read(reinterpret_cast<char*>(Scape), sizeof(Scape));
 		ifs.read(reinterpret_cast<char*>(&Guy), sizeof(Guy));
 		ifs.read(reinterpret_cast<char*>(&BootsFahrt), sizeof(BootsFahrt));
@@ -63,14 +63,14 @@ namespace Game
 		ifs.read(reinterpret_cast<char*>(&Tag), sizeof(Tag));
 		ifs.read(reinterpret_cast<char*>(TextBereich), sizeof(TextBereich));
 		ifs.read(reinterpret_cast<char*>(&SchatzGef), sizeof(SchatzGef));
-		
-		for (short i = 0; i<BILDANZ; i++)
+
+		for (short i = 0; i < BILDANZ; i++)
 		{
 			ifs.read(reinterpret_cast<char*>(&Bmp[i].Animation), sizeof(Bmp[i].Animation));
 			ifs.read(reinterpret_cast<char*>(&Bmp[i].Phase), sizeof(Bmp[i].Phase));
 			ifs.read(reinterpret_cast<char*>(&Bmp[i].First), sizeof(Bmp[i].First));
 		}
-		return(true);
+		return (true);
 	}
 
 	void InitStructs()
@@ -79,7 +79,7 @@ namespace Game
 
 		// BILD
 		// Standardbildinitialisierung
-		for (i = 0; i<BILDANZ; i++)
+		for (i = 0; i < BILDANZ; i++)
 		{
 			Bmp[i].Animation = false;
 			Bmp[i].Anzahl = 0;
@@ -97,7 +97,7 @@ namespace Game
 			Bmp[i].Breite = 0;
 			Bmp[i].Hoehe = 0;
 			Bmp[i].Sound = 0;
-			for (k = 0; k<BILDANZ; k++)
+			for (k = 0; k < BILDANZ; k++)
 				Bmp[i].Rohstoff[k] = 0;
 			Bmp[i].AkAnzahl = 0;
 			Bmp[i].First = true;
@@ -2166,11 +2166,12 @@ namespace Game
 		Bmp[MUSIK].rcDes.bottom = Bmp[MUSIK].rcDes.top + Bmp[MUSIK].Hoehe;
 		Bmp[MUSIK].Surface = lpDDSCredits;
 
-		for (i = 0; i<10; i++) for (k = 0; k<10; k++)
-		{
-			AbspannListe[i][k].Aktiv = false;
-			AbspannListe[i][k].Bild = -1;
-		}
+		for (i = 0; i < 10; i++)
+			for (k = 0; k < 10; k++)
+			{
+				AbspannListe[i][k].Aktiv = false;
+				AbspannListe[i][k].Bild = -1;
+			}
 		AbspannListe[0][0].Bild = PROGRAMMIERUNG;
 		AbspannListe[0][1].Aktiv = true; // nur den hier true setzen, löst dann alles andere aus
 		AbspannListe[0][1].Bild = DIRKPLATE;
@@ -2249,7 +2250,7 @@ namespace Game
 	void InitWaves()
 	{
 		// Sounds
-		for(short i = 0; i<Sound::COUNT; i++)
+		for (short i = 0; i < Sound::COUNT; i++)
 		{
 			Wav[i].Dateiname = "sounds/klick.wav";
 			Wav[i].Loop = false;
@@ -2331,7 +2332,7 @@ namespace Game
 		Wav[Sound::INVENTION].Volume = 95;
 
 		// Testweise alle Sounds gleich in den Speicher laden
-		for(short i = 1; i<Sound::COUNT; i++)
+		for (short i = 1; i < Sound::COUNT; i++)
 			Sound::LoadSound(i);
 	}
 
@@ -2339,11 +2340,11 @@ namespace Game
 	{
 		short x, y;
 		bool LoadOK = false;
-		
-		Game::InitStructs();
-		Game::InitWaves();
-		
-		if (!neu) LoadOK = Game::LoadGame();
+
+		InitStructs();
+		InitWaves();
+
+		if (!neu) LoadOK = LoadGame();
 
 		if ((!LoadOK) || (neu))
 		{
@@ -2398,10 +2399,10 @@ namespace Game
 			Guy.Pos.x = 1;
 			Guy.Pos.y = MAXYKACH / 2;
 			Guy.PosScreen.x =
-				(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
+			(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
 				Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2;
 			Guy.PosScreen.y =
-				(Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
+			(Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2;
 
 			Camera.x = Guy.PosScreen.x - static_cast<short>(rcGesamt.right / 2);
@@ -2412,7 +2413,9 @@ namespace Game
 			BootsFahrt = false;
 			if (!BootsFahrt) World::ChangeBootsFahrt();
 
-			Tag = 1; Stunden = 0; Minuten = 0;
+			Tag = 1;
+			Stunden = 0;
+			Minuten = 0;
 
 			Spielzustand = State::INTRO;
 			Guy.Aktiv = false;
@@ -2434,20 +2437,20 @@ namespace Game
 
 		LAnimation = false;
 		// Schatzvergraben und Schatzkarte malen
-		for (y = 0; y<MAXYKACH; y++) for (x = 0; x<MAXXKACH; x++)
-		{
-			Entdeckttmp[x][y] = Scape[x][y].Entdeckt;
-			Scape[x][y].Entdeckt = true;
-		}
-		
+		for (y = 0; y < MAXYKACH; y++)
+			for (x = 0; x < MAXXKACH; x++)
+			{
+				Entdeckttmp[x][y] = Scape[x][y].Entdeckt;
+				Scape[x][y].Entdeckt = true;
+			}
+
 		World::Generate(); // Einmal vor dem Schatz schon entdeckt malen
 		World::Schatz();
 
-		for (y = 0; y<MAXYKACH; y++) for (x = 0; x<MAXXKACH; x++) Scape[x][y].Entdeckt = Entdeckttmp[x][y];
+		for (y = 0; y < MAXYKACH; y++) for (x = 0; x < MAXXKACH; x++) Scape[x][y].Entdeckt = Entdeckttmp[x][y];
 		World::Entdecken();
 		LAnimation = Anitmp;
 		World::Generate(); // Und nochmal ohne das die Gegend entdeckt ist
 		Guy.PosAlt = Guy.PosScreen;
 	}
-
 } // namespace Game

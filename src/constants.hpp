@@ -1,24 +1,24 @@
 #pragma once
 
-const int KXPIXEL = 54;					// Breite der Kacheln
-const int KYPIXEL = 44;					// Hoehe der Kacheln
-const unsigned int S1XPIXEL = 20;		// Breite der Schrift1
-const unsigned int S1YPIXEL = 20;		// Höhe der Schrift1
-const unsigned int S1ABSTAND = 13;		// Abstand zum nächsten Buchstaben
-const unsigned int S2XPIXEL = 10;		// Breite der Schrift2
-const unsigned int S2YPIXEL = 15;		// Höhe der Schrift2
-const unsigned int S2ABSTAND = 10;		// Abstand zum nächsten Buchstaben
-const unsigned int MAXXKACH = 60;		// Anzahl der Kacheln
+const int KXPIXEL = 54; // Breite der Kacheln
+const int KYPIXEL = 44; // Hoehe der Kacheln
+const unsigned int S1XPIXEL = 20; // Breite der Schrift1
+const unsigned int S1YPIXEL = 20; // Höhe der Schrift1
+const unsigned int S1ABSTAND = 13; // Abstand zum nächsten Buchstaben
+const unsigned int S2XPIXEL = 10; // Breite der Schrift2
+const unsigned int S2YPIXEL = 15; // Höhe der Schrift2
+const unsigned int S2ABSTAND = 10; // Abstand zum nächsten Buchstaben
+const unsigned int MAXXKACH = 60; // Anzahl der Kacheln
 const unsigned int MAXYKACH = 60;
-const unsigned int MAXSCAPEX = 3360;	// Größe der Scapesurface
+const unsigned int MAXSCAPEX = 3360; // Größe der Scapesurface
 const unsigned int MAXSCAPEY = 1700;
-const unsigned int MAXX = 1280;			// Bildschirmauflösung
+const unsigned int MAXX = 1280; // Bildschirmauflösung
 const unsigned int MAXY = 720;
-const unsigned int GIPFEL = 3;			// Hoehe des Gipfels
-const unsigned int MAXFLUSS = 1000;		// Maximale Flusslänge
-const unsigned int FLUSSANZAHL = 1;		// Wieviele Flüsse? Mehr als 1 funktioniert seltsamerweise nicht mehr..
-const unsigned int SKARTEX = 370;		// Schatzkartenbreite
-const unsigned int SKARTEY = 370;		// Schatzkartenhöhe
+const unsigned int GIPFEL = 3; // Hoehe des Gipfels
+const unsigned int MAXFLUSS = 1000; // Maximale Flusslänge
+const unsigned int FLUSSANZAHL = 1; // Wieviele Flüsse? Mehr als 1 funktioniert seltsamerweise nicht mehr..
+const unsigned int SKARTEX = 370; // Schatzkartenbreite
+const unsigned int SKARTEY = 370; // Schatzkartenhöhe
 
 enum Tiles
 {
@@ -38,7 +38,7 @@ enum Tiles
 	MUENDUNG3 = MEERWELLEN + 13,
 	MUENDUNG4 = MEERWELLEN + 14,
 	QUELLE1 = MEERWELLEN + 15,
-	QUELLE2 = MEERWELLEN + 16,	// Wenn hier was eingefügt wird, auch die FillRohr ändern!!
+	QUELLE2 = MEERWELLEN + 16, // Wenn hier was eingefügt wird, auch die FillRohr ändern!!
 	QUELLE3 = MEERWELLEN + 17,
 	QUELLE4 = MEERWELLEN + 18,
 	SCHLEUSE1 = MEERWELLEN + 19,

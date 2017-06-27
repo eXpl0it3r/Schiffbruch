@@ -3,7 +3,7 @@
 namespace Sound
 {
 	std::vector<sf::SoundBuffer> sound_buffers; // Sound::COUNT - Wavedateispeicher
-	std::vector<sf::Sound>       sound_players; // Sound::COUNT
+	std::vector<sf::Sound> sound_players; // Sound::COUNT
 
 	void Init()
 	{
@@ -13,10 +13,10 @@ namespace Sound
 
 	void LoadSound(short Sound)
 	{
-		if(Soundzustand == -1) // Wenn keine Soundkarte vorhanden raus...
+		if (Soundzustand == -1) // Wenn keine Soundkarte vorhanden raus...
 			return;
 
-		if(!sound_buffers[Sound].loadFromFile(Wav[Sound].Dateiname))
+		if (!sound_buffers[Sound].loadFromFile(Wav[Sound].Dateiname))
 			sf::err() << "Couldn't load sound file '" << Wav[Sound].Dateiname << "'!" << std::endl;
 
 		sound_players[Sound].setBuffer(sound_buffers[Sound]);
@@ -26,7 +26,7 @@ namespace Sound
 
 	void PlaySound(short Sound, short Volume)
 	{
-		if((Sound == 0) || (Soundzustand <= 0) || (sound_players[Sound].getStatus() == sf::Sound::Playing))
+		if ((Sound == 0) || (Soundzustand <= 0) || (sound_players[Sound].getStatus() == sf::Sound::Playing))
 			return;
 
 		sound_players[Sound].play();
@@ -34,10 +34,9 @@ namespace Sound
 
 	void StopSound(short Sound)
 	{
-		if((Sound == 0) || (Soundzustand <= 0))
+		if ((Sound == 0) || (Soundzustand <= 0))
 			return;
 
 		sound_players[Sound].stop();
 	}
-
 } // namespace Sound

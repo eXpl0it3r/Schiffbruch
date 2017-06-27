@@ -5,7 +5,7 @@
 namespace Routing
 {
 	int LenMap[MAXXKACH][MAXYKACH];
-	ZWEID SaveRoute[MAXXKACH*MAXYKACH]; // Zum zwischenspeichern der Route
+	ZWEID SaveRoute[MAXXKACH * MAXYKACH]; // Zum zwischenspeichern der Route
 	ZWEID NewPos; // Nur innerhalb des Pathfindings benutzt
 
 	void MarkRoute(bool Mark)
@@ -20,33 +20,56 @@ namespace Routing
 	{
 		switch (Dir)
 		{
-		case 2: { NewPos.x++;      NewPos.y++;     Dir = 4; break; }
-		case 4: { NewPos.x--;      NewPos.y++;     Dir = 8; break; }
-		case 8:  { NewPos.x--;      NewPos.y--;     Dir = 1; break; }
-		case 1: { NewPos.x++;	    NewPos.y--;     Dir = 2; break; }
-		};
+		case 2:
+			{
+				NewPos.x++;
+				NewPos.y++;
+				Dir = 4;
+				break;
+			}
+		case 4:
+			{
+				NewPos.x--;
+				NewPos.y++;
+				Dir = 8;
+				break;
+			}
+		case 8:
+			{
+				NewPos.x--;
+				NewPos.y--;
+				Dir = 1;
+				break;
+			}
+		case 1:
+			{
+				NewPos.x++;
+				NewPos.y--;
+				Dir = 2;
+				break;
+			}
+		}
 		return Dir;
 	}
 
 	bool FindTheWay()
 	{
-		short	Dir;
+		short Dir;
 
-		ZWEID	Plist[MAXXKACH*MAXYKACH]; // Besuchte Punkte merken
-		short	Llist[MAXXKACH*MAXYKACH]; // Länge vom Punkt zum Ziel
+		ZWEID Plist[MAXXKACH * MAXYKACH]; // Besuchte Punkte merken
+		short Llist[MAXXKACH * MAXYKACH]; // Länge vom Punkt zum Ziel
 
-		ZWEID	ShPos{0, 0};
-		ZWEID	BestLine{0, 0};
-		ZWEID	ShortKoor{0, 0};
+		ZWEID ShPos{0, 0};
+		ZWEID BestLine{0, 0};
+		ZWEID ShortKoor{0, 0};
 
-		for (short AI = 0; AI<MAXYKACH; AI++)
-			for (short BI = 0; BI<MAXXKACH; BI++)
+		for (short AI = 0; AI < MAXYKACH; AI++)
+			for (short BI = 0; BI < MAXXKACH; BI++)
 			{
 				LenMap[AI][BI] = 65535;
-				Llist[AI*BI] = 0;
-				Plist[AI*BI].x = 0;
-				Plist[AI*BI].y = 0;
-
+				Llist[AI * BI] = 0;
+				Plist[AI * BI].x = 0;
+				Plist[AI * BI].y = 0;
 			}
 		short ShortEntf = -1;
 		RouteLaenge = 0;
@@ -55,7 +78,7 @@ namespace Routing
 		Plist[0] = RouteStart;
 		short DiffX = (RouteStart.x - RouteZiel.x);
 		short DiffY = (RouteStart.y - RouteZiel.y);
-		Llist[0] = (DiffX*DiffX) + (DiffY*DiffY);
+		Llist[0] = (DiffX * DiffX) + (DiffY * DiffY);
 
 		LenMap[RouteStart.x][RouteStart.y] = 0;
 		ZWEID Pos = RouteStart;
@@ -67,7 +90,7 @@ namespace Routing
 			short Shortest = 0;
 			for (short CI = 0; CI <= PCnt - 1; CI++)
 			{
-				if (Llist[CI]<Llist[Shortest])
+				if (Llist[CI] < Llist[Shortest])
 				{
 					Shortest = CI;
 				}
@@ -86,8 +109,9 @@ namespace Routing
 			Llist[Shortest] = Llist[PCnt - 1];
 			PCnt--;
 			NewPos = Pos;
-			Dir = 2; NewPos.y--;		// Oben nachschauen anfangen
-			for (short BI = 0; BI <= 3; BI++)	// In jede Richtung schauen
+			Dir = 2;
+			NewPos.y--; // Oben nachschauen anfangen
+			for (short BI = 0; BI <= 3; BI++) // In jede Richtung schauen
 			{
 				// ist das Feld noch nicht besucht und frei?
 				if ((LenMap[NewPos.x][NewPos.y] == 65535) &&
@@ -100,7 +124,7 @@ namespace Routing
 					// Die Entfernung in die Liste aufnehmen
 					DiffX = (NewPos.x - RouteZiel.x);
 					DiffY = (NewPos.y - RouteZiel.y);
-					Llist[PCnt] = (DiffX*DiffX) + (DiffY*DiffY);
+					Llist[PCnt] = (DiffX * DiffX) + (DiffY * DiffY);
 					PCnt++;
 				}
 				// Ziel erreicht?
@@ -118,9 +142,9 @@ namespace Routing
 			RouteZiel.y = ShortKoor.y;
 
 			if (FindTheWay()) return true;
-			else return false;
+			return false;
 		}
-		else if (GoalReached) // Punkt rückwärts durchgehen und Abkürzungen finden
+		if (GoalReached) // Punkt rückwärts durchgehen und Abkürzungen finden
 		{
 			Pos = RouteZiel;
 			ZWEID LineStartPos = Pos;
@@ -128,10 +152,11 @@ namespace Routing
 			{
 				NewPos = Pos;
 				int ShStep = 65535;
-				Dir = 2; NewPos.y--; // Zuerst nach oben probieren
+				Dir = 2;
+				NewPos.y--; // Zuerst nach oben probieren
 				for (short AI = 0; AI <= 3; AI++)
 				{
-					if (LenMap[NewPos.x][NewPos.y]<ShStep)
+					if (LenMap[NewPos.x][NewPos.y] < ShStep)
 					{
 						ShStep = LenMap[NewPos.x][NewPos.y];
 						ShPos = NewPos;
@@ -168,7 +193,7 @@ namespace Routing
 
 		if (!save)
 		{
-			for (i = 0; i<RouteLaenge; i++)
+			for (i = 0; i < RouteLaenge; i++)
 			{
 				if ((x == Route[i].x) && (y == Route[i].y)) return true;
 			}
@@ -189,16 +214,16 @@ namespace Routing
 
 		Pos.x = RouteStart.x;
 		Pos.y = RouteStart.y;
-		for (short i = 0; i<RouteLaenge; i++) // Alle Teile vom Start durchgehen
+		for (short i = 0; i < RouteLaenge; i++) // Alle Teile vom Start durchgehen
 		{
 			SaveRoute[i].x = Pos.x;
 			SaveRoute[i].y = Pos.y;
 
 			RouteKoor[2 * i].x =
-				(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
+			(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
 				Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
 			RouteKoor[2 * i].y =
-				(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
+			(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
 				Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
 
 			NewPos.x = Pos.x;
@@ -213,34 +238,34 @@ namespace Routing
 					{
 					case 0:
 						RouteKoor[2 * i + 1].x =
-							(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x +
+						(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x +
 							Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
 						RouteKoor[2 * i + 1].y =
-							(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
+						(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
 							Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y) / 2;
 						break;
 					case 1:
 						RouteKoor[2 * i + 1].x =
-							(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x +
+						(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x +
 							Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x) / 2;
 						RouteKoor[2 * i + 1].y =
-							(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y +
+						(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y +
 							Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
 						break;
 					case 2:
 						RouteKoor[2 * i + 1].x =
-							(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x +
+						(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x +
 							Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x) / 2;
 						RouteKoor[2 * i + 1].y =
-							(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y +
+						(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y +
 							Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y) / 2;
 						break;
 					case 3:
 						RouteKoor[2 * i + 1].x =
-							(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
+						(Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
 							Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x) / 2;
 						RouteKoor[2 * i + 1].y =
-							(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y +
+						(Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y +
 							Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y) / 2;
 						break;
 					}
@@ -274,10 +299,9 @@ namespace Routing
 		// Die Animation gleich anschließend starten
 		Guy.Aktiv = true;
 		if ((BootsFahrt) && (Guy.Zustand != GUYSCHWIMMEN)) Guy.Zustand = GUYBOOTLINKS;
-		else if (Guy.Zustand != GUYSCHWIMMEN)              Guy.Zustand = GUYLINKS;
+		else if (Guy.Zustand != GUYSCHWIMMEN) Guy.Zustand = GUYLINKS;
 		RoutePunkt = -1;
 		Steps = 0;
 		Step = 0;
 	}
-
 } // namespace Route

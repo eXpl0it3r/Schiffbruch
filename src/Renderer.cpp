@@ -19,7 +19,7 @@ namespace Renderer
 
 	void Fade(short RP, short GP, short BP)
 	{
-		for (short blackloop = 0; blackloop<256; blackloop++)
+		for (short blackloop = 0; blackloop < 256; blackloop++)
 		{
 			DDGammaRamp.red[blackloop] = DDGammaOld.red[blackloop] * RP / 100;
 			DDGammaRamp.green[blackloop] = DDGammaOld.green[blackloop] * GP / 100;
@@ -44,28 +44,27 @@ namespace Renderer
 	{
 		ZWEID Erg;
 
-		for (short y = 0; y<MAXYKACH; y++)
-			for (short x = 0; x<MAXXKACH; x++)
+		for (short y = 0; y < MAXYKACH; y++)
+			for (short x = 0; x < MAXXKACH; x++)
 			{
 				// Die in Betracht kommenden Kacheln rausfinden
-				if ((PosX >	Scape[x][y].xScreen) && (PosX < Scape[x][y].xScreen + KXPIXEL) &&
+				if ((PosX > Scape[x][y].xScreen) && (PosX < Scape[x][y].xScreen + KXPIXEL) &&
 					(PosY > Scape[x][y].yScreen) && (PosY < Scape[x][y].yScreen + KYPIXEL))
 				{
-
 					if ((Math::InDreieck(PosX, PosY,
-						Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][0].x,
-						Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][0].y,
-						Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][1].x,
-						Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][1].y,
-						Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][3].x,
-						Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][3].y)) ||
+					                     Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][0].x,
+					                     Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][0].y,
+					                     Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][1].x,
+					                     Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][1].y,
+					                     Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][3].x,
+					                     Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][3].y)) ||
 						(Math::InDreieck(PosX, PosY,
-						Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][2].x,
-						Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][2].y,
-						Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][1].x,
-						Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][1].y,
-						Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][3].x,
-						Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][3].y)))
+						                 Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][2].x,
+						                 Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][2].y,
+						                 Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][1].x,
+						                 Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][1].y,
+						                 Scape[x][y].xScreen + EckKoor[Scape[x][y].Typ][3].x,
+						                 Scape[x][y].yScreen + EckKoor[Scape[x][y].Typ][3].y)))
 					{
 						Erg.x = x;
 						Erg.y = y;
@@ -147,7 +146,7 @@ namespace Renderer
 			hr = lpDDSNach->GetBltStatus(/*DDGBS_ISBLTDONE |*/ DDGBS_CANBLT);
 
 			if (hr == DD_OK) break;
-			else Sleep(1);
+			Sleep(1);
 
 			if (z == 1000)
 			{
@@ -160,7 +159,7 @@ namespace Renderer
 		{
 			z++;
 			if (Transp) hr = lpDDSNach->Blt(&rcRectdes, lpDDSVon, &rcRectsrc, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
-			else		hr = lpDDSNach->Blt(&rcRectdes, lpDDSVon, &rcRectsrc, DDBLT_WAIT, nullptr);
+			else hr = lpDDSNach->Blt(&rcRectdes, lpDDSVon, &rcRectsrc, DDBLT_WAIT, nullptr);
 			if (hr != DDERR_WASSTILLDRAWING)
 				break;
 			if (z == 1000)
@@ -173,15 +172,15 @@ namespace Renderer
 
 	void PutPixel(short x, short y, DWORD color, LPDDSURFACEDESC2 ddsd)
 	{
-		WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
+		WORD* pixels = static_cast<WORD *>(ddsd->lpSurface);
 		// DWORD pitch = ddsd->dwWidth+2;
 		DWORD pitch = ddsd->lPitch >> 1;
-		pixels[y*pitch + x * 2] = static_cast<WORD>(color);
+		pixels[y * pitch + x * 2] = static_cast<WORD>(color);
 	}
 
 	void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd)
 	{
-		WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
+		WORD* pixels = static_cast<WORD *>(ddsd->lpSurface);
 		// DWORD pitch = ddsd->dwWidth;
 		DWORD pitch = ddsd->lPitch >> 1;
 		DWORD color = pixels[y * pitch + x * 2];
@@ -193,15 +192,16 @@ namespace Renderer
 	{
 		short Phase;
 
-		if (Frucht == -1) Phase = Bmp[i].Phase; else Phase = Frucht;
+		if (Frucht == -1) Phase = Bmp[i].Phase;
+		else Phase = Frucht;
 		rcRectsrc = Bmp[i].rcSrc;
 		if (!Reverse)
 		{
-			rcRectsrc.top += Phase*(Bmp[i].Hoehe);
+			rcRectsrc.top += Phase * (Bmp[i].Hoehe);
 		}
 		else
 		{
-			rcRectsrc.top = Bmp[i].rcSrc.top + (Bmp[i].Anzahl - 1)*Bmp[i].Hoehe - Phase*Bmp[i].Hoehe;
+			rcRectsrc.top = Bmp[i].rcSrc.top + (Bmp[i].Anzahl - 1) * Bmp[i].Hoehe - Phase * Bmp[i].Hoehe;
 		}
 		rcRectsrc.bottom = rcRectsrc.top + (Bmp[i].Hoehe);
 		rcRectdes.left = x;
@@ -214,8 +214,8 @@ namespace Renderer
 
 	void ZeichneObjekte()
 	{
-		for (short y = 0; y<MAXYKACH; y++)
-			for (short x = 0; x<MAXXKACH; x++)
+		for (short y = 0; y < MAXYKACH; y++)
+			for (short x = 0; x < MAXXKACH; x++)
 			{
 				bool Guyzeichnen = false;
 				if ((Guy.Pos.x == x) && (Guy.Pos.y == y)) Guyzeichnen = true;
@@ -226,7 +226,8 @@ namespace Renderer
 					(Scape[x][y].yScreen > Camera.y + rcSpielflaeche.top - KYPIXEL) &&
 					(Scape[x][y].yScreen < Camera.y + rcSpielflaeche.bottom + KYPIXEL) &&
 					(Scape[x][y].Entdeckt) &&
-					((Scape[x][y].Markiert) || (Scape[x][y].Objekt != -1) || (Guyzeichnen)))) continue;
+					((Scape[x][y].Markiert) || (Scape[x][y].Objekt != -1) || (Guyzeichnen))))
+					continue;
 
 				if (Scape[x][y].Markiert) // Die Rahmen um die markierten Kacheln malen
 				{
@@ -260,13 +261,12 @@ namespace Renderer
 					}
 
 					ZeichneBilder(Scape[x][y].xScreen + Scape[x][y].ObPos.x - Camera.x,
-						Scape[x][y].yScreen + Scape[x][y].ObPos.y - Camera.y,
-						Scape[x][y].Objekt, rcSpielflaeche, Scape[x][y].Reverse,
-						static_cast<short>(Scape[x][y].Phase));
+					              Scape[x][y].yScreen + Scape[x][y].ObPos.y - Camera.y,
+					              Scape[x][y].Objekt, rcSpielflaeche, Scape[x][y].Reverse,
+					              static_cast<short>(Scape[x][y].Phase));
 				}
 				else
 				{
-
 					if (((Scape[x][y].Objekt >= BAUM1) && (Scape[x][y].Objekt <= BAUM4DOWN)) ||
 						(Scape[x][y].Objekt == BAUMGROSS) || (Scape[x][y].Objekt == FEUER) ||
 						(Scape[x][y].Objekt == WRACK) || (Scape[x][y].Objekt == WRACK2) ||
@@ -293,9 +293,9 @@ namespace Renderer
 						}
 
 						ZeichneBilder(Scape[x][y].xScreen + Scape[x][y].ObPos.x - Camera.x,
-							Scape[x][y].yScreen + Scape[x][y].ObPos.y - Camera.y,
-							Scape[x][y].Objekt, rcSpielflaeche, false,
-							static_cast<short>(Scape[x][y].Phase));
+						              Scape[x][y].yScreen + Scape[x][y].ObPos.y - Camera.y,
+						              Scape[x][y].Objekt, rcSpielflaeche, false,
+						              static_cast<short>(Scape[x][y].Phase));
 					}
 				}
 				if (Guyzeichnen) ZeichneGuy();
@@ -309,19 +309,20 @@ namespace Renderer
 			if (Guy.Zustand == GUYSCHIFF)
 			{
 				ZeichneBilder(Guy.PosScreen.x - 30 - Camera.x,
-					Guy.PosScreen.y - 28 - Camera.y,
-					Guy.Zustand, rcSpielflaeche, false, -1);
+				              Guy.PosScreen.y - 28 - Camera.y,
+				              Guy.Zustand, rcSpielflaeche, false, -1);
 			}
 			else
 			{
 				ZeichneBilder(Guy.PosScreen.x - (Bmp[Guy.Zustand].Breite) / 2 - Camera.x,
-					Guy.PosScreen.y - (Bmp[Guy.Zustand].Hoehe) / 2 - Camera.y,
-					Guy.Zustand, rcSpielflaeche, false, -1);
+				              Guy.PosScreen.y - (Bmp[Guy.Zustand].Hoehe) / 2 - Camera.y,
+				              Guy.Zustand, rcSpielflaeche, false, -1);
 			}
 		}
-		else ZeichneBilder(Guy.PosScreen.x - (Bmp[Guy.Zustand].Breite) / 2 - Camera.x,
-			Guy.PosScreen.y - (Bmp[Guy.Zustand].Hoehe) - Camera.y,
-			Guy.Zustand, rcSpielflaeche, false, -1);
+		else
+			ZeichneBilder(Guy.PosScreen.x - (Bmp[Guy.Zustand].Breite) / 2 - Camera.x,
+			              Guy.PosScreen.y - (Bmp[Guy.Zustand].Hoehe) - Camera.y,
+			              Guy.Zustand, rcSpielflaeche, false, -1);
 		// Sound abspielen
 		if (Guy.Aktiv) Sound::PlaySound(Bmp[Guy.Zustand].Sound, 100);
 	}
@@ -399,73 +400,79 @@ namespace Renderer
 		Blitten(lpDDSPanel, lpDDSBack, true);
 
 		// Gitternetzknopf
-		if (Gitter) Bmp[BUTTGITTER].Phase = 1; else Bmp[BUTTGITTER].Phase = 0;
+		if (Gitter) Bmp[BUTTGITTER].Phase = 1;
+		else Bmp[BUTTGITTER].Phase = 0;
 		ZeichneBilder(static_cast<short>(Bmp[BUTTGITTER].rcDes.left),
-			static_cast<short>(Bmp[BUTTGITTER].rcDes.top),
-			BUTTGITTER, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTGITTER].rcDes.top),
+		              BUTTGITTER, rcPanel, false, -1);
 
 		// SOUNDknopf
-		if ((Soundzustand == 0) || (Soundzustand == -1)) Bmp[BUTTSOUND].Phase = 1; else Bmp[BUTTSOUND].Phase = 0;
+		if ((Soundzustand == 0) || (Soundzustand == -1)) Bmp[BUTTSOUND].Phase = 1;
+		else Bmp[BUTTSOUND].Phase = 0;
 		ZeichneBilder(static_cast<short>(Bmp[BUTTSOUND].rcDes.left),
-			static_cast<short>(Bmp[BUTTSOUND].rcDes.top),
-			BUTTSOUND, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTSOUND].rcDes.top),
+		              BUTTSOUND, rcPanel, false, -1);
 
 		// ANIMATIONknopf
-		if (!LAnimation) Bmp[BUTTANIMATION].Phase = 1; else Bmp[BUTTANIMATION].Phase = 0;
+		if (!LAnimation) Bmp[BUTTANIMATION].Phase = 1;
+		else Bmp[BUTTANIMATION].Phase = 0;
 		ZeichneBilder(static_cast<short>(Bmp[BUTTANIMATION].rcDes.left),
-			static_cast<short>(Bmp[BUTTANIMATION].rcDes.top),
-			BUTTANIMATION, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTANIMATION].rcDes.top),
+		              BUTTANIMATION, rcPanel, false, -1);
 
 		// BEENDENknopf
 		ZeichneBilder(static_cast<short>(Bmp[BUTTBEENDEN].rcDes.left),
-			static_cast<short>(Bmp[BUTTBEENDEN].rcDes.top),
-			BUTTBEENDEN, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTBEENDEN].rcDes.top),
+		              BUTTBEENDEN, rcPanel, false, -1);
 
 		// NEUknopf
 		ZeichneBilder(static_cast<short>(Bmp[BUTTNEU].rcDes.left),
-			static_cast<short>(Bmp[BUTTNEU].rcDes.top),
-			BUTTNEU, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTNEU].rcDes.top),
+		              BUTTNEU, rcPanel, false, -1);
 
 		// TAGNEUknopf
 		ZeichneBilder(static_cast<short>(Bmp[BUTTTAGNEU].rcDes.left),
-			static_cast<short>(Bmp[BUTTTAGNEU].rcDes.top),
-			BUTTTAGNEU, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTTAGNEU].rcDes.top),
+		              BUTTTAGNEU, rcPanel, false, -1);
 
 		// Aktionsknopf
 		if (HauptMenue == Menu::ACTION) Bmp[BUTTAKTION].Phase = Bmp[BUTTAKTION].Anzahl;
 		else if (Bmp[BUTTAKTION].Phase == Bmp[BUTTAKTION].Anzahl) Bmp[BUTTAKTION].Phase = 0;
 		ZeichneBilder(static_cast<short>(Bmp[BUTTAKTION].rcDes.left),
-			static_cast<short>(Bmp[BUTTAKTION].rcDes.top),
-			BUTTAKTION, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTAKTION].rcDes.top),
+		              BUTTAKTION, rcPanel, false, -1);
 
 		// BauKnopf
 		if (HauptMenue == Menu::BUILD) Bmp[BUTTBAUEN].Phase = Bmp[BUTTBAUEN].Anzahl;
 		else if (Bmp[BUTTBAUEN].Phase == Bmp[BUTTBAUEN].Anzahl) Bmp[BUTTBAUEN].Phase = 0;
 		ZeichneBilder(static_cast<short>(Bmp[BUTTBAUEN].rcDes.left),
-			static_cast<short>(Bmp[BUTTBAUEN].rcDes.top),
-			BUTTBAUEN, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTBAUEN].rcDes.top),
+		              BUTTBAUEN, rcPanel, false, -1);
 
 		// Inventarknopf
 		if (HauptMenue == Menu::INVENTORY) Bmp[BUTTINVENTAR].Phase = Bmp[BUTTINVENTAR].Anzahl;
 		else if (Bmp[BUTTINVENTAR].Phase == Bmp[BUTTINVENTAR].Anzahl) Bmp[BUTTINVENTAR].Phase = 0;
 		ZeichneBilder(static_cast<short>(Bmp[BUTTINVENTAR].rcDes.left),
-			static_cast<short>(Bmp[BUTTINVENTAR].rcDes.top),
-			BUTTINVENTAR, rcPanel, false, -1);
+		              static_cast<short>(Bmp[BUTTINVENTAR].rcDes.top),
+		              BUTTINVENTAR, rcPanel, false, -1);
 
 		// WEITERknopf
-		if (Bmp[BUTTWEITER].Phase != -1) ZeichneBilder(static_cast<short>(Bmp[BUTTWEITER].rcDes.left),
-			static_cast<short>(Bmp[BUTTWEITER].rcDes.top),
-			BUTTWEITER, rcPanel, false, -1);
+		if (Bmp[BUTTWEITER].Phase != -1)
+			ZeichneBilder(static_cast<short>(Bmp[BUTTWEITER].rcDes.left),
+			              static_cast<short>(Bmp[BUTTWEITER].rcDes.top),
+			              BUTTWEITER, rcPanel, false, -1);
 
 		// STOPknopf
-		if (Bmp[BUTTSTOP].Phase != -1) ZeichneBilder(static_cast<short>(Bmp[BUTTSTOP].rcDes.left),
-			static_cast<short>(Bmp[BUTTSTOP].rcDes.top),
-			BUTTSTOP, rcPanel, false, -1);
+		if (Bmp[BUTTSTOP].Phase != -1)
+			ZeichneBilder(static_cast<short>(Bmp[BUTTSTOP].rcDes.left),
+			              static_cast<short>(Bmp[BUTTSTOP].rcDes.top),
+			              BUTTSTOP, rcPanel, false, -1);
 
 		// ABLEGENknopf
-		if (Bmp[BUTTABLEGEN].Phase != -1) ZeichneBilder(static_cast<short>(Bmp[BUTTABLEGEN].rcDes.left),
-			static_cast<short>(Bmp[BUTTABLEGEN].rcDes.top),
-			BUTTABLEGEN, rcPanel, false, -1);
+		if (Bmp[BUTTABLEGEN].Phase != -1)
+			ZeichneBilder(static_cast<short>(Bmp[BUTTABLEGEN].rcDes.left),
+			              static_cast<short>(Bmp[BUTTABLEGEN].rcDes.top),
+			              BUTTABLEGEN, rcPanel, false, -1);
 
 		// Welches Menü zeichnen?
 		switch (HauptMenue)
@@ -476,13 +483,13 @@ namespace Renderer
 				if (Bmp[i].Phase == -1)
 				{
 					ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left),
-						static_cast<short>(Bmp[i].rcDes.top),
-						BUTTFRAGEZ, rcPanel, false, -1);
+					              static_cast<short>(Bmp[i].rcDes.top),
+					              BUTTFRAGEZ, rcPanel, false, -1);
 					continue;
 				}
 				ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left),
-					static_cast<short>(Bmp[i].rcDes.top),
-					i, rcPanel, false, -1);
+				              static_cast<short>(Bmp[i].rcDes.top),
+				              i, rcPanel, false, -1);
 			}
 			break;
 		case Menu::BUILD:
@@ -491,54 +498,54 @@ namespace Renderer
 				if (Bmp[i].Phase == -1)
 				{
 					ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left),
-						static_cast<short>(Bmp[i].rcDes.top),
-						BUTTFRAGEZ, rcPanel, false, -1);
+					              static_cast<short>(Bmp[i].rcDes.top),
+					              BUTTFRAGEZ, rcPanel, false, -1);
 					continue;
 				}
 				ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left),
-					static_cast<short>(Bmp[i].rcDes.top),
-					i, rcPanel, false, -1);
+				              static_cast<short>(Bmp[i].rcDes.top),
+				              i, rcPanel, false, -1);
 			}
 			break;
 		case Menu::INVENTORY:
 			ZeichneBilder(static_cast<short>(Bmp[INVPAPIER].rcDes.left),
-				static_cast<short>(Bmp[INVPAPIER].rcDes.top),
-				INVPAPIER, rcPanel, false, -1);
+			              static_cast<short>(Bmp[INVPAPIER].rcDes.top),
+			              INVPAPIER, rcPanel, false, -1);
 			for (short i = ROHAST; i <= ROHSCHLEUDER; i++)
 			{
 				if (Guy.Inventar[i] <= 0) continue;
 				ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left),
-					static_cast<short>(Bmp[i].rcDes.top),
-					i, rcPanel, false, -1);
+				              static_cast<short>(Bmp[i].rcDes.top),
+				              i, rcPanel, false, -1);
 				Bmp[ROEMISCH1].rcDes.top = Bmp[i].rcDes.top;
 				Bmp[ROEMISCH2].rcDes.top = Bmp[i].rcDes.top;
 				for (short j = 1; j <= Guy.Inventar[i]; j++)
 				{
-					if (j<5)
+					if (j < 5)
 					{
 						ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left) + 20 + j * 4,
-							static_cast<short>(Bmp[ROEMISCH1].rcDes.top),
-							ROEMISCH1, rcPanel, false, -1);
+						              static_cast<short>(Bmp[ROEMISCH1].rcDes.top),
+						              ROEMISCH1, rcPanel, false, -1);
 					}
-					else if (j == 5) ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left) + 23,
-						static_cast<short>(Bmp[ROEMISCH2].rcDes.top),
-						ROEMISCH2, rcPanel, false, -1);
-					else if ((j>5) && (j<10))
+					else if (j == 5)
+						ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left) + 23,
+						              static_cast<short>(Bmp[ROEMISCH2].rcDes.top),
+						              ROEMISCH2, rcPanel, false, -1);
+					else if ((j > 5) && (j < 10))
 					{
 						ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left) + 20 + j * 4,
-							static_cast<short>(Bmp[ROEMISCH1].rcDes.top),
-							ROEMISCH1, rcPanel, false, -1);
+						              static_cast<short>(Bmp[ROEMISCH1].rcDes.top),
+						              ROEMISCH1, rcPanel, false, -1);
 					}
 					else if (j == 10)
 						ZeichneBilder(static_cast<short>(Bmp[i].rcDes.left) + 43,
-						static_cast<short>(Bmp[ROEMISCH2].rcDes.top),
-						ROEMISCH2, rcPanel, false, -1);
+						              static_cast<short>(Bmp[ROEMISCH2].rcDes.top),
+						              ROEMISCH2, rcPanel, false, -1);
 				}
 			}
 			break;
-
 		}
-		
+
 		// Säule1
 		short i = Bmp[SAEULE1].Hoehe - static_cast<short>(Guy.Resource[WASSER]) * Bmp[SAEULE1].Hoehe / 100;
 		rcRectsrc = Bmp[SAEULE1].rcSrc;
@@ -569,8 +576,8 @@ namespace Renderer
 		short TagesZeit = (Stunden * 10 + Minuten * 10 / 60);
 
 		ZeichneBilder(static_cast<short>(Bmp[SONNE].rcDes.left + diffx * cos(pi - pi * TagesZeit / 120) + diffx),
-			static_cast<short>(Bmp[SONNE].rcDes.top + (-diffy * sin(pi - pi * TagesZeit / 120) + diffy)),
-			SONNE, Bmp[SONNE].rcDes, false, -1);
+		              static_cast<short>(Bmp[SONNE].rcDes.top + (-diffy * sin(pi - pi * TagesZeit / 120) + diffy)),
+		              SONNE, Bmp[SONNE].rcDes, false, -1);
 
 		// Rettungsring
 		short Ringtmp;
@@ -578,17 +585,17 @@ namespace Renderer
 		else Ringtmp = 100;
 		if (Ringtmp > 100) Ringtmp = 100;
 		ZeichneBilder(static_cast<short>(Bmp[RING].rcDes.left),
-			static_cast<short>(Bmp[RING].rcDes.top + Ringtmp),
-			RING, rcPanel, false, -1);
+		              static_cast<short>(Bmp[RING].rcDes.top + Ringtmp),
+		              RING, rcPanel, false, -1);
 
 		// Die ChanceZahl ausgeben
 		Textloeschen(TXTCHANCE);
 		TextBereich[TXTCHANCE].Aktiv = true;
 		TextBereich[TXTCHANCE].rcText.top = Bmp[RING].rcDes.top + Ringtmp + Bmp[RING].Hoehe;
 		TextBereich[TXTCHANCE].rcText.bottom = TextBereich[TXTCHANCE].rcText.top + S2YPIXEL;
-		std::sprintf(StdString, "%.1f", Chance);
+		sprintf(StdString, "%.1f", Chance);
 		DrawString(StdString, static_cast<short>(TextBereich[TXTCHANCE].rcText.left),
-			static_cast<short>(TextBereich[TXTCHANCE].rcText.top), 2);
+		           static_cast<short>(TextBereich[TXTCHANCE].rcText.top), 2);
 
 		// TextFeld malen
 		rcRectsrc.left = 0;
@@ -599,7 +606,7 @@ namespace Renderer
 		Blitten(lpDDSTextFeld, lpDDSBack, false);
 	}
 
-	void DrawString(char *string, short x, short y, short Art)
+	void DrawString(char* string, short x, short y, short Art)
 	{
 		short Breite = 0;
 		short Hoehe = 0;
@@ -616,42 +623,42 @@ namespace Renderer
 		}
 
 		// Länge der Schrift ermitteln
-		std::size_t length = strlen(string);
+		size_t length = strlen(string);
 
 		// Alle Zeichen durchgehen
-		for (std::size_t index = 0; index<length; index++)
+		for (size_t index = 0; index < length; index++)
 		{
 			// Korrekte indexNummer ermitteln
 			short cindex = string[index] - ' ';
 
 			if ((string[index] >= ' ') && (string[index] <= '/'))
 			{
-				rcRectsrc.left = cindex*Breite;
+				rcRectsrc.left = cindex * Breite;
 				rcRectsrc.top = 0;
 			}
 			if ((string[index] >= '0') && (string[index] <= '?'))
 			{
-				rcRectsrc.left = (cindex - 16)*Breite;
+				rcRectsrc.left = (cindex - 16) * Breite;
 				rcRectsrc.top = Hoehe;
 			}
 			if ((string[index] >= '@') && (string[index] <= 'O'))
 			{
-				rcRectsrc.left = (cindex - 16 * 2)*Breite;
+				rcRectsrc.left = (cindex - 16 * 2) * Breite;
 				rcRectsrc.top = 2 * Hoehe;
 			}
 			if ((string[index] >= 'P') && (string[index] <= '_'))
 			{
-				rcRectsrc.left = (cindex - 16 * 3)*Breite;
+				rcRectsrc.left = (cindex - 16 * 3) * Breite;
 				rcRectsrc.top = 3 * Hoehe;
 			}
-			if ((string[index]>'_') && (string[index] <= 'o'))
+			if ((string[index] > '_') && (string[index] <= 'o'))
 			{
-				rcRectsrc.left = (cindex - 16 * 4)*Breite;
+				rcRectsrc.left = (cindex - 16 * 4) * Breite;
 				rcRectsrc.top = 4 * Hoehe;
 			}
 			if ((string[index] >= 'p') && (string[index] <= '~'))
 			{
-				rcRectsrc.left = (cindex - 16 * 5)*Breite;
+				rcRectsrc.left = (cindex - 16 * 5) * Breite;
 				rcRectsrc.top = 5 * Hoehe;
 			}
 
@@ -682,11 +689,11 @@ namespace Renderer
 		short BBreite = 0;
 		short BHoehe = 0;
 		char Text[1024];
-		int	blank = ' ';
+		int blank = ' ';
 		int slash = '/';
 		int strend = 0x0;
-		char StdString2[10];	// Zur Variablenausgabe
-		short Anzahl;			// Zur Variablenausgabe
+		char StdString2[10]; // Zur Variablenausgabe
+		short Anzahl; // Zur Variablenausgabe
 
 		Textloeschen(Bereich);
 		TextBereich[Bereich].Aktiv = true;
@@ -704,33 +711,33 @@ namespace Renderer
 		LoadString(g_hInst, TEXT, Text, 1024);
 		short Posx = static_cast<short>(TextBereich[Bereich].rcText.left);
 		short Posy = static_cast<short>(TextBereich[Bereich].rcText.top);
-		char *Posnext = Text;
+		char* Posnext = Text;
 
 		while (true)
 		{
 			strcpy(StdString, "");
 			short Pos = Posnext - Text;
 			Posnext = strchr(Text + Pos + 1, blank);
-			char *Posnext2 = strchr(Text + Pos + 1, slash);
+			char* Posnext2 = strchr(Text + Pos + 1, slash);
 			if ((Posnext != nullptr) && (Posnext2 != nullptr) && (Posnext2 <= Posnext))
 			{
 				char scratch = *(Posnext2 + 1);
 				switch (scratch)
 				{
 				case 'a':
-					Anzahl = std::sprintf(StdString2, " %d", Tag);
+					Anzahl = sprintf(StdString2, " %d", Tag);
 					DrawString(StdString2, Posx, Posy, Art);
-					Posx += BBreite*(Anzahl);
+					Posx += BBreite * (Anzahl);
 					break;
 				case 'b':
-					Anzahl = std::sprintf(StdString2, " %d", static_cast<short>(Guy.Resource[GESUNDHEIT]));
+					Anzahl = sprintf(StdString2, " %d", static_cast<short>(Guy.Resource[GESUNDHEIT]));
 					DrawString(StdString2, Posx, Posy, Art);
-					Posx += BBreite*(Anzahl);
+					Posx += BBreite * (Anzahl);
 					break;
 				case 'c':
-					Anzahl = std::sprintf(StdString2, " %.2f", Chance);
+					Anzahl = sprintf(StdString2, " %.2f", Chance);
 					DrawString(StdString2, Posx, Posy, Art);
-					Posx += BBreite*(Anzahl);
+					Posx += BBreite * (Anzahl);
 					break;
 				case 'd':
 					Frage = 0;
@@ -761,7 +768,7 @@ namespace Renderer
 			}
 			if (Posnext == nullptr) Posnext = strchr(Text + Pos + 1, strend);
 			strncpy(StdString, Text + Pos, (Posnext - Text) - Pos);
-			if (Posx + BBreite*((Posnext - Text) - Pos) > TextBereich[Bereich].rcText.right)
+			if (Posx + BBreite * ((Posnext - Text) - Pos) > TextBereich[Bereich].rcText.right)
 			{
 				Posx = static_cast<short>(TextBereich[Bereich].rcText.left) - BBreite;
 				Posy += BHoehe + 3;
@@ -769,7 +776,7 @@ namespace Renderer
 			StdString[(Posnext - Text) - Pos] = static_cast<char>(0);
 			DrawString(StdString, Posx, Posy, Art);
 			if (Posnext[0] == static_cast<char>(0)) break;
-			Posx += BBreite*((Posnext - Text) - Pos);
+			Posx += BBreite * ((Posnext - Text) - Pos);
 		}
 		short Erg = static_cast<short>(Posy + BHoehe - TextBereich[Bereich].rcText.top);
 		if (Erg < 100) Erg = 100;
@@ -814,35 +821,35 @@ namespace Renderer
 		rcRectdes.right = rcSpielflaeche.right;
 		rcRectdes.bottom = rcSpielflaeche.bottom;
 
-		Renderer::Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
+		Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 
-		Renderer::ZeichneObjekte();
+		ZeichneObjekte();
 
-		Renderer::ZeichnePanel();
+		ZeichnePanel();
 
 		// Die TagesZeit ausgeben
-		Renderer::Textloeschen(TXTTAGESZEIT);
+		Textloeschen(TXTTAGESZEIT);
 		TextBereich[TXTTAGESZEIT].Aktiv = true;
-		std::sprintf(Stringsave1, "%d", Stunden + 6);
-		std::sprintf(Stringsave2, "%d", Minuten);
+		sprintf(Stringsave1, "%d", Stunden + 6);
+		sprintf(Stringsave2, "%d", Minuten);
 		strcpy(StdString, "");
-		if (Stunden + 6 < 10) std::strcat(StdString, "0");
-		std::strcat(StdString, Stringsave1);
-		std::strcat(StdString, ":");
-		if (Minuten < 10) std::strcat(StdString, "0");
-		std::strcat(StdString, Stringsave2);
-		Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTAGESZEIT].rcText.left),
-			static_cast<short>(TextBereich[TXTTAGESZEIT].rcText.top), 2);
+		if (Stunden + 6 < 10) strcat(StdString, "0");
+		strcat(StdString, Stringsave1);
+		strcat(StdString, ":");
+		if (Minuten < 10) strcat(StdString, "0");
+		strcat(StdString, Stringsave2);
+		DrawString(StdString, static_cast<short>(TextBereich[TXTTAGESZEIT].rcText.left),
+		           static_cast<short>(TextBereich[TXTTAGESZEIT].rcText.top), 2);
 
-		if (PapierText != -1) Renderer::ZeichnePapier();
+		if (PapierText != -1) ZeichnePapier();
 
 		// Die Textsurface blitten
-		for (short i = 0; i<TEXTANZ; i++)
+		for (short i = 0; i < TEXTANZ; i++)
 		{
 			if (!TextBereich[i].Aktiv) continue; // Die nicht aktiven Felder auslassen
 			rcRectsrc = TextBereich[i].rcText;
 			rcRectdes = TextBereich[i].rcText;
-			Renderer::Blitten(lpDDSSchrift, lpDDSBack, true);
+			Blitten(lpDDSSchrift, lpDDSBack, true);
 		}
 		// Alles schwarz übermalen und nur das Papier mit Text anzeigen
 		if (Nacht)
@@ -851,25 +858,27 @@ namespace Renderer
 			rcRectdes.top = 0;
 			rcRectdes.right = MAXX;
 			rcRectdes.bottom = MAXY;
-			ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
+			ddbltfx.dwFillColor = RGB2DWORD(0, 0, 0);
 			lpDDSBack->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
 			if (PapierText != -1)
 			{
-				Renderer::ZeichnePapier();
+				ZeichnePapier();
 				rcRectsrc = TextBereich[TXTPAPIER].rcText;
 				rcRectdes = TextBereich[TXTPAPIER].rcText;
-				Renderer::Blitten(lpDDSSchrift, lpDDSBack, true);
+				Blitten(lpDDSSchrift, lpDDSBack, true);
 			}
-			Renderer::Fade(100, 100, 100);
+			Fade(100, 100, 100);
 		}
 
 		// Cursor
-		if (CursorTyp == CUPFEIL) Renderer::ZeichneBilder(MousePosition.x, MousePosition.y,
-			CursorTyp, rcGesamt, false, -1);
-		else Renderer::ZeichneBilder(MousePosition.x - Bmp[CursorTyp].Breite / 2,
-			MousePosition.y - Bmp[CursorTyp].Hoehe / 2,
-			CursorTyp, rcGesamt, false, -1);
+		if (CursorTyp == CUPFEIL)
+			ZeichneBilder(MousePosition.x, MousePosition.y,
+			              CursorTyp, rcGesamt, false, -1);
+		else
+			ZeichneBilder(MousePosition.x - Bmp[CursorTyp].Breite / 2,
+			              MousePosition.y - Bmp[CursorTyp].Hoehe / 2,
+			              CursorTyp, rcGesamt, false, -1);
 		// Flippen
 		while (true)
 		{
@@ -893,8 +902,7 @@ namespace Renderer
 		}
 
 
-		if (Nacht) Renderer::Fade(100, 100, 100); // Das muß hier stehen, damit man die Textnachricht in der Nacht lesen kann
-
+		if (Nacht) Fade(100, 100, 100); // Das muß hier stehen, damit man die Textnachricht in der Nacht lesen kann
 	}
 
 	void ZeigeIntro()
@@ -903,7 +911,7 @@ namespace Renderer
 		rcRectdes.top = 0;
 		rcRectdes.right = MAXX;
 		rcRectdes.bottom = MAXY;
-		ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
+		ddbltfx.dwFillColor = RGB2DWORD(0, 0, 0);
 		short z = 0;
 		while (true)
 		{
@@ -926,19 +934,19 @@ namespace Renderer
 		rcRectdes.right = rcSpielflaeche.right;
 		rcRectdes.bottom = rcSpielflaeche.bottom;
 
-		Renderer::Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
+		Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 
-		Renderer::ZeichneObjekte();
+		ZeichneObjekte();
 
-		if (PapierText != -1) Renderer::ZeichnePapier();
+		if (PapierText != -1) ZeichnePapier();
 
 		// Die Textsurface blitten
-		for (short i = 0; i<TEXTANZ; i++)
+		for (short i = 0; i < TEXTANZ; i++)
 		{
 			if (!TextBereich[i].Aktiv) continue; // Die nicht aktiven Felder auslassen
 			rcRectsrc = TextBereich[i].rcText;
 			rcRectdes = TextBereich[i].rcText;
-			Renderer::Blitten(lpDDSSchrift, lpDDSBack, true);
+			Blitten(lpDDSSchrift, lpDDSBack, true);
 		}
 
 		// Flippen
@@ -962,18 +970,17 @@ namespace Renderer
 				break;
 			}
 		}
-
 	}
 
 	void ZeigeAbspann()
 	{
-		Sound::PlaySound(Sound::OUTRO, 100);
+		PlaySound(Sound::OUTRO, 100);
 
 		rcRectdes.left = 0;
 		rcRectdes.top = 0;
 		rcRectdes.right = MAXX;
 		rcRectdes.bottom = MAXY;
-		ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
+		ddbltfx.dwFillColor = RGB2DWORD(0, 0, 0);
 		short z = 0;
 		while (true)
 		{
@@ -988,20 +995,20 @@ namespace Renderer
 		}
 		if (AbspannZustand == 0)
 		{
-			Renderer::ZeichneBilder(static_cast<short>(MAXX) / 2 - Bmp[AbspannListe[AbspannNr][0].Bild].Breite / 2, 100,
-				AbspannListe[AbspannNr][0].Bild, rcGesamt, false, -1);
-			for (z = 1; z<10; z++)
+			ZeichneBilder(static_cast<short>(MAXX) / 2 - Bmp[AbspannListe[AbspannNr][0].Bild].Breite / 2, 100,
+			              AbspannListe[AbspannNr][0].Bild, rcGesamt, false, -1);
+			for (z = 1; z < 10; z++)
 			{
 				if (AbspannListe[AbspannNr][z].Aktiv)
 					AbspannBlt(AbspannListe[AbspannNr][z].Bild,
-					static_cast<short>(100 * std::sin(pi / MAXY * (Bmp[AbspannListe[AbspannNr][z].Bild].rcDes.top +
-						Bmp[AbspannListe[AbspannNr][z].Aktiv].Hoehe / 2))));
+					           static_cast<short>(100 * sin(pi / MAXY * (Bmp[AbspannListe[AbspannNr][z].Bild].rcDes.top +
+						           Bmp[AbspannListe[AbspannNr][z].Aktiv].Hoehe / 2))));
 			}
 		}
 		else if (AbspannZustand == 1)
 		{
 			rcRectsrc = Bmp[AbspannNr].rcSrc;
-			rcRectsrc.top += Bmp[AbspannNr].Phase*Bmp[AbspannNr].Hoehe;
+			rcRectsrc.top += Bmp[AbspannNr].Phase * Bmp[AbspannNr].Hoehe;
 			rcRectsrc.bottom = rcRectsrc.top + Bmp[AbspannNr].Hoehe;
 
 			rcRectdes.left = 2;
@@ -1009,7 +1016,7 @@ namespace Renderer
 			rcRectdes.right = Bmp[AbspannNr].Breite + 2;
 			rcRectdes.bottom = Bmp[AbspannNr].Hoehe + 2;
 
-			Renderer::Blitten(Bmp[AbspannNr].Surface, lpDDSBack, true);
+			Blitten(Bmp[AbspannNr].Surface, lpDDSBack, true);
 
 			rcRectsrc.left = 0;
 			rcRectsrc.top = 0;
@@ -1021,7 +1028,7 @@ namespace Renderer
 			rcRectdes.right = rcRectdes.left + rcRectsrc.right * 10;
 			rcRectdes.bottom = rcRectdes.top + rcRectsrc.bottom * 10;
 
-			Renderer::Blitten(lpDDSBack, lpDDSBack, false);
+			Blitten(lpDDSBack, lpDDSBack, false);
 
 			rcRectsrc.left = 100;
 			rcRectsrc.top = 2;
@@ -1033,7 +1040,7 @@ namespace Renderer
 			rcRectdes.right = Bmp[AbspannNr].Breite + 2;
 			rcRectdes.bottom = Bmp[AbspannNr].Hoehe + 2;
 
-			Renderer::Blitten(lpDDSBack, lpDDSBack, false);
+			Blitten(lpDDSBack, lpDDSBack, false);
 		}
 		// Flippen
 		while (true)
@@ -1064,7 +1071,7 @@ namespace Renderer
 		rcRectdes.top = 0;
 		rcRectdes.right = MAXX;
 		rcRectdes.bottom = MAXY;
-		ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
+		ddbltfx.dwFillColor = RGB2DWORD(0, 0, 0);
 		short z = 0;
 		while (true)
 		{
@@ -1088,9 +1095,9 @@ namespace Renderer
 		rcRectdes.bottom = MAXY / 2 + 250;
 
 
-		Renderer::Blitten(lpDDSLogo, lpDDSBack, false);
+		Blitten(lpDDSLogo, lpDDSBack, false);
 
-		Sound::PlaySound(Sound::LOGO, 100);
+		PlaySound(Sound::LOGO, 100);
 
 		// Flippen
 		while (true)
@@ -1120,28 +1127,27 @@ namespace Renderer
 		Bmp[Bild].Surface->Lock(nullptr, &ddsd, DDLOCK_WAIT, nullptr);
 		lpDDSBack->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
-		for (short x = 0; x<Bmp[Bild].Breite; x++)
-			for (short y = 0; y<Bmp[Bild].Hoehe; y++)
+		for (short x = 0; x < Bmp[Bild].Breite; x++)
+			for (short y = 0; y < Bmp[Bild].Hoehe; y++)
 			{
 				if ((x + Bmp[Bild].rcDes.left >= MAXX) || (x + Bmp[Bild].rcDes.left <= 0) ||
-					(y + Bmp[Bild].rcDes.top >= MAXY) || (y + Bmp[Bild].rcDes.top <= 0)) continue;
+					(y + Bmp[Bild].rcDes.top >= MAXY) || (y + Bmp[Bild].rcDes.top <= 0))
+					continue;
 				Renderer::GetPixel(static_cast<short>(x + Bmp[Bild].rcDes.left),
-					static_cast<short>(y + Bmp[Bild].rcDes.top), &ddsd2);
+				                   static_cast<short>(y + Bmp[Bild].rcDes.top), &ddsd2);
 				RGBSTRUCT rgbalt = rgbStruct;
 				Renderer::GetPixel(static_cast<short>(x + Bmp[Bild].rcSrc.left),
-					static_cast<short>(y + Bmp[Bild].rcSrc.top), &ddsd);
+				                   static_cast<short>(y + Bmp[Bild].rcSrc.top), &ddsd);
 				if ((rgbStruct.r == 0) && (rgbStruct.g == 0) && (rgbStruct.b == 0)) continue;
-				Renderer::PutPixel(static_cast<short>(x + Bmp[Bild].rcDes.left),
-					static_cast<short>(y + Bmp[Bild].rcDes.top),
-					Renderer::RGB2DWORD(rgbalt.r + (rgbStruct.r - rgbalt.r)*Prozent / 100,
-					rgbalt.g + (rgbStruct.g - rgbalt.g)*Prozent / 100,
-					rgbalt.b + (rgbStruct.b - rgbalt.b)*Prozent / 100),
-					&ddsd2);
+				PutPixel(static_cast<short>(x + Bmp[Bild].rcDes.left),
+				         static_cast<short>(y + Bmp[Bild].rcDes.top),
+				         RGB2DWORD(rgbalt.r + (rgbStruct.r - rgbalt.r) * Prozent / 100,
+				                   rgbalt.g + (rgbStruct.g - rgbalt.g) * Prozent / 100,
+				                   rgbalt.b + (rgbStruct.b - rgbalt.b) * Prozent / 100),
+				         &ddsd2);
 			}
 
 		Bmp[Bild].Surface->Unlock(nullptr);
 		lpDDSBack->Unlock(nullptr);
-
 	}
-
 } // namespace Renderer

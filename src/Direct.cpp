@@ -14,20 +14,20 @@
 
 namespace Direct
 {
-	LPDIRECTDRAW4 lpDD = NULL; // DirectDraw object
-	bool          Button0down; // linke Maustaste gedrückt gehalten
-	bool          Button1down; // rechte Maustaste gedrückt gehalten
+	LPDIRECTDRAW4 lpDD = nullptr; // DirectDraw object
+	bool Button0down; // linke Maustaste gedrückt gehalten
+	bool Button1down; // rechte Maustaste gedrückt gehalten
 
 	void finiObjects()
 	{
-		if(lpDD != nullptr)
+		if (lpDD != nullptr)
 		{
-			if(lpDDSPrimary != nullptr)
+			if (lpDDSPrimary != nullptr)
 			{
 				lpDDSPrimary->Release();
 				lpDDSPrimary = nullptr;
 			}
-			if(lpDDPal != nullptr)
+			if (lpDDPal != nullptr)
 			{
 				lpDDPal->Release();
 				lpDDPal = nullptr;
@@ -39,7 +39,7 @@ namespace Direct
 
 	void InitDDraw(HWND hWnd)
 	{
-		DDSCAPS2     ddscaps;
+		DDSCAPS2 ddscaps;
 		LPDIRECTDRAW pDD;
 
 		// Create the main DirectDraw object
@@ -69,7 +69,11 @@ namespace Direct
 			case DDERR_NOEXCLUSIVEMODE:
 			case DDERR_SURFACEBUSY:
 			case DDERR_UNSUPPORTED:
-			case DDERR_UNSUPPORTEDMODE: {MessageBeep(MB_OK); break; }
+			case DDERR_UNSUPPORTEDMODE:
+				{
+					MessageBeep(MB_OK);
+					break;
+				}
 			case DDERR_WASSTILLDRAWING:
 				;
 			}
@@ -101,7 +105,7 @@ namespace Direct
 		if (ddrval != DD_OK)
 			goto error;
 
-		ddsd.dwSize = sizeof(ddsd);  // Tell DirectDraw which members are valid. 
+		ddsd.dwSize = sizeof(ddsd); // Tell DirectDraw which members are valid. 
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
 		// In diese Surface sollen die Bausteine geladen werden
@@ -165,7 +169,7 @@ namespace Direct
 		lpDDSLogo = DDLoadBitmap(lpDD, Logo, 0, 0);
 
 		ZeroMemory(&ddsd, sizeof(ddsd));
-		ddsd.dwSize = sizeof(ddsd);  // Tell DirectDraw which members are valid. 
+		ddsd.dwSize = sizeof(ddsd); // Tell DirectDraw which members are valid. 
 		ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
 		// In diese Surface soll die MiniMap gespeichert werden
@@ -235,8 +239,8 @@ namespace Direct
 				CursorTyp = CUPFEIL;
 		}
 
-		short Button = -1;	// Welcher Knopf ist gedrückt worden
-		short Push = 0;		// Knopf gedrückt(1) oder losgelassen(-1) oder gedrückt(0) gehalten
+		short Button = -1; // Welcher Knopf ist gedrückt worden
+		short Push = 0; // Knopf gedrückt(1) oder losgelassen(-1) oder gedrückt(0) gehalten
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
@@ -294,7 +298,7 @@ namespace Direct
 						Renderer::Textloeschen(TXTPAPIER);
 						PapierText = -1;
 						Guy.Aktiv = false;
-						Sound::PlaySound(Sound::CLICK2, 100);
+						PlaySound(Sound::CLICK2, 100);
 					}
 				}
 				else if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[NEIN].rcDes))
@@ -306,11 +310,11 @@ namespace Direct
 						Renderer::Textloeschen(TXTPAPIER);
 						PapierText = -1;
 						Guy.Aktiv = false;
-						Sound::PlaySound(Sound::CLICK2, 100);
+						PlaySound(Sound::CLICK2, 100);
 					}
 				}
 				else if ((Button == 0) && (Push == 1))
-					Sound::PlaySound(Sound::CLICK, 100);
+					PlaySound(Sound::CLICK, 100);
 			}
 			else if ((Button != -1) && (Push == 1))
 			{
@@ -319,7 +323,6 @@ namespace Direct
 				Guy.Aktiv = false;
 			}
 			return;
-
 		}
 
 		// Animationen und Text löschen (werden dann von den MouseIn.. Sachen neu angestellt
@@ -349,7 +352,7 @@ namespace Direct
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Logo Abbrechen
 			{
-				Sound::StopSound(Sound::LOGO);
+				StopSound(Sound::LOGO);
 				Game::NeuesSpiel(false);
 				return 2;
 			}
@@ -359,10 +362,10 @@ namespace Direct
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Intro Abbrechen
 			{
-				Sound::StopSound(Sound::STORM);		// Sound hier sofort stoppen
-				Sound::StopSound(Sound::SWIM);	// Sound hier sofort stoppen
+				StopSound(Sound::STORM); // Sound hier sofort stoppen
+				StopSound(Sound::SWIM); // Sound hier sofort stoppen
 				Guy.Aktiv = false;
-				for (short x = Guy.Pos.x; x<MAXXKACH; x++)
+				for (short x = Guy.Pos.x; x < MAXXKACH; x++)
 				{
 					Guy.Pos.x = x;
 					World::Entdecken();
@@ -374,10 +377,10 @@ namespace Direct
 				Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[WRACK].rcDes.top);
 
 				Guy.PosScreen.x =
-					(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
+				(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
 					Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2;
 				Guy.PosScreen.y =
-					(Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
+				(Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
 					Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2;
 				RouteStart.x = -1;
 				RouteStart.y = -1;
@@ -495,11 +498,10 @@ namespace Direct
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				Sound::StopSound(Sound::OUTRO);
+				StopSound(Sound::OUTRO);
 				return 0;
 			}
 		}
 		return 1;
 	}
-
 } // namespace Direct
