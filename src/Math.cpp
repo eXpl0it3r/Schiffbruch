@@ -20,11 +20,10 @@ namespace Math
 
 	void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
 	{
-		ZWEID	Erg;						// Die angeklickte Kachel
-		char	Text[1024], TextTmp[1024];	// Text für Infoleiste
+		char Text[1024], TextTmp[1024]; // Text für Infoleiste
 
 		// Info anzeigen
-		Erg = Renderer::GetKachel((MousePosition.x + Camera.x), (MousePosition.y + Camera.y));
+		ZWEID Erg = Renderer::GetKachel((MousePosition.x + Camera.x), (MousePosition.y + Camera.y)); // Die angeklickte Kachel
 		if (Scape[Erg.x][Erg.y].Entdeckt)
 		{
 			LoadString(g_hInst, 45 + Scape[Erg.x][Erg.y].Art, Text, 1024);
@@ -84,8 +83,8 @@ namespace Math
 
 			}
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(Text, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(Text, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 		}
 
 		// rechte Maustastescrollen
@@ -140,13 +139,12 @@ namespace Math
 
 	void MouseInPanel(short Button, short Push)
 	{
-		short mx, my, i; // Mauskoordinaten in Minimap
-
 		// wenn die Maus in der Minimap ist ->
 		if ((InRect(MousePosition.x, MousePosition.y, rcKarte)) && (Button == 0) && (Push != -1))
 		{
-			mx = MousePosition.x - (short)rcKarte.left;
-			my = MousePosition.y - (short)rcKarte.top;
+			// Mauskoordinaten in Minimap
+			short mx = MousePosition.x - static_cast<short>(rcKarte.left);
+			short my = MousePosition.y - static_cast<short>(rcKarte.top);
 			Camera.x = ((KXPIXEL / 4)*(mx - my) + MAXXKACH * KXPIXEL / 2)
 				- static_cast<short>((rcSpielflaeche.right - rcSpielflaeche.left) / 2);
 			Camera.y = ((KXPIXEL / 7)*(my + mx))
@@ -186,7 +184,7 @@ namespace Math
 			{
 				if (Soundzustand == 1)
 				{
-					for (i = 1; i<Sound::COUNT; i++) Sound::StopSound(i);
+					for (short i = 1; i<Sound::COUNT; i++) Sound::StopSound(i);
 					Soundzustand = 0;
 				}
 				else if (Soundzustand == 0)
@@ -508,8 +506,8 @@ namespace Math
 			World::MakeRohString(-1, -1, FELD);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTFELD].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -541,8 +539,8 @@ namespace Math
 			World::MakeRohString(-1, -1, ZELT);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTZELT].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -575,8 +573,8 @@ namespace Math
 			World::MakeRohString(-1, -1, BOOT);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTBOOT].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -612,8 +610,8 @@ namespace Math
 			World::MakeRohString(-1, -1, ROHR);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTROHR].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -645,8 +643,8 @@ namespace Math
 			World::MakeRohString(-1, -1, SOS);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTSOS].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -678,8 +676,8 @@ namespace Math
 			World::MakeRohString(-1, -1, HAUS1);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTHAUS1].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -713,8 +711,8 @@ namespace Math
 			World::MakeRohString(-1, -1, HAUS2);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTHAUS2].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -750,8 +748,8 @@ namespace Math
 			World::MakeRohString(-1, -1, HAUS3);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTHAUS3].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -788,8 +786,8 @@ namespace Math
 			World::MakeRohString(-1, -1, FEUERSTELLE);
 			std::strcat(StdString, RohString);
 			TextBereich[TXTTEXTFELD].Aktiv = true;
-			Renderer::DrawString(StdString, (short)TextBereich[TXTTEXTFELD].rcText.left,
-				(short)TextBereich[TXTTEXTFELD].rcText.top, 2);
+			Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+				static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
 			Bmp[BUTTFEUERST].Animation = true;
 			if ((Button == 0) && (Push == 1))
@@ -833,7 +831,7 @@ namespace Math
 		}
 		else if ((InRect(MousePosition.x, MousePosition.y, Bmp[INVPAPIER].rcDes)) && (HauptMenue == Menu::INVENTORY))
 		{
-			for (i = ROHAST; i <= ROHSCHLEUDER; i++)
+			for (short i = ROHAST; i <= ROHSCHLEUDER; i++)
 			{
 				if (InRect(MousePosition.x, MousePosition.y, Bmp[i].rcDes) && (Guy.Inventar[i]>0))
 				{
@@ -881,17 +879,22 @@ namespace Math
 
 	bool InDreieck(short X, short Y, short X0, short Y0, short X1, short Y1, short X3, short Y3)
 	{
-		float	x, y, x0, y0, x1, y1, x3, y3, a, b, c, d;
+		float x = static_cast<float>(X);
+		float y = static_cast<float>(Y);
+		float x0 = static_cast<float>(X0);
+		float y0 = static_cast<float>(Y0);
+		float x1 = static_cast<float>(X1);
+		float y1 = static_cast<float>(Y1);
+		float x3 = static_cast<float>(X3);
+		float y3 = static_cast<float>(Y3);
 
-		x = (float)X; y = (float)Y; x0 = (float)X0; y0 = (float)Y0; x1 = (float)X1; y1 = (float)Y1; x3 = (float)X3; y3 = (float)Y3;
-
-		c = (x - x1) / (x0 - x1);
+		float c = (x - x1) / (x0 - x1);
 		if (c<0) return false;
-		d = ((y - y3)*(x0 - x1) - (x - x1)*(y0 - y3)) / ((y1 - y3)*(x0 - x1));
+		float d = ((y - y3)*(x0 - x1) - (x - x1)*(y0 - y3)) / ((y1 - y3)*(x0 - x1));
 		if (d<0) return false;
-		b = ((y - y0)*(x1 - x0) - (x - x0)*(y1 - y0)) / ((x1 - x0)*(y3 - y1));
+		float b = ((y - y0)*(x1 - x0) - (x - x0)*(y1 - y0)) / ((x1 - x0)*(y3 - y1));
 		if (b<0) return false;
-		a = (x - x0) / (x1 - x0) - b;
+		float a = (x - x0) / (x1 - x0) - b;
 		if (a<0) return false;
 		return true;
 	}
@@ -905,8 +908,6 @@ namespace Math
 
 	void CalcGuyKoor()
 	{
-		short	Dx, Dy;	// Differenz zwischen Ziel und Start
-
 		if (Step >= Steps)
 		{
 			RoutePunkt++;
@@ -954,8 +955,10 @@ namespace Math
 					(RouteKoor[RoutePunkt].y <  RouteKoor[RoutePunkt + 1].y)) Guy.Zustand += 3;
 			}
 
-			Dx = RouteKoor[RoutePunkt + 1].x - RouteKoor[RoutePunkt].x;
-			Dy = RouteKoor[RoutePunkt + 1].y - RouteKoor[RoutePunkt].y;
+			// Differenz zwischen Ziel und Start
+			short Dx = RouteKoor[RoutePunkt + 1].x - RouteKoor[RoutePunkt].x;
+			short Dy = RouteKoor[RoutePunkt + 1].y - RouteKoor[RoutePunkt].y;
+
 			GuyPosScreenStart.x = RouteKoor[RoutePunkt].x;
 			GuyPosScreenStart.y = RouteKoor[RoutePunkt].y;
 			Step = 0;
@@ -963,14 +966,14 @@ namespace Math
 			if (abs(Dx)>abs(Dy))
 			{
 				if (Dx>0)  Schrittx = 1; else Schrittx = -1;
-				if (Dx == 0)  Schritty = 0; else Schritty = (float)Dy / ((float)(Dx*Schrittx));
+				if (Dx == 0)  Schritty = 0; else Schritty = static_cast<float>(Dy) / static_cast<float>(Dx * Schrittx);
 				Steps = abs(Dx);
 
 			}
 			else
 			{
 				if (Dy>0)  Schritty = 1; else Schritty = -1;
-				if (Dy == 0)  Schrittx = 0; else Schrittx = (float)Dx / ((float)(Dy*Schritty));
+				if (Dy == 0)  Schrittx = 0; else Schrittx = static_cast<float>(Dx) / static_cast<float>(Dy * Schritty);
 				Steps = abs(Dy);
 			}
 
@@ -998,10 +1001,9 @@ namespace Math
 
 	void CalcKoor()
 	{
-		short				x, y;
 		// Bildschirmkoordinaten berechnen und speichern
-		for (y = 0; y<MAXYKACH; y++)
-			for (x = 0; x<MAXXKACH; x++)
+		for (short y = 0; y<MAXYKACH; y++)
+			for (short x = 0; x<MAXXKACH; x++)
 			{
 				Scape[x][y].xScreen = KXPIXEL / 2 * MAXXKACH + 32 +
 					x * KXPIXEL / 2 - y * KYPIXEL / 2 +
@@ -1009,43 +1011,45 @@ namespace Math
 				Scape[x][y].yScreen =
 					x * KXPIXEL / 2 + y * KYPIXEL / 2 - 16 * Scape[x][y].Hoehe +
 					(-13 * x) + (-8 * y); // seltsame Korrekturen
-				if ((x == 0) && (y == 0))				ScapeGrenze.top = Scape[x][y].yScreen;
-				if ((x == 0) && (y == MAXYKACH - 1))		ScapeGrenze.left = Scape[x][y].xScreen;
-				if ((x == MAXXKACH - 1) && (y == MAXYKACH - 1))		ScapeGrenze.bottom = Scape[x][y].yScreen + KYPIXEL;
-				if ((x == MAXXKACH - 1) && (y == 0))				ScapeGrenze.right = Scape[x][y].xScreen + KXPIXEL;
+
+				if ((x == 0) && (y == 0))
+					ScapeGrenze.top = Scape[x][y].yScreen;
+				if ((x == 0) && (y == MAXYKACH - 1))
+					ScapeGrenze.left = Scape[x][y].xScreen;
+				if ((x == MAXXKACH - 1) && (y == MAXYKACH - 1))
+					ScapeGrenze.bottom = Scape[x][y].yScreen + KYPIXEL;
+				if ((x == MAXXKACH - 1) && (y == 0))
+					ScapeGrenze.right = Scape[x][y].xScreen + KXPIXEL;
 			}
 
 	}
 
 	bool LineIntersect(ZWEID LineStartPos, ZWEID Pos, bool store)
 	{
-		short		i;
-		float	  x, y;
-		short  Dx, Dy;
-		float  Sx, Sy;
-		bool	  erg = false;
-		float	Nextx, Nexty;
+		float Sx, Sy;
+		bool erg = false;
 
 		Steps = 0;
 
-		Dx = LineStartPos.x - Pos.x;
-		Dy = LineStartPos.y - Pos.y;
-		x = LineStartPos.x;
-		y = LineStartPos.y;
+		short Dx = LineStartPos.x - Pos.x;
+		short Dy = LineStartPos.y - Pos.y;
+		float x = LineStartPos.x;
+		float y = LineStartPos.y;
+
 		if (abs(Dx)>abs(Dy))
 		{
 			if (Dx>0)  Sx = -1; else Sx = 1;
-			if (Dx == 0)  Sy = 0; else Sy = (float)Dy / ((float)(Dx*Sx));
+			if (Dx == 0)  Sy = 0; else Sy = static_cast<float>(Dy) / static_cast<float>(Dx * Sx);
 			Steps = abs(Dx);
 		}
 		else
 		{
 			if (Dy>0)  Sy = -1; else Sy = 1;
-			if (Dy == 0)  Sx = 0; else Sx = (float)Dx / ((float)(Dy*Sy));
+			if (Dy == 0)  Sx = 0; else Sx = static_cast<float>(Dx) / static_cast<float>(Dy * Sy);
 			Steps = abs(Dy);
 		}
 
-		for (i = 0; i<Steps; i++)
+		for (short i = 0; i<Steps; i++)
 		{
 			if (!Scape[ROUND(x)][ROUND(y)].Begehbar)  erg = true;
 			if ((store))
@@ -1054,8 +1058,8 @@ namespace Math
 				Route[RouteLaenge].y = ROUND(y);
 				RouteLaenge++;
 			}
-			Nextx = x + Sx;
-			Nexty = y + Sy;
+			float Nextx = x + Sx;
+			float Nexty = y + Sy;
 			if ((ROUND(y) != ROUND(Nexty)) && (ROUND(x) != ROUND(Nextx)))
 			{
 				if (Scape[ROUND(x)][ROUND(Nexty)].Begehbar)
@@ -1117,9 +1121,7 @@ namespace Math
 
 	void ButtAniAus()
 	{
-		short i;
-
-		for (i = BUTTGITTER; i <= BUTTDESTROY; i++)
+		for (short i = BUTTGITTER; i <= BUTTDESTROY; i++)
 		{
 			Bmp[i].Animation = false;
 		}
@@ -1127,11 +1129,11 @@ namespace Math
 
 	void AbspannCalc()
 	{
-		short i, k;
+		short i;
 
 		if (AbspannZustand == 0)
 		{
-			for (k = 1; k<10; k++)
+			for (short k = 1; k<10; k++)
 			{
 				if (AbspannListe[AbspannNr][k].Bild == -1) break;
 				if (!AbspannListe[AbspannNr][k].Aktiv) continue;
@@ -1183,11 +1185,11 @@ namespace Math
 
 	void Animationen()
 	{
-		short x, y, i, j, k, loop; // Zwischenspeicher
+		short i, j, loop; // Zwischenspeicher
 
 
-		for (y = 0; y<MAXYKACH; y++)
-			for (x = 0; x<MAXXKACH; x++)
+		for (short y = 0; y<MAXYKACH; y++)
+			for (short x = 0; x<MAXXKACH; x++)
 			{
 				j = Scape[x][y].Objekt;
 				if ((j == -1) || (!Bmp[j].Animation)) continue;
@@ -1195,10 +1197,11 @@ namespace Math
 				if (i<1) i = 1;
 				if (Bild%i == 0)
 				{
-					if ((j >= BAUM1DOWN) && (j <= BAUM4DOWN) &&  // Die Baumfällenanimation nur ein mal abspielen
-						(Scape[x][y].Phase == Bmp[j].Anzahl - 1));
-					else Scape[x][y].Phase++;
-					if (Scape[x][y].Phase >= Bmp[j].Anzahl) Scape[x][y].Phase = 0;
+					if ((j < BAUM1DOWN) || (j > BAUM4DOWN) ||  // Die Baumfällenanimation nur ein mal abspielen
+						(Scape[x][y].Phase != Bmp[j].Anzahl - 1))
+						Scape[x][y].Phase++;
+					if (Scape[x][y].Phase >= Bmp[j].Anzahl)
+						Scape[x][y].Phase = 0;
 				}
 
 			}
@@ -1226,7 +1229,7 @@ namespace Math
 			if (i<1) i = 1;
 			if (LastBild - Bmp[Guy.Zustand].Geschwindigkeit < 0) loop = 2; else loop = 1;
 			if (BootsFahrt) loop = loop * 2;
-			for (k = 0; k<loop; k++) if ((Bild%i == 0) && (Guy.Aktiv)) CalcGuyKoor();
+			for (short k = 0; k<loop; k++) if ((Bild%i == 0) && (Guy.Aktiv)) CalcGuyKoor();
 			return;
 		}
 		// sonstige Aktionen

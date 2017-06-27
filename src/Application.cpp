@@ -32,7 +32,7 @@ Application::Application(const std::string& name, HINSTANCE instance_handle)
 	Spielzustand = State::LOGO;
 	Game::InitWaves(); // Nur zum Wavinitialisieren
 
-	srand((unsigned)time(NULL)); // Random initialisieren
+	srand(static_cast<unsigned>(time(NULL))); // Random initialisieren
 }
 
 void Application::process_events()
@@ -59,7 +59,6 @@ void Application::process_events()
 void Application::run()
 {
 	sf::Clock timer;
-	std::time_t Zeitsave;
 
 	while(m_window.isOpen())
 	{
@@ -70,7 +69,7 @@ void Application::run()
 			while(true)
 			{
 				Bild++;
-				Zeitsave = time(NULL);
+				std::time_t Zeitsave = time(NULL);
 				if(m_time + 5 < Zeitsave)
 				{
 					m_time = Zeitsave;

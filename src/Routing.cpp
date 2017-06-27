@@ -10,9 +10,7 @@ namespace Routing
 
 	void MarkRoute(bool Mark)
 	{
-		short i;
-
-		for (i = 0; i < RouteLaenge; i++)
+		for (short i = 0; i < RouteLaenge; i++)
 		{
 			Scape[Route[i].x][Route[i].y].Markiert = Mark;
 		}
@@ -32,29 +30,17 @@ namespace Routing
 
 	bool FindTheWay()
 	{
-		ZWEID		Pos;
-		short		Dir;
+		short	Dir;
 
-		ZWEID		Plist[MAXXKACH*MAXYKACH]; // Besuchte Punkte merken
-		short		Llist[MAXXKACH*MAXYKACH]; // Länge vom Punkt zum Ziel
-		short		PCnt;
-		bool		GoalReached;
-		short		Shortest;
-		short		DiffX, DiffY;
-		short		StepCnt;
+		ZWEID	Plist[MAXXKACH*MAXYKACH]; // Besuchte Punkte merken
+		short	Llist[MAXXKACH*MAXYKACH]; // Länge vom Punkt zum Ziel
 
-		ZWEID		ShPos;
-		int     	ShStep;
-		ZWEID		BestLine;
-		ZWEID		LineStartPos;
-		short		AI, BI, CI;
-		ZWEID		ShortKoor;
-		short		ShortEntf;
+		ZWEID	ShPos{0, 0};
+		ZWEID	BestLine{0, 0};
+		ZWEID	ShortKoor{0, 0};
 
-
-
-		for (AI = 0; AI<MAXYKACH; AI++)
-			for (BI = 0; BI<MAXXKACH; BI++)
+		for (short AI = 0; AI<MAXYKACH; AI++)
+			for (short BI = 0; BI<MAXXKACH; BI++)
 			{
 				LenMap[AI][BI] = 65535;
 				Llist[AI*BI] = 0;
@@ -62,24 +48,24 @@ namespace Routing
 				Plist[AI*BI].y = 0;
 
 			}
-		ShortEntf = -1;
+		short ShortEntf = -1;
 		RouteLaenge = 0;
 
-		PCnt = 1;
+		short PCnt = 1;
 		Plist[0] = RouteStart;
-		DiffX = (RouteStart.x - RouteZiel.x);
-		DiffY = (RouteStart.y - RouteZiel.y);
+		short DiffX = (RouteStart.x - RouteZiel.x);
+		short DiffY = (RouteStart.y - RouteZiel.y);
 		Llist[0] = (DiffX*DiffX) + (DiffY*DiffY);
 
 		LenMap[RouteStart.x][RouteStart.y] = 0;
-		Pos = RouteStart;
+		ZWEID Pos = RouteStart;
 		NewPos = Pos;
-		GoalReached = false;
+		bool GoalReached = false;
 		while ((!GoalReached) && (PCnt > 0))
 		{
 			// den mit der kürzesten Entfernung zum Ziel finden (der in der Liste ist)
-			Shortest = 0;
-			for (CI = 0; CI <= PCnt - 1; CI++)
+			short Shortest = 0;
+			for (short CI = 0; CI <= PCnt - 1; CI++)
 			{
 				if (Llist[CI]<Llist[Shortest])
 				{
@@ -101,14 +87,14 @@ namespace Routing
 			PCnt--;
 			NewPos = Pos;
 			Dir = 2; NewPos.y--;		// Oben nachschauen anfangen
-			for (BI = 0; BI <= 3; BI++)	// In jede Richtung schauen
+			for (short BI = 0; BI <= 3; BI++)	// In jede Richtung schauen
 			{
 				// ist das Feld noch nicht besucht und frei?
 				if ((LenMap[NewPos.x][NewPos.y] == 65535) &&
 					(Scape[NewPos.x][NewPos.y].Begehbar))
 				{
 					// Wieviele Schritte braucht man um zu diesem Feld zu kommen 
-					StepCnt = LenMap[Pos.x][Pos.y] + 1;
+					short StepCnt = LenMap[Pos.x][Pos.y] + 1;
 					LenMap[NewPos.x][NewPos.y] = StepCnt;
 					Plist[PCnt] = NewPos;
 					// Die Entfernung in die Liste aufnehmen
@@ -137,13 +123,13 @@ namespace Routing
 		else if (GoalReached) // Punkt rückwärts durchgehen und Abkürzungen finden
 		{
 			Pos = RouteZiel;
-			LineStartPos = Pos;
+			ZWEID LineStartPos = Pos;
 			while ((Pos.x != RouteStart.x) || (Pos.y != RouteStart.y))
 			{
 				NewPos = Pos;
-				ShStep = 65535;
+				int ShStep = 65535;
 				Dir = 2; NewPos.y--; // Zuerst nach oben probieren
-				for (AI = 0; AI <= 3; AI++)
+				for (short AI = 0; AI <= 3; AI++)
 				{
 					if (LenMap[NewPos.x][NewPos.y]<ShStep)
 					{
@@ -199,13 +185,11 @@ namespace Routing
 
 	void SortRoute()
 	{
-		short i, j;
 		ZWEID Pos;
-		short Dir;
 
 		Pos.x = RouteStart.x;
 		Pos.y = RouteStart.y;
-		for (i = 0; i<RouteLaenge; i++) // Alle Teile vom Start durchgehen
+		for (short i = 0; i<RouteLaenge; i++) // Alle Teile vom Start durchgehen
 		{
 			SaveRoute[i].x = Pos.x;
 			SaveRoute[i].y = Pos.y;
@@ -219,8 +203,8 @@ namespace Routing
 
 			NewPos.x = Pos.x;
 			NewPos.y = Pos.y - 1; // oben mit nachschauen anfangen
-			Dir = 2;
-			for (j = 0; j <= 3; j++)
+			short Dir = 2;
+			for (short j = 0; j <= 3; j++)
 			{
 				if ((CheckRoute(NewPos.x, NewPos.y, false, RouteLaenge)) &&
 					(!CheckRoute(NewPos.x, NewPos.y, true, i)))
@@ -268,7 +252,7 @@ namespace Routing
 			Pos.x = NewPos.x;
 			Pos.y = NewPos.y;
 		}
-		for (i = 0; i <= RouteLaenge; i++) // Wieder in die Originalroute speichern
+		for (short i = 0; i <= RouteLaenge; i++) // Wieder in die Originalroute speichern
 		{
 			Route[i].x = SaveRoute[i].x;
 			Route[i].y = SaveRoute[i].y;

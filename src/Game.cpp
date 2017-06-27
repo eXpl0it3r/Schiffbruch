@@ -14,65 +14,61 @@ namespace Game
 {
 	void SaveGame()
 	{
-		short i;
-
 		std::ofstream ofs("save.dat", std::ios::binary);
 		if (!ofs) return;
 
-		ofs.write((char*)Scape, sizeof(Scape));
-		ofs.write((char*)&Guy, sizeof(Guy));
-		ofs.write((char*)&BootsFahrt, sizeof(BootsFahrt));
-		ofs.write((char*)&Camera, sizeof(Camera));
-		ofs.write((char*)&Chance, sizeof(Chance));
-		ofs.write((char*)&Gitter, sizeof(Gitter));
-		ofs.write((char*)&HauptMenue, sizeof(HauptMenue));
-		ofs.write((char*)&LAnimation, sizeof(LAnimation));
-		ofs.write((char*)&Minuten, sizeof(Minuten));
-		ofs.write((char*)&ScapeGrenze, sizeof(ScapeGrenze));
-		ofs.write((char*)&SchatzPos, sizeof(SchatzPos));
-		ofs.write((char*)&Spielzustand, sizeof(Spielzustand));
-		ofs.write((char*)&Stunden, sizeof(Stunden));
-		ofs.write((char*)&Tag, sizeof(Tag));
-		ofs.write((char*)TextBereich, sizeof(TextBereich));
-		ofs.write((char*)&SchatzGef, sizeof(SchatzGef));
+		ofs.write(reinterpret_cast<char*>(Scape), sizeof(Scape));
+		ofs.write(reinterpret_cast<char*>(&Guy), sizeof(Guy));
+		ofs.write(reinterpret_cast<char*>(&BootsFahrt), sizeof(BootsFahrt));
+		ofs.write(reinterpret_cast<char*>(&Camera), sizeof(Camera));
+		ofs.write(reinterpret_cast<char*>(&Chance), sizeof(Chance));
+		ofs.write(reinterpret_cast<char*>(&Gitter), sizeof(Gitter));
+		ofs.write(reinterpret_cast<char*>(&HauptMenue), sizeof(HauptMenue));
+		ofs.write(reinterpret_cast<char*>(&LAnimation), sizeof(LAnimation));
+		ofs.write(reinterpret_cast<char*>(&Minuten), sizeof(Minuten));
+		ofs.write(reinterpret_cast<char*>(&ScapeGrenze), sizeof(ScapeGrenze));
+		ofs.write(reinterpret_cast<char*>(&SchatzPos), sizeof(SchatzPos));
+		ofs.write(reinterpret_cast<char*>(&Spielzustand), sizeof(Spielzustand));
+		ofs.write(reinterpret_cast<char*>(&Stunden), sizeof(Stunden));
+		ofs.write(reinterpret_cast<char*>(&Tag), sizeof(Tag));
+		ofs.write(reinterpret_cast<char*>(TextBereich), sizeof(TextBereich));
+		ofs.write(reinterpret_cast<char*>(&SchatzGef), sizeof(SchatzGef));
 
-		for (i = 0; i<BILDANZ; i++)
+		for (short i = 0; i<BILDANZ; i++)
 		{
-			ofs.write((char*)&Bmp[i].Animation, sizeof(Bmp[i].Animation));
-			ofs.write((char*)&Bmp[i].Phase, sizeof(Bmp[i].Phase));
-			ofs.write((char*)&Bmp[i].First, sizeof(Bmp[i].First));
+			ofs.write(reinterpret_cast<char*>(&Bmp[i].Animation), sizeof(Bmp[i].Animation));
+			ofs.write(reinterpret_cast<char*>(&Bmp[i].Phase), sizeof(Bmp[i].Phase));
+			ofs.write(reinterpret_cast<char*>(&Bmp[i].First), sizeof(Bmp[i].First));
 		}
 	}
 
 	bool LoadGame()
 	{
-		short i;
-
 		std::ifstream ifs("save.dat", std::ios::binary); // | ios::nocreate);
 		if (!ifs) return(false);
 		
-		ifs.read((char*)Scape, sizeof(Scape));
-		ifs.read((char*)&Guy, sizeof(Guy));
-		ifs.read((char*)&BootsFahrt, sizeof(BootsFahrt));
-		ifs.read((char*)&Camera, sizeof(Camera));
-		ifs.read((char*)&Chance, sizeof(Chance));
-		ifs.read((char*)&Gitter, sizeof(Gitter));
-		ifs.read((char*)&HauptMenue, sizeof(HauptMenue));
-		ifs.read((char*)&LAnimation, sizeof(LAnimation));
-		ifs.read((char*)&Minuten, sizeof(Minuten));
-		ifs.read((char*)&ScapeGrenze, sizeof(ScapeGrenze));
-		ifs.read((char*)&SchatzPos, sizeof(SchatzPos));
-		ifs.read((char*)&Spielzustand, sizeof(Spielzustand));
-		ifs.read((char*)&Stunden, sizeof(Stunden));
-		ifs.read((char*)&Tag, sizeof(Tag));
-		ifs.read((char*)TextBereich, sizeof(TextBereich));
-		ifs.read((char*)&SchatzGef, sizeof(SchatzGef));
+		ifs.read(reinterpret_cast<char*>(Scape), sizeof(Scape));
+		ifs.read(reinterpret_cast<char*>(&Guy), sizeof(Guy));
+		ifs.read(reinterpret_cast<char*>(&BootsFahrt), sizeof(BootsFahrt));
+		ifs.read(reinterpret_cast<char*>(&Camera), sizeof(Camera));
+		ifs.read(reinterpret_cast<char*>(&Chance), sizeof(Chance));
+		ifs.read(reinterpret_cast<char*>(&Gitter), sizeof(Gitter));
+		ifs.read(reinterpret_cast<char*>(&HauptMenue), sizeof(HauptMenue));
+		ifs.read(reinterpret_cast<char*>(&LAnimation), sizeof(LAnimation));
+		ifs.read(reinterpret_cast<char*>(&Minuten), sizeof(Minuten));
+		ifs.read(reinterpret_cast<char*>(&ScapeGrenze), sizeof(ScapeGrenze));
+		ifs.read(reinterpret_cast<char*>(&SchatzPos), sizeof(SchatzPos));
+		ifs.read(reinterpret_cast<char*>(&Spielzustand), sizeof(Spielzustand));
+		ifs.read(reinterpret_cast<char*>(&Stunden), sizeof(Stunden));
+		ifs.read(reinterpret_cast<char*>(&Tag), sizeof(Tag));
+		ifs.read(reinterpret_cast<char*>(TextBereich), sizeof(TextBereich));
+		ifs.read(reinterpret_cast<char*>(&SchatzGef), sizeof(SchatzGef));
 		
-		for (i = 0; i<BILDANZ; i++)
+		for (short i = 0; i<BILDANZ; i++)
 		{
-			ifs.read((char*)&Bmp[i].Animation, sizeof(Bmp[i].Animation));
-			ifs.read((char*)&Bmp[i].Phase, sizeof(Bmp[i].Phase));
-			ifs.read((char*)&Bmp[i].First, sizeof(Bmp[i].First));
+			ifs.read(reinterpret_cast<char*>(&Bmp[i].Animation), sizeof(Bmp[i].Animation));
+			ifs.read(reinterpret_cast<char*>(&Bmp[i].Phase), sizeof(Bmp[i].Phase));
+			ifs.read(reinterpret_cast<char*>(&Bmp[i].First), sizeof(Bmp[i].First));
 		}
 		return(true);
 	}
@@ -1092,40 +1088,40 @@ namespace Game
 		Bmp[BAUM1].rcSrc.top = 0;
 		Bmp[BAUM1].rcSrc.right = 21;
 		Bmp[BAUM1].rcSrc.bottom = 26;
-		Bmp[BAUM1].Breite = (short)(Bmp[BAUM1].rcSrc.right - Bmp[BAUM1].rcSrc.left);
-		Bmp[BAUM1].Hoehe = (short)(Bmp[BAUM1].rcSrc.bottom - Bmp[BAUM1].rcSrc.top);
+		Bmp[BAUM1].Breite = static_cast<short>(Bmp[BAUM1].rcSrc.right - Bmp[BAUM1].rcSrc.left);
+		Bmp[BAUM1].Hoehe = static_cast<short>(Bmp[BAUM1].rcSrc.bottom - Bmp[BAUM1].rcSrc.top);
 
 		// Baum2
 		Bmp[BAUM2].rcSrc.left = 21;
 		Bmp[BAUM2].rcSrc.top = 0;
 		Bmp[BAUM2].rcSrc.right = 42;
 		Bmp[BAUM2].rcSrc.bottom = 26;
-		Bmp[BAUM2].Breite = (short)(Bmp[BAUM2].rcSrc.right - Bmp[BAUM2].rcSrc.left);
-		Bmp[BAUM2].Hoehe = (short)(Bmp[BAUM2].rcSrc.bottom - Bmp[BAUM2].rcSrc.top);
+		Bmp[BAUM2].Breite = static_cast<short>(Bmp[BAUM2].rcSrc.right - Bmp[BAUM2].rcSrc.left);
+		Bmp[BAUM2].Hoehe = static_cast<short>(Bmp[BAUM2].rcSrc.bottom - Bmp[BAUM2].rcSrc.top);
 
 		// Baum3
 		Bmp[BAUM3].rcSrc.left = 42;
 		Bmp[BAUM3].rcSrc.top = 0;
 		Bmp[BAUM3].rcSrc.right = 64;
 		Bmp[BAUM3].rcSrc.bottom = 27;
-		Bmp[BAUM3].Breite = (short)(Bmp[BAUM3].rcSrc.right - Bmp[BAUM3].rcSrc.left);
-		Bmp[BAUM3].Hoehe = (short)(Bmp[BAUM3].rcSrc.bottom - Bmp[BAUM3].rcSrc.top);
+		Bmp[BAUM3].Breite = static_cast<short>(Bmp[BAUM3].rcSrc.right - Bmp[BAUM3].rcSrc.left);
+		Bmp[BAUM3].Hoehe = static_cast<short>(Bmp[BAUM3].rcSrc.bottom - Bmp[BAUM3].rcSrc.top);
 
 		// Baum4
 		Bmp[BAUM4].rcSrc.left = 64;
 		Bmp[BAUM4].rcSrc.top = 0;
 		Bmp[BAUM4].rcSrc.right = 81;
 		Bmp[BAUM4].rcSrc.bottom = 16;
-		Bmp[BAUM4].Breite = (short)(Bmp[BAUM4].rcSrc.right - Bmp[BAUM4].rcSrc.left);
-		Bmp[BAUM4].Hoehe = (short)(Bmp[BAUM4].rcSrc.bottom - Bmp[BAUM4].rcSrc.top);
+		Bmp[BAUM4].Breite = static_cast<short>(Bmp[BAUM4].rcSrc.right - Bmp[BAUM4].rcSrc.left);
+		Bmp[BAUM4].Hoehe = static_cast<short>(Bmp[BAUM4].rcSrc.bottom - Bmp[BAUM4].rcSrc.top);
 
 		// Baumgroß
 		Bmp[BAUMGROSS].rcSrc.left = 238;
 		Bmp[BAUMGROSS].rcSrc.top = 0;
 		Bmp[BAUMGROSS].rcSrc.right = 238 + 26;
 		Bmp[BAUMGROSS].rcSrc.bottom = 41;
-		Bmp[BAUMGROSS].Breite = (short)(Bmp[BAUMGROSS].rcSrc.right - Bmp[BAUMGROSS].rcSrc.left);
-		Bmp[BAUMGROSS].Hoehe = (short)(Bmp[BAUMGROSS].rcSrc.bottom - Bmp[BAUMGROSS].rcSrc.top);
+		Bmp[BAUMGROSS].Breite = static_cast<short>(Bmp[BAUMGROSS].rcSrc.right - Bmp[BAUMGROSS].rcSrc.left);
+		Bmp[BAUMGROSS].Hoehe = static_cast<short>(Bmp[BAUMGROSS].rcSrc.bottom - Bmp[BAUMGROSS].rcSrc.top);
 		Bmp[BAUMGROSS].Animation = false;
 		Bmp[BAUMGROSS].Anzahl = 1;
 		Bmp[BAUMGROSS].Geschwindigkeit = 0;
@@ -1191,8 +1187,8 @@ namespace Game
 		Bmp[BUSCH].rcSrc.top = 0;
 		Bmp[BUSCH].rcSrc.right = 81 + 20;
 		Bmp[BUSCH].rcSrc.bottom = 13;
-		Bmp[BUSCH].Breite = (short)(Bmp[BUSCH].rcSrc.right - Bmp[BUSCH].rcSrc.left);
-		Bmp[BUSCH].Hoehe = (short)(Bmp[BUSCH].rcSrc.bottom - Bmp[BUSCH].rcSrc.top);
+		Bmp[BUSCH].Breite = static_cast<short>(Bmp[BUSCH].rcSrc.right - Bmp[BUSCH].rcSrc.left);
+		Bmp[BUSCH].Hoehe = static_cast<short>(Bmp[BUSCH].rcSrc.bottom - Bmp[BUSCH].rcSrc.top);
 		Bmp[BUSCH].Animation = false;
 		Bmp[BUSCH].Anzahl = 3;
 		Bmp[BUSCH].Geschwindigkeit = 0;
@@ -1219,8 +1215,8 @@ namespace Game
 		Bmp[BUTTGITTER].rcDes.top = rcPanel.top + 26;
 		Bmp[BUTTGITTER].rcDes.right = Bmp[BUTTGITTER].rcDes.left + 28;
 		Bmp[BUTTGITTER].rcDes.bottom = Bmp[BUTTGITTER].rcDes.top + 28;
-		Bmp[BUTTGITTER].Breite = (short)(Bmp[BUTTGITTER].rcSrc.right - Bmp[BUTTGITTER].rcSrc.left);
-		Bmp[BUTTGITTER].Hoehe = (short)(Bmp[BUTTGITTER].rcSrc.bottom - Bmp[BUTTGITTER].rcSrc.top);
+		Bmp[BUTTGITTER].Breite = static_cast<short>(Bmp[BUTTGITTER].rcSrc.right - Bmp[BUTTGITTER].rcSrc.left);
+		Bmp[BUTTGITTER].Hoehe = static_cast<short>(Bmp[BUTTGITTER].rcSrc.bottom - Bmp[BUTTGITTER].rcSrc.top);
 		Bmp[BUTTGITTER].Anzahl = 2;
 
 		// BUTTANIMATION
@@ -1232,8 +1228,8 @@ namespace Game
 		Bmp[BUTTANIMATION].rcDes.top = rcPanel.top + 60;
 		Bmp[BUTTANIMATION].rcDes.right = Bmp[BUTTANIMATION].rcDes.left + 28;
 		Bmp[BUTTANIMATION].rcDes.bottom = Bmp[BUTTANIMATION].rcDes.top + 28;
-		Bmp[BUTTANIMATION].Breite = (short)(Bmp[BUTTANIMATION].rcSrc.right - Bmp[BUTTANIMATION].rcSrc.left);
-		Bmp[BUTTANIMATION].Hoehe = (short)(Bmp[BUTTANIMATION].rcSrc.bottom - Bmp[BUTTANIMATION].rcSrc.top);
+		Bmp[BUTTANIMATION].Breite = static_cast<short>(Bmp[BUTTANIMATION].rcSrc.right - Bmp[BUTTANIMATION].rcSrc.left);
+		Bmp[BUTTANIMATION].Hoehe = static_cast<short>(Bmp[BUTTANIMATION].rcSrc.bottom - Bmp[BUTTANIMATION].rcSrc.top);
 		Bmp[BUTTANIMATION].Anzahl = 2;
 
 		// BUTTBEENDEN
@@ -1245,8 +1241,8 @@ namespace Game
 		Bmp[BUTTBEENDEN].rcDes.top = rcPanel.top + 2;
 		Bmp[BUTTBEENDEN].rcDes.right = Bmp[BUTTBEENDEN].rcDes.left + 20;
 		Bmp[BUTTBEENDEN].rcDes.bottom = Bmp[BUTTBEENDEN].rcDes.top + 20;
-		Bmp[BUTTBEENDEN].Breite = (short)(Bmp[BUTTBEENDEN].rcSrc.right - Bmp[BUTTBEENDEN].rcSrc.left);
-		Bmp[BUTTBEENDEN].Hoehe = (short)(Bmp[BUTTBEENDEN].rcSrc.bottom - Bmp[BUTTBEENDEN].rcSrc.top);
+		Bmp[BUTTBEENDEN].Breite = static_cast<short>(Bmp[BUTTBEENDEN].rcSrc.right - Bmp[BUTTBEENDEN].rcSrc.left);
+		Bmp[BUTTBEENDEN].Hoehe = static_cast<short>(Bmp[BUTTBEENDEN].rcSrc.bottom - Bmp[BUTTBEENDEN].rcSrc.top);
 		Bmp[BUTTBEENDEN].Anzahl = 4;
 		Bmp[BUTTBEENDEN].Geschwindigkeit = 4;
 
@@ -1259,8 +1255,8 @@ namespace Game
 		Bmp[BUTTNEU].rcDes.top = rcPanel.top + 2;
 		Bmp[BUTTNEU].rcDes.right = Bmp[BUTTNEU].rcDes.left + 20;
 		Bmp[BUTTNEU].rcDes.bottom = Bmp[BUTTNEU].rcDes.top + 20;
-		Bmp[BUTTNEU].Breite = (short)(Bmp[BUTTNEU].rcSrc.right - Bmp[BUTTNEU].rcSrc.left);
-		Bmp[BUTTNEU].Hoehe = (short)(Bmp[BUTTNEU].rcSrc.bottom - Bmp[BUTTNEU].rcSrc.top);
+		Bmp[BUTTNEU].Breite = static_cast<short>(Bmp[BUTTNEU].rcSrc.right - Bmp[BUTTNEU].rcSrc.left);
+		Bmp[BUTTNEU].Hoehe = static_cast<short>(Bmp[BUTTNEU].rcSrc.bottom - Bmp[BUTTNEU].rcSrc.top);
 		Bmp[BUTTNEU].Anzahl = 2;
 		Bmp[BUTTNEU].Geschwindigkeit = 3;
 
@@ -1274,8 +1270,8 @@ namespace Game
 		Bmp[BUTTTAGNEU].rcDes.top = rcPanel.top + 2;
 		Bmp[BUTTTAGNEU].rcDes.right = Bmp[BUTTTAGNEU].rcDes.left + 20;
 		Bmp[BUTTTAGNEU].rcDes.bottom = Bmp[BUTTTAGNEU].rcDes.top + 20;
-		Bmp[BUTTTAGNEU].Breite = (short)(Bmp[BUTTTAGNEU].rcSrc.right - Bmp[BUTTTAGNEU].rcSrc.left);
-		Bmp[BUTTTAGNEU].Hoehe = (short)(Bmp[BUTTTAGNEU].rcSrc.bottom - Bmp[BUTTTAGNEU].rcSrc.top);
+		Bmp[BUTTTAGNEU].Breite = static_cast<short>(Bmp[BUTTTAGNEU].rcSrc.right - Bmp[BUTTTAGNEU].rcSrc.left);
+		Bmp[BUTTTAGNEU].Hoehe = static_cast<short>(Bmp[BUTTTAGNEU].rcSrc.bottom - Bmp[BUTTTAGNEU].rcSrc.top);
 		Bmp[BUTTTAGNEU].Anzahl = 2;
 		Bmp[BUTTTAGNEU].Geschwindigkeit = 2;
 
@@ -1288,8 +1284,8 @@ namespace Game
 		Bmp[BUTTSOUND].rcDes.top = rcPanel.top + 94;
 		Bmp[BUTTSOUND].rcDes.right = Bmp[BUTTSOUND].rcDes.left + 28;
 		Bmp[BUTTSOUND].rcDes.bottom = Bmp[BUTTSOUND].rcDes.top + 28;
-		Bmp[BUTTSOUND].Breite = (short)(Bmp[BUTTSOUND].rcSrc.right - Bmp[BUTTSOUND].rcSrc.left);
-		Bmp[BUTTSOUND].Hoehe = (short)(Bmp[BUTTSOUND].rcSrc.bottom - Bmp[BUTTSOUND].rcSrc.top);
+		Bmp[BUTTSOUND].Breite = static_cast<short>(Bmp[BUTTSOUND].rcSrc.right - Bmp[BUTTSOUND].rcSrc.left);
+		Bmp[BUTTSOUND].Hoehe = static_cast<short>(Bmp[BUTTSOUND].rcSrc.bottom - Bmp[BUTTSOUND].rcSrc.top);
 		Bmp[BUTTSOUND].Anzahl = 2;
 
 		// ButtAktion
@@ -1301,8 +1297,8 @@ namespace Game
 		Bmp[BUTTAKTION].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTAKTION].rcDes.right = Bmp[BUTTAKTION].rcDes.left + 35;
 		Bmp[BUTTAKTION].rcDes.bottom = Bmp[BUTTAKTION].rcDes.top + 35;
-		Bmp[BUTTAKTION].Breite = (short)(Bmp[BUTTAKTION].rcSrc.right - Bmp[BUTTAKTION].rcSrc.left);
-		Bmp[BUTTAKTION].Hoehe = (short)(Bmp[BUTTAKTION].rcSrc.bottom - Bmp[BUTTAKTION].rcSrc.top);
+		Bmp[BUTTAKTION].Breite = static_cast<short>(Bmp[BUTTAKTION].rcSrc.right - Bmp[BUTTAKTION].rcSrc.left);
+		Bmp[BUTTAKTION].Hoehe = static_cast<short>(Bmp[BUTTAKTION].rcSrc.bottom - Bmp[BUTTAKTION].rcSrc.top);
 		Bmp[BUTTAKTION].Anzahl = 3;
 		Bmp[BUTTAKTION].Geschwindigkeit = 6;
 
@@ -1315,8 +1311,8 @@ namespace Game
 		Bmp[BUTTBAUEN].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTBAUEN].rcDes.right = Bmp[BUTTBAUEN].rcDes.left + 35;
 		Bmp[BUTTBAUEN].rcDes.bottom = Bmp[BUTTBAUEN].rcDes.top + 35;
-		Bmp[BUTTBAUEN].Breite = (short)(Bmp[BUTTBAUEN].rcSrc.right - Bmp[BUTTBAUEN].rcSrc.left);
-		Bmp[BUTTBAUEN].Hoehe = (short)(Bmp[BUTTBAUEN].rcSrc.bottom - Bmp[BUTTBAUEN].rcSrc.top);
+		Bmp[BUTTBAUEN].Breite = static_cast<short>(Bmp[BUTTBAUEN].rcSrc.right - Bmp[BUTTBAUEN].rcSrc.left);
+		Bmp[BUTTBAUEN].Hoehe = static_cast<short>(Bmp[BUTTBAUEN].rcSrc.bottom - Bmp[BUTTBAUEN].rcSrc.top);
 		Bmp[BUTTBAUEN].Anzahl = 4;
 		Bmp[BUTTBAUEN].Geschwindigkeit = 5;
 
@@ -1330,8 +1326,8 @@ namespace Game
 		Bmp[BUTTINVENTAR].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTINVENTAR].rcDes.right = Bmp[BUTTINVENTAR].rcDes.left + 35;
 		Bmp[BUTTINVENTAR].rcDes.bottom = Bmp[BUTTINVENTAR].rcDes.top + 35;
-		Bmp[BUTTINVENTAR].Breite = (short)(Bmp[BUTTINVENTAR].rcSrc.right - Bmp[BUTTINVENTAR].rcSrc.left);
-		Bmp[BUTTINVENTAR].Hoehe = (short)(Bmp[BUTTINVENTAR].rcSrc.bottom - Bmp[BUTTINVENTAR].rcSrc.top);
+		Bmp[BUTTINVENTAR].Breite = static_cast<short>(Bmp[BUTTINVENTAR].rcSrc.right - Bmp[BUTTINVENTAR].rcSrc.left);
+		Bmp[BUTTINVENTAR].Hoehe = static_cast<short>(Bmp[BUTTINVENTAR].rcSrc.bottom - Bmp[BUTTINVENTAR].rcSrc.top);
 		Bmp[BUTTINVENTAR].Anzahl = 4;
 		Bmp[BUTTINVENTAR].Geschwindigkeit = 4;
 
@@ -1344,8 +1340,8 @@ namespace Game
 		Bmp[BUTTWEITER].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTWEITER].rcDes.right = Bmp[BUTTWEITER].rcDes.left + 35;
 		Bmp[BUTTWEITER].rcDes.bottom = Bmp[BUTTWEITER].rcDes.top + 35;
-		Bmp[BUTTWEITER].Breite = (short)(Bmp[BUTTWEITER].rcSrc.right - Bmp[BUTTWEITER].rcSrc.left);
-		Bmp[BUTTWEITER].Hoehe = (short)(Bmp[BUTTWEITER].rcSrc.bottom - Bmp[BUTTWEITER].rcSrc.top);
+		Bmp[BUTTWEITER].Breite = static_cast<short>(Bmp[BUTTWEITER].rcSrc.right - Bmp[BUTTWEITER].rcSrc.left);
+		Bmp[BUTTWEITER].Hoehe = static_cast<short>(Bmp[BUTTWEITER].rcSrc.bottom - Bmp[BUTTWEITER].rcSrc.top);
 		Bmp[BUTTWEITER].Anzahl = 4;
 		Bmp[BUTTWEITER].Geschwindigkeit = 4;
 		Bmp[BUTTWEITER].Phase = -1;
@@ -1359,8 +1355,8 @@ namespace Game
 		Bmp[BUTTSTOP].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTSTOP].rcDes.right = Bmp[BUTTSTOP].rcDes.left + 35;
 		Bmp[BUTTSTOP].rcDes.bottom = Bmp[BUTTSTOP].rcDes.top + 35;
-		Bmp[BUTTSTOP].Breite = (short)(Bmp[BUTTSTOP].rcSrc.right - Bmp[BUTTSTOP].rcSrc.left);
-		Bmp[BUTTSTOP].Hoehe = (short)(Bmp[BUTTSTOP].rcSrc.bottom - Bmp[BUTTSTOP].rcSrc.top);
+		Bmp[BUTTSTOP].Breite = static_cast<short>(Bmp[BUTTSTOP].rcSrc.right - Bmp[BUTTSTOP].rcSrc.left);
+		Bmp[BUTTSTOP].Hoehe = static_cast<short>(Bmp[BUTTSTOP].rcSrc.bottom - Bmp[BUTTSTOP].rcSrc.top);
 		Bmp[BUTTSTOP].Anzahl = 4;
 		Bmp[BUTTSTOP].Geschwindigkeit = 4;
 		Bmp[BUTTSTOP].Phase = -1;
@@ -1374,8 +1370,8 @@ namespace Game
 		Bmp[BUTTABLEGEN].rcDes.top = rcPanel.top + 191;
 		Bmp[BUTTABLEGEN].rcDes.right = Bmp[BUTTABLEGEN].rcDes.left + 35;
 		Bmp[BUTTABLEGEN].rcDes.bottom = Bmp[BUTTABLEGEN].rcDes.top + 35;
-		Bmp[BUTTABLEGEN].Breite = (short)(Bmp[BUTTABLEGEN].rcSrc.right - Bmp[BUTTABLEGEN].rcSrc.left);
-		Bmp[BUTTABLEGEN].Hoehe = (short)(Bmp[BUTTABLEGEN].rcSrc.bottom - Bmp[BUTTABLEGEN].rcSrc.top);
+		Bmp[BUTTABLEGEN].Breite = static_cast<short>(Bmp[BUTTABLEGEN].rcSrc.right - Bmp[BUTTABLEGEN].rcSrc.left);
+		Bmp[BUTTABLEGEN].Hoehe = static_cast<short>(Bmp[BUTTABLEGEN].rcSrc.bottom - Bmp[BUTTABLEGEN].rcSrc.top);
 		Bmp[BUTTABLEGEN].Anzahl = 4;
 		Bmp[BUTTABLEGEN].Geschwindigkeit = 3;
 		Bmp[BUTTSTOP].Phase = -1;
@@ -1389,8 +1385,8 @@ namespace Game
 		Bmp[BUTTSUCHEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTSUCHEN].rcDes.right = Bmp[BUTTSUCHEN].rcDes.left + 35;
 		Bmp[BUTTSUCHEN].rcDes.bottom = Bmp[BUTTSUCHEN].rcDes.top + 35;
-		Bmp[BUTTSUCHEN].Breite = (short)(Bmp[BUTTSUCHEN].rcSrc.right - Bmp[BUTTSUCHEN].rcSrc.left);
-		Bmp[BUTTSUCHEN].Hoehe = (short)(Bmp[BUTTSUCHEN].rcSrc.bottom - Bmp[BUTTSUCHEN].rcSrc.top);
+		Bmp[BUTTSUCHEN].Breite = static_cast<short>(Bmp[BUTTSUCHEN].rcSrc.right - Bmp[BUTTSUCHEN].rcSrc.left);
+		Bmp[BUTTSUCHEN].Hoehe = static_cast<short>(Bmp[BUTTSUCHEN].rcSrc.bottom - Bmp[BUTTSUCHEN].rcSrc.top);
 		Bmp[BUTTSUCHEN].Anzahl = 4;
 		Bmp[BUTTSUCHEN].Geschwindigkeit = 4;
 
@@ -1403,8 +1399,8 @@ namespace Game
 		Bmp[BUTTESSEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTESSEN].rcDes.right = Bmp[BUTTESSEN].rcDes.left + 35;
 		Bmp[BUTTESSEN].rcDes.bottom = Bmp[BUTTESSEN].rcDes.top + 35;
-		Bmp[BUTTESSEN].Breite = (short)(Bmp[BUTTESSEN].rcSrc.right - Bmp[BUTTESSEN].rcSrc.left);
-		Bmp[BUTTESSEN].Hoehe = (short)(Bmp[BUTTESSEN].rcSrc.bottom - Bmp[BUTTESSEN].rcSrc.top);
+		Bmp[BUTTESSEN].Breite = static_cast<short>(Bmp[BUTTESSEN].rcSrc.right - Bmp[BUTTESSEN].rcSrc.left);
+		Bmp[BUTTESSEN].Hoehe = static_cast<short>(Bmp[BUTTESSEN].rcSrc.bottom - Bmp[BUTTESSEN].rcSrc.top);
 		Bmp[BUTTESSEN].Anzahl = 4;
 		Bmp[BUTTESSEN].Geschwindigkeit = 4;
 
@@ -1417,8 +1413,8 @@ namespace Game
 		Bmp[BUTTSCHLAFEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTSCHLAFEN].rcDes.right = Bmp[BUTTSCHLAFEN].rcDes.left + 35;
 		Bmp[BUTTSCHLAFEN].rcDes.bottom = Bmp[BUTTSCHLAFEN].rcDes.top + 35;
-		Bmp[BUTTSCHLAFEN].Breite = (short)(Bmp[BUTTSCHLAFEN].rcSrc.right - Bmp[BUTTSCHLAFEN].rcSrc.left);
-		Bmp[BUTTSCHLAFEN].Hoehe = (short)(Bmp[BUTTSCHLAFEN].rcSrc.bottom - Bmp[BUTTSCHLAFEN].rcSrc.top);
+		Bmp[BUTTSCHLAFEN].Breite = static_cast<short>(Bmp[BUTTSCHLAFEN].rcSrc.right - Bmp[BUTTSCHLAFEN].rcSrc.left);
+		Bmp[BUTTSCHLAFEN].Hoehe = static_cast<short>(Bmp[BUTTSCHLAFEN].rcSrc.bottom - Bmp[BUTTSCHLAFEN].rcSrc.top);
 		Bmp[BUTTSCHLAFEN].Anzahl = 4;
 		Bmp[BUTTSCHLAFEN].Geschwindigkeit = 3;
 
@@ -1431,8 +1427,8 @@ namespace Game
 		Bmp[BUTTFAELLEN].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTFAELLEN].rcDes.right = Bmp[BUTTFAELLEN].rcDes.left + 35;
 		Bmp[BUTTFAELLEN].rcDes.bottom = Bmp[BUTTFAELLEN].rcDes.top + 35;
-		Bmp[BUTTFAELLEN].Breite = (short)(Bmp[BUTTFAELLEN].rcSrc.right - Bmp[BUTTFAELLEN].rcSrc.left);
-		Bmp[BUTTFAELLEN].Hoehe = (short)(Bmp[BUTTFAELLEN].rcSrc.bottom - Bmp[BUTTFAELLEN].rcSrc.top);
+		Bmp[BUTTFAELLEN].Breite = static_cast<short>(Bmp[BUTTFAELLEN].rcSrc.right - Bmp[BUTTFAELLEN].rcSrc.left);
+		Bmp[BUTTFAELLEN].Hoehe = static_cast<short>(Bmp[BUTTFAELLEN].rcSrc.bottom - Bmp[BUTTFAELLEN].rcSrc.top);
 		Bmp[BUTTFAELLEN].Anzahl = 4;
 		Bmp[BUTTFAELLEN].Geschwindigkeit = 4;
 		Bmp[BUTTFAELLEN].Phase = -1;
@@ -1446,8 +1442,8 @@ namespace Game
 		Bmp[BUTTANGELN].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTANGELN].rcDes.right = Bmp[BUTTANGELN].rcDes.left + 35;
 		Bmp[BUTTANGELN].rcDes.bottom = Bmp[BUTTANGELN].rcDes.top + 35;
-		Bmp[BUTTANGELN].Breite = (short)(Bmp[BUTTANGELN].rcSrc.right - Bmp[BUTTANGELN].rcSrc.left);
-		Bmp[BUTTANGELN].Hoehe = (short)(Bmp[BUTTANGELN].rcSrc.bottom - Bmp[BUTTANGELN].rcSrc.top);
+		Bmp[BUTTANGELN].Breite = static_cast<short>(Bmp[BUTTANGELN].rcSrc.right - Bmp[BUTTANGELN].rcSrc.left);
+		Bmp[BUTTANGELN].Hoehe = static_cast<short>(Bmp[BUTTANGELN].rcSrc.bottom - Bmp[BUTTANGELN].rcSrc.top);
 		Bmp[BUTTANGELN].Anzahl = 4;
 		Bmp[BUTTANGELN].Geschwindigkeit = 3;
 		Bmp[BUTTANGELN].Phase = -1;
@@ -1461,8 +1457,8 @@ namespace Game
 		Bmp[BUTTANZUENDEN].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTANZUENDEN].rcDes.right = Bmp[BUTTANZUENDEN].rcDes.left + 35;
 		Bmp[BUTTANZUENDEN].rcDes.bottom = Bmp[BUTTANZUENDEN].rcDes.top + 35;
-		Bmp[BUTTANZUENDEN].Breite = (short)(Bmp[BUTTANZUENDEN].rcSrc.right - Bmp[BUTTANZUENDEN].rcSrc.left);
-		Bmp[BUTTANZUENDEN].Hoehe = (short)(Bmp[BUTTANZUENDEN].rcSrc.bottom - Bmp[BUTTANZUENDEN].rcSrc.top);
+		Bmp[BUTTANZUENDEN].Breite = static_cast<short>(Bmp[BUTTANZUENDEN].rcSrc.right - Bmp[BUTTANZUENDEN].rcSrc.left);
+		Bmp[BUTTANZUENDEN].Hoehe = static_cast<short>(Bmp[BUTTANZUENDEN].rcSrc.bottom - Bmp[BUTTANZUENDEN].rcSrc.top);
 		Bmp[BUTTANZUENDEN].Anzahl = 3;
 		Bmp[BUTTANZUENDEN].Geschwindigkeit = 4;
 		Bmp[BUTTANZUENDEN].Phase = -1;
@@ -1476,8 +1472,8 @@ namespace Game
 		Bmp[BUTTAUSSCHAU].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTAUSSCHAU].rcDes.right = Bmp[BUTTAUSSCHAU].rcDes.left + 35;
 		Bmp[BUTTAUSSCHAU].rcDes.bottom = Bmp[BUTTAUSSCHAU].rcDes.top + 35;
-		Bmp[BUTTAUSSCHAU].Breite = (short)(Bmp[BUTTAUSSCHAU].rcSrc.right - Bmp[BUTTAUSSCHAU].rcSrc.left);
-		Bmp[BUTTAUSSCHAU].Hoehe = (short)(Bmp[BUTTAUSSCHAU].rcSrc.bottom - Bmp[BUTTAUSSCHAU].rcSrc.top);
+		Bmp[BUTTAUSSCHAU].Breite = static_cast<short>(Bmp[BUTTAUSSCHAU].rcSrc.right - Bmp[BUTTAUSSCHAU].rcSrc.left);
+		Bmp[BUTTAUSSCHAU].Hoehe = static_cast<short>(Bmp[BUTTAUSSCHAU].rcSrc.bottom - Bmp[BUTTAUSSCHAU].rcSrc.top);
 		Bmp[BUTTAUSSCHAU].Anzahl = 4;
 		Bmp[BUTTAUSSCHAU].Geschwindigkeit = 3;
 		Bmp[BUTTAUSSCHAU].Phase = -1;
@@ -1491,8 +1487,8 @@ namespace Game
 		Bmp[BUTTSCHATZKARTE].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTSCHATZKARTE].rcDes.right = Bmp[BUTTSCHATZKARTE].rcDes.left + 35;
 		Bmp[BUTTSCHATZKARTE].rcDes.bottom = Bmp[BUTTSCHATZKARTE].rcDes.top + 35;
-		Bmp[BUTTSCHATZKARTE].Breite = (short)(Bmp[BUTTSCHATZKARTE].rcSrc.right - Bmp[BUTTSCHATZKARTE].rcSrc.left);
-		Bmp[BUTTSCHATZKARTE].Hoehe = (short)(Bmp[BUTTSCHATZKARTE].rcSrc.bottom - Bmp[BUTTSCHATZKARTE].rcSrc.top);
+		Bmp[BUTTSCHATZKARTE].Breite = static_cast<short>(Bmp[BUTTSCHATZKARTE].rcSrc.right - Bmp[BUTTSCHATZKARTE].rcSrc.left);
+		Bmp[BUTTSCHATZKARTE].Hoehe = static_cast<short>(Bmp[BUTTSCHATZKARTE].rcSrc.bottom - Bmp[BUTTSCHATZKARTE].rcSrc.top);
 		Bmp[BUTTSCHATZKARTE].Anzahl = 4;
 		Bmp[BUTTSCHATZKARTE].Geschwindigkeit = 3;
 		Bmp[BUTTSCHATZKARTE].Phase = -1;
@@ -1506,8 +1502,8 @@ namespace Game
 		Bmp[BUTTSCHATZ].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTSCHATZ].rcDes.right = Bmp[BUTTSCHATZ].rcDes.left + 35;
 		Bmp[BUTTSCHATZ].rcDes.bottom = Bmp[BUTTSCHATZ].rcDes.top + 35;
-		Bmp[BUTTSCHATZ].Breite = (short)(Bmp[BUTTSCHATZ].rcSrc.right - Bmp[BUTTSCHATZ].rcSrc.left);
-		Bmp[BUTTSCHATZ].Hoehe = (short)(Bmp[BUTTSCHATZ].rcSrc.bottom - Bmp[BUTTSCHATZ].rcSrc.top);
+		Bmp[BUTTSCHATZ].Breite = static_cast<short>(Bmp[BUTTSCHATZ].rcSrc.right - Bmp[BUTTSCHATZ].rcSrc.left);
+		Bmp[BUTTSCHATZ].Hoehe = static_cast<short>(Bmp[BUTTSCHATZ].rcSrc.bottom - Bmp[BUTTSCHATZ].rcSrc.top);
 		Bmp[BUTTSCHATZ].Anzahl = 4;
 		Bmp[BUTTSCHATZ].Geschwindigkeit = 3;
 		Bmp[BUTTSCHATZ].Phase = -1;
@@ -1521,8 +1517,8 @@ namespace Game
 		Bmp[BUTTSCHLEUDER].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTSCHLEUDER].rcDes.right = Bmp[BUTTSCHLEUDER].rcDes.left + 35;
 		Bmp[BUTTSCHLEUDER].rcDes.bottom = Bmp[BUTTSCHLEUDER].rcDes.top + 35;
-		Bmp[BUTTSCHLEUDER].Breite = (short)(Bmp[BUTTSCHLEUDER].rcSrc.right - Bmp[BUTTSCHLEUDER].rcSrc.left);
-		Bmp[BUTTSCHLEUDER].Hoehe = (short)(Bmp[BUTTSCHLEUDER].rcSrc.bottom - Bmp[BUTTSCHLEUDER].rcSrc.top);
+		Bmp[BUTTSCHLEUDER].Breite = static_cast<short>(Bmp[BUTTSCHLEUDER].rcSrc.right - Bmp[BUTTSCHLEUDER].rcSrc.left);
+		Bmp[BUTTSCHLEUDER].Hoehe = static_cast<short>(Bmp[BUTTSCHLEUDER].rcSrc.bottom - Bmp[BUTTSCHLEUDER].rcSrc.top);
 		Bmp[BUTTSCHLEUDER].Anzahl = 4;
 		Bmp[BUTTSCHLEUDER].Geschwindigkeit = 3;
 		Bmp[BUTTSCHLEUDER].Phase = -1;
@@ -1536,8 +1532,8 @@ namespace Game
 		Bmp[BUTTFELD].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTFELD].rcDes.right = Bmp[BUTTFELD].rcDes.left + 35;
 		Bmp[BUTTFELD].rcDes.bottom = Bmp[BUTTFELD].rcDes.top + 35;
-		Bmp[BUTTFELD].Breite = (short)(Bmp[BUTTFELD].rcSrc.right - Bmp[BUTTFELD].rcSrc.left);
-		Bmp[BUTTFELD].Hoehe = (short)(Bmp[BUTTFELD].rcSrc.bottom - Bmp[BUTTFELD].rcSrc.top);
+		Bmp[BUTTFELD].Breite = static_cast<short>(Bmp[BUTTFELD].rcSrc.right - Bmp[BUTTFELD].rcSrc.left);
+		Bmp[BUTTFELD].Hoehe = static_cast<short>(Bmp[BUTTFELD].rcSrc.bottom - Bmp[BUTTFELD].rcSrc.top);
 		Bmp[BUTTFELD].Anzahl = 4;
 		Bmp[BUTTFELD].Geschwindigkeit = 3;
 		Bmp[BUTTFELD].Phase = -1;
@@ -1551,8 +1547,8 @@ namespace Game
 		Bmp[BUTTZELT].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTZELT].rcDes.right = Bmp[BUTTZELT].rcDes.left + 35;
 		Bmp[BUTTZELT].rcDes.bottom = Bmp[BUTTZELT].rcDes.top + 35;
-		Bmp[BUTTZELT].Breite = (short)(Bmp[BUTTZELT].rcSrc.right - Bmp[BUTTZELT].rcSrc.left);
-		Bmp[BUTTZELT].Hoehe = (short)(Bmp[BUTTZELT].rcSrc.bottom - Bmp[BUTTZELT].rcSrc.top);
+		Bmp[BUTTZELT].Breite = static_cast<short>(Bmp[BUTTZELT].rcSrc.right - Bmp[BUTTZELT].rcSrc.left);
+		Bmp[BUTTZELT].Hoehe = static_cast<short>(Bmp[BUTTZELT].rcSrc.bottom - Bmp[BUTTZELT].rcSrc.top);
 		Bmp[BUTTZELT].Anzahl = 3;
 		Bmp[BUTTZELT].Geschwindigkeit = 3;
 		Bmp[BUTTZELT].Phase = 0;
@@ -1566,8 +1562,8 @@ namespace Game
 		Bmp[BUTTBOOT].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTBOOT].rcDes.right = Bmp[BUTTBOOT].rcDes.left + 35;
 		Bmp[BUTTBOOT].rcDes.bottom = Bmp[BUTTBOOT].rcDes.top + 35;
-		Bmp[BUTTBOOT].Breite = (short)(Bmp[BUTTBOOT].rcSrc.right - Bmp[BUTTBOOT].rcSrc.left);
-		Bmp[BUTTBOOT].Hoehe = (short)(Bmp[BUTTBOOT].rcSrc.bottom - Bmp[BUTTBOOT].rcSrc.top);
+		Bmp[BUTTBOOT].Breite = static_cast<short>(Bmp[BUTTBOOT].rcSrc.right - Bmp[BUTTBOOT].rcSrc.left);
+		Bmp[BUTTBOOT].Hoehe = static_cast<short>(Bmp[BUTTBOOT].rcSrc.bottom - Bmp[BUTTBOOT].rcSrc.top);
 		Bmp[BUTTBOOT].Anzahl = 3;
 		Bmp[BUTTBOOT].Geschwindigkeit = 3;
 		Bmp[BUTTBOOT].Phase = -1;
@@ -1581,8 +1577,8 @@ namespace Game
 		Bmp[BUTTROHR].rcDes.top = rcPanel.top + 270;
 		Bmp[BUTTROHR].rcDes.right = Bmp[BUTTROHR].rcDes.left + 35;
 		Bmp[BUTTROHR].rcDes.bottom = Bmp[BUTTROHR].rcDes.top + 35;
-		Bmp[BUTTROHR].Breite = (short)(Bmp[BUTTROHR].rcSrc.right - Bmp[BUTTROHR].rcSrc.left);
-		Bmp[BUTTROHR].Hoehe = (short)(Bmp[BUTTROHR].rcSrc.bottom - Bmp[BUTTROHR].rcSrc.top);
+		Bmp[BUTTROHR].Breite = static_cast<short>(Bmp[BUTTROHR].rcSrc.right - Bmp[BUTTROHR].rcSrc.left);
+		Bmp[BUTTROHR].Hoehe = static_cast<short>(Bmp[BUTTROHR].rcSrc.bottom - Bmp[BUTTROHR].rcSrc.top);
 		Bmp[BUTTROHR].Anzahl = 4;
 		Bmp[BUTTROHR].Geschwindigkeit = 2;
 		Bmp[BUTTROHR].Phase = -1;
@@ -1596,8 +1592,8 @@ namespace Game
 		Bmp[BUTTSOS].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTSOS].rcDes.right = Bmp[BUTTSOS].rcDes.left + 35;
 		Bmp[BUTTSOS].rcDes.bottom = Bmp[BUTTSOS].rcDes.top + 35;
-		Bmp[BUTTSOS].Breite = (short)(Bmp[BUTTSOS].rcSrc.right - Bmp[BUTTSOS].rcSrc.left);
-		Bmp[BUTTSOS].Hoehe = (short)(Bmp[BUTTSOS].rcSrc.bottom - Bmp[BUTTSOS].rcSrc.top);
+		Bmp[BUTTSOS].Breite = static_cast<short>(Bmp[BUTTSOS].rcSrc.right - Bmp[BUTTSOS].rcSrc.left);
+		Bmp[BUTTSOS].Hoehe = static_cast<short>(Bmp[BUTTSOS].rcSrc.bottom - Bmp[BUTTSOS].rcSrc.top);
 		Bmp[BUTTSOS].Anzahl = 3;
 		Bmp[BUTTSOS].Geschwindigkeit = 2;
 
@@ -1610,8 +1606,8 @@ namespace Game
 		Bmp[BUTTHAUS1].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTHAUS1].rcDes.right = Bmp[BUTTHAUS1].rcDes.left + 35;
 		Bmp[BUTTHAUS1].rcDes.bottom = Bmp[BUTTHAUS1].rcDes.top + 35;
-		Bmp[BUTTHAUS1].Breite = (short)(Bmp[BUTTHAUS1].rcSrc.right - Bmp[BUTTHAUS1].rcSrc.left);
-		Bmp[BUTTHAUS1].Hoehe = (short)(Bmp[BUTTHAUS1].rcSrc.bottom - Bmp[BUTTHAUS1].rcSrc.top);
+		Bmp[BUTTHAUS1].Breite = static_cast<short>(Bmp[BUTTHAUS1].rcSrc.right - Bmp[BUTTHAUS1].rcSrc.left);
+		Bmp[BUTTHAUS1].Hoehe = static_cast<short>(Bmp[BUTTHAUS1].rcSrc.bottom - Bmp[BUTTHAUS1].rcSrc.top);
 		Bmp[BUTTHAUS1].Anzahl = 5;
 		Bmp[BUTTHAUS1].Geschwindigkeit = 3;
 		Bmp[BUTTHAUS1].Phase = -1;
@@ -1625,8 +1621,8 @@ namespace Game
 		Bmp[BUTTHAUS2].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTHAUS2].rcDes.right = Bmp[BUTTHAUS2].rcDes.left + 35;
 		Bmp[BUTTHAUS2].rcDes.bottom = Bmp[BUTTHAUS2].rcDes.top + 35;
-		Bmp[BUTTHAUS2].Breite = (short)(Bmp[BUTTHAUS2].rcSrc.right - Bmp[BUTTHAUS2].rcSrc.left);
-		Bmp[BUTTHAUS2].Hoehe = (short)(Bmp[BUTTHAUS2].rcSrc.bottom - Bmp[BUTTHAUS2].rcSrc.top);
+		Bmp[BUTTHAUS2].Breite = static_cast<short>(Bmp[BUTTHAUS2].rcSrc.right - Bmp[BUTTHAUS2].rcSrc.left);
+		Bmp[BUTTHAUS2].Hoehe = static_cast<short>(Bmp[BUTTHAUS2].rcSrc.bottom - Bmp[BUTTHAUS2].rcSrc.top);
 		Bmp[BUTTHAUS2].Anzahl = 4;
 		Bmp[BUTTHAUS2].Geschwindigkeit = 3;
 		Bmp[BUTTHAUS2].Phase = -1;
@@ -1640,8 +1636,8 @@ namespace Game
 		Bmp[BUTTHAUS3].rcDes.top = rcPanel.top + 325;
 		Bmp[BUTTHAUS3].rcDes.right = Bmp[BUTTHAUS3].rcDes.left + 35;
 		Bmp[BUTTHAUS3].rcDes.bottom = Bmp[BUTTHAUS3].rcDes.top + 35;
-		Bmp[BUTTHAUS3].Breite = (short)(Bmp[BUTTHAUS3].rcSrc.right - Bmp[BUTTHAUS3].rcSrc.left);
-		Bmp[BUTTHAUS3].Hoehe = (short)(Bmp[BUTTHAUS3].rcSrc.bottom - Bmp[BUTTHAUS3].rcSrc.top);
+		Bmp[BUTTHAUS3].Breite = static_cast<short>(Bmp[BUTTHAUS3].rcSrc.right - Bmp[BUTTHAUS3].rcSrc.left);
+		Bmp[BUTTHAUS3].Hoehe = static_cast<short>(Bmp[BUTTHAUS3].rcSrc.bottom - Bmp[BUTTHAUS3].rcSrc.top);
 		Bmp[BUTTHAUS3].Anzahl = 4;
 		Bmp[BUTTHAUS3].Geschwindigkeit = 3;
 		Bmp[BUTTHAUS3].Phase = -1;
@@ -1655,8 +1651,8 @@ namespace Game
 		Bmp[BUTTFEUERST].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTFEUERST].rcDes.right = Bmp[BUTTFEUERST].rcDes.left + 35;
 		Bmp[BUTTFEUERST].rcDes.bottom = Bmp[BUTTFEUERST].rcDes.top + 35;
-		Bmp[BUTTFEUERST].Breite = (short)(Bmp[BUTTFEUERST].rcSrc.right - Bmp[BUTTFEUERST].rcSrc.left);
-		Bmp[BUTTFEUERST].Hoehe = (short)(Bmp[BUTTFEUERST].rcSrc.bottom - Bmp[BUTTFEUERST].rcSrc.top);
+		Bmp[BUTTFEUERST].Breite = static_cast<short>(Bmp[BUTTFEUERST].rcSrc.right - Bmp[BUTTFEUERST].rcSrc.left);
+		Bmp[BUTTFEUERST].Hoehe = static_cast<short>(Bmp[BUTTFEUERST].rcSrc.bottom - Bmp[BUTTFEUERST].rcSrc.top);
 		Bmp[BUTTFEUERST].Anzahl = 4;
 		Bmp[BUTTFEUERST].Geschwindigkeit = 3;
 
@@ -1669,8 +1665,8 @@ namespace Game
 		Bmp[BUTTFRAGEZ].rcDes.top = 0;
 		Bmp[BUTTFRAGEZ].rcDes.right = 0 + 35;
 		Bmp[BUTTFRAGEZ].rcDes.bottom = 0 + 35;
-		Bmp[BUTTFRAGEZ].Breite = (short)(Bmp[BUTTFRAGEZ].rcSrc.right - Bmp[BUTTFRAGEZ].rcSrc.left);
-		Bmp[BUTTFRAGEZ].Hoehe = (short)(Bmp[BUTTFRAGEZ].rcSrc.bottom - Bmp[BUTTFRAGEZ].rcSrc.top);
+		Bmp[BUTTFRAGEZ].Breite = static_cast<short>(Bmp[BUTTFRAGEZ].rcSrc.right - Bmp[BUTTFRAGEZ].rcSrc.left);
+		Bmp[BUTTFRAGEZ].Hoehe = static_cast<short>(Bmp[BUTTFRAGEZ].rcSrc.bottom - Bmp[BUTTFRAGEZ].rcSrc.top);
 		Bmp[BUTTFRAGEZ].Anzahl = 1;
 		Bmp[BUTTFRAGEZ].Geschwindigkeit = 0;
 
@@ -1683,8 +1679,8 @@ namespace Game
 		Bmp[BUTTDESTROY].rcDes.top = rcPanel.top + 380;
 		Bmp[BUTTDESTROY].rcDes.right = Bmp[BUTTDESTROY].rcDes.left + 35;
 		Bmp[BUTTDESTROY].rcDes.bottom = Bmp[BUTTDESTROY].rcDes.top + 35;
-		Bmp[BUTTDESTROY].Breite = (short)(Bmp[BUTTDESTROY].rcSrc.right - Bmp[BUTTDESTROY].rcSrc.left);
-		Bmp[BUTTDESTROY].Hoehe = (short)(Bmp[BUTTDESTROY].rcSrc.bottom - Bmp[BUTTDESTROY].rcSrc.top);
+		Bmp[BUTTDESTROY].Breite = static_cast<short>(Bmp[BUTTDESTROY].rcSrc.right - Bmp[BUTTDESTROY].rcSrc.left);
+		Bmp[BUTTDESTROY].Hoehe = static_cast<short>(Bmp[BUTTDESTROY].rcSrc.bottom - Bmp[BUTTDESTROY].rcSrc.top);
 		Bmp[BUTTDESTROY].Anzahl = 4;
 		Bmp[BUTTDESTROY].Geschwindigkeit = 5;
 
@@ -1706,32 +1702,32 @@ namespace Game
 		Bmp[BAUM1DOWN].rcSrc.top = 0;
 		Bmp[BAUM1DOWN].rcSrc.right = 101 + 35;
 		Bmp[BAUM1DOWN].rcSrc.bottom = 27;
-		Bmp[BAUM1DOWN].Breite = (short)(Bmp[BAUM1DOWN].rcSrc.right - Bmp[BAUM1DOWN].rcSrc.left);
-		Bmp[BAUM1DOWN].Hoehe = (short)(Bmp[BAUM1DOWN].rcSrc.bottom - Bmp[BAUM1DOWN].rcSrc.top);
+		Bmp[BAUM1DOWN].Breite = static_cast<short>(Bmp[BAUM1DOWN].rcSrc.right - Bmp[BAUM1DOWN].rcSrc.left);
+		Bmp[BAUM1DOWN].Hoehe = static_cast<short>(Bmp[BAUM1DOWN].rcSrc.bottom - Bmp[BAUM1DOWN].rcSrc.top);
 
 		// BAUM2DOWN
 		Bmp[BAUM2DOWN].rcSrc.left = 136;
 		Bmp[BAUM2DOWN].rcSrc.top = 0;
 		Bmp[BAUM2DOWN].rcSrc.right = 136 + 36;
 		Bmp[BAUM2DOWN].rcSrc.bottom = 27;
-		Bmp[BAUM2DOWN].Breite = (short)(Bmp[BAUM2DOWN].rcSrc.right - Bmp[BAUM2DOWN].rcSrc.left);
-		Bmp[BAUM2DOWN].Hoehe = (short)(Bmp[BAUM2DOWN].rcSrc.bottom - Bmp[BAUM2DOWN].rcSrc.top);
+		Bmp[BAUM2DOWN].Breite = static_cast<short>(Bmp[BAUM2DOWN].rcSrc.right - Bmp[BAUM2DOWN].rcSrc.left);
+		Bmp[BAUM2DOWN].Hoehe = static_cast<short>(Bmp[BAUM2DOWN].rcSrc.bottom - Bmp[BAUM2DOWN].rcSrc.top);
 
 		// BAUM3DOWN
 		Bmp[BAUM3DOWN].rcSrc.left = 172;
 		Bmp[BAUM3DOWN].rcSrc.top = 0;
 		Bmp[BAUM3DOWN].rcSrc.right = 172 + 34;
 		Bmp[BAUM3DOWN].rcSrc.bottom = 28;
-		Bmp[BAUM3DOWN].Breite = (short)(Bmp[BAUM3DOWN].rcSrc.right - Bmp[BAUM3DOWN].rcSrc.left);
-		Bmp[BAUM3DOWN].Hoehe = (short)(Bmp[BAUM3DOWN].rcSrc.bottom - Bmp[BAUM3DOWN].rcSrc.top);
+		Bmp[BAUM3DOWN].Breite = static_cast<short>(Bmp[BAUM3DOWN].rcSrc.right - Bmp[BAUM3DOWN].rcSrc.left);
+		Bmp[BAUM3DOWN].Hoehe = static_cast<short>(Bmp[BAUM3DOWN].rcSrc.bottom - Bmp[BAUM3DOWN].rcSrc.top);
 
 		// BAUM4DOWN
 		Bmp[BAUM4DOWN].rcSrc.left = 206;
 		Bmp[BAUM4DOWN].rcSrc.top = 0;
 		Bmp[BAUM4DOWN].rcSrc.right = 206 + 32;
 		Bmp[BAUM4DOWN].rcSrc.bottom = 17;
-		Bmp[BAUM4DOWN].Breite = (short)(Bmp[BAUM4DOWN].rcSrc.right - Bmp[BAUM4DOWN].rcSrc.left);
-		Bmp[BAUM4DOWN].Hoehe = (short)(Bmp[BAUM4DOWN].rcSrc.bottom - Bmp[BAUM4DOWN].rcSrc.top);
+		Bmp[BAUM4DOWN].Breite = static_cast<short>(Bmp[BAUM4DOWN].rcSrc.right - Bmp[BAUM4DOWN].rcSrc.left);
+		Bmp[BAUM4DOWN].Hoehe = static_cast<short>(Bmp[BAUM4DOWN].rcSrc.bottom - Bmp[BAUM4DOWN].rcSrc.top);
 
 		// Sonstiges
 
@@ -1745,8 +1741,8 @@ namespace Game
 		Bmp[SAEULE1].rcDes.top = rcPanel.top + 471;
 		Bmp[SAEULE1].rcDes.right = Bmp[SAEULE1].rcDes.left + 11;
 		Bmp[SAEULE1].rcDes.bottom = Bmp[SAEULE1].rcDes.top + 115;
-		Bmp[SAEULE1].Breite = (short)(Bmp[SAEULE1].rcSrc.right - Bmp[SAEULE1].rcSrc.left);
-		Bmp[SAEULE1].Hoehe = (short)(Bmp[SAEULE1].rcSrc.bottom - Bmp[SAEULE1].rcSrc.top);
+		Bmp[SAEULE1].Breite = static_cast<short>(Bmp[SAEULE1].rcSrc.right - Bmp[SAEULE1].rcSrc.left);
+		Bmp[SAEULE1].Hoehe = static_cast<short>(Bmp[SAEULE1].rcSrc.bottom - Bmp[SAEULE1].rcSrc.top);
 		Bmp[SAEULE1].Surface = lpDDSPanel;
 
 		// Säule2
@@ -1759,8 +1755,8 @@ namespace Game
 		Bmp[SAEULE2].rcDes.top = rcPanel.top + 471;
 		Bmp[SAEULE2].rcDes.right = Bmp[SAEULE2].rcDes.left + 11;
 		Bmp[SAEULE2].rcDes.bottom = Bmp[SAEULE2].rcDes.top + 115;
-		Bmp[SAEULE2].Breite = (short)(Bmp[SAEULE2].rcSrc.right - Bmp[SAEULE2].rcSrc.left);
-		Bmp[SAEULE2].Hoehe = (short)(Bmp[SAEULE2].rcSrc.bottom - Bmp[SAEULE2].rcSrc.top);
+		Bmp[SAEULE2].Breite = static_cast<short>(Bmp[SAEULE2].rcSrc.right - Bmp[SAEULE2].rcSrc.left);
+		Bmp[SAEULE2].Hoehe = static_cast<short>(Bmp[SAEULE2].rcSrc.bottom - Bmp[SAEULE2].rcSrc.top);
 		Bmp[SAEULE2].Surface = lpDDSPanel;
 
 		// Säule3
@@ -1773,8 +1769,8 @@ namespace Game
 		Bmp[SAEULE3].rcDes.top = rcPanel.top + 471;
 		Bmp[SAEULE3].rcDes.right = Bmp[SAEULE3].rcDes.left + 11;
 		Bmp[SAEULE3].rcDes.bottom = Bmp[SAEULE3].rcDes.top + 115;
-		Bmp[SAEULE3].Breite = (short)(Bmp[SAEULE3].rcSrc.right - Bmp[SAEULE3].rcSrc.left);
-		Bmp[SAEULE3].Hoehe = (short)(Bmp[SAEULE3].rcSrc.bottom - Bmp[SAEULE3].rcSrc.top);
+		Bmp[SAEULE3].Breite = static_cast<short>(Bmp[SAEULE3].rcSrc.right - Bmp[SAEULE3].rcSrc.left);
+		Bmp[SAEULE3].Hoehe = static_cast<short>(Bmp[SAEULE3].rcSrc.bottom - Bmp[SAEULE3].rcSrc.top);
 		Bmp[SAEULE3].Surface = lpDDSPanel;
 
 		// Rohstoffe
@@ -1785,8 +1781,8 @@ namespace Game
 			Bmp[i].rcSrc.top = 0;
 			Bmp[i].rcSrc.right = Bmp[i].rcSrc.left + 16;
 			Bmp[i].rcSrc.bottom = Bmp[i].rcSrc.top + 15;
-			Bmp[i].Breite = (short)(Bmp[i].rcSrc.right - Bmp[i].rcSrc.left);
-			Bmp[i].Hoehe = (short)(Bmp[i].rcSrc.bottom - Bmp[i].rcSrc.top);
+			Bmp[i].Breite = static_cast<short>(Bmp[i].rcSrc.right - Bmp[i].rcSrc.left);
+			Bmp[i].Hoehe = static_cast<short>(Bmp[i].rcSrc.bottom - Bmp[i].rcSrc.top);
 			Bmp[i].Surface = lpDDSInventar;
 		}
 		// RohAst
@@ -1870,8 +1866,8 @@ namespace Game
 		Bmp[ROEMISCH1].rcDes.top = rcPanel.top;
 		Bmp[ROEMISCH1].rcDes.right = Bmp[ROEMISCH1].rcDes.left + 3;
 		Bmp[ROEMISCH1].rcDes.bottom = Bmp[ROEMISCH1].rcDes.top + 13;
-		Bmp[ROEMISCH1].Breite = (short)(Bmp[ROEMISCH1].rcSrc.right - Bmp[ROEMISCH1].rcSrc.left);
-		Bmp[ROEMISCH1].Hoehe = (short)(Bmp[ROEMISCH1].rcSrc.bottom - Bmp[ROEMISCH1].rcSrc.top);
+		Bmp[ROEMISCH1].Breite = static_cast<short>(Bmp[ROEMISCH1].rcSrc.right - Bmp[ROEMISCH1].rcSrc.left);
+		Bmp[ROEMISCH1].Hoehe = static_cast<short>(Bmp[ROEMISCH1].rcSrc.bottom - Bmp[ROEMISCH1].rcSrc.top);
 		Bmp[ROEMISCH1].Surface = lpDDSInventar;
 
 		// ROEMISCH2
@@ -1884,8 +1880,8 @@ namespace Game
 		Bmp[ROEMISCH2].rcDes.top = rcPanel.top;
 		Bmp[ROEMISCH2].rcDes.right = Bmp[ROEMISCH2].rcDes.left + 15;
 		Bmp[ROEMISCH2].rcDes.bottom = Bmp[ROEMISCH2].rcDes.top + 10;
-		Bmp[ROEMISCH2].Breite = (short)(Bmp[ROEMISCH2].rcSrc.right - Bmp[ROEMISCH2].rcSrc.left);
-		Bmp[ROEMISCH2].Hoehe = (short)(Bmp[ROEMISCH2].rcSrc.bottom - Bmp[ROEMISCH2].rcSrc.top);
+		Bmp[ROEMISCH2].Breite = static_cast<short>(Bmp[ROEMISCH2].rcSrc.right - Bmp[ROEMISCH2].rcSrc.left);
+		Bmp[ROEMISCH2].Hoehe = static_cast<short>(Bmp[ROEMISCH2].rcSrc.bottom - Bmp[ROEMISCH2].rcSrc.top);
 		Bmp[ROEMISCH2].Surface = lpDDSInventar;
 
 		// INVPAPIER
@@ -1898,8 +1894,8 @@ namespace Game
 		Bmp[INVPAPIER].rcDes.top = rcPanel.top + 270;
 		Bmp[INVPAPIER].rcDes.right = Bmp[INVPAPIER].rcDes.left + 178;
 		Bmp[INVPAPIER].rcDes.bottom = Bmp[INVPAPIER].rcDes.top + 114;
-		Bmp[INVPAPIER].Breite = (short)(Bmp[INVPAPIER].rcSrc.right - Bmp[INVPAPIER].rcSrc.left);
-		Bmp[INVPAPIER].Hoehe = (short)(Bmp[INVPAPIER].rcSrc.bottom - Bmp[INVPAPIER].rcSrc.top);
+		Bmp[INVPAPIER].Breite = static_cast<short>(Bmp[INVPAPIER].rcSrc.right - Bmp[INVPAPIER].rcSrc.left);
+		Bmp[INVPAPIER].Hoehe = static_cast<short>(Bmp[INVPAPIER].rcSrc.bottom - Bmp[INVPAPIER].rcSrc.top);
 		Bmp[INVPAPIER].Surface = lpDDSInventar;
 
 		// RING
@@ -1912,8 +1908,8 @@ namespace Game
 		Bmp[RING].rcDes.top = rcPanel.top - 113;
 		Bmp[RING].rcDes.right = Bmp[RING].rcDes.left + 30;
 		Bmp[RING].rcDes.bottom = Bmp[RING].rcDes.top;
-		Bmp[RING].Breite = (short)(Bmp[RING].rcSrc.right - Bmp[RING].rcSrc.left);
-		Bmp[RING].Hoehe = (short)(Bmp[RING].rcSrc.bottom - Bmp[RING].rcSrc.top);
+		Bmp[RING].Breite = static_cast<short>(Bmp[RING].rcSrc.right - Bmp[RING].rcSrc.left);
+		Bmp[RING].Hoehe = static_cast<short>(Bmp[RING].rcSrc.bottom - Bmp[RING].rcSrc.top);
 		Bmp[RING].Surface = lpDDSPanel;
 
 		// KREUZ
@@ -1922,8 +1918,8 @@ namespace Game
 		Bmp[KREUZ].rcSrc.top = 380;
 		Bmp[KREUZ].rcSrc.right = Bmp[KREUZ].rcSrc.left + 40;
 		Bmp[KREUZ].rcSrc.bottom = Bmp[KREUZ].rcSrc.top + 22;
-		Bmp[KREUZ].Breite = (short)(Bmp[KREUZ].rcSrc.right - Bmp[KREUZ].rcSrc.left);
-		Bmp[KREUZ].Hoehe = (short)(Bmp[KREUZ].rcSrc.bottom - Bmp[KREUZ].rcSrc.top);
+		Bmp[KREUZ].Breite = static_cast<short>(Bmp[KREUZ].rcSrc.right - Bmp[KREUZ].rcSrc.left);
+		Bmp[KREUZ].Hoehe = static_cast<short>(Bmp[KREUZ].rcSrc.bottom - Bmp[KREUZ].rcSrc.top);
 		Bmp[KREUZ].Surface = lpDDSPanel;
 
 		// JA
@@ -1932,8 +1928,8 @@ namespace Game
 		Bmp[JA].rcSrc.top = 154;
 		Bmp[JA].rcSrc.right = Bmp[JA].rcSrc.left + 41;
 		Bmp[JA].rcSrc.bottom = Bmp[JA].rcSrc.top + 42;
-		Bmp[JA].Breite = (short)(Bmp[JA].rcSrc.right - Bmp[JA].rcSrc.left);
-		Bmp[JA].Hoehe = (short)(Bmp[JA].rcSrc.bottom - Bmp[JA].rcSrc.top);
+		Bmp[JA].Breite = static_cast<short>(Bmp[JA].rcSrc.right - Bmp[JA].rcSrc.left);
+		Bmp[JA].Hoehe = static_cast<short>(Bmp[JA].rcSrc.bottom - Bmp[JA].rcSrc.top);
 		Bmp[JA].Surface = lpDDSPapier;
 
 		// NEIN
@@ -1942,8 +1938,8 @@ namespace Game
 		Bmp[NEIN].rcSrc.top = 154;
 		Bmp[NEIN].rcSrc.right = Bmp[NEIN].rcSrc.left + 100;
 		Bmp[NEIN].rcSrc.bottom = Bmp[NEIN].rcSrc.top + 39;
-		Bmp[NEIN].Breite = (short)(Bmp[NEIN].rcSrc.right - Bmp[NEIN].rcSrc.left);
-		Bmp[NEIN].Hoehe = (short)(Bmp[NEIN].rcSrc.bottom - Bmp[NEIN].rcSrc.top);
+		Bmp[NEIN].Breite = static_cast<short>(Bmp[NEIN].rcSrc.right - Bmp[NEIN].rcSrc.left);
+		Bmp[NEIN].Hoehe = static_cast<short>(Bmp[NEIN].rcSrc.bottom - Bmp[NEIN].rcSrc.top);
 		Bmp[NEIN].Surface = lpDDSPapier;
 
 		// Sonne
@@ -1956,8 +1952,8 @@ namespace Game
 		Bmp[SONNE].rcDes.top = rcPanel.top + 630;
 		Bmp[SONNE].rcDes.right = Bmp[SONNE].rcDes.left + 152;
 		Bmp[SONNE].rcDes.bottom = Bmp[SONNE].rcDes.top + 55;
-		Bmp[SONNE].Breite = (short)(Bmp[SONNE].rcSrc.right - Bmp[SONNE].rcSrc.left);
-		Bmp[SONNE].Hoehe = (short)(Bmp[SONNE].rcSrc.bottom - Bmp[SONNE].rcSrc.top);
+		Bmp[SONNE].Breite = static_cast<short>(Bmp[SONNE].rcSrc.right - Bmp[SONNE].rcSrc.left);
+		Bmp[SONNE].Hoehe = static_cast<short>(Bmp[SONNE].rcSrc.bottom - Bmp[SONNE].rcSrc.top);
 		Bmp[SONNE].Surface = lpDDSPanel;
 
 		// PROGRAMMIERUNG
@@ -1966,8 +1962,8 @@ namespace Game
 		Bmp[PROGRAMMIERUNG].rcSrc.top = 0;
 		Bmp[PROGRAMMIERUNG].rcSrc.right = Bmp[PROGRAMMIERUNG].rcSrc.left + 348;
 		Bmp[PROGRAMMIERUNG].rcSrc.bottom = Bmp[PROGRAMMIERUNG].rcSrc.top + 49;
-		Bmp[PROGRAMMIERUNG].Breite = (short)(Bmp[PROGRAMMIERUNG].rcSrc.right - Bmp[PROGRAMMIERUNG].rcSrc.left);
-		Bmp[PROGRAMMIERUNG].Hoehe = (short)(Bmp[PROGRAMMIERUNG].rcSrc.bottom - Bmp[PROGRAMMIERUNG].rcSrc.top);
+		Bmp[PROGRAMMIERUNG].Breite = static_cast<short>(Bmp[PROGRAMMIERUNG].rcSrc.right - Bmp[PROGRAMMIERUNG].rcSrc.left);
+		Bmp[PROGRAMMIERUNG].Hoehe = static_cast<short>(Bmp[PROGRAMMIERUNG].rcSrc.bottom - Bmp[PROGRAMMIERUNG].rcSrc.top);
 		Bmp[PROGRAMMIERUNG].rcDes.left = MAXX / 2 - Bmp[PROGRAMMIERUNG].Breite / 2;
 		Bmp[PROGRAMMIERUNG].rcDes.top = MAXY - Bmp[PROGRAMMIERUNG].Hoehe / 2;
 		Bmp[PROGRAMMIERUNG].rcDes.right = Bmp[PROGRAMMIERUNG].rcDes.left + Bmp[PROGRAMMIERUNG].Breite;
@@ -1980,8 +1976,8 @@ namespace Game
 		Bmp[DIRKPLATE].rcSrc.top = 49;
 		Bmp[DIRKPLATE].rcSrc.right = Bmp[DIRKPLATE].rcSrc.left + 196;
 		Bmp[DIRKPLATE].rcSrc.bottom = Bmp[DIRKPLATE].rcSrc.top + 47;
-		Bmp[DIRKPLATE].Breite = (short)(Bmp[DIRKPLATE].rcSrc.right - Bmp[DIRKPLATE].rcSrc.left);
-		Bmp[DIRKPLATE].Hoehe = (short)(Bmp[DIRKPLATE].rcSrc.bottom - Bmp[DIRKPLATE].rcSrc.top);
+		Bmp[DIRKPLATE].Breite = static_cast<short>(Bmp[DIRKPLATE].rcSrc.right - Bmp[DIRKPLATE].rcSrc.left);
+		Bmp[DIRKPLATE].Hoehe = static_cast<short>(Bmp[DIRKPLATE].rcSrc.bottom - Bmp[DIRKPLATE].rcSrc.top);
 		Bmp[DIRKPLATE].rcDes.left = MAXX / 2 - Bmp[DIRKPLATE].Breite / 2;
 		Bmp[DIRKPLATE].rcDes.top = MAXY - Bmp[DIRKPLATE].Hoehe / 2;
 		Bmp[DIRKPLATE].rcDes.right = Bmp[DIRKPLATE].rcDes.left + Bmp[DIRKPLATE].Breite;
@@ -1994,8 +1990,8 @@ namespace Game
 		Bmp[MATTHIAS].rcSrc.top = 96;
 		Bmp[MATTHIAS].rcSrc.right = Bmp[MATTHIAS].rcSrc.left + 379;
 		Bmp[MATTHIAS].rcSrc.bottom = Bmp[MATTHIAS].rcSrc.top + 47;
-		Bmp[MATTHIAS].Breite = (short)(Bmp[MATTHIAS].rcSrc.right - Bmp[MATTHIAS].rcSrc.left);
-		Bmp[MATTHIAS].Hoehe = (short)(Bmp[MATTHIAS].rcSrc.bottom - Bmp[MATTHIAS].rcSrc.top);
+		Bmp[MATTHIAS].Breite = static_cast<short>(Bmp[MATTHIAS].rcSrc.right - Bmp[MATTHIAS].rcSrc.left);
+		Bmp[MATTHIAS].Hoehe = static_cast<short>(Bmp[MATTHIAS].rcSrc.bottom - Bmp[MATTHIAS].rcSrc.top);
 		Bmp[MATTHIAS].rcDes.left = MAXX / 2 - Bmp[MATTHIAS].Breite / 2;
 		Bmp[MATTHIAS].rcDes.top = MAXY - Bmp[MATTHIAS].Hoehe / 2;
 		Bmp[MATTHIAS].rcDes.right = Bmp[MATTHIAS].rcDes.left + Bmp[MATTHIAS].Breite;
@@ -2008,8 +2004,8 @@ namespace Game
 		Bmp[TESTSPIELER].rcSrc.top = 143;
 		Bmp[TESTSPIELER].rcSrc.right = Bmp[TESTSPIELER].rcSrc.left + 210;
 		Bmp[TESTSPIELER].rcSrc.bottom = Bmp[TESTSPIELER].rcSrc.top + 55;
-		Bmp[TESTSPIELER].Breite = (short)(Bmp[TESTSPIELER].rcSrc.right - Bmp[TESTSPIELER].rcSrc.left);
-		Bmp[TESTSPIELER].Hoehe = (short)(Bmp[TESTSPIELER].rcSrc.bottom - Bmp[TESTSPIELER].rcSrc.top);
+		Bmp[TESTSPIELER].Breite = static_cast<short>(Bmp[TESTSPIELER].rcSrc.right - Bmp[TESTSPIELER].rcSrc.left);
+		Bmp[TESTSPIELER].Hoehe = static_cast<short>(Bmp[TESTSPIELER].rcSrc.bottom - Bmp[TESTSPIELER].rcSrc.top);
 		Bmp[TESTSPIELER].rcDes.left = MAXX / 2 - Bmp[TESTSPIELER].Breite / 2;
 		Bmp[TESTSPIELER].rcDes.top = MAXY - Bmp[TESTSPIELER].Hoehe / 2;
 		Bmp[TESTSPIELER].rcDes.right = Bmp[TESTSPIELER].rcDes.left + Bmp[TESTSPIELER].Breite;
@@ -2022,8 +2018,8 @@ namespace Game
 		Bmp[TOBIAS].rcSrc.top = 198;
 		Bmp[TOBIAS].rcSrc.right = Bmp[TOBIAS].rcSrc.left + 273;
 		Bmp[TOBIAS].rcSrc.bottom = Bmp[TOBIAS].rcSrc.top + 56;
-		Bmp[TOBIAS].Breite = (short)(Bmp[TOBIAS].rcSrc.right - Bmp[TOBIAS].rcSrc.left);
-		Bmp[TOBIAS].Hoehe = (short)(Bmp[TOBIAS].rcSrc.bottom - Bmp[TOBIAS].rcSrc.top);
+		Bmp[TOBIAS].Breite = static_cast<short>(Bmp[TOBIAS].rcSrc.right - Bmp[TOBIAS].rcSrc.left);
+		Bmp[TOBIAS].Hoehe = static_cast<short>(Bmp[TOBIAS].rcSrc.bottom - Bmp[TOBIAS].rcSrc.top);
 		Bmp[TOBIAS].rcDes.left = MAXX / 2 - Bmp[TOBIAS].Breite / 2;
 		Bmp[TOBIAS].rcDes.top = MAXY - Bmp[TOBIAS].Hoehe / 2;
 		Bmp[TOBIAS].rcDes.right = Bmp[TOBIAS].rcDes.left + Bmp[TOBIAS].Breite;
@@ -2036,8 +2032,8 @@ namespace Game
 		Bmp[SIGRID].rcSrc.top = 254;
 		Bmp[SIGRID].rcSrc.right = Bmp[SIGRID].rcSrc.left + 226;
 		Bmp[SIGRID].rcSrc.bottom = Bmp[SIGRID].rcSrc.top + 56;
-		Bmp[SIGRID].Breite = (short)(Bmp[SIGRID].rcSrc.right - Bmp[SIGRID].rcSrc.left);
-		Bmp[SIGRID].Hoehe = (short)(Bmp[SIGRID].rcSrc.bottom - Bmp[SIGRID].rcSrc.top);
+		Bmp[SIGRID].Breite = static_cast<short>(Bmp[SIGRID].rcSrc.right - Bmp[SIGRID].rcSrc.left);
+		Bmp[SIGRID].Hoehe = static_cast<short>(Bmp[SIGRID].rcSrc.bottom - Bmp[SIGRID].rcSrc.top);
 		Bmp[SIGRID].rcDes.left = MAXX / 2 - Bmp[SIGRID].Breite / 2;
 		Bmp[SIGRID].rcDes.top = MAXY - Bmp[SIGRID].Hoehe / 2;
 		Bmp[SIGRID].rcDes.right = Bmp[SIGRID].rcDes.left + Bmp[SIGRID].Breite;
@@ -2050,8 +2046,8 @@ namespace Game
 		Bmp[PATHFINDING].rcSrc.top = 353;
 		Bmp[PATHFINDING].rcSrc.right = Bmp[PATHFINDING].rcSrc.left + 233;
 		Bmp[PATHFINDING].rcSrc.bottom = Bmp[PATHFINDING].rcSrc.top + 59;
-		Bmp[PATHFINDING].Breite = (short)(Bmp[PATHFINDING].rcSrc.right - Bmp[PATHFINDING].rcSrc.left);
-		Bmp[PATHFINDING].Hoehe = (short)(Bmp[PATHFINDING].rcSrc.bottom - Bmp[PATHFINDING].rcSrc.top);
+		Bmp[PATHFINDING].Breite = static_cast<short>(Bmp[PATHFINDING].rcSrc.right - Bmp[PATHFINDING].rcSrc.left);
+		Bmp[PATHFINDING].Hoehe = static_cast<short>(Bmp[PATHFINDING].rcSrc.bottom - Bmp[PATHFINDING].rcSrc.top);
 		Bmp[PATHFINDING].rcDes.left = MAXX / 2 - Bmp[PATHFINDING].Breite / 2;
 		Bmp[PATHFINDING].rcDes.top = MAXY - Bmp[PATHFINDING].Hoehe / 2;
 		Bmp[PATHFINDING].rcDes.right = Bmp[PATHFINDING].rcDes.left + Bmp[PATHFINDING].Breite;
@@ -2064,8 +2060,8 @@ namespace Game
 		Bmp[JOHN].rcSrc.top = 412;
 		Bmp[JOHN].rcSrc.right = Bmp[JOHN].rcSrc.left + 347;
 		Bmp[JOHN].rcSrc.bottom = Bmp[JOHN].rcSrc.top + 56;
-		Bmp[JOHN].Breite = (short)(Bmp[JOHN].rcSrc.right - Bmp[JOHN].rcSrc.left);
-		Bmp[JOHN].Hoehe = (short)(Bmp[JOHN].rcSrc.bottom - Bmp[JOHN].rcSrc.top);
+		Bmp[JOHN].Breite = static_cast<short>(Bmp[JOHN].rcSrc.right - Bmp[JOHN].rcSrc.left);
+		Bmp[JOHN].Hoehe = static_cast<short>(Bmp[JOHN].rcSrc.bottom - Bmp[JOHN].rcSrc.top);
 		Bmp[JOHN].rcDes.left = MAXX / 2 - Bmp[JOHN].Breite / 2;
 		Bmp[JOHN].rcDes.top = MAXY - Bmp[JOHN].Hoehe / 2;
 		Bmp[JOHN].rcDes.right = Bmp[JOHN].rcDes.left + Bmp[JOHN].Breite;
@@ -2078,8 +2074,8 @@ namespace Game
 		Bmp[HEIKO].rcSrc.top = 468;
 		Bmp[HEIKO].rcSrc.right = Bmp[HEIKO].rcSrc.left + 236;
 		Bmp[HEIKO].rcSrc.bottom = Bmp[HEIKO].rcSrc.top + 47;
-		Bmp[HEIKO].Breite = (short)(Bmp[HEIKO].rcSrc.right - Bmp[HEIKO].rcSrc.left);
-		Bmp[HEIKO].Hoehe = (short)(Bmp[HEIKO].rcSrc.bottom - Bmp[HEIKO].rcSrc.top);
+		Bmp[HEIKO].Breite = static_cast<short>(Bmp[HEIKO].rcSrc.right - Bmp[HEIKO].rcSrc.left);
+		Bmp[HEIKO].Hoehe = static_cast<short>(Bmp[HEIKO].rcSrc.bottom - Bmp[HEIKO].rcSrc.top);
 		Bmp[HEIKO].rcDes.left = MAXX / 2 - Bmp[HEIKO].Breite / 2;
 		Bmp[HEIKO].rcDes.top = MAXY - Bmp[HEIKO].Hoehe / 2;
 		Bmp[HEIKO].rcDes.right = Bmp[HEIKO].rcDes.left + Bmp[HEIKO].Breite;
@@ -2092,8 +2088,8 @@ namespace Game
 		Bmp[GISELA].rcSrc.top = 515;
 		Bmp[GISELA].rcSrc.right = Bmp[GISELA].rcSrc.left + 232;
 		Bmp[GISELA].rcSrc.bottom = Bmp[GISELA].rcSrc.top + 47;
-		Bmp[GISELA].Breite = (short)(Bmp[GISELA].rcSrc.right - Bmp[GISELA].rcSrc.left);
-		Bmp[GISELA].Hoehe = (short)(Bmp[GISELA].rcSrc.bottom - Bmp[GISELA].rcSrc.top);
+		Bmp[GISELA].Breite = static_cast<short>(Bmp[GISELA].rcSrc.right - Bmp[GISELA].rcSrc.left);
+		Bmp[GISELA].Hoehe = static_cast<short>(Bmp[GISELA].rcSrc.bottom - Bmp[GISELA].rcSrc.top);
 		Bmp[GISELA].rcDes.left = MAXX / 2 - Bmp[GISELA].Breite / 2;
 		Bmp[GISELA].rcDes.top = MAXY - Bmp[GISELA].Hoehe / 2;
 		Bmp[GISELA].rcDes.right = Bmp[GISELA].rcDes.left + Bmp[GISELA].Breite;
@@ -2106,8 +2102,8 @@ namespace Game
 		Bmp[WEITEREHILFE].rcSrc.top = 562;
 		Bmp[WEITEREHILFE].rcSrc.right = Bmp[WEITEREHILFE].rcSrc.left + 258;
 		Bmp[WEITEREHILFE].rcSrc.bottom = Bmp[WEITEREHILFE].rcSrc.top + 46;
-		Bmp[WEITEREHILFE].Breite = (short)(Bmp[WEITEREHILFE].rcSrc.right - Bmp[WEITEREHILFE].rcSrc.left);
-		Bmp[WEITEREHILFE].Hoehe = (short)(Bmp[WEITEREHILFE].rcSrc.bottom - Bmp[WEITEREHILFE].rcSrc.top);
+		Bmp[WEITEREHILFE].Breite = static_cast<short>(Bmp[WEITEREHILFE].rcSrc.right - Bmp[WEITEREHILFE].rcSrc.left);
+		Bmp[WEITEREHILFE].Hoehe = static_cast<short>(Bmp[WEITEREHILFE].rcSrc.bottom - Bmp[WEITEREHILFE].rcSrc.top);
 		Bmp[WEITEREHILFE].rcDes.left = MAXX / 2 - Bmp[WEITEREHILFE].Breite / 2;
 		Bmp[WEITEREHILFE].rcDes.top = MAXY - Bmp[WEITEREHILFE].Hoehe / 2;
 		Bmp[WEITEREHILFE].rcDes.right = Bmp[WEITEREHILFE].rcDes.left + Bmp[WEITEREHILFE].Breite;
@@ -2120,8 +2116,8 @@ namespace Game
 		Bmp[DPSOFTWARE].rcSrc.top = 608;
 		Bmp[DPSOFTWARE].rcSrc.right = Bmp[DPSOFTWARE].rcSrc.left + 291;
 		Bmp[DPSOFTWARE].rcSrc.bottom = Bmp[DPSOFTWARE].rcSrc.top + 99;
-		Bmp[DPSOFTWARE].Breite = (short)(Bmp[DPSOFTWARE].rcSrc.right - Bmp[DPSOFTWARE].rcSrc.left);
-		Bmp[DPSOFTWARE].Hoehe = (short)(Bmp[DPSOFTWARE].rcSrc.bottom - Bmp[DPSOFTWARE].rcSrc.top);
+		Bmp[DPSOFTWARE].Breite = static_cast<short>(Bmp[DPSOFTWARE].rcSrc.right - Bmp[DPSOFTWARE].rcSrc.left);
+		Bmp[DPSOFTWARE].Hoehe = static_cast<short>(Bmp[DPSOFTWARE].rcSrc.bottom - Bmp[DPSOFTWARE].rcSrc.top);
 		Bmp[DPSOFTWARE].rcDes.left = MAXX / 2 - Bmp[DPSOFTWARE].Breite / 2;
 		Bmp[DPSOFTWARE].rcDes.top = MAXY - Bmp[DPSOFTWARE].Hoehe / 2;
 		Bmp[DPSOFTWARE].rcDes.right = Bmp[DPSOFTWARE].rcDes.left + Bmp[DPSOFTWARE].Breite;
@@ -2134,8 +2130,8 @@ namespace Game
 		Bmp[SCHWARZ].rcSrc.top = 608;
 		Bmp[SCHWARZ].rcSrc.right = Bmp[SCHWARZ].rcSrc.left + 1;
 		Bmp[SCHWARZ].rcSrc.bottom = Bmp[SCHWARZ].rcSrc.top + 1;
-		Bmp[SCHWARZ].Breite = (short)(Bmp[SCHWARZ].rcSrc.right - Bmp[SCHWARZ].rcSrc.left);
-		Bmp[SCHWARZ].Hoehe = (short)(Bmp[SCHWARZ].rcSrc.bottom - Bmp[SCHWARZ].rcSrc.top);
+		Bmp[SCHWARZ].Breite = static_cast<short>(Bmp[SCHWARZ].rcSrc.right - Bmp[SCHWARZ].rcSrc.left);
+		Bmp[SCHWARZ].Hoehe = static_cast<short>(Bmp[SCHWARZ].rcSrc.bottom - Bmp[SCHWARZ].rcSrc.top);
 		Bmp[SCHWARZ].rcDes.left = MAXX / 2 - Bmp[SCHWARZ].Breite / 2;
 		Bmp[SCHWARZ].rcDes.top = MAXY - Bmp[SCHWARZ].Hoehe / 2;
 		Bmp[SCHWARZ].rcDes.right = Bmp[SCHWARZ].rcDes.left + Bmp[SCHWARZ].Breite;
@@ -2148,8 +2144,8 @@ namespace Game
 		Bmp[SOUNDS].rcSrc.top = 310;
 		Bmp[SOUNDS].rcSrc.right = Bmp[SOUNDS].rcSrc.left + 144;
 		Bmp[SOUNDS].rcSrc.bottom = Bmp[SOUNDS].rcSrc.top + 43;
-		Bmp[SOUNDS].Breite = (short)(Bmp[SOUNDS].rcSrc.right - Bmp[SOUNDS].rcSrc.left);
-		Bmp[SOUNDS].Hoehe = (short)(Bmp[SOUNDS].rcSrc.bottom - Bmp[SOUNDS].rcSrc.top);
+		Bmp[SOUNDS].Breite = static_cast<short>(Bmp[SOUNDS].rcSrc.right - Bmp[SOUNDS].rcSrc.left);
+		Bmp[SOUNDS].Hoehe = static_cast<short>(Bmp[SOUNDS].rcSrc.bottom - Bmp[SOUNDS].rcSrc.top);
 		Bmp[SOUNDS].rcDes.left = MAXX / 2 - Bmp[SOUNDS].Breite / 2;
 		Bmp[SOUNDS].rcDes.top = MAXY - Bmp[SOUNDS].Hoehe / 2;
 		Bmp[SOUNDS].rcDes.right = Bmp[SOUNDS].rcDes.left + Bmp[SOUNDS].Breite;
@@ -2162,8 +2158,8 @@ namespace Game
 		Bmp[MUSIK].rcSrc.top = 310;
 		Bmp[MUSIK].rcSrc.right = Bmp[MUSIK].rcSrc.left + 124;
 		Bmp[MUSIK].rcSrc.bottom = Bmp[MUSIK].rcSrc.top + 39;
-		Bmp[MUSIK].Breite = (short)(Bmp[MUSIK].rcSrc.right - Bmp[MUSIK].rcSrc.left);
-		Bmp[MUSIK].Hoehe = (short)(Bmp[MUSIK].rcSrc.bottom - Bmp[MUSIK].rcSrc.top);
+		Bmp[MUSIK].Breite = static_cast<short>(Bmp[MUSIK].rcSrc.right - Bmp[MUSIK].rcSrc.left);
+		Bmp[MUSIK].Hoehe = static_cast<short>(Bmp[MUSIK].rcSrc.bottom - Bmp[MUSIK].rcSrc.top);
 		Bmp[MUSIK].rcDes.left = MAXX / 2 - Bmp[MUSIK].Breite / 2;
 		Bmp[MUSIK].rcDes.top = MAXY - Bmp[MUSIK].Hoehe / 2;
 		Bmp[MUSIK].rcDes.right = Bmp[MUSIK].rcDes.left + Bmp[MUSIK].Breite;
@@ -2252,10 +2248,8 @@ namespace Game
 
 	void InitWaves()
 	{
-		short i = 0;
-
 		// Sounds
-		for(i = 0; i<Sound::COUNT; i++)
+		for(short i = 0; i<Sound::COUNT; i++)
 		{
 			Wav[i].Dateiname = "sounds/klick.wav";
 			Wav[i].Loop = false;
@@ -2337,13 +2331,14 @@ namespace Game
 		Wav[Sound::INVENTION].Volume = 95;
 
 		// Testweise alle Sounds gleich in den Speicher laden
-		for(i = 1; i<Sound::COUNT; i++) Sound::LoadSound(i);
+		for(short i = 1; i<Sound::COUNT; i++)
+			Sound::LoadSound(i);
 	}
 
 	void NeuesSpiel(bool neu)
 	{
 		short x, y;
-		bool LoadOK;
+		bool LoadOK = false;
 		
 		Game::InitStructs();
 		Game::InitWaves();

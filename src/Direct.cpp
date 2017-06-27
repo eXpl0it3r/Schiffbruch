@@ -18,7 +18,7 @@ namespace Direct
 	bool          Button0down; // linke Maustaste gedrückt gehalten
 	bool          Button1down; // rechte Maustaste gedrückt gehalten
 
-	void finiObjects(void)
+	void finiObjects()
 	{
 		if(lpDD != nullptr)
 		{
@@ -40,14 +40,13 @@ namespace Direct
 	void InitDDraw(HWND hWnd)
 	{
 		DDSCAPS2     ddscaps;
-		HRESULT      ddrval;
 		LPDIRECTDRAW pDD;
 
 		// Create the main DirectDraw object
-		ddrval = DirectDrawCreate(nullptr, &pDD, nullptr);
+		HRESULT ddrval = DirectDrawCreate(nullptr, &pDD, nullptr);
 		if (ddrval != DD_OK)
 			goto error;
-		ddrval = pDD->QueryInterface(IID_IDirectDraw4, (LPVOID *)& lpDD);
+		ddrval = pDD->QueryInterface(IID_IDirectDraw4, reinterpret_cast<LPVOID *>(& lpDD));
 		if (ddrval != DD_OK)
 			goto error;
 
@@ -92,7 +91,7 @@ namespace Direct
 			goto error;
 
 		// für gamma-ablenden
-		lpDDSPrimary->QueryInterface(IID_IDirectDrawGammaControl, (void **)&lpDDGammaControl);
+		lpDDSPrimary->QueryInterface(IID_IDirectDrawGammaControl, reinterpret_cast<void **>(&lpDDGammaControl));
 		lpDDGammaControl->GetGammaRamp(0, &DDGammaOld);
 		lpDDGammaControl->GetGammaRamp(0, &DDGammaRamp);
 
@@ -209,18 +208,14 @@ namespace Direct
 
 	void CheckMouse()
 	{
-		short			Button;			// Welcher Knopf ist gedrückt worden			
-		short			Push;			// Knopf gedrückt(1) oder losgelassen(-1) oder gedrückt(0) gehalten
-		short			xDiff, yDiff;	// Die Differenz zur vorherigen Position ((Für Scrollen)
-
 		// Mausbewegung
-		xDiff = MousePosition.x - sf::Mouse::getPosition().x;
+		short xDiff = MousePosition.x - sf::Mouse::getPosition().x; // Die Differenz zur vorherigen Position ((Für Scrollen)
 		MousePosition.x = sf::Mouse::getPosition().x;
 		if (MousePosition.x < 0)
 			MousePosition.x = 0;
 		if (MousePosition.x > MAXX - 2)
 			MousePosition.x = MAXX - 2;
-		yDiff = MousePosition.y - sf::Mouse::getPosition().y;
+		short yDiff = MousePosition.y - sf::Mouse::getPosition().y; // Die Differenz zur vorherigen Position ((Für Scrollen)
 		MousePosition.y = sf::Mouse::getPosition().y;
 		if (MousePosition.y < 0)
 			MousePosition.y = 0;
@@ -239,7 +234,9 @@ namespace Direct
 			else
 				CursorTyp = CUPFEIL;
 		}
-		Button = -1;
+
+		short Button = -1;	// Welcher Knopf ist gedrückt worden
+		short Push = 0;		// Knopf gedrückt(1) oder losgelassen(-1) oder gedrückt(0) gehalten
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
@@ -261,7 +258,6 @@ namespace Direct
 				Button0down = false;
 			}
 		}
-
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		{
@@ -333,9 +329,8 @@ namespace Direct
 		// Wenn der Guy aktiv dann linke Mouse-Buttons ignorieren
 		if ((Guy.Aktiv) && (Button == 0))
 		{
-			if ((Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes)) &&
-				(Bmp[BUTTSTOP].Phase != -1));
-			else
+			if (!(Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes)) ||
+				(Bmp[BUTTSTOP].Phase == -1))
 				Button = -1;
 		}
 
@@ -349,8 +344,6 @@ namespace Direct
 
 	short CheckKey()
 	{
-		short x;
-
 		if (Spielzustand == State::LOGO)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
@@ -369,7 +362,7 @@ namespace Direct
 				Sound::StopSound(Sound::STORM);		// Sound hier sofort stoppen
 				Sound::StopSound(Sound::SWIM);	// Sound hier sofort stoppen
 				Guy.Aktiv = false;
-				for (x = Guy.Pos.x; x<MAXXKACH; x++)
+				for (short x = Guy.Pos.x; x<MAXXKACH; x++)
 				{
 					Guy.Pos.x = x;
 					World::Entdecken();
@@ -377,8 +370,8 @@ namespace Direct
 						break;
 				}
 				Scape[Guy.Pos.x - 2][Guy.Pos.y].Objekt = WRACK;
-				Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.x = (short)Bmp[WRACK].rcDes.left;
-				Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.y = (short)Bmp[WRACK].rcDes.top;
+				Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[WRACK].rcDes.left);
+				Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[WRACK].rcDes.top);
 
 				Guy.PosScreen.x =
 					(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +

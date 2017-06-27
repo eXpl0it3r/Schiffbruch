@@ -21,4 +21,3 @@ extern HRESULT              DDSetColorKey(IDirectDrawSurface4 *pdds, COLORREF rg
 #ifdef __cplusplus
 }
 #endif	/* __cplusplus */
-

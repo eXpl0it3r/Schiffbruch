@@ -118,8 +118,6 @@ namespace Action
 
 	void intro()
 	{
-		short x;
-
 		Guy.AkNummer++;
 		switch (Guy.AkNummer)
 		{
@@ -132,7 +130,7 @@ namespace Action
 			RouteStart.x = Guy.Pos.x;
 			RouteStart.y = Guy.Pos.y;
 			RouteZiel.y = Guy.Pos.y;
-			for (x = Guy.Pos.x; x<MAXXKACH; x++) // Zielkoordinate für Introroute finden
+			for (short x = Guy.Pos.x; x<MAXXKACH; x++) // Zielkoordinate für Introroute finden
 			{
 				if (Scape[x][Guy.Pos.y].Art != 1) break;
 				RouteZiel.x = x - 1;
@@ -148,8 +146,8 @@ namespace Action
 			break;
 		case 3:
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = WRACK;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[WRACK].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[WRACK].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[WRACK].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[WRACK].rcDes.top);
 
 			World::ChangeBootsFahrt();
 			Guy.Pos.x += 2;
@@ -222,12 +220,11 @@ namespace Action
 
 	void day_restart()
 	{
-		ZWEID Erg;
 		Guy.AkNummer++;
 		switch (Guy.AkNummer)
 		{
 		case 1:
-			Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
+			ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
 			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
 				Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			else if (RoutePunkt % 2 == 0)
@@ -385,8 +382,6 @@ namespace Action
 
 	void destroy()
 	{
-		short i; // Um sich kurz das Objekt zu merken 
-
 		if (Guy.AkNummer == 0)
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
 
@@ -414,11 +409,12 @@ namespace Action
 			World::AddTime(0, 5);
 			break;
 		case 6:
+		{
 			if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == SOS)
 				Chance -= 0.1f;
 
-			i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt;
-			
+			short i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt; // Um sich kurz das Objekt zu merken 
+
 			if ((i >= HAUS1) && (i <= HAUS3))
 				Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BAUMGROSS;
 			else
@@ -435,6 +431,7 @@ namespace Action
 
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			break;
+		}
 		case 7:
 			Guy.Aktion = Action::NOTHING;
 			break;
@@ -444,18 +441,17 @@ namespace Action
 	void search()
 	{
 		ZWEID Ziel;
-		ZWEID Erg;
 		short i;
 
 		if (Guy.AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
 		}
-		while (1)
+		while (true)
 		{
 			Ziel.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % KXPIXEL;
 			Ziel.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % KYPIXEL;
-			Erg = Renderer::GetKachel(Ziel.x, Ziel.y);
+			ZWEID Erg = Renderer::GetKachel(Ziel.x, Ziel.y);
 			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
 				break; // Wenn das gefundene Ziel in der Kachel, dann fertig
 		}
@@ -732,8 +728,6 @@ namespace Action
 
 	void log()
 	{
-		short i;
-
 		if (Guy.AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
@@ -755,14 +749,16 @@ namespace Action
 			World::AddTime(0, 10);
 			break;
 		case 7:
+		{
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYWARTEN;
-			i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt + (BAUM1DOWN - BAUM1);
+			short i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt + (BAUM1DOWN - BAUM1);
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = i;
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
 			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x -= 17;
 			Sound::PlaySound(Sound::TIMBER, 100);
 			break;
+		}
 		case 8:
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			break;
@@ -929,8 +925,8 @@ namespace Action
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYWARTEN;
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FEUER;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[FEUER].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[FEUER].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FEUER].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FEUER].rcDes.top);
 			Chance += 2 + 2 * Scape[Guy.Pos.x][Guy.Pos.y].Hoehe;
 			World::AddTime(0, 2);
 			Guy.PosScreen.x -= 5;
@@ -1020,16 +1016,14 @@ namespace Action
 
 	void field()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[FELD].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FELD;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[FELD].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[FELD].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FELD].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FELD].rcDes.top);
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[FELD].Anzahl;
 		}
 		Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
@@ -1091,8 +1085,8 @@ namespace Action
 		case 19:
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FELD;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[FELD].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[FELD].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FELD].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FELD].rcDes.top);
 			break;
 		case 20:
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
@@ -1412,14 +1406,11 @@ namespace Action
 
 	void rescued()
 	{
-		ZWEID Erg;
-		short x;
-
 		Guy.AkNummer++;
 		switch (Guy.AkNummer)
 		{
 		case 1:
-			Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
+			ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
 			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			else if (RoutePunkt % 2 == 0) Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); //Nur bis zur Mitte der aktuellen Kacheln laufen
 			else Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
@@ -1450,7 +1441,7 @@ namespace Action
 			RouteStart.x = Guy.Pos.x;
 			RouteStart.y = Guy.Pos.y;
 			RouteZiel.y = Guy.Pos.y;
-			for (x = MAXXKACH - 1; x>1; x--) // Position des Rettungsschiffs festlegen
+			for (short x = MAXXKACH - 1; x>1; x--) // Position des Rettungsschiffs festlegen
 			{
 				if (Scape[x][Guy.Pos.y].Art != 1) break;
 				RouteZiel.x = x + 1;
@@ -1492,8 +1483,8 @@ namespace Action
 			RouteZiel.y = Guy.Pos.y;
 			RouteZiel.x = MAXXKACH - 2;
 			Routing::FindTheWay();
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[MEERWELLEN].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[MEERWELLEN].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[MEERWELLEN].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[MEERWELLEN].rcDes.top);
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = MEERWELLEN;
 			break;
 		case 8:
@@ -1510,17 +1501,15 @@ namespace Action
 
 	void tent()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = ZELT;
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[ZELT].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[ZELT].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[ZELT].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[ZELT].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[ZELT].rcDes.top);
 		}
 		Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
 		if (!World::CheckRohstoff())
@@ -1597,17 +1586,15 @@ namespace Action
 
 	void boat()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BOOT;
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[BOOT].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[BOOT].Anzahl;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[BOOT].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[BOOT].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[BOOT].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[BOOT].rcDes.top);
 		}
 		Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
 		if (!World::CheckRohstoff())
@@ -1628,7 +1615,7 @@ namespace Action
 		case 3:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 28,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 19);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[BOOT].Anzahl + 1);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOOT].Anzahl + 1);
 			break;
 		case 4: case 5: case 6: case 8: case 9: case 10: case 12: case 13: case 14:
 			Guy.Aktiv = true;
@@ -1640,12 +1627,12 @@ namespace Action
 		case 7:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 22,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 16);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[BOOT].Anzahl + 2);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOOT].Anzahl + 2);
 			break;
 		case 11:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 14,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 11);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[BOOT].Anzahl + 3);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOOT].Anzahl + 3);
 			break;
 		case 15:
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -1688,17 +1675,15 @@ namespace Action
 
 	void pipe()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = ROHR;
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[ROHR].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[ROHR].Anzahl;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[ROHR].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[ROHR].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[ROHR].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[ROHR].rcDes.top);
 		}
 		Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
 		if (!World::CheckRohstoff())
@@ -1719,7 +1704,7 @@ namespace Action
 		case 3:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 28,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 15);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[ROHR].Anzahl + 1);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[ROHR].Anzahl + 1);
 			break;
 		case 4: case 5: case 6: case 11: case 12: case 13:
 			Guy.Aktiv = true;
@@ -1738,7 +1723,7 @@ namespace Action
 		case 10:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 17,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 13);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[ROHR].Anzahl + 2);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[ROHR].Anzahl + 2);
 			break;
 		case 17:
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -1759,17 +1744,15 @@ namespace Action
 
 	void sos()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = SOS;
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[SOS].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[SOS].Anzahl;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[SOS].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[SOS].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[SOS].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[SOS].rcDes.top);
 		}
 		Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
 		if (!World::CheckRohstoff())
@@ -1786,27 +1769,27 @@ namespace Action
 		case 4:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 12,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 17);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[SOS].Anzahl + 1);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[SOS].Anzahl + 1);
 			break;
 		case 7:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 12,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 9);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[SOS].Anzahl + 2);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[SOS].Anzahl + 2);
 			break;
 		case 10:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 19,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 12);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[SOS].Anzahl + 3);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[SOS].Anzahl + 3);
 			break;
 		case 13:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 21,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 5);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[SOS].Anzahl + 4);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[SOS].Anzahl + 4);
 			break;
 		case 16:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 28,
 				Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 8);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[SOS].Anzahl + 5);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[SOS].Anzahl + 5);
 			break;
 		case 2: case 5: case 8: case 11: case 14: case 17:
 			Guy.Aktiv = true;
@@ -1845,17 +1828,15 @@ namespace Action
 
 	void fireplace()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FEUERSTELLE;
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[FEUERSTELLE].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[FEUERSTELLE].Anzahl;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = (short)Bmp[FEUERSTELLE].rcDes.left;
-			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = (short)Bmp[FEUERSTELLE].rcDes.top;
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FEUERSTELLE].rcDes.left);
+			Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FEUERSTELLE].rcDes.top);
 		}
 		Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
 		if (!World::CheckRohstoff())
@@ -1884,7 +1865,7 @@ namespace Action
 			World::AddResource(WASSER, -1);
 			World::AddResource(NAHRUNG, -1);
 			World::AddTime(0, 1);
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[FEUERSTELLE].Anzahl + 1);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[FEUERSTELLE].Anzahl + 1);
 			break;
 		case 4:
 			Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x,
@@ -1898,7 +1879,7 @@ namespace Action
 			World::AddTime(0, 1);
 			if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer != 5)
 				Scape[Guy.Pos.x][Guy.Pos.y].Phase =
-				(short)(Bmp[FEUERSTELLE].Anzahl + Scape[Guy.Pos.x][Guy.Pos.y].AkNummer - 4);
+				static_cast<short>(Bmp[FEUERSTELLE].Anzahl + Scape[Guy.Pos.x][Guy.Pos.y].AkNummer - 4);
 			break;
 		case 8:
 			Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -1918,12 +1899,10 @@ namespace Action
 
 	void house1()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HAUS1].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HAUS1].Anzahl;
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HAUS1;
@@ -1952,7 +1931,7 @@ namespace Action
 		case 6: case 7: case 8: case 9:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS1].Anzahl + 1);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS1].Anzahl + 1);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -1960,7 +1939,7 @@ namespace Action
 		case 10: case 11: case 12: case 13:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS1].Anzahl + 2);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS1].Anzahl + 2);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -1968,7 +1947,7 @@ namespace Action
 		case 14: case 15: case 16: case 17:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS1].Anzahl + 3);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS1].Anzahl + 3);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -1986,12 +1965,10 @@ namespace Action
 
 	void house2()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HAUS2].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HAUS2].Anzahl;
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HAUS2;
@@ -2027,7 +2004,7 @@ namespace Action
 		case 7: case 8: case 9: case 10:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS2].Anzahl + 1);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 1);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -2035,7 +2012,7 @@ namespace Action
 		case 11: case 12: case 13: case 14:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS2].Anzahl + 2);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 2);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -2043,7 +2020,7 @@ namespace Action
 		case 15: case 16: case 17: case 18:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS2].Anzahl + 3);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 3);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -2051,7 +2028,7 @@ namespace Action
 		case 19:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYKLETTERN2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS2].Anzahl + 4);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 4);
 			World::AddResource(NAHRUNG, -1);
 			World::AddResource(WASSER, -1);
 			World::AddTime(0, 1);
@@ -2069,12 +2046,10 @@ namespace Action
 
 	void house3()
 	{
-		short i;
-
 		if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
 		{
 			Guy.PosAlt = Guy.PosScreen;	// Die Originalposition merken
-			for (i = 0; i<BILDANZ; i++)
+			for (short i = 0; i<BILDANZ; i++)
 				Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HAUS3].Rohstoff[i];
 			Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HAUS3].Anzahl;
 			Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HAUS3;
@@ -2110,7 +2085,7 @@ namespace Action
 		case 7: case 8: case 9: case 10:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS3].Anzahl + 1);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 1);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -2118,7 +2093,7 @@ namespace Action
 		case 11: case 12: case 13: case 14:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS3].Anzahl + 2);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 2);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -2126,7 +2101,7 @@ namespace Action
 		case 15: case 16: case 17: case 18:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYHAMMER2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS3].Anzahl + 3);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 3);
 			World::AddResource(NAHRUNG, -0.5);
 			World::AddResource(WASSER, -0.5);
 			World::AddTime(0, 1);
@@ -2134,7 +2109,7 @@ namespace Action
 		case 19:
 			Guy.Aktiv = true;
 			Guy.Zustand = GUYKLETTERN2;
-			Scape[Guy.Pos.x][Guy.Pos.y].Phase = (short)(Bmp[HAUS3].Anzahl + 4);
+			Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 4);
 			World::AddResource(NAHRUNG, -1);
 			World::AddResource(WASSER, -1);
 			World::AddTime(0, 1);

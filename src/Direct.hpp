@@ -6,7 +6,7 @@
 namespace Direct
 {
 	// finished with all objects we use; release them
-	void finiObjects(void);
+	void finiObjects();
 
 	void InitDDraw(HWND hWnd);	// DirectDraw initialisieren
 	void Reset();
