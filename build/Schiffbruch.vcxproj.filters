@@ -101,6 +101,9 @@
     <ClInclude Include="..\src\State.hpp">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\json.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\bin\images\Animation.BMP">

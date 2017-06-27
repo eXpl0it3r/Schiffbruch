@@ -33,6 +33,7 @@
     <ClInclude Include="..\src\extern.hpp" />
     <ClInclude Include="..\src\Game.hpp" />
     <ClInclude Include="..\src\headers.hpp" />
+    <ClInclude Include="..\src\json.hpp" />
     <ClInclude Include="..\src\Math.hpp" />
     <ClInclude Include="..\src\Menu.hpp" />
     <ClInclude Include="..\src\Renderer.hpp" />
