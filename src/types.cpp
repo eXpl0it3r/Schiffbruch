@@ -216,3 +216,17 @@ void from_json(const json & j, SCAPE & scape)
 	}
 	scape.Timer = j.at("Timer").get<float>();
 }
+
+void to_json(json & j, const FLUSSLAUF flusslauf)
+{
+	j = json{
+		{"x", flusslauf.x},
+		{"y", flusslauf.y}
+	};
+}
+
+void from_json(const json & j, FLUSSLAUF & flusslauf)
+{
+	flusslauf.x = j.at("x").get<short>();
+	flusslauf.y = j.at("y").get<short>();
+}

@@ -108,3 +108,6 @@ struct FLUSSLAUF
 {
     short x, y;
 };
+
+void to_json(json& j, const FLUSSLAUF flusslauf);
+void from_json(const json& j, FLUSSLAUF& flusslauf);
