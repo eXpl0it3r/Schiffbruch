@@ -48,6 +48,9 @@
     <ClCompile Include="..\src\Math.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\types.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Action.hpp">

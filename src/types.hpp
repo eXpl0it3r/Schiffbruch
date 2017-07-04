@@ -1,6 +1,9 @@
 #pragma once
 
 #include "headers.hpp"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 struct TEXTBEREICH
 {

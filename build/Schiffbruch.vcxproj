@@ -22,6 +22,7 @@
     <ClCompile Include="..\src\Renderer.cpp" />
     <ClCompile Include="..\src\Routing.cpp" />
     <ClCompile Include="..\src\Sound.cpp" />
+    <ClCompile Include="..\src\types.cpp" />
     <ClCompile Include="..\src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
