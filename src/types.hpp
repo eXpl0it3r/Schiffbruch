@@ -38,6 +38,9 @@ struct GUY
     short Inventar[BILDANZ]; // Welche Rohstoffe usw. besitzt man
 };
 
+void to_json(json& j, const GUY& guy);
+void from_json(const json& j, GUY& guy);
+
 struct BMP
 {
     LPDIRECTDRAWSURFACE4 Surface; // in welcher Surface gespeichert?
