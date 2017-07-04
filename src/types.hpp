@@ -17,6 +17,9 @@ struct ZWEID
     short y;
 };
 
+void to_json(json& j, const ZWEID& zweid);
+void from_json(const json& j, ZWEID& zweid);
+
 struct RGBSTRUCT
 {
     BYTE r, g, b;

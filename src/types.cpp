@@ -17,3 +17,17 @@ void from_json(const json& j, RECT& rect)
 	rect.right = j.at("right").get<LONG>();
 	rect.bottom = j.at("bottom").get<LONG>();
 }
+
+void to_json(json & j, const ZWEID & zweid)
+{
+	j = json{
+		{"x", zweid.x},
+		{"y", zweid.y}
+	};
+}
+
+void from_json(const json & j, ZWEID & zweid)
+{
+	zweid.x = j.at("x").get<short>();
+	zweid.y = j.at("y").get<short>();
+}
