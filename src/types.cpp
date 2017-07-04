@@ -149,3 +149,17 @@ void from_json(const json & j, WAV & wav)
 	wav.Loop = j.at("Loop").get<bool>();
 	wav.Volume = j.at("Volume").get<bool>();
 }
+
+void to_json(json & j, const ABSPANN & abspann)
+{
+	j = json{
+		{"Aktiv", abspann.Aktiv},
+		{"Bild", abspann.Bild}
+	};
+}
+
+void from_json(const json & j, ABSPANN & abspann)
+{
+	abspann.Aktiv = j.at("Aktiv").get<bool>();
+	abspann.Bild = j.at("Bild").get<short>();
+}

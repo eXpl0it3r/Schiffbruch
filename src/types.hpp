@@ -78,6 +78,9 @@ struct ABSPANN
     short Bild; // welches Bild
 };
 
+void to_json(json& j, const ABSPANN& abspann);
+void from_json(const json& j, ABSPANN& abspann);
+
 struct SCAPE
 {
     short Typ; // Flach, Hang usw.
