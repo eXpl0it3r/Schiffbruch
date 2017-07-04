@@ -59,6 +59,9 @@ struct BMP
     bool First; // Ist es das erstemal gebaut, dann Hilfetext
 };
 
+void to_json(json& j, const BMP& bmp);
+void from_json(const json& j, BMP& bmp);
+
 struct WAV
 {
     char* Dateiname; // Dateiname der Wavdatei

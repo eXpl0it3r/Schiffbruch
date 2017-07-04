@@ -77,3 +77,48 @@ void from_json(const json & j, GUY & guy)
 		guy.Inventar[i] = inventory[i].get<short>();
 	}
 }
+
+void to_json(json & j, const BMP & bmp)
+{
+	//NOTE: this ignores the "Surface" property!
+	j = json{
+		{"Animation", bmp.Animation},
+		{"Anzahl", bmp.Anzahl},
+		{"Phase", bmp.Phase},
+		{"rcSrc", bmp.rcSrc},
+		{"rcDes", bmp.rcDes},
+		{"Breite", bmp.Breite},
+		{"Hoehe", bmp.Hoehe},
+		{"Geschwindigkeit", bmp.Geschwindigkeit},
+		{"Sound", bmp.Sound},
+		{"AkAnzahl", bmp.AkAnzahl},
+		{"First", bmp.First}
+	};
+
+	j["Rohstoff"] = {};
+	for (size_t i = 0; i < BILDANZ; i++)
+	{
+		j["Rohstoff"][i] = bmp.Rohstoff[i];
+	}
+}
+
+void from_json(const json & j, BMP & bmp)
+{
+	//NOTE: this ignores the "Surface" property!
+	bmp.Animation = j.at("Animation").get<bool>();
+	bmp.Anzahl = j.at("Anzahl").get<short>();
+	bmp.Phase = j.at("Phase").get<short>();
+	bmp.rcSrc = j.at("rcSrc").get<RECT>();
+	bmp.rcDes = j.at("rcDes").get<RECT>();
+	bmp.Breite = j.at("Breite").get<short>();
+	bmp.Hoehe = j.at("Hoehe").get<short>();
+	bmp.Geschwindigkeit = j.at("Geschwindigkeit").get<short>();
+	bmp.Sound = j.at("Sound").get<short>();
+	json resources = j.at("Rohstoff");
+	for (size_t i = 0; i < BILDANZ; i++)
+	{
+		bmp.Rohstoff[i] = resources[i].get<short>();
+	}
+	bmp.AkAnzahl = j.at("AkAnzahl").get<short>();
+	bmp.First = j.at("First").get<bool>();
+}
