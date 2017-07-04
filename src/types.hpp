@@ -69,6 +69,9 @@ struct WAV
     short Volume; // Die Standardlautstärke in Prozent
 };
 
+void to_json(json& j, const WAV& wav);
+void from_json(const json& j, WAV& wav);
+
 struct ABSPANN
 {
     bool Aktiv; // Bewegt sich gerade

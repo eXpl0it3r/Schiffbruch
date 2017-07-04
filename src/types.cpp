@@ -122,3 +122,30 @@ void from_json(const json & j, BMP & bmp)
 	bmp.AkAnzahl = j.at("AkAnzahl").get<short>();
 	bmp.First = j.at("First").get<bool>();
 }
+
+void to_json(json & j, const WAV & wav)
+{
+	j = json{
+		{"Dateiname", std::string(wav.Dateiname)},
+		{"Loop", wav.Loop},
+		{"Volume", wav.Volume}
+	};
+}
+
+void from_json(const json & j, WAV & wav)
+{
+	//get the filename
+	std::string filename = j.at("Dateiname").get<std::string>();
+	//FIXME: it's kind of impossible to prevent a memory leak here at some point
+	//because I can't know if the reference is to a statically or dynamically allocated string
+	wav.Dateiname = new char[filename.length() + sizeof("")];
+	std::string::iterator iterator;
+	size_t index;
+	for (index = 0, iterator = filename.begin(); iterator < filename.end(); iterator++, index++)
+	{
+		wav.Dateiname[index] = *iterator;
+	}
+
+	wav.Loop = j.at("Loop").get<bool>();
+	wav.Volume = j.at("Volume").get<bool>();
+}
