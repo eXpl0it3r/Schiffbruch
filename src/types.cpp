@@ -163,3 +163,56 @@ void from_json(const json & j, ABSPANN & abspann)
 	abspann.Aktiv = j.at("Aktiv").get<bool>();
 	abspann.Bild = j.at("Bild").get<short>();
 }
+
+void to_json(json & j, const SCAPE & scape)
+{
+	j = json{
+		{"Typ", scape.Typ},
+		{"Art", scape.Art},
+		{"Hoehe", scape.Hoehe},
+		{"Markiert", scape.Markiert},
+		{"xScreen", scape.xScreen},
+		{"yScreen", scape.yScreen},
+		{"Begehbar", scape.Begehbar},
+		{"Entdeckt", scape.Entdeckt},
+		{"LaufZeit", scape.LaufZeit},
+		{"Objekt", scape.Objekt},
+		{"Reverse", scape.Reverse},
+		{"ObPos", scape.ObPos},
+		{"Phase", scape.Phase},
+		{"AkNummer", scape.AkNummer},
+		{"GPosAlt", scape.GPosAlt},
+		{"Timer", scape.Timer}
+	};
+
+	j["Rohstoff"] = {};
+	for (size_t i = 0; i < BILDANZ; i++)
+	{
+		j["Rohstoff"][i] = scape.Rohstoff[i];
+	}
+}
+
+void from_json(const json & j, SCAPE & scape)
+{
+	scape.Typ = j.at("Typ").get<short>();
+	scape.Art = j.at("Art").get<short>();
+	scape.Hoehe = j.at("Hoehe").get<short>();
+	scape.Markiert = j.at("Markiert").get<bool>();
+	scape.xScreen = j.at("xScreen").get<short>();
+	scape.yScreen = j.at("yScreen").get<short>();
+	scape.Begehbar = j.at("Begehbar").get<bool>();
+	scape.Entdeckt = j.at("Entdeckt").get<bool>();
+	scape.LaufZeit = j.at("Laufzeit").get<short>();
+	scape.Objekt = j.at("Objekt").get<short>();
+	scape.Reverse = j.at("Reverse").get<bool>();
+	scape.ObPos = j.at("ObPos").get<ZWEID>();
+	scape.Phase = j.at("Phase").get<float>();
+	scape.AkNummer = j.at("AkNummer").get<short>();
+	scape.GPosAlt = j.at("GPosAlt").get<ZWEID>();
+	json resources = j.at("Rohstoff");
+	for (size_t i = 0; i < BILDANZ; i++)
+	{
+		scape.Rohstoff[i] = resources[i].get<short>();
+	}
+	scape.Timer = j.at("Timer").get<float>();
+}

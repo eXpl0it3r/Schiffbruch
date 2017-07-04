@@ -101,6 +101,9 @@ struct SCAPE
     float Timer; //Bis jetzt nur fürs Feuer nötig
 };
 
+void to_json(json& j, const SCAPE& scape);
+void from_json(const json& j, SCAPE& scape);
+
 struct FLUSSLAUF
 {
     short x, y;
