@@ -76,3 +76,6 @@ _ReSharper*/
 
 # External Libraries
 extlibs
+
+# Temp Files
+bin/save.dat
