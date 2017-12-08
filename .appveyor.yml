@@ -1,0 +1,47 @@
+version: 1.2.{build}
+image: Visual Studio 2017
+configuration: Release
+platform: Win32
+before_build:
+- cmd: >-
+    git clone https://github.com/SFML/SFML.git
+
+    cd SFML
+
+    mkdir ..\extlibs
+
+    mkdir build
+
+    cd build
+
+    cmake -DCMAKE_INSTALL_PREFIX=../../extlibs -DBUILD_SHARED_LIBS=FALSE -DSFML_USE_STATIC_STD_LIBS=TRUE ..
+
+    msbuild /m INSTALL.vcxproj
+
+    cd ..\..\
+
+    rmdir SFML /Q /S
+build:
+  parallel: true
+  verbosity: normal
+after_build:
+- cmd: >-
+    mkdir Schiffbruch
+
+    xcopy bin\* Schiffbruch\ /E
+
+    copy build\Release\Schiffbruch.exe Schiffbruch
+
+    copy extlibs\bin\openal32.dll Schiffbruch
+artifacts:
+- path: Schiffbruch
+  name: Schiffbruch
+deploy:
+- provider: GitHub
+  release: Schiffbruch
+  auth_token:
+    secure: VNLzFyMO7lZLsF5VnklStOWxdtBz0lUPf7FOE2/qvPIP0vjVv3b1Ex1Y6iVZUpk01r6Qa7rm+xTpEC3ivLxcItly10LKzjzC4LEoSg2QFEc=
+  artifact: Schiffbruch
+  draft: true
+  on:
+    branch: master
