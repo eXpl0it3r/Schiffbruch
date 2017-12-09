@@ -2452,5 +2452,34 @@ namespace Game
         LAnimation = Anitmp;
         World::Generate(); // Und nochmal ohne das die Gegend entdeckt ist
         Guy.PosAlt = Guy.PosScreen;
+
+        ExportObjects();
+    }
+
+    void ExportObjects()
+    {
+#ifdef _DEBUG
+        json j;
+
+        std::ifstream input("objects.txt");
+        std::string name;
+        std::vector<std::string> objects;
+        while (input >> name)
+            objects.push_back(name);
+        for (std::size_t i = 0; i < objects.size(); ++i)
+            j["objects"][i] = objects[i];
+        
+        for (std::size_t i = 0; i < 180; ++i)
+            to_json(j["bmp"][std::to_string(i)], Bmp[i]);
+        for (std::size_t x = 0; x < 10; ++x)
+            for (std::size_t y = 0; y < 10; ++y)
+                to_json(j["abspann"][std::to_string(x)][std::to_string(y)], AbspannListe[x][y]);
+        to_json(j["guy"], Guy);
+        for (std::size_t i = 0; i < 25; ++i)
+            to_json(j["wav"][std::to_string(i)], Wav[i]);
+
+        std::ofstream output("export.json");
+        output << std::setw(4) << j;
+#endif
     }
 } // namespace Game

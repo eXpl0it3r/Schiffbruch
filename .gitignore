@@ -82,3 +82,4 @@ extlibs
 
 # Temp Files
 bin/save.dat
+bin/export.json

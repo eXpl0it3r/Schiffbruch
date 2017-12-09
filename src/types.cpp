@@ -51,10 +51,11 @@ void to_json(json & j, const GUY & guy)
 	}
 
 	j["Inventar"] = {};
+	/* An empty inventory is of no use to us.
 	for (size_t i = 0; i < BILDANZ; i++)
 	{
 		j["Inventar"][i] = guy.Inventar[i];
-	}
+	}*/
 }
 
 void from_json(const json & j, GUY & guy)
@@ -72,10 +73,11 @@ void from_json(const json & j, GUY & guy)
 		guy.Resource[i] = resources[i].get<float>();
 	}
 	json inventory = j.at("Inventar");
+	/* An empty inventory is of no use to us.
 	for (size_t i = 0; i < BILDANZ; i++)
 	{
 		guy.Inventar[i] = inventory[i].get<short>();
-	}
+	}*/
 }
 
 void to_json(json & j, const BMP & bmp)
@@ -98,7 +100,9 @@ void to_json(json & j, const BMP & bmp)
 	j["Rohstoff"] = {};
 	for (size_t i = 0; i < BILDANZ; i++)
 	{
-		j["Rohstoff"][i] = bmp.Rohstoff[i];
+		// Only set when the material is actually needed.
+		if(bmp.Rohstoff[i] > 0)
+			j["Rohstoff"][std::to_string(i)] = bmp.Rohstoff[i];
 	}
 }
 
@@ -117,7 +121,15 @@ void from_json(const json & j, BMP & bmp)
 	json resources = j.at("Rohstoff");
 	for (size_t i = 0; i < BILDANZ; i++)
 	{
-		bmp.Rohstoff[i] = resources[i].get<short>();
+		try
+		{
+			bmp.Rohstoff[i] = resources.at(std::to_string(i)).get<short>();
+		}
+		catch(std::exception&)
+		{
+			// In case the key doesn't exist.
+			continue;
+		}
 	}
 	bmp.AkAnzahl = j.at("AkAnzahl").get<short>();
 	bmp.First = j.at("First").get<bool>();
