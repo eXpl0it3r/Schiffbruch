@@ -40,7 +40,7 @@ deploy:
 - provider: GitHub
   release: Schiffbruch
   auth_token:
-    secure: VNLzFyMO7lZLsF5VnklStOWxdtBz0lUPf7FOE2/qvPIP0vjVv3b1Ex1Y6iVZUpk01r6Qa7rm+xTpEC3ivLxcItly10LKzjzC4LEoSg2QFEc=
+    secure: krNF+BFj+w2O15FO6BiPJ1J1NQ7QffQYWKF2qexIigODVTNv4t8sZTG3+YGsR8rt
   artifact: Schiffbruch
   draft: true
   on:
