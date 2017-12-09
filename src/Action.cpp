@@ -178,12 +178,11 @@ namespace Action
 
 	void restart()
 	{
-		ZWEID Erg;
 		Guy.AkNummer++;
 		switch (Guy.AkNummer)
 		{
 		case 1:
-			Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
+			ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
 			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
 				Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			else if (RoutePunkt % 2 == 0)
@@ -262,12 +261,11 @@ namespace Action
 
 	void quit()
 	{
-		ZWEID Erg;
 		Guy.AkNummer++;
 		switch (Guy.AkNummer)
 		{
 		case 1:
-			Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
+			ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
 			if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
 				Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
 			else if (RoutePunkt % 2 == 0)

@@ -63,8 +63,8 @@ namespace World
 			}
 			strcat(RohString, TmpString);
 			strcat(RohString, "=");
-			if (Objekt == -1) sprintf(TmpString, "%d", Scape[x][y].Rohstoff[i]);
-			else sprintf(TmpString, "%d", Bmp[Objekt].Rohstoff[i]);
+			if (Objekt == -1) std::sprintf(TmpString, "%d", Scape[x][y].Rohstoff[i]);
+			else std::sprintf(TmpString, "%d", Bmp[Objekt].Rohstoff[i]);
 			strcat(RohString, TmpString);
 		}
 	}

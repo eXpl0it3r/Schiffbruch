@@ -19,7 +19,7 @@
 Application::Application(const std::string& name, HINSTANCE instance_handle)
 	: m_window({MAXX, MAXY}, name, sf::Style::Fullscreen)
 	  , m_name(name)
-	  , m_time(time(nullptr))
+	  , m_time(std::time(nullptr))
 {
 	// Set globals
 	g_hInst = instance_handle;
@@ -32,7 +32,7 @@ Application::Application(const std::string& name, HINSTANCE instance_handle)
 	Spielzustand = State::LOGO;
 	Game::InitWaves(); // Nur zum Wavinitialisieren
 
-	srand(static_cast<unsigned>(time(nullptr))); // Random initialisieren
+	srand(static_cast<unsigned>(std::time(nullptr))); // Random initialisieren
 }
 
 void Application::process_events()
@@ -69,7 +69,7 @@ void Application::run()
 			while (true)
 			{
 				Bild++;
-				time_t Zeitsave = time(nullptr);
+				std::time_t Zeitsave = std::time(nullptr);
 				if (m_time + 5 < Zeitsave)
 				{
 					m_time = Zeitsave;

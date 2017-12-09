@@ -72,7 +72,7 @@ namespace Math
 					// Baufortschrittanzeigen
 					strcat(Text, " ");
 					strcat(Text, "(");
-					sprintf(TextTmp, "%d", (Scape[Erg.x][Erg.y].AkNummer * 100) / Bmp[Scape[Erg.x][Erg.y].Objekt].AkAnzahl);
+					std::sprintf(TextTmp, "%d", (Scape[Erg.x][Erg.y].AkNummer * 100) / Bmp[Scape[Erg.x][Erg.y].Objekt].AkAnzahl);
 					strcat(Text, TextTmp);
 					strcat(Text, "%");
 					strcat(Text, ")");

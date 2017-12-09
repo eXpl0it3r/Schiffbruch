@@ -79,7 +79,7 @@ namespace Renderer
 
 	inline DWORD RGB2DWORD(BYTE r, BYTE g, BYTE b)
 	{
-		DWORD Erg = 0;
+		DWORD Erg;
 
 		if (ddpf.dwRBitMask == 63488)
 		{
@@ -593,7 +593,7 @@ namespace Renderer
 		TextBereich[TXTCHANCE].Aktiv = true;
 		TextBereich[TXTCHANCE].rcText.top = Bmp[RING].rcDes.top + Ringtmp + Bmp[RING].Hoehe;
 		TextBereich[TXTCHANCE].rcText.bottom = TextBereich[TXTCHANCE].rcText.top + S2YPIXEL;
-		sprintf(StdString, "%.1f", Chance);
+		std::sprintf(StdString, "%.1f", Chance);
 		DrawString(StdString, static_cast<short>(TextBereich[TXTCHANCE].rcText.left),
 		           static_cast<short>(TextBereich[TXTCHANCE].rcText.top), 2);
 
@@ -623,10 +623,10 @@ namespace Renderer
 		}
 
 		// Länge der Schrift ermitteln
-		size_t length = strlen(string);
+		std::size_t length = strlen(string);
 
 		// Alle Zeichen durchgehen
-		for (size_t index = 0; index < length; index++)
+		for (std::size_t index = 0; index < length; index++)
 		{
 			// Korrekte indexNummer ermitteln
 			short cindex = string[index] - ' ';
@@ -725,17 +725,17 @@ namespace Renderer
 				switch (scratch)
 				{
 				case 'a':
-					Anzahl = sprintf(StdString2, " %d", Tag);
+					Anzahl = std::sprintf(StdString2, " %d", Tag);
 					DrawString(StdString2, Posx, Posy, Art);
 					Posx += BBreite * (Anzahl);
 					break;
 				case 'b':
-					Anzahl = sprintf(StdString2, " %d", static_cast<short>(Guy.Resource[GESUNDHEIT]));
+					Anzahl = std::sprintf(StdString2, " %d", static_cast<short>(Guy.Resource[GESUNDHEIT]));
 					DrawString(StdString2, Posx, Posy, Art);
 					Posx += BBreite * (Anzahl);
 					break;
 				case 'c':
-					Anzahl = sprintf(StdString2, " %.2f", Chance);
+					Anzahl = std::sprintf(StdString2, " %.2f", Chance);
 					DrawString(StdString2, Posx, Posy, Art);
 					Posx += BBreite * (Anzahl);
 					break;
@@ -830,8 +830,8 @@ namespace Renderer
 		// Die TagesZeit ausgeben
 		Textloeschen(TXTTAGESZEIT);
 		TextBereich[TXTTAGESZEIT].Aktiv = true;
-		sprintf(Stringsave1, "%d", Stunden + 6);
-		sprintf(Stringsave2, "%d", Minuten);
+		std::sprintf(Stringsave1, "%d", Stunden + 6);
+		std::sprintf(Stringsave2, "%d", Minuten);
 		strcpy(StdString, "");
 		if (Stunden + 6 < 10) strcat(StdString, "0");
 		strcat(StdString, Stringsave1);

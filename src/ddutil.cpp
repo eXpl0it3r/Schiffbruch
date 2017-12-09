@@ -248,7 +248,7 @@ DDLoadPalette(IDirectDraw4* pdd, LPCSTR szBitmap)
 extern "C" DWORD
 DDColorMatch(IDirectDrawSurface4* pdds, COLORREF rgb)
 {
-	COLORREF rgbT;
+	COLORREF rgbT = 0;
 	HDC hdc;
 	DWORD dw = CLR_INVALID;
 	DDSURFACEDESC2 ddsd;
@@ -267,7 +267,11 @@ DDColorMatch(IDirectDrawSurface4* pdds, COLORREF rgb)
 	// Now lock the surface so we can read back the converted color
 	//
 	ddsd.dwSize = sizeof(ddsd);
-	while ((hres = pdds->Lock(nullptr, &ddsd, 0, nullptr)) == DDERR_WASSTILLDRAWING);
+	while ((hres = pdds->Lock(nullptr, &ddsd, 0, nullptr)) == DDERR_WASSTILLDRAWING)
+	{
+		// Busy wait
+	}
+
 	if (hres == DD_OK)
 	{
 		dw = *(DWORD *)ddsd.lpSurface; // Get DWORD
