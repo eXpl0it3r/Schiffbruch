@@ -2,6 +2,6 @@
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Application app("Landscape", hInstance);
-	app.run();
+    Application app("Landscape", hInstance);
+    app.run();
 }

@@ -96,8 +96,8 @@ BEGIN
             VALUE "CompanyName", "dP-Software\0"
             VALUE "FileDescription", "Schiffbruch\0"
             VALUE "FileVersion", "1, 3, 0, 0\0"
-            VALUE "InternalName", "Landscape\0"
-            VALUE "LegalCopyright", "Copyright © 2002 Dirk Plate\0"
+            VALUE "InternalName", "Schiffbruch\0"
+            VALUE "LegalCopyright", "Copyright ï¿½ 2002 Dirk Plate\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "Schiffbruch.exe\0"
             VALUE "PrivateBuild", "\0"
@@ -122,7 +122,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_MAIN_ICON           ICON    DISCARDABLE     "../bin/images/Landscape.ico"
+IDI_MAIN_ICON           ICON    DISCARDABLE     "../bin/images/Schiffbruch.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -134,7 +134,7 @@ BEGIN
     TESTTEXT1               "Dies ist ein Test. /a Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. /z /z Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test."
     GITTERAN                "Gitternetz anschalten"
     GITTERAUS               "Gitternetz ausschalten"
-    KEINEFUNKTION           "Diese Funktion ist leider noch nicht integriert. Warten Sie bitte eine spaetere Version von Landscape ab. Dann wird Ihnen der gesamte Funktionsumfang zur Verfuegung stehen."
+    KEINEFUNKTION           "Diese Funktion ist leider noch nicht integriert. Warten Sie bitte eine spaetere Version von Schiffbruch ab. Dann wird Ihnen der gesamte Funktionsumfang zur Verfuegung stehen."
     MEAKTIONAUF             "Oeffnet das Aktionsmenue"
     MEAKTIONZU              "Schliesst das Aktionsmenue"
     BEGINNSUCHEN            "Durchsuche die Umgebung"
@@ -199,7 +199,7 @@ BEGIN
     MIT                     "mit"
     LIANE                   "Liane "
     ROHLIANEGEFUNDEN        "Mit sehr viel Muehe habe ich es geschafft, eine Liane vom Baum abzureissen. Mit Lianen kann man sehr viel anstellen, deshalb werde ich sie die naechste Zeit mit mir herumschleppen."
-    ROHLIANEZUVIEL          "So nützlich sind Lianen dann doch wieder nicht, dass ich so viele davon mit mir herumtragen muss."
+    ROHLIANEZUVIEL          "So nï¿½tzlich sind Lianen dann doch wieder nicht, dass ich so viele davon mit mir herumtragen muss."
     ANGEL                   "Angel"
     BAUEANGEL               "Dieser duenne, biegsame Ast und diese Liane lassen sich vorzueglich zu einer Angel verbinden. Endlich muss ich nicht mehr vegetarisch leben und kann mir ein paar fette Forellen fischen."
     BEGINNANGELN            "Angeln"
@@ -265,7 +265,7 @@ BEGIN
     ANIMATIONAN             "Wasseranimationen anschalten"
     ASTPLUSLIANENICHTS      "Mehr kann ich mir auch mit einer Liane und einem Ast nicht bauen."
     SCHLEUDER               "Steinschleuder"
-    STEINPLUSLIANENICHTS    "Mir faellt nichts mehr ein, was ich mir aus einer Liane und einem Stein bauen könnte."
+    STEINPLUSLIANENICHTS    "Mir faellt nichts mehr ein, was ich mir aus einer Liane und einem Stein bauen kï¿½nnte."
 END
 
 STRINGTABLE DISCARDABLE 

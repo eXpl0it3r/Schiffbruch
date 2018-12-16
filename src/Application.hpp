@@ -10,17 +10,17 @@
 class Application
 {
 public:
-	Application(const std::string& name, HINSTANCE instance_handle);
+    Application(const std::string& name, HINSTANCE instance_handle);
 
-	void run();
-	void update();
-
-private:
-	void process_events();
+    void run();
+    void update();
 
 private:
-	sf::Window m_window;
+    void process_events();
 
-	std::string m_name;
-	std::time_t m_time; // Beginning of the second
+private:
+    sf::Window m_window;
+
+    std::string m_name;
+    std::time_t m_time; // Beginning of the second
 };
