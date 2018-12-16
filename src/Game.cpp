@@ -9,6 +9,7 @@
 #include "World.hpp"
 
 #include <fstream>
+#include <iomanip>
 
 namespace Game
 {
@@ -77,6 +78,7 @@ namespace Game
     {
         short i, k;
 
+#ifdef EXPORT
         // BILD
         // Standardbildinitialisierung
         for (i = 0; i < BILDANZ; i++)
@@ -2230,6 +2232,8 @@ namespace Game
         {
             Guy.Inventar[i] = 0;
         }
+#endif
+
         CursorTyp = CUPFEIL;
         Gitter = false;
         PapierText = -1;
@@ -2249,6 +2253,7 @@ namespace Game
 
     void InitWaves()
     {
+#ifdef EXPORT
         // Sounds
         for (short i = 0; i < Sound::COUNT; i++)
         {
@@ -2330,6 +2335,19 @@ namespace Game
 
         Wav[Sound::INVENTION].Dateiname = "sounds/erfindung.wav";
         Wav[Sound::INVENTION].Volume = 95;
+#endif
+
+#ifdef IMPORT
+        json j;
+
+        std::ifstream i("export.json");
+        i >> j;
+
+        for (auto wav_objects : j["wav"].items())
+        {
+            from_json(wav_objects.value(), Wav[std::stoi(wav_objects.key())]);
+        }
+#endif
 
         // Testweise alle Sounds gleich in den Speicher laden
         for (short i = 1; i < Sound::COUNT; i++)
@@ -2343,6 +2361,7 @@ namespace Game
 
         InitStructs();
         InitWaves();
+        ImportObjects();
 
         if (!neu) LoadOK = LoadGame();
 
@@ -2452,5 +2471,257 @@ namespace Game
         LAnimation = Anitmp;
         World::Generate(); // Und nochmal ohne das die Gegend entdeckt ist
         Guy.PosAlt = Guy.PosScreen;
+
+        ExportObjects();
+    }
+
+    std::string to_string(LPDIRECTDRAWSURFACE4 surface)
+    {
+        if (surface == lpDDSPrimary)
+        {
+            return "primary";
+        }
+        if (surface == lpDDSBack)
+        {
+            return "back";
+        }
+        if (surface == lpDDSMisc)
+        {
+            return "misc";
+        }
+        if (surface == lpDDSPanel)
+        {
+            return "panel";
+        }
+        if (surface == lpDDSGuyAni)
+        {
+            return "guy";
+        }
+        if (surface == lpDDSAnimation)
+        {
+            return "animation";
+        }
+        if (surface == lpDDSKarte)
+        {
+            return "karte";
+        }
+        if (surface == lpDDSSchrift)
+        {
+            return "schrift";
+        }
+        if (surface == lpDDSSchrift1)
+        {
+            return "schrift1";
+        }
+        if (surface == lpDDSSchrift2)
+        {
+            return "schrift2";
+        }
+        if (surface == lpDDSTextFeld)
+        {
+            return "text";
+        }
+        if (surface == lpDDSPapier)
+        {
+            return "papier";
+        }
+        if (surface == lpDDSBaum)
+        {
+            return "baum";
+        }
+        if (surface == lpDDSBau)
+        {
+            return "bau";
+        }
+        if (surface == lpDDSCredits)
+        {
+            return "credits";
+        }
+        if (surface == lpDDSLogo)
+        {
+            return "logo";
+        }
+        if (surface == lpDDSCursor)
+        {
+            return "cursor";
+        }
+        if (surface == lpDDSButtons)
+        {
+            return "buttons";
+        }
+        if (surface == lpDDSInventar)
+        {
+            return "inventar";
+        }
+        if (surface == lpDDSScape)
+        {
+            return "scape";
+        }
+        if (surface == lpDDSSchatzkarte)
+        {
+            return "schatzkarte";
+        }
+
+        return "";
+    }
+
+    LPDIRECTDRAWSURFACE4 from_string(std::string surface)
+    {
+        if (surface == "primary")
+        {
+            return lpDDSPrimary;
+        }
+        if (surface == "back")
+        {
+            return lpDDSBack;
+        }
+        if (surface == "misc")
+        {
+            return lpDDSMisc;
+        }
+        if (surface == "panel")
+        {
+            return lpDDSPanel;
+        }
+        if (surface == "guy")
+        {
+            return lpDDSGuyAni;
+        }
+        if (surface == "animation")
+        {
+            return lpDDSAnimation;
+        }
+        if (surface == "karte")
+        {
+            return lpDDSKarte;
+        }
+        if (surface == "schrift")
+        {
+            return lpDDSSchrift;
+        }
+        if (surface == "schrift1")
+        {
+            return lpDDSSchrift1;
+        }
+        if (surface == "schrift2")
+        {
+            return lpDDSSchrift2;
+        }
+        if (surface == "text")
+        {
+            return lpDDSTextFeld;
+        }
+        if (surface == "papier")
+        {
+            return lpDDSPapier;
+        }
+        if (surface == "baum")
+        {
+            return lpDDSBaum;
+        }
+        if (surface == "bau")
+        {
+            return lpDDSBau;
+        }
+        if (surface == "credits")
+        {
+            return lpDDSCredits;
+        }
+        if (surface == "logo")
+        {
+            return lpDDSLogo;
+        }
+        if (surface == "cursor")
+        {
+            return lpDDSCursor;
+        }
+        if (surface == "buttons")
+        {
+            return lpDDSButtons;
+        }
+        if (surface == "inventar")
+        {
+            return lpDDSInventar;
+        }
+        if (surface == "scape")
+        {
+            return lpDDSScape;
+        }
+        if (surface == "schatzkarte")
+        {
+            return lpDDSSchatzkarte;
+        }
+
+        return nullptr;
+    }
+
+    void ExportObjects()
+    {
+#ifdef EXPORT
+        json j;
+
+        std::ifstream input("objects.txt");
+        std::string name;
+        std::vector<std::string> objects;
+
+        while (input >> name)
+            objects.push_back(name);
+        for (std::size_t i = 0; i < objects.size(); ++i)
+            j["objects"][i] = objects[i];
+        
+        for (std::size_t i = 0; i < 180; ++i)
+        {
+            to_json(j["bmp"][std::to_string(i)], Bmp[i]);
+            j["bmp"][std::to_string(i)]["Surface"] = to_string(Bmp[i].Surface);
+        }
+
+        for (std::size_t x = 0; x < 10; ++x)
+            for (std::size_t y = 0; y < 10; ++y)
+                to_json(j["abspann"][std::to_string(x)][std::to_string(y)], AbspannListe[x][y]);
+
+        to_json(j["guy"], Guy);
+
+        for (std::size_t i = 0; i < 25; ++i)
+            to_json(j["wav"][std::to_string(i)], Wav[i]);
+
+        for (std::size_t i = TXTTEXTFELD; i < TEXTANZ; ++i)
+        {
+            to_json(j["textbereich"][std::to_string(i)], TextBereich[i]);
+        }
+
+        std::ofstream output("export.json");
+        output << std::setw(4) << j;
+#endif
+    }
+
+    void ImportObjects()
+    {
+#ifdef IMPORT
+        json j;
+
+        std::ifstream i("export.json");
+        i >> j;
+
+        for (auto bmp_objects : j["bmp"].items())
+        {
+            from_json(bmp_objects.value(), Bmp[std::stoi(bmp_objects.key())]);
+            Bmp[std::stoi(bmp_objects.key())].Surface = from_string(bmp_objects.value()["Surface"]);
+        }
+
+        for (auto abspann_x_objects : j["abspann"].items())
+        {
+            for (auto abspann_y_objects : abspann_x_objects.value().items())
+            {
+                from_json(abspann_y_objects.value(), AbspannListe[std::stoi(abspann_x_objects.key())][std::stoi(abspann_y_objects.key())]);
+            }
+        }
+
+        from_json(j["guy"], Guy);
+
+        for (auto textbereich_objects : j["textbereich"].items())
+        {
+            from_json(textbereich_objects.value(), TextBereich[std::stoi(textbereich_objects.key())]);
+        }
+#endif
     }
 } // namespace Game

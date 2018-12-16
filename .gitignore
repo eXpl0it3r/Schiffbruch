@@ -82,3 +82,5 @@ extlibs
 
 # Temp Files
 bin/save.dat
+bin/NormalLog.txt
+bin/ErrorLog.txt

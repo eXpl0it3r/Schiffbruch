@@ -1,6 +1,9 @@
 #pragma once
 
 #include "headers.hpp"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 struct TEXTBEREICH
 {
@@ -8,11 +11,17 @@ struct TEXTBEREICH
     RECT rcText; // Die Position des Ausgabe
 };
 
+void to_json(json& j, const TEXTBEREICH textbereich);
+void from_json(const json& j, TEXTBEREICH& textbereich);
+
 struct ZWEID
 {
     short x;
     short y;
 };
+
+void to_json(json& j, const ZWEID& zweid);
+void from_json(const json& j, ZWEID& zweid);
 
 struct RGBSTRUCT
 {
@@ -32,6 +41,9 @@ struct GUY
     short Inventar[BILDANZ]; // Welche Rohstoffe usw. besitzt man
 };
 
+void to_json(json& j, const GUY& guy);
+void from_json(const json& j, GUY& guy);
+
 struct BMP
 {
     LPDIRECTDRAWSURFACE4 Surface; // in welcher Surface gespeichert?
@@ -50,18 +62,27 @@ struct BMP
     bool First; // Ist es das erstemal gebaut, dann Hilfetext
 };
 
+void to_json(json& j, const BMP& bmp);
+void from_json(const json& j, BMP& bmp);
+
 struct WAV
 {
-    char* Dateiname; // Dateiname der Wavdatei
+    std::string Dateiname; // Dateiname der Wavdatei
     bool Loop; // Nur einmal abspielen und ständig
     short Volume; // Die Standardlautstärke in Prozent
 };
+
+void to_json(json& j, const WAV& wav);
+void from_json(const json& j, WAV& wav);
 
 struct ABSPANN
 {
     bool Aktiv; // Bewegt sich gerade
     short Bild; // welches Bild
 };
+
+void to_json(json& j, const ABSPANN& abspann);
+void from_json(const json& j, ABSPANN& abspann);
 
 struct SCAPE
 {
@@ -83,7 +104,13 @@ struct SCAPE
     float Timer; //Bis jetzt nur fürs Feuer nötig
 };
 
+void to_json(json& j, const SCAPE& scape);
+void from_json(const json& j, SCAPE& scape);
+
 struct FLUSSLAUF
 {
     short x, y;
 };
+
+void to_json(json& j, const FLUSSLAUF flusslauf);
+void from_json(const json& j, FLUSSLAUF& flusslauf);

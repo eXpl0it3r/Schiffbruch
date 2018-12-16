@@ -10,4 +10,6 @@ namespace Game
     void InitWaves(); // Initialisiert die Wav Structs
     void SaveGame(); // Speichert den Spielstand
     bool LoadGame(); // Lädt den Spielstand
+    void ExportObjects(); // Export game objects
+    void ImportObjects(); // Import game objects
 }
