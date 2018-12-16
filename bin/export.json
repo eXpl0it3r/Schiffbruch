@@ -1,0 +1,5322 @@
+{
+    "abspann": {
+        "0": {
+            "0": {
+                "Aktiv": false,
+                "Bild": 165
+            },
+            "1": {
+                "Aktiv": true,
+                "Bild": 166
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "1": {
+            "0": {
+                "Aktiv": false,
+                "Bild": 178
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": 173
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "2": {
+            "0": {
+                "Aktiv": false,
+                "Bild": 170
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": 166
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "3": {
+            "0": {
+                "Aktiv": false,
+                "Bild": 176
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": 167
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": 168
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": 169
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "4": {
+            "0": {
+                "Aktiv": false,
+                "Bild": 171
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": 172
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "5": {
+            "0": {
+                "Aktiv": false,
+                "Bild": 175
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": 173
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": 174
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "6": {
+            "0": {
+                "Aktiv": false,
+                "Bild": 177
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": 179
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "7": {
+            "0": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "8": {
+            "0": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        },
+        "9": {
+            "0": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "1": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "2": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "3": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "4": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "5": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "6": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "7": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "8": {
+                "Aktiv": false,
+                "Bild": -1
+            },
+            "9": {
+                "Aktiv": false,
+                "Bild": -1
+            }
+        }
+    },
+    "bmp": {
+        "0": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 28,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 13,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 16,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 36,
+                "left": 9,
+                "right": 37,
+                "top": 23
+            },
+            "rcSrc": {
+                "bottom": 13,
+                "left": 0,
+                "right": 28,
+                "top": 0
+            }
+        },
+        "1": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 8,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 26,
+                "left": 10,
+                "right": 44,
+                "top": 18
+            },
+            "rcSrc": {
+                "bottom": 8,
+                "left": 28,
+                "right": 62,
+                "top": 0
+            }
+        },
+        "10": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 13,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 44,
+                "top": 26
+            },
+            "rcSrc": {
+                "bottom": 13,
+                "left": 302,
+                "right": 336,
+                "top": 0
+            }
+        },
+        "100": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 48,
+            "First": true,
+            "Geschwindigkeit": 10,
+            "Hoehe": 38,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 1,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 38,
+                "left": 297,
+                "right": 345,
+                "top": 0
+            }
+        },
+        "101": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 46,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 40,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 3,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 40,
+                "left": 345,
+                "right": 391,
+                "top": 0
+            }
+        },
+        "102": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 15,
+            "First": true,
+            "Geschwindigkeit": 10,
+            "Hoehe": 9,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 2,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 9,
+                "left": 705,
+                "right": 720,
+                "top": 0
+            }
+        },
+        "103": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 10,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 10,
+                "left": 743,
+                "right": 759,
+                "top": 0
+            }
+        },
+        "104": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 759,
+                "right": 785,
+                "top": 0
+            }
+        },
+        "105": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 20,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 90,
+                "left": 0,
+                "right": 26,
+                "top": 72
+            }
+        },
+        "106": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 5,
+            "Breite": 23,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 20,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 20,
+                "left": 720,
+                "right": 743,
+                "top": 0
+            }
+        },
+        "107": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 28,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 28,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 54,
+                "left": 1248,
+                "right": 1276,
+                "top": 26
+            },
+            "rcSrc": {
+                "bottom": 28,
+                "left": 0,
+                "right": 28,
+                "top": 0
+            }
+        },
+        "108": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 28,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 28,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 88,
+                "left": 1248,
+                "right": 1276,
+                "top": 60
+            },
+            "rcSrc": {
+                "bottom": 84,
+                "left": 0,
+                "right": 28,
+                "top": 56
+            }
+        },
+        "109": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 20,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 20,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 22,
+                "left": 1135,
+                "right": 1155,
+                "top": 2
+            },
+            "rcSrc": {
+                "bottom": 132,
+                "left": 0,
+                "right": 20,
+                "top": 112
+            }
+        },
+        "11": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 42,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 22,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 2,
+                "right": 44,
+                "top": 17
+            },
+            "rcSrc": {
+                "bottom": 22,
+                "left": 336,
+                "right": 378,
+                "top": 0
+            }
+        },
+        "110": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 20,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 20,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 22,
+                "left": 1175,
+                "right": 1195,
+                "top": 2
+            },
+            "rcSrc": {
+                "bottom": 212,
+                "left": 0,
+                "right": 20,
+                "top": 192
+            }
+        },
+        "111": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 20,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 20,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 22,
+                "left": 1215,
+                "right": 1235,
+                "top": 2
+            },
+            "rcSrc": {
+                "bottom": 252,
+                "left": 0,
+                "right": 20,
+                "top": 232
+            }
+        },
+        "112": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 28,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 28,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 122,
+                "left": 1248,
+                "right": 1276,
+                "top": 94
+            },
+            "rcSrc": {
+                "bottom": 300,
+                "left": 0,
+                "right": 28,
+                "top": 272
+            }
+        },
+        "113": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 226,
+                "left": 1104,
+                "right": 1139,
+                "top": 191
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 28,
+                "right": 63,
+                "top": 0
+            }
+        },
+        "114": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 5,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 226,
+                "left": 1145,
+                "right": 1180,
+                "top": 191
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 203,
+                "right": 238,
+                "top": 0
+            }
+        },
+        "115": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 226,
+                "left": 1227,
+                "right": 1262,
+                "top": 191
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 168,
+                "right": 203,
+                "top": 0
+            }
+        },
+        "116": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 226,
+                "left": 1186,
+                "right": 1221,
+                "top": 191
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 343,
+                "right": 378,
+                "top": 0
+            }
+        },
+        "117": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 226,
+                "left": 1186,
+                "right": 1221,
+                "top": 191
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 378,
+                "right": 413,
+                "top": 0
+            }
+        },
+        "118": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 226,
+                "left": 1186,
+                "right": 1221,
+                "top": 191
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 483,
+                "right": 518,
+                "top": 0
+            }
+        },
+        "119": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1104,
+                "right": 1139,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 63,
+                "right": 98,
+                "top": 0
+            }
+        },
+        "12": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 40,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 22,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 50,
+                "top": 17
+            },
+            "rcSrc": {
+                "bottom": 22,
+                "left": 378,
+                "right": 418,
+                "top": 0
+            }
+        },
+        "120": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1145,
+                "right": 1180,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 133,
+                "right": 168,
+                "top": 0
+            }
+        },
+        "121": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1186,
+                "right": 1221,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 308,
+                "right": 343,
+                "top": 0
+            }
+        },
+        "122": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1227,
+                "right": 1262,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 98,
+                "right": 133,
+                "top": 0
+            }
+        },
+        "123": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1104,
+                "right": 1139,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 413,
+                "right": 448,
+                "top": 0
+            }
+        },
+        "124": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1145,
+                "right": 1180,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 210,
+                "left": 28,
+                "right": 63,
+                "top": 175
+            }
+        },
+        "125": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1186,
+                "right": 1221,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 210,
+                "left": 63,
+                "right": 98,
+                "top": 175
+            }
+        },
+        "126": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1227,
+                "right": 1262,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 210,
+                "left": 98,
+                "right": 133,
+                "top": 175
+            }
+        },
+        "127": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 415,
+                "left": 1104,
+                "right": 1139,
+                "top": 380
+            },
+            "rcSrc": {
+                "bottom": 210,
+                "left": 133,
+                "right": 168,
+                "top": 175
+            }
+        },
+        "128": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 415,
+                "left": 1145,
+                "right": 1180,
+                "top": 380
+            },
+            "rcSrc": {
+                "bottom": 210,
+                "left": 168,
+                "right": 203,
+                "top": 175
+            }
+        },
+        "129": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1104,
+                "right": 1139,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 273,
+                "right": 308,
+                "top": 0
+            }
+        },
+        "13": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 40,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 22,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 43,
+                "left": 10,
+                "right": 50,
+                "top": 21
+            },
+            "rcSrc": {
+                "bottom": 22,
+                "left": 418,
+                "right": 458,
+                "top": 0
+            }
+        },
+        "130": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1145,
+                "right": 1180,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 238,
+                "right": 273,
+                "top": 0
+            }
+        },
+        "131": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1186,
+                "right": 1221,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 448,
+                "right": 483,
+                "top": 0
+            }
+        },
+        "132": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 305,
+                "left": 1227,
+                "right": 1262,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 518,
+                "right": 553,
+                "top": 0
+            }
+        },
+        "133": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1104,
+                "right": 1139,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 588,
+                "right": 623,
+                "top": 0
+            }
+        },
+        "134": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 5,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1145,
+                "right": 1180,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 623,
+                "right": 658,
+                "top": 0
+            }
+        },
+        "135": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1186,
+                "right": 1221,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 658,
+                "right": 693,
+                "top": 0
+            }
+        },
+        "136": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": -1,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 360,
+                "left": 1227,
+                "right": 1262,
+                "top": 325
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 693,
+                "right": 728,
+                "top": 0
+            }
+        },
+        "137": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 415,
+                "left": 1104,
+                "right": 1139,
+                "top": 380
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 728,
+                "right": 763,
+                "top": 0
+            }
+        },
+        "138": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 35,
+                "left": 0,
+                "right": 35,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 210,
+                "left": 203,
+                "right": 238,
+                "top": 175
+            }
+        },
+        "139": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 5,
+            "Hoehe": 35,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "buttons",
+            "rcDes": {
+                "bottom": 415,
+                "left": 1227,
+                "right": 1262,
+                "top": 380
+            },
+            "rcSrc": {
+                "bottom": 35,
+                "left": 553,
+                "right": 588,
+                "top": 0
+            }
+        },
+        "14": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 42,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 22,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 43,
+                "left": 2,
+                "right": 44,
+                "top": 21
+            },
+            "rcSrc": {
+                "bottom": 22,
+                "left": 458,
+                "right": 500,
+                "top": 0
+            }
+        },
+        "140": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 11,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 115,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "panel",
+            "rcDes": {
+                "bottom": 586,
+                "left": 1127,
+                "right": 1138,
+                "top": 471
+            },
+            "rcSrc": {
+                "bottom": 230,
+                "left": 205,
+                "right": 216,
+                "top": 115
+            }
+        },
+        "141": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 11,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 115,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "panel",
+            "rcDes": {
+                "bottom": 586,
+                "left": 1189,
+                "right": 1200,
+                "top": 471
+            },
+            "rcSrc": {
+                "bottom": 230,
+                "left": 216,
+                "right": 227,
+                "top": 115
+            }
+        },
+        "142": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 11,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 115,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "panel",
+            "rcDes": {
+                "bottom": 586,
+                "left": 1250,
+                "right": 1261,
+                "top": 471
+            },
+            "rcSrc": {
+                "bottom": 230,
+                "left": 227,
+                "right": 238,
+                "top": 115
+            }
+        },
+        "143": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 295,
+                "left": 1109,
+                "right": 1125,
+                "top": 280
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 18,
+                "right": 34,
+                "top": 0
+            }
+        },
+        "144": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 375,
+                "left": 1109,
+                "right": 1125,
+                "top": 360
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 34,
+                "right": 50,
+                "top": 0
+            }
+        },
+        "145": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 315,
+                "left": 1109,
+                "right": 1125,
+                "top": 300
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 50,
+                "right": 66,
+                "top": 0
+            }
+        },
+        "146": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 295,
+                "left": 1225,
+                "right": 1241,
+                "top": 280
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 66,
+                "right": 82,
+                "top": 0
+            }
+        },
+        "147": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 335,
+                "left": 1109,
+                "right": 1125,
+                "top": 320
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 82,
+                "right": 98,
+                "top": 0
+            }
+        },
+        "148": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 315,
+                "left": 1225,
+                "right": 1241,
+                "top": 300
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 98,
+                "right": 114,
+                "top": 0
+            }
+        },
+        "149": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 355,
+                "left": 1109,
+                "right": 1125,
+                "top": 340
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 114,
+                "right": 130,
+                "top": 0
+            }
+        },
+        "15": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 30,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 19,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 38,
+                "left": 16,
+                "right": 46,
+                "top": 19
+            },
+            "rcSrc": {
+                "bottom": 19,
+                "left": 500,
+                "right": 530,
+                "top": 0
+            }
+        },
+        "150": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 335,
+                "left": 1225,
+                "right": 1241,
+                "top": 320
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 130,
+                "right": 146,
+                "top": 0
+            }
+        },
+        "151": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 355,
+                "left": 1225,
+                "right": 1241,
+                "top": 340
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 146,
+                "right": 162,
+                "top": 0
+            }
+        },
+        "152": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 375,
+                "left": 1225,
+                "right": 1241,
+                "top": 360
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 162,
+                "right": 178,
+                "top": 0
+            }
+        },
+        "153": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 295,
+                "left": 1180,
+                "right": 1196,
+                "top": 280
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 178,
+                "right": 194,
+                "top": 0
+            }
+        },
+        "154": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 335,
+                "left": 1180,
+                "right": 1196,
+                "top": 320
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 194,
+                "right": 210,
+                "top": 0
+            }
+        },
+        "155": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 335,
+                "left": 1180,
+                "right": 1196,
+                "top": 320
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 210,
+                "right": 226,
+                "top": 0
+            }
+        },
+        "156": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 355,
+                "left": 1180,
+                "right": 1196,
+                "top": 340
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 226,
+                "right": 242,
+                "top": 0
+            }
+        },
+        "157": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 3,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 13,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 13,
+                "left": 1125,
+                "right": 1128,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 13,
+                "left": 0,
+                "right": 3,
+                "top": 0
+            }
+        },
+        "158": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 15,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 10,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 10,
+                "left": 1125,
+                "right": 1140,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 10,
+                "left": 3,
+                "right": 18,
+                "top": 0
+            }
+        },
+        "159": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 178,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 114,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "inventar",
+            "rcDes": {
+                "bottom": 384,
+                "left": 1090,
+                "right": 1268,
+                "top": 270
+            },
+            "rcSrc": {
+                "bottom": 129,
+                "left": 0,
+                "right": 178,
+                "top": 15
+            }
+        },
+        "16": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 19,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 9,
+                "right": 35,
+                "top": 20
+            },
+            "rcSrc": {
+                "bottom": 19,
+                "left": 530,
+                "right": 556,
+                "top": 0
+            }
+        },
+        "160": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 37,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 150,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "panel",
+            "rcDes": {
+                "bottom": -113,
+                "left": 1080,
+                "right": 1110,
+                "top": -113
+            },
+            "rcSrc": {
+                "bottom": 380,
+                "left": 205,
+                "right": 242,
+                "top": 230
+            }
+        },
+        "161": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 40,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 22,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "panel",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 402,
+                "left": 205,
+                "right": 245,
+                "top": 380
+            }
+        },
+        "162": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 41,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 42,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "papier",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 196,
+                "left": 0,
+                "right": 41,
+                "top": 154
+            }
+        },
+        "163": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 100,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 39,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "papier",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 193,
+                "left": 41,
+                "right": 141,
+                "top": 154
+            }
+        },
+        "164": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 51,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 50,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "panel",
+            "rcDes": {
+                "bottom": 685,
+                "left": 1105,
+                "right": 1257,
+                "top": 630
+            },
+            "rcSrc": {
+                "bottom": 115,
+                "left": 205,
+                "right": 256,
+                "top": 65
+            }
+        },
+        "165": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 348,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 49,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 745,
+                "left": 466,
+                "right": 814,
+                "top": 696
+            },
+            "rcSrc": {
+                "bottom": 49,
+                "left": 0,
+                "right": 348,
+                "top": 0
+            }
+        },
+        "166": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 196,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 47,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 744,
+                "left": 542,
+                "right": 738,
+                "top": 697
+            },
+            "rcSrc": {
+                "bottom": 96,
+                "left": 0,
+                "right": 196,
+                "top": 49
+            }
+        },
+        "167": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 379,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 47,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 744,
+                "left": 451,
+                "right": 830,
+                "top": 697
+            },
+            "rcSrc": {
+                "bottom": 143,
+                "left": 0,
+                "right": 379,
+                "top": 96
+            }
+        },
+        "168": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 273,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 56,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 748,
+                "left": 504,
+                "right": 777,
+                "top": 692
+            },
+            "rcSrc": {
+                "bottom": 254,
+                "left": 0,
+                "right": 273,
+                "top": 198
+            }
+        },
+        "169": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 226,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 56,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 748,
+                "left": 527,
+                "right": 753,
+                "top": 692
+            },
+            "rcSrc": {
+                "bottom": 310,
+                "left": 0,
+                "right": 226,
+                "top": 254
+            }
+        },
+        "17": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 25,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 16,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 35,
+                "left": 19,
+                "right": 44,
+                "top": 19
+            },
+            "rcSrc": {
+                "bottom": 16,
+                "left": 556,
+                "right": 581,
+                "top": 0
+            }
+        },
+        "170": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 144,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 43,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 742,
+                "left": 568,
+                "right": 712,
+                "top": 699
+            },
+            "rcSrc": {
+                "bottom": 353,
+                "left": 0,
+                "right": 144,
+                "top": 310
+            }
+        },
+        "171": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 233,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 59,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 750,
+                "left": 524,
+                "right": 757,
+                "top": 691
+            },
+            "rcSrc": {
+                "bottom": 412,
+                "left": 0,
+                "right": 233,
+                "top": 353
+            }
+        },
+        "172": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 347,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 56,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 748,
+                "left": 467,
+                "right": 814,
+                "top": 692
+            },
+            "rcSrc": {
+                "bottom": 468,
+                "left": 0,
+                "right": 347,
+                "top": 412
+            }
+        },
+        "173": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 236,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 47,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 744,
+                "left": 522,
+                "right": 758,
+                "top": 697
+            },
+            "rcSrc": {
+                "bottom": 515,
+                "left": 0,
+                "right": 236,
+                "top": 468
+            }
+        },
+        "174": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 232,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 47,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 744,
+                "left": 524,
+                "right": 756,
+                "top": 697
+            },
+            "rcSrc": {
+                "bottom": 562,
+                "left": 0,
+                "right": 232,
+                "top": 515
+            }
+        },
+        "175": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 258,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 46,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 743,
+                "left": 511,
+                "right": 769,
+                "top": 697
+            },
+            "rcSrc": {
+                "bottom": 608,
+                "left": 0,
+                "right": 258,
+                "top": 562
+            }
+        },
+        "176": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 210,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 55,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 748,
+                "left": 535,
+                "right": 745,
+                "top": 693
+            },
+            "rcSrc": {
+                "bottom": 198,
+                "left": 0,
+                "right": 210,
+                "top": 143
+            }
+        },
+        "177": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 1,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 1,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 721,
+                "left": 640,
+                "right": 641,
+                "top": 720
+            },
+            "rcSrc": {
+                "bottom": 609,
+                "left": 0,
+                "right": 1,
+                "top": 608
+            }
+        },
+        "178": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 124,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 39,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 740,
+                "left": 578,
+                "right": 702,
+                "top": 701
+            },
+            "rcSrc": {
+                "bottom": 349,
+                "left": 160,
+                "right": 284,
+                "top": 310
+            }
+        },
+        "179": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 291,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 99,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "credits",
+            "rcDes": {
+                "bottom": 770,
+                "left": 495,
+                "right": 786,
+                "top": 671
+            },
+            "rcSrc": {
+                "bottom": 707,
+                "left": 0,
+                "right": 291,
+                "top": 608
+            }
+        },
+        "18": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 25,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 36,
+                "left": 8,
+                "right": 33,
+                "top": 21
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 581,
+                "right": 606,
+                "top": 0
+            }
+        },
+        "19": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 22,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 45,
+                "top": 17
+            },
+            "rcSrc": {
+                "bottom": 148,
+                "left": 164,
+                "right": 199,
+                "top": 126
+            }
+        },
+        "2": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 8,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 27,
+                "left": 10,
+                "right": 44,
+                "top": 19
+            },
+            "rcSrc": {
+                "bottom": 8,
+                "left": 62,
+                "right": 96,
+                "top": 0
+            }
+        },
+        "20": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 23,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 44,
+                "top": 16
+            },
+            "rcSrc": {
+                "bottom": 149,
+                "left": 199,
+                "right": 233,
+                "top": 126
+            }
+        },
+        "21": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 22,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 44,
+                "top": 17
+            },
+            "rcSrc": {
+                "bottom": 148,
+                "left": 233,
+                "right": 267,
+                "top": 126
+            }
+        },
+        "22": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 33,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 23,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 11,
+                "right": 44,
+                "top": 16
+            },
+            "rcSrc": {
+                "bottom": 128,
+                "left": 268,
+                "right": 301,
+                "top": 105
+            }
+        },
+        "23": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 37,
+                "left": 10,
+                "right": 44,
+                "top": 20
+            },
+            "rcSrc": {
+                "bottom": 108,
+                "left": 302,
+                "right": 336,
+                "top": 91
+            }
+        },
+        "24": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 23,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 45,
+                "top": 16
+            },
+            "rcSrc": {
+                "bottom": 177,
+                "left": 336,
+                "right": 371,
+                "top": 154
+            }
+        },
+        "25": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 4,
+            "Breite": 21,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 26,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 26,
+                "left": 0,
+                "right": 21,
+                "top": 0
+            }
+        },
+        "26": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 4,
+            "Breite": 21,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 26,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 26,
+                "left": 21,
+                "right": 42,
+                "top": 0
+            }
+        },
+        "27": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 4,
+            "Breite": 22,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 27,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 27,
+                "left": 42,
+                "right": 64,
+                "top": 0
+            }
+        },
+        "28": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 4,
+            "Breite": 17,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 16,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 16,
+                "left": 64,
+                "right": 81,
+                "top": 0
+            }
+        },
+        "29": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 20,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 13,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 13,
+                "left": 81,
+                "right": 101,
+                "top": 0
+            }
+        },
+        "3": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 44,
+                "top": 5
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 96,
+                "right": 130,
+                "top": 0
+            }
+        },
+        "30": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 3,
+            "Breite": 35,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 27,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 27,
+                "left": 101,
+                "right": 136,
+                "top": 0
+            }
+        },
+        "31": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 3,
+            "Breite": 36,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 27,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 27,
+                "left": 136,
+                "right": 172,
+                "top": 0
+            }
+        },
+        "32": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 3,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 28,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 28,
+                "left": 172,
+                "right": 206,
+                "top": 0
+            }
+        },
+        "33": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 3,
+            "Breite": 32,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 206,
+                "right": 238,
+                "top": 0
+            }
+        },
+        "34": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 41,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "baum",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 41,
+                "left": 238,
+                "right": 264,
+                "top": 0
+            }
+        },
+        "35": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 3,
+            "Breite": 21,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 28,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 15,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 29,
+                "left": 15,
+                "right": 36,
+                "top": 1
+            },
+            "rcSrc": {
+                "bottom": 28,
+                "left": 276,
+                "right": 297,
+                "top": 0
+            }
+        },
+        "36": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 3,
+            "Breite": 24,
+            "First": true,
+            "Geschwindigkeit": 5,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 38,
+                "left": 15,
+                "right": 39,
+                "top": 20
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 391,
+                "right": 415,
+                "top": 0
+            }
+        },
+        "37": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 3,
+            "Breite": 27,
+            "First": true,
+            "Geschwindigkeit": 5,
+            "Hoehe": 26,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 42,
+                "left": 15,
+                "right": 42,
+                "top": 16
+            },
+            "rcSrc": {
+                "bottom": 26,
+                "left": 415,
+                "right": 442,
+                "top": 0
+            }
+        },
+        "38": {
+            "AkAnzahl": 20,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 42,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 27,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 42,
+                "left": 5,
+                "right": 47,
+                "top": 15
+            },
+            "rcSrc": {
+                "bottom": 27,
+                "left": 0,
+                "right": 42,
+                "top": 0
+            }
+        },
+        "39": {
+            "AkAnzahl": 16,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 23,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 20,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 29,
+                "left": 14,
+                "right": 37,
+                "top": 9
+            },
+            "rcSrc": {
+                "bottom": 20,
+                "left": 42,
+                "right": 65,
+                "top": 0
+            }
+        },
+        "4": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 44,
+                "top": 5
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 130,
+                "right": 164,
+                "top": 0
+            }
+        },
+        "40": {
+            "AkAnzahl": 16,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 38,
+                "left": 14,
+                "right": 40,
+                "top": 20
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 65,
+                "right": 91,
+                "top": 0
+            }
+        },
+        "41": {
+            "AkAnzahl": 18,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 21,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 37,
+                "left": 11,
+                "right": 45,
+                "top": 16
+            },
+            "rcSrc": {
+                "bottom": 21,
+                "left": 91,
+                "right": 125,
+                "top": 0
+            }
+        },
+        "42": {
+            "AkAnzahl": 20,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 36,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 19,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 39,
+                "left": 11,
+                "right": 47,
+                "top": 20
+            },
+            "rcSrc": {
+                "bottom": 19,
+                "left": 125,
+                "right": 161,
+                "top": 0
+            }
+        },
+        "43": {
+            "AkAnzahl": 19,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 41,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 41,
+                "left": 0,
+                "right": 26,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 41,
+                "left": 161,
+                "right": 187,
+                "top": 0
+            }
+        },
+        "44": {
+            "AkAnzahl": 21,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 41,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 41,
+                "left": 0,
+                "right": 34,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 41,
+                "left": 187,
+                "right": 221,
+                "top": 0
+            }
+        },
+        "45": {
+            "AkAnzahl": 21,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 41,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 14,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 41,
+                "left": 0,
+                "right": 34,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 41,
+                "left": 221,
+                "right": 255,
+                "top": 0
+            }
+        },
+        "46": {
+            "AkAnzahl": 9,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 21,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 19,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "bau",
+            "rcDes": {
+                "bottom": 29,
+                "left": 15,
+                "right": 36,
+                "top": 10
+            },
+            "rcSrc": {
+                "bottom": 19,
+                "left": 255,
+                "right": 276,
+                "top": 0
+            }
+        },
+        "47": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 18,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "cursor",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 0,
+                "right": 18,
+                "top": 0
+            }
+        },
+        "48": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 18,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "cursor",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 18,
+                "right": 36,
+                "top": 0
+            }
+        },
+        "49": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 1,
+            "Breite": 18,
+            "First": true,
+            "Geschwindigkeit": 0,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "cursor",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 36,
+                "right": 54,
+                "top": 0
+            }
+        },
+        "5": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 44,
+                "top": 21
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 164,
+                "right": 198,
+                "top": 0
+            }
+        },
+        "50": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 20,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 0,
+                "right": 7,
+                "top": 0
+            }
+        },
+        "51": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 20,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 7,
+                "right": 14,
+                "top": 0
+            }
+        },
+        "52": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 20,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 14,
+                "right": 21,
+                "top": 0
+            }
+        },
+        "53": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 20,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 21,
+                "right": 28,
+                "top": 0
+            }
+        },
+        "54": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 11,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 14,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 12,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 14,
+                "left": 28,
+                "right": 39,
+                "top": 0
+            }
+        },
+        "55": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 12,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 39,
+                "right": 46,
+                "top": 0
+            }
+        },
+        "56": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 5,
+            "Breite": 9,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 13,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 11,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 13,
+                "left": 46,
+                "right": 55,
+                "top": 0
+            }
+        },
+        "57": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 15,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 19,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 4,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 19,
+                "left": 55,
+                "right": 70,
+                "top": 0
+            }
+        },
+        "58": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 70,
+                "right": 77,
+                "top": 0
+            }
+        },
+        "59": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 19,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 78,
+                "right": 97,
+                "top": 0
+            }
+        },
+        "6": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 44,
+                "top": 21
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 198,
+                "right": 232,
+                "top": 0
+            }
+        },
+        "60": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 8,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 97,
+                "right": 105,
+                "top": 0
+            }
+        },
+        "61": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 54,
+                "left": 98,
+                "right": 105,
+                "top": 36
+            }
+        },
+        "62": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 17,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 10,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 54,
+                "left": 125,
+                "right": 142,
+                "top": 36
+            }
+        },
+        "63": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 20,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 10,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 10,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 64,
+                "left": 105,
+                "right": 125,
+                "top": 54
+            }
+        },
+        "64": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 105,
+                "right": 112,
+                "top": 0
+            }
+        },
+        "65": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 17,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 125,
+                "right": 142,
+                "top": 0
+            }
+        },
+        "66": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 9,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 142,
+                "right": 151,
+                "top": 0
+            }
+        },
+        "67": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 151,
+                "right": 167,
+                "top": 0
+            }
+        },
+        "68": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 167,
+                "right": 183,
+                "top": 0
+            }
+        },
+        "69": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 14,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 183,
+                "right": 197,
+                "top": 0
+            }
+        },
+        "7": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 18,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 10,
+                "right": 28,
+                "top": 21
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 232,
+                "right": 250,
+                "top": 0
+            }
+        },
+        "70": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 14,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 197,
+                "right": 211,
+                "top": 0
+            }
+        },
+        "71": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 16,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 16,
+                "left": 211,
+                "right": 227,
+                "top": 0
+            }
+        },
+        "72": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 16,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 16,
+                "left": 227,
+                "right": 243,
+                "top": 0
+            }
+        },
+        "73": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 14,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 243,
+                "right": 257,
+                "top": 0
+            }
+        },
+        "74": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 14,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 257,
+                "right": 271,
+                "top": 0
+            }
+        },
+        "75": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 16,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 16,
+                "left": 271,
+                "right": 287,
+                "top": 0
+            }
+        },
+        "76": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 16,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 16,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 16,
+                "left": 285,
+                "right": 301,
+                "top": 0
+            }
+        },
+        "77": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 14,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 299,
+                "right": 313,
+                "top": 0
+            }
+        },
+        "78": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 14,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 313,
+                "right": 327,
+                "top": 0
+            }
+        },
+        "79": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 12,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 24,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 5,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 24,
+                "left": 327,
+                "right": 339,
+                "top": 0
+            }
+        },
+        "8": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 18,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 39,
+                "left": 26,
+                "right": 44,
+                "top": 21
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 250,
+                "right": 268,
+                "top": 0
+            }
+        },
+        "80": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 10,
+            "Hoehe": 21,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 21,
+                "left": 339,
+                "right": 365,
+                "top": 0
+            }
+        },
+        "81": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 10,
+            "Hoehe": 21,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 21,
+                "left": 365,
+                "right": 391,
+                "top": 0
+            }
+        },
+        "82": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 10,
+            "Hoehe": 21,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 21,
+                "left": 391,
+                "right": 417,
+                "top": 0
+            }
+        },
+        "83": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 10,
+            "Hoehe": 21,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 21,
+                "left": 417,
+                "right": 443,
+                "top": 0
+            }
+        },
+        "84": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 6,
+            "Hoehe": 25,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 25,
+                "left": 443,
+                "right": 469,
+                "top": 0
+            }
+        },
+        "85": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 25,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 25,
+                "left": 469,
+                "right": 495,
+                "top": 0
+            }
+        },
+        "86": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 25,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 25,
+                "left": 495,
+                "right": 521,
+                "top": 0
+            }
+        },
+        "87": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 5,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 5,
+            "Hoehe": 27,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 27,
+                "left": 521,
+                "right": 547,
+                "top": 0
+            }
+        },
+        "88": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 547,
+                "right": 573,
+                "top": 0
+            }
+        },
+        "89": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 26,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 17,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 17,
+                "left": 573,
+                "right": 599,
+                "top": 0
+            }
+        },
+        "9": {
+            "AkAnzahl": 0,
+            "Animation": true,
+            "Anzahl": 7,
+            "Breite": 34,
+            "First": true,
+            "Geschwindigkeit": 7,
+            "Hoehe": 15,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 18,
+            "Surface": "animation",
+            "rcDes": {
+                "bottom": 35,
+                "left": 10,
+                "right": 44,
+                "top": 20
+            },
+            "rcSrc": {
+                "bottom": 15,
+                "left": 268,
+                "right": 302,
+                "top": 0
+            }
+        },
+        "90": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 9,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 8,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 599,
+                "right": 608,
+                "top": 0
+            }
+        },
+        "91": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 608,
+                "right": 615,
+                "top": 0
+            }
+        },
+        "92": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 615,
+                "right": 622,
+                "top": 0
+            }
+        },
+        "93": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 7,
+            "First": true,
+            "Geschwindigkeit": 4,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 8,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 622,
+                "right": 629,
+                "top": 0
+            }
+        },
+        "94": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 9,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 631,
+                "right": 640,
+                "top": 0
+            }
+        },
+        "95": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 2,
+            "Breite": 10,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 10,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 640,
+                "right": 650,
+                "top": 0
+            }
+        },
+        "96": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 3,
+            "Breite": 9,
+            "First": true,
+            "Geschwindigkeit": 2,
+            "Hoehe": 34,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 34,
+                "left": 650,
+                "right": 659,
+                "top": 0
+            }
+        },
+        "97": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 6,
+            "Breite": 19,
+            "First": true,
+            "Geschwindigkeit": 5,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 659,
+                "right": 678,
+                "top": 0
+            }
+        },
+        "98": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 4,
+            "Breite": 10,
+            "First": true,
+            "Geschwindigkeit": 1,
+            "Hoehe": 18,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 0,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 18,
+                "left": 678,
+                "right": 688,
+                "top": 0
+            }
+        },
+        "99": {
+            "AkAnzahl": 0,
+            "Animation": false,
+            "Anzahl": 10,
+            "Breite": 17,
+            "First": true,
+            "Geschwindigkeit": 3,
+            "Hoehe": 19,
+            "Phase": 0,
+            "Rohstoff": null,
+            "Sound": 7,
+            "Surface": "guy",
+            "rcDes": {
+                "bottom": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0
+            },
+            "rcSrc": {
+                "bottom": 19,
+                "left": 688,
+                "right": 705,
+                "top": 0
+            }
+        }
+    },
+    "guy": {
+        "AkNummer": 0,
+        "Aktion": 25,
+        "Aktiv": false,
+        "Inventar": {
+            "143": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0
+        },
+        "Pos": {
+            "x": 1,
+            "y": 30
+        },
+        "PosAlt": {
+            "x": 866,
+            "y": 463
+        },
+        "PosScreen": {
+            "x": 866,
+            "y": 463
+        },
+        "Resource": [
+            100.0,
+            100.0,
+            100.0
+        ],
+        "Zustand": 100
+    },
+    "objects": [
+        "MEERWELLEN",
+        "FLUSS1",
+        "FLUSS2",
+        "FLUSS3",
+        "FLUSS4",
+        "FLUSS5",
+        "FLUSS6",
+        "FLUSS7",
+        "FLUSS8",
+        "FLUSS9",
+        "FLUSS10",
+        "MUENDUNG1",
+        "MUENDUNG2",
+        "MUENDUNG3",
+        "MUENDUNG4",
+        "QUELLE1",
+        "QUELLE2",
+        "QUELLE3",
+        "QUELLE4",
+        "SCHLEUSE1",
+        "SCHLEUSE2",
+        "SCHLEUSE3",
+        "SCHLEUSE4",
+        "SCHLEUSE5",
+        "SCHLEUSE6",
+        "BAUM1",
+        "BAUM2",
+        "BAUM3",
+        "BAUM4",
+        "BUSCH",
+        "BAUM1DOWN",
+        "BAUM2DOWN",
+        "BAUM3DOWN",
+        "BAUM4DOWN",
+        "BAUMGROSS",
+        "FEUER",
+        "WRACK",
+        "WRACK2",
+        "FELD",
+        "ZELT",
+        "BOOT",
+        "ROHR",
+        "SOS",
+        "HAUS1",
+        "HAUS2",
+        "HAUS3",
+        "FEUERSTELLE",
+        "CUPFEIL",
+        "CURICHTUNG",
+        "CUUHR",
+        "GUYLINKS",
+        "GUYOBEN",
+        "GUYRECHTS",
+        "GUYUNTEN",
+        "GUYSUCHEN",
+        "GUYESSEN",
+        "GUYTRINKEN",
+        "GUYFAELLEN",
+        "GUYWARTEN",
+        "GUYFELD",
+        "GUYBINDENOBEN",
+        "GUYBINDENUNTEN",
+        "GUYSCHLAFEN",
+        "GUYSCHLAFZELT",
+        "GUYGEHINZELT",
+        "GUYHINLEGEN",
+        "GUYAUFSTEHEN",
+        "GUYANGELN1LINKS",
+        "GUYANGELN1OBEN",
+        "GUYANGELN1RECHTS",
+        "GUYANGELN1UNTEN",
+        "GUYANGELN2LINKS",
+        "GUYANGELN2OBEN",
+        "GUYANGELN2RECHTS",
+        "GUYANGELN2UNTEN",
+        "GUYANGELN3LINKS",
+        "GUYANGELN3OBEN",
+        "GUYANGELN3RECHTS",
+        "GUYANGELN3UNTEN",
+        "GUYSCHLAGEN",
+        "GUYBOOTLINKS",
+        "GUYBOOTOBEN",
+        "GUYBOOTRECHTS",
+        "GUYBOOTUNTEN",
+        "GUYBOOTANGELN1",
+        "GUYBOOTANGELN2",
+        "GUYBOOTANGELN3",
+        "GUYTAUCHEN1",
+        "GUYTAUCHEN2",
+        "GUYTAUCHEN3",
+        "GUYHAMMER",
+        "GUYKLETTERN1",
+        "GUYKLETTERN2",
+        "GUYHAMMER2",
+        "GUYGEHINHAUS",
+        "GUYSCHLAFHAUS",
+        "GUYGEHAUSHAUS",
+        "GUYANZUENDEN",
+        "GUYAUSSCHAU",
+        "GUYSCHAUFELN",
+        "GUYSCHIFF",
+        "GUYSCHIFFDOWN",
+        "GUYSCHWIMMEN",
+        "GUYTOD",
+        "GUYBOOTTOD",
+        "GUYBOOTWARTEN",
+        "GUYSCHLEUDER",
+        "BUTTGITTER",
+        "BUTTANIMATION",
+        "BUTTBEENDEN",
+        "BUTTNEU",
+        "BUTTTAGNEU",
+        "BUTTSOUND",
+        "BUTTAKTION",
+        "BUTTBAUEN",
+        "BUTTINVENTAR",
+        "BUTTWEITER",
+        "BUTTSTOP",
+        "BUTTABLEGEN",
+        "BUTTSUCHEN",
+        "BUTTESSEN",
+        "BUTTSCHLAFEN",
+        "BUTTFAELLEN",
+        "BUTTANGELN",
+        "BUTTANZUENDEN",
+        "BUTTAUSSCHAU",
+        "BUTTSCHATZKARTE",
+        "BUTTSCHATZ",
+        "BUTTSCHLEUDER",
+        "BUTTZELT",
+        "BUTTFELD",
+        "BUTTBOOT",
+        "BUTTROHR",
+        "BUTTSOS",
+        "BUTTHAUS1",
+        "BUTTHAUS2",
+        "BUTTHAUS3",
+        "BUTTFEUERST",
+        "BUTTFRAGEZ",
+        "BUTTDESTROY",
+        "SAEULE1",
+        "SAEULE2",
+        "SAEULE3",
+        "ROHAST",
+        "ROHSTAMM",
+        "ROHSTEIN",
+        "ROHAXT",
+        "ROHBLATT",
+        "ROHEGGE",
+        "ROHLIANE",
+        "ROHANGEL",
+        "ROHHAMMER",
+        "ROHFERNROHR",
+        "ROHSTREICHHOLZ",
+        "ROHSCHAUFEL",
+        "ROHKARTE",
+        "ROHSCHLEUDER",
+        "ROEMISCH1",
+        "ROEMISCH2",
+        "INVPAPIER",
+        "RING",
+        "KREUZ",
+        "JA",
+        "NEIN",
+        "SONNE",
+        "PROGRAMMIERUNG",
+        "DIRKPLATE",
+        "MATTHIAS",
+        "TOBIAS",
+        "SIGRID",
+        "SOUNDS",
+        "PATHFINDING",
+        "JOHN",
+        "HEIKO",
+        "GISELA",
+        "WEITEREHILFE",
+        "TESTSPIELER",
+        "SCHWARZ",
+        "MUSIK",
+        "DPSOFTWARE",
+        "BILDANZ"
+    ],
+    "textbereich": {
+        "0": {
+            "Aktiv": false,
+            "rcText": {
+                "bottom": 718,
+                "left": 9,
+                "right": 1080,
+                "top": 703
+            }
+        },
+        "1": {
+            "Aktiv": false,
+            "rcText": {
+                "bottom": 23,
+                "left": 1240,
+                "right": 1280,
+                "top": 3
+            }
+        },
+        "2": {
+            "Aktiv": true,
+            "rcText": {
+                "bottom": 715,
+                "left": 1170,
+                "right": 1220,
+                "top": 700
+            }
+        },
+        "3": {
+            "Aktiv": false,
+            "rcText": {
+                "bottom": 62,
+                "left": 1085,
+                "right": 1115,
+                "top": 47
+            }
+        },
+        "4": {
+            "Aktiv": false,
+            "rcText": {
+                "bottom": 560,
+                "left": 450,
+                "right": 830,
+                "top": 160
+            }
+        }
+    },
+    "wav": {
+        "0": {
+            "Dateiname": "sounds/klick.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "1": {
+            "Dateiname": "sounds/sturm.wav",
+            "Loop": false,
+            "Volume": 85
+        },
+        "10": {
+            "Dateiname": "sounds/schnarchen.wav",
+            "Loop": false,
+            "Volume": 90
+        },
+        "11": {
+            "Dateiname": "sounds/trinken.wav",
+            "Loop": false,
+            "Volume": 95
+        },
+        "12": {
+            "Dateiname": "sounds/knistern.wav",
+            "Loop": false,
+            "Volume": 90
+        },
+        "13": {
+            "Dateiname": "sounds/angel.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "14": {
+            "Dateiname": "sounds/wald.wav",
+            "Loop": false,
+            "Volume": 90
+        },
+        "15": {
+            "Dateiname": "sounds/feuer.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "16": {
+            "Dateiname": "sounds/brandung.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "17": {
+            "Dateiname": "sounds/baumfaellt.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "18": {
+            "Dateiname": "sounds/fluss.wav",
+            "Loop": false,
+            "Volume": 85
+        },
+        "19": {
+            "Dateiname": "sounds/klick.wav",
+            "Loop": false,
+            "Volume": 95
+        },
+        "2": {
+            "Dateiname": "sounds/schwimmen.wav",
+            "Loop": false,
+            "Volume": 90
+        },
+        "20": {
+            "Dateiname": "sounds/klick2.wav",
+            "Loop": false,
+            "Volume": 95
+        },
+        "21": {
+            "Dateiname": "sounds/logo.wav",
+            "Loop": true,
+            "Volume": 100
+        },
+        "22": {
+            "Dateiname": "sounds/abspann.wav",
+            "Loop": true,
+            "Volume": 100
+        },
+        "23": {
+            "Dateiname": "sounds/wolf.wav",
+            "Loop": false,
+            "Volume": 90
+        },
+        "24": {
+            "Dateiname": "sounds/erfindung.wav",
+            "Loop": false,
+            "Volume": 95
+        },
+        "3": {
+            "Dateiname": "sounds/platsch.wav",
+            "Loop": false,
+            "Volume": 95
+        },
+        "4": {
+            "Dateiname": "sounds/faellen.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "5": {
+            "Dateiname": "sounds/schlagen.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "6": {
+            "Dateiname": "sounds/schleuder.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "7": {
+            "Dateiname": "sounds/schaufeln.wav",
+            "Loop": false,
+            "Volume": 90
+        },
+        "8": {
+            "Dateiname": "sounds/hammer.wav",
+            "Loop": false,
+            "Volume": 100
+        },
+        "9": {
+            "Dateiname": "sounds/crash.wav",
+            "Loop": false,
+            "Volume": 100
+        }
+    }
+}

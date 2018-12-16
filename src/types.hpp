@@ -11,6 +11,9 @@ struct TEXTBEREICH
     RECT rcText; // Die Position des Ausgabe
 };
 
+void to_json(json& j, const TEXTBEREICH textbereich);
+void from_json(const json& j, TEXTBEREICH& textbereich);
+
 struct ZWEID
 {
     short x;
@@ -64,7 +67,7 @@ void from_json(const json& j, BMP& bmp);
 
 struct WAV
 {
-    char* Dateiname; // Dateiname der Wavdatei
+    std::string Dateiname; // Dateiname der Wavdatei
     bool Loop; // Nur einmal abspielen und ständig
     short Volume; // Die Standardlautstärke in Prozent
 };
