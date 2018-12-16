@@ -127,7 +127,7 @@
     <Image Include="..\bin\images\Inventar.bmp">
       <Filter>Resource</Filter>
     </Image>
-    <Image Include="..\bin\images\Landscape.ico">
+    <Image Include="..\bin\images\Schiffbruch.ico">
       <Filter>Resource</Filter>
     </Image>
     <Image Include="..\bin\images\Logo.bmp">
@@ -153,7 +153,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\src\Landscape.rc">
+    <ResourceCompile Include="..\src\Schiffbruch.rc">
       <Filter>Resource</Filter>
     </ResourceCompile>
   </ItemGroup>
