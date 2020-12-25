@@ -400,11 +400,11 @@ short CheckKey()
             Scape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
 
             Guy.ScreenPosition.x =
-                (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                 Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
+                (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                 Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
             Guy.ScreenPosition.y =
-                (Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
+                (Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
             RouteStart.x = -1;
             RouteStart.y = -1;
             RouteDestination.x = -1;

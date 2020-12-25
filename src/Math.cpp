@@ -13,6 +13,8 @@
 #include <cstdio>
 #include <cstring>
 
+#define ROUND(s) ((short) ((short)(s-0.5) == (short) s ? s+1:s)) //Zahlen runden Macro
+
 namespace Math {
 float Schrittx, Schritty; // Zum Figur laufen lassen
 Coordinate GuyPosScreenStart; // Absolute StartPosition bei einem Schritt (Für CalcGuyKoor)

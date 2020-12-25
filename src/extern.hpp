@@ -40,7 +40,7 @@ extern RECT rcPlayingSurface;
 extern RECT rcPanel;
 extern RECT rcKarte;
 
-extern Coordinate EckKoor[13][4];
+extern Coordinate CornerCoord[13][4];
 
 extern TextArea TextBereich[TEXTANZ];
 

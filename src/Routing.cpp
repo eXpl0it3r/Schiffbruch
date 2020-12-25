@@ -221,11 +221,11 @@ void SortRoute()
         SaveRoute[i].y = Pos.y;
 
         RouteKoor[2 * i].x =
-            (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].x +
-             Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].x) / 2;
+            (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].x +
+             Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].x) / 2;
         RouteKoor[2 * i].y =
-            (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].y +
-             Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].y) / 2;
+            (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].y +
+             Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].y) / 2;
 
         NewPos.x = Pos.x;
         NewPos.y = Pos.y - 1; // oben mit nachschauen anfangen
@@ -237,38 +237,38 @@ void SortRoute()
                 switch (j) {
                 case 0:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].x +
-                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].x +
+                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].y +
-                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].y +
+                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].y) / 2;
                     break;
 
                 case 1:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].x +
-                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].x +
+                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].y +
-                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].y +
+                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].y) / 2;
                     break;
 
                 case 2:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].x +
-                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].x +
+                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].y +
-                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].y +
+                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].y) / 2;
                     break;
 
                 case 3:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].x +
-                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].x +
+                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].y +
-                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].y +
+                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].y) / 2;
                     break;
                 }
 

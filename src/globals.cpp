@@ -45,7 +45,7 @@ RECT rcPanel = {MAX_SCREEN_X - 205, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
 RECT rcKarte = {MAX_SCREEN_X - 158, 27, rcKarte.left + MAX_TILES_X * 2, rcKarte.top + (MAX_TILESY + 13) * 2};
 
 //Die Eckkoordinaten der Kacheln (Achtung: mit überlappendem Rand)
-Coordinate EckKoor[13][4] = {
+Coordinate CornerCoord[13][4] = {
     //       0           1           2           3          Ecke
     {{-1, 29}, {26, 15}, {54, 30}, {27, 44}},//0
     {{-1, 13}, {26, 15}, {54, 30}, {27, 28}},//1
