@@ -2355,6 +2355,7 @@ void NeuesSpiel(bool neu)
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
+
         ddbltfx.dwFillColor = Renderer::RGB2DWORD(70, 70, 100);
 //            lpDDSPrimary->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
         ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);

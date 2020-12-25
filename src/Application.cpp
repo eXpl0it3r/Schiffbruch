@@ -56,8 +56,18 @@ void Application::run()
 {
     sf::Clock timer;
 
+    sf::Texture texture;
+    sf::Sprite sprite;
+    sprite.setPosition(0, 0);
     while (m_window.isOpen()) {
         process_events();
+
+        // TODO: this is probably the worst and least efficient way to render things
+        // I'm almost proud.
+        texture.loadFromImage(*lpDDSBack);
+        sprite.setTexture(texture);
+        m_window.draw(sprite);
+        m_window.display();
 
         if (timer.getElapsedTime() > sf::milliseconds(1000)) {
             while (true) {
@@ -87,7 +97,7 @@ void Application::run()
                         break;
                     }
 
-                    Renderer::ZeigeLogo(); // Bild auffrischen
+                    Renderer::ShowLogo(); // Bild auffrischen
                 } else if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED)) {
                     if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
                         m_window.close();
@@ -100,7 +110,7 @@ void Application::run()
                         Action::handler(Guy.CurrentAction);
                     }
 
-                    Renderer::ZeigeIntro(); // Bild auffrischen
+                    Renderer::ShowIntro(); // Bild auffrischen
                 } else if (Spielzustand == State::GAME) {
                     // Hide system cursor
 //                    SetCursor(nullptr);
@@ -138,7 +148,7 @@ void Application::run()
                     }
 
                     Math::AbspannCalc();
-                    Renderer::ZeigeAbspann();
+                    Renderer::ShowCredits();
                 }
             }
 

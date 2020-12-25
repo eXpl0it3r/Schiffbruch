@@ -41,6 +41,7 @@ void InitDDraw(HWND hWnd)
     DDSCAPS2 ddscaps;
     LPDIRECTDRAW pDD;
 
+#if 0
     // Create the main DirectDraw object
     HRESULT ddrval = dx_DirectDrawCreate(nullptr, &pDD, nullptr);
 
@@ -83,6 +84,7 @@ void InitDDraw(HWND hWnd)
 
         goto error;
     }
+#endif
 
     ZeroMemory(&ddsd2, sizeof(ddsd2));
     ddsd2.dwSize = sizeof(ddsd2);
@@ -108,9 +110,9 @@ void InitDDraw(HWND hWnd)
 //        ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
 //        ddrval = lpDDSPrimary->GetAttachedSurface(&ddscaps, &lpDDSBack);
 
-    if (ddrval != DD_OK) {
-        goto error;
-    }
+//    if (ddrval != DD_OK) {
+//        goto error;
+//    }
 
     ddsd.dwSize = sizeof(ddsd); // Tell DirectDraw which members are valid.
 //        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
@@ -209,13 +211,13 @@ void InitDDraw(HWND hWnd)
     lpDDSSchatzkarte = new sf::Image;
     lpDDSSchatzkarte->create(2 * TREASUREMAP_WIDTH, 2 * TREASUREMAP_HEIGHT, sf::Color::Black);
 
-error:
+//error:
 
-    if (ddrval != DD_OK) {
-        finiObjects();
-        MessageBox(hWnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
-        DestroyWindow(hWnd);
-    }
+//    if (ddrval != DD_OK) {
+//        finiObjects();
+//        MessageBox(hWnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
+//        DestroyWindow(hWnd);
+//    }
 }
 
 void Reset()
@@ -306,7 +308,7 @@ void CheckMouse()
 
                 if ((Button == 0) && (Push == 1)) {
                     Frage = 1;
-                    Renderer::Textloeschen(TXTPAPIER);
+                    Renderer::HideText(TXTPAPIER);
                     PapierText = -1;
                     Guy.IsActive = false;
                     PlaySound(Sound::CLICK2, 100);
@@ -316,7 +318,7 @@ void CheckMouse()
 
                 if ((Button == 0) && (Push == 1)) {
                     Frage = 2;
-                    Renderer::Textloeschen(TXTPAPIER);
+                    Renderer::HideText(TXTPAPIER);
                     PapierText = -1;
                     Guy.IsActive = false;
                     PlaySound(Sound::CLICK2, 100);
@@ -325,7 +327,7 @@ void CheckMouse()
                 PlaySound(Sound::CLICK, 100);
             }
         } else if ((Button != -1) && (Push == 1)) {
-            Renderer::Textloeschen(TXTPAPIER);
+            Renderer::HideText(TXTPAPIER);
             PapierText = -1;
             Guy.IsActive = false;
         }
@@ -334,7 +336,7 @@ void CheckMouse()
     }
 
     // Animationen und Text löschen (werden dann von den MouseIn.. Sachen neu angestellt
-    Renderer::Textloeschen(TXTTEXTFELD);
+    Renderer::HideText(TXTTEXTFELD);
     Math::ButtAniAus();
 
     // Wenn der Guy aktiv dann linke Mouse-Buttons ignorieren
@@ -398,7 +400,7 @@ short CheckKey()
             Camera.x = Guy.ScreenPosition.x - static_cast<short>(rcSpielflaeche.right / 2);
             Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcSpielflaeche.bottom / 2);
 
-            if (BootsFahrt) {
+            if (IsInBoat) {
                 World::ChangeBootsFahrt();
             }
 
