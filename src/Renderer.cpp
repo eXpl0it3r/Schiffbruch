@@ -272,7 +272,7 @@ void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fru
         rcRectsrc.top = Bmp[i].sourceRect.top + (Bmp[i].AnimationPhaseCount - 1) * Bmp[i].Height - Phase * Bmp[i].Height;
     }
 
-    rcRectsrc.bottom = rcRectsrc.top + (Bmp[i].Width);
+    rcRectsrc.bottom = rcRectsrc.top + (Bmp[i].Height);
     rcRectdes.left = x;
     rcRectdes.top = y;
     rcRectdes.right = x + (Bmp[i].Width);
