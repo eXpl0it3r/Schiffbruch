@@ -7,7 +7,7 @@ namespace World {
 void AddTime(short h, short m); // Addiert Stunden und Minuten zur TagesZeit
 void AddResource(short Art, float Anzahl); // Fügt wassser usw hinzu
 void Generate(); // Kacheln in den Speicher zeichnen
-void Compute(short MinGroesse, short MaxGroesse); // Zufallslandschaft erzeugen
+void Compute(short MinimumSize, short MaxGroesse); // Zufallslandschaft erzeugen
 void Meer(); // Mit Meer aufüllen
 void Flow(); // Erstellt einen Fluß
 bool CheckFlow(short x, short y); // Für FLuss()

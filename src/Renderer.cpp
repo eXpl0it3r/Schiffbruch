@@ -254,14 +254,14 @@ void GetPixel(short x, short y, sf::Image *img)
 //    DWORD2RGB(color);
 }
 
-void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Frucht)
+void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fruit)
 {
     short Phase;
 
-    if (Frucht == -1) {
+    if (Fruit == -1) {
         Phase = Bmp[i].AnimationPhase;
     } else {
-        Phase = Frucht;
+        Phase = Fruit;
     }
 
     rcRectsrc = Bmp[i].sourceRect;
