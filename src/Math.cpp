@@ -914,42 +914,18 @@ void MouseInPanel(short Button, short Push)
     }
 }
 
-bool InDreieck(short X, short Y, short X0, short Y0, short X1, short Y1, short X3, short Y3)
+#define SIGN(p1x, p1y, p2x, p2y, p3x, p3y)  (((p1x) - (p3x)) * ((p2y) - (p3y)) - ((p2x) - (p3x)) * ((p1y) - (p3y)))
+
+bool InTriangle(float x, float y, float x0, float y0, float x1, float y1, float x3, float y3)
 {
-    float x = static_cast<float>(X);
-    float y = static_cast<float>(Y);
-    float x0 = static_cast<float>(X0);
-    float y0 = static_cast<float>(Y0);
-    float x1 = static_cast<float>(X1);
-    float y1 = static_cast<float>(Y1);
-    float x3 = static_cast<float>(X3);
-    float y3 = static_cast<float>(Y3);
+    const float d1 = SIGN(x, y, x0, y0, x1, y1);
+    const float d2 = SIGN(x, y, x1, y1, x3, y3);
+    const float d3 = SIGN(x, y, x3, y3, x0, y0);
 
-    float c = (x - x1) / (x0 - x1);
-
-    if (c < 0) {
-        return false;
-    }
-
-    float d = ((y - y3) * (x0 - x1) - (x - x1) * (y0 - y3)) / ((y1 - y3) * (x0 - x1));
-
-    if (d < 0) {
-        return false;
-    }
-
-    float b = ((y - y0) * (x1 - x0) - (x - x0) * (y1 - y0)) / ((x1 - x0) * (y3 - y1));
-
-    if (b < 0) {
-        return false;
-    }
-
-    float a = (x - x0) / (x1 - x0) - b;
-
-    if (a < 0) {
-        return false;
-    }
-
-    return true;
+    return !(
+        (d1 < 0 || d2 < 0 || d3 < 0) &&
+        (d1 > 0 || d2 > 0 || d3 > 0)
+        );
 }
 
 bool InRect(short x, short y, RECT rcRect)
