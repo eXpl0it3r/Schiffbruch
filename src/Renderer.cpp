@@ -792,7 +792,7 @@ short DrawText(int TEXT, short Bereich, short Art)
 {
     short BWidth = 0;
     short BHeight = 0;
-    char Text[1024];
+    const char *Text;
     int blank = ' ';
     int slash = '/';
     int strend = 0x0;
@@ -812,16 +812,16 @@ short DrawText(int TEXT, short Bereich, short Art)
         BHeight = FONT2_LETTER_HEIGHT;
     }
 
-    LoadString(g_hInst, TEXT, Text, 1024);
+    Text = GetLanguageString(TEXT);
     short Posx = static_cast<short>(TextBereich[Bereich].textRect.left);
     short Posy = static_cast<short>(TextBereich[Bereich].textRect.top);
-    char *Posnext = Text;
+    const char *Posnext = Text;
 
     while (true) {
         strcpy(StdString, "");
         short Pos = Posnext - Text;
         Posnext = strchr(Text + Pos + 1, blank);
-        char *Posnext2 = strchr(Text + Pos + 1, slash);
+        const char *Posnext2 = strchr(Text + Pos + 1, slash);
 
         if ((Posnext != nullptr) && (Posnext2 != nullptr) && (Posnext2 <= Posnext)) {
             char scratch = *(Posnext2 + 1);

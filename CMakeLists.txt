@@ -15,6 +15,7 @@ add_executable(schiffbruch
     src/Routing.cpp
     src/Sound.cpp
     src/World.cpp
+    src/strings.cpp
 
     src/Action.hpp
     src/Application.hpp

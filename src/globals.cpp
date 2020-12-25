@@ -4,6 +4,8 @@
 #include "constants.hpp"
 #include "extern.hpp"
 
+#include "strings.h"
+
 #include <SFML/Audio.hpp>
 
 #include <vector>
