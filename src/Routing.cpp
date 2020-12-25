@@ -5,14 +5,14 @@
 namespace Routing
 {
     int LenMap[MAX_TILES_X][MAX_TILESY];
-    ZWEID SaveRoute[MAX_TILES_X * MAX_TILESY]; // Zum zwischenspeichern der Route
-    ZWEID NewPos; // Nur innerhalb des Pathfindings benutzt
+    Coordinate SaveRoute[MAX_TILES_X * MAX_TILESY]; // Zum zwischenspeichern der Route
+    Coordinate NewPos; // Nur innerhalb des Pathfindings benutzt
 
     void MarkRoute(bool Mark)
     {
         for (short i = 0; i < RouteLaenge; i++)
         {
-            Scape[Route[i].x][Route[i].y].Markiert = Mark;
+            Scape[Route[i].x][Route[i].y].Marked = Mark;
         }
     }
 
@@ -56,12 +56,12 @@ namespace Routing
     {
         short Dir;
 
-        ZWEID Plist[MAX_TILES_X * MAX_TILESY]; // Besuchte Punkte merken
+        Coordinate Plist[MAX_TILES_X * MAX_TILESY]; // Besuchte Punkte merken
         short Llist[MAX_TILES_X * MAX_TILESY]; // Länge vom Punkt zum Ziel
 
-        ZWEID ShPos{0, 0};
-        ZWEID BestLine{0, 0};
-        ZWEID ShortKoor{0, 0};
+        Coordinate ShPos{0, 0};
+        Coordinate BestLine{0, 0};
+        Coordinate ShortKoor{0, 0};
 
         for (short AI = 0; AI < MAX_TILESY; AI++)
             for (short BI = 0; BI < MAX_TILES_X; BI++)
@@ -81,7 +81,7 @@ namespace Routing
         Llist[0] = (DiffX * DiffX) + (DiffY * DiffY);
 
         LenMap[RouteStart.x][RouteStart.y] = 0;
-        ZWEID Pos = RouteStart;
+        Coordinate Pos = RouteStart;
         NewPos = Pos;
         bool GoalReached = false;
         while ((!GoalReached) && (PCnt > 0))
@@ -115,7 +115,7 @@ namespace Routing
             {
                 // ist das Feld noch nicht besucht und frei?
                 if ((LenMap[NewPos.x][NewPos.y] == 65535) &&
-                    (Scape[NewPos.x][NewPos.y].Begehbar))
+                    (Scape[NewPos.x][NewPos.y].Walkable))
                 {
                     // Wieviele Schritte braucht man um zu diesem Feld zu kommen 
                     short StepCnt = LenMap[Pos.x][Pos.y] + 1;
@@ -136,7 +136,7 @@ namespace Routing
                 Dir = RotateRight(Dir);
             }
         }
-        if ((PCnt == 0) || (!Scape[RouteZiel.x][RouteZiel.y].Begehbar))
+        if ((PCnt == 0) || (!Scape[RouteZiel.x][RouteZiel.y].Walkable))
         {
             RouteZiel.x = ShortKoor.x;
             RouteZiel.y = ShortKoor.y;
@@ -147,7 +147,7 @@ namespace Routing
         if (GoalReached) // Punkt rückwärts durchgehen und Abkürzungen finden
         {
             Pos = RouteZiel;
-            ZWEID LineStartPos = Pos;
+            Coordinate LineStartPos = Pos;
             while ((Pos.x != RouteStart.x) || (Pos.y != RouteStart.y))
             {
                 NewPos = Pos;
@@ -210,7 +210,7 @@ namespace Routing
 
     void SortRoute()
     {
-        ZWEID Pos;
+        Coordinate Pos;
 
         Pos.x = RouteStart.x;
         Pos.y = RouteStart.y;
@@ -287,19 +287,19 @@ namespace Routing
     void ShortRoute(short Zielx, short Ziely)
     {
         RouteLaenge = 1;
-        Route[0].x = Guy.Pos.x;
-        Route[0].y = Guy.Pos.y;
-        RouteKoor[0].x = Guy.PosScreen.x;
-        RouteKoor[0].y = Guy.PosScreen.y;
-        Route[1].x = Guy.Pos.x;
-        Route[1].y = Guy.Pos.y;
+        Route[0].x = Guy.CurrentPosition.x;
+        Route[0].y = Guy.CurrentPosition.y;
+        RouteKoor[0].x = Guy.ScreenPosition.x;
+        RouteKoor[0].y = Guy.ScreenPosition.y;
+        Route[1].x = Guy.CurrentPosition.x;
+        Route[1].y = Guy.CurrentPosition.y;
         RouteKoor[1].x = Zielx;
         RouteKoor[1].y = Ziely;
 
         // Die Animation gleich anschließend starten
-        Guy.Aktiv = true;
-        if ((BootsFahrt) && (Guy.Zustand != GUY_SWIM)) Guy.Zustand = GUY_BOAT_LEFT;
-        else if (Guy.Zustand != GUY_SWIM) Guy.Zustand = GUY_LEFT;
+        Guy.IsActive = true;
+        if ((BootsFahrt) && (Guy.AnimationState != GUY_SWIM)) Guy.AnimationState = GUY_BOAT_LEFT;
+        else if (Guy.AnimationState != GUY_SWIM) Guy.AnimationState = GUY_LEFT;
         RoutePunkt = -1;
         Steps = 0;
         Step = 0;

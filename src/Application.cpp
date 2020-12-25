@@ -103,8 +103,8 @@ void Application::run()
                     }
 
                     Math::Animationen(); // Animationen weiterschalten
-                    if (!Guy.Aktiv) // Aktionen starten
-                        Action::handler(Guy.Aktion);
+                    if (!Guy.IsActive) // Aktionen starten
+                        Action::handler(Guy.CurrentAction);
 
                     Renderer::ZeigeIntro(); // Bild auffrischen
                 }
@@ -113,14 +113,14 @@ void Application::run()
                     // Hide system cursor
 //                    SetCursor(nullptr);
 
-                    if ((Stunden >= 12) && (Minuten != 0) && (Guy.Aktion != Action::DAY_END)) // Hier ist der Tag zuende
+                    if ((Stunden >= 12) && (Minuten != 0) && (Guy.CurrentAction != Action::DAY_END)) // Hier ist der Tag zuende
                     {
-                        if (Guy.Aktion == Action::LOOKOUT)
-                            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
+                        if (Guy.CurrentAction == Action::LOOKOUT)
+                            Chance -= 1 + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Height;
 
-                        Guy.Aktiv = false;
-                        Guy.AkNummer = 0;
-                        Guy.Aktion = Action::DAY_END;
+                        Guy.IsActive = false;
+                        Guy.ActionNumber = 0;
+                        Guy.CurrentAction = Action::DAY_END;
                     }
 
                     World::CheckSpzButton(); // Die Spezialkn�pfe umschalten
@@ -132,8 +132,8 @@ void Application::run()
                     }
                     Renderer::LimitScroll(); // Das Scrollen an die Grenzen der Landschaft anpassen
                     Math::Animationen(); // Die Animationsphasen weiterschalten
-                    if (!Guy.Aktiv) // Die Aktionen starten
-                        Action::handler(Guy.Aktion);
+                    if (!Guy.IsActive) // Die Aktionen starten
+                        Action::handler(Guy.CurrentAction);
                     Renderer::Zeige(); // Das Bild zeichnen
                 }
                 else if (Spielzustand == State::OUTRO)

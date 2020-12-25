@@ -43,7 +43,7 @@ RECT rcPanel = {MAX_SCREEN_X - 205, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
 RECT rcKarte = {MAX_SCREEN_X - 158, 27, rcKarte.left + MAX_TILES_X * 2, rcKarte.top + (MAX_TILESY + 13) * 2};
 
 //Die Eckkoordinaten der Kacheln (Achtung: mit überlappendem Rand)
-ZWEID EckKoor[13][4] =
+Coordinate EckKoor[13][4] =
 {//       0           1           2           3          Ecke
     {{-1, 29}, {26, 15}, {54, 30}, {27, 44}},//0
     {{-1, 13}, {26, 15}, {54, 30}, {27, 28}},//1
@@ -61,9 +61,9 @@ ZWEID EckKoor[13][4] =
 
 };
 
-TEXTBEREICH TextBereich[TEXTANZ];
+TextArea TextBereich[TEXTANZ];
 
-ZWEID Camera, // aktueller Kartenausschnitt
+Coordinate Camera, // aktueller Kartenausschnitt
       MousePosition, //     "    Mauskoordinaten
       RouteZiel, RouteStart, // Koordinaten des Starts und des Endes der Route
       Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
@@ -73,7 +73,7 @@ RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 GUY Guy;
 BMP Bmp[SPRITE_COUNT];
 WAV Wav[25]; // Sound::COUNT
-ABSPANN AbspannListe[10][10]; // Namenabfolge im Abspann
+CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 SCAPE Scape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
@@ -88,7 +88,7 @@ LPDIRECTDRAWSURFACE4 lpDDSSchrift = nullptr; // DirectDraw Schrift surface
 LPDIRECTDRAWSURFACE4 lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
 LPDIRECTDRAWSURFACE4 lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
 LPDIRECTDRAWSURFACE4 lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
-LPDIRECTDRAWSURFACE4 lpDDSPapier = nullptr; // DirectDraw Paier surface
+LPDIRECTDRAWSURFACE4 lpDDSPaper = nullptr; // DirectDraw Paier surface
 LPDIRECTDRAWSURFACE4 lpDDSBaum = nullptr; // DirectDraw Bäume surface
 LPDIRECTDRAWSURFACE4 lpDDSBau = nullptr; // DirectDraw Bauwerke surface
 LPDIRECTDRAWSURFACE4 lpDDSCredits = nullptr; // DirectDraw Credits surface

@@ -39,11 +39,11 @@ extern RECT rcSpielflaeche;
 extern RECT rcPanel;
 extern RECT rcKarte;
 
-extern ZWEID EckKoor[13][4];
+extern Coordinate EckKoor[13][4];
 
-extern TEXTBEREICH TextBereich[TEXTANZ];
+extern TextArea TextBereich[TEXTANZ];
 
-extern ZWEID Camera, // aktueller Kartenausschnitt
+extern Coordinate Camera, // aktueller Kartenausschnitt
              MousePosition, //     "    Mauskoordinaten
              RouteZiel, RouteStart, // Koordinaten des Starts und des Endes der Route
              Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
@@ -54,7 +54,7 @@ extern RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespe
 extern GUY Guy;
 extern BMP Bmp[SPRITE_COUNT];
 extern WAV Wav[25]; // Sound::COUNT;
-extern ABSPANN AbspannListe[10][10]; // Namenabfolge im Abspann
+extern CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 extern SCAPE Scape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
@@ -69,7 +69,7 @@ extern LPDIRECTDRAWSURFACE4 lpDDSSchrift; // DirectDraw Schrift surface
 extern LPDIRECTDRAWSURFACE4 lpDDSSchrift1; // DirectDraw Schrift1 surface
 extern LPDIRECTDRAWSURFACE4 lpDDSSchrift2; // DirectDraw Schrift2 surface
 extern LPDIRECTDRAWSURFACE4 lpDDSTextFeld; // DirectDraw TextFeld surface
-extern LPDIRECTDRAWSURFACE4 lpDDSPapier; // DirectDraw Paier surface
+extern LPDIRECTDRAWSURFACE4 lpDDSPaper; // DirectDraw Paier surface
 extern LPDIRECTDRAWSURFACE4 lpDDSBaum; // DirectDraw Bäume surface
 extern LPDIRECTDRAWSURFACE4 lpDDSBau; // DirectDraw Bauwerke surface
 extern LPDIRECTDRAWSURFACE4 lpDDSCredits; // DirectDraw Credits surface
