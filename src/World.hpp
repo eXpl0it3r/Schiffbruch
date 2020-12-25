@@ -21,6 +21,6 @@ namespace World
     void ChangeBootsFahrt(); // Ändert die notwendigen Sachen für eine Bootsfahrt (und zurück);
     void FillRohr(); // Überprüft die Röhren, ob sie an Wassernetz angeschlossen sind
     void CheckRohr(short x, short y); // Rekursive Procedure für FillRohr();
-    void Schatz(); // Schatz vergraben und Schatzkarte malen
+    void Treasure(); // Schatz vergraben und Schatzkarte malen
     void Piratenwrack(); // Setzt das Piratenwrack
 } // namespace World

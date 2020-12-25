@@ -24,7 +24,7 @@ short PapierText; // Wieviel Papier? (in Pixel) -1 = Kein Text
 short HauptMenue; // Welches Menü?
 short TwoClicks; // Für Aktionen mit zwei Mausklicks
 float Chance; // Wie groß ist die Chance am Tag gerettet zu werden
-bool BootsFahrt; // Gerade mit dem Boot unterwegs?
+bool IsInBoat; // Gerade mit dem Boot unterwegs?
 bool Nacht; // Wird die Tageszusammenfassung angezeigt?
 short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
 short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
@@ -65,7 +65,7 @@ TextArea TextBereich[TEXTANZ];
 
 Coordinate Camera, // aktueller Kartenausschnitt
       MousePosition, //     "    Mauskoordinaten
-      RouteZiel, RouteStart, // Koordinaten des Starts und des Endes der Route
+      RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
       Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
       RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
       SchatzPos; // Hier ist der Schatz vergraben

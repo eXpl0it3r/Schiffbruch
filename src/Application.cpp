@@ -116,7 +116,7 @@ void Application::run()
                     if ((Stunden >= 12) && (Minuten != 0) && (Guy.CurrentAction != Action::DAY_END)) // Hier ist der Tag zuende
                     {
                         if (Guy.CurrentAction == Action::LOOKOUT)
-                            Chance -= 1 + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Height;
+                            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
 
                         Guy.IsActive = false;
                         Guy.ActionNumber = 0;

@@ -27,7 +27,7 @@ struct GUY
 {
     bool IsActive; // Ist er aktiv?
     short CurrentAction; // Welche Aktion (Suchen, fischen ...) (Übergeordnet über Zustand)
-    Coordinate CurrentPosition; // KachelPosition der Spielfigur
+    Coordinate Pos; // KachelPosition der Spielfigur
     Coordinate OriginalPosition; // Die ursprünglich Position in der Kachel (für die Aktionsprozeduren)
     Coordinate ScreenPosition; // Absolute Position der Spielfigur
     short AnimationState; // Was macht er gerade? (Animation)(linkslaufen,rechtslaufen...,angeln..)
