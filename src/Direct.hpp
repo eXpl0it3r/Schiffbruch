@@ -8,7 +8,7 @@ namespace Direct {
 // finished with all objects we use; release them
 void finiObjects();
 
-bool InitDDraw(HWND hWnd); // DirectDraw initialisieren
+bool InitDDraw(); // DirectDraw initialisieren
 void Reset();
 void CheckMouse(const sf::Window &win); // Maus abfragen
 short CheckKey(); // Tastatur abfragen

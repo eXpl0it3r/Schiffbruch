@@ -8,7 +8,7 @@
 #define DIRECTINPUT_VERSION 0x0700
 #define DIRECTDRAW_VERSION 0x0500
 
-#include <windows.h>
+//#include <windows.h>
 //#include <windowsx.h>
 //#include <ddraw.h>
 //#include <dinput.h>

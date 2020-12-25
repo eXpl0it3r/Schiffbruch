@@ -36,7 +36,7 @@ void finiObjects()
 //    }
 }
 
-bool InitDDraw(HWND hWnd)
+bool InitDDraw()
 {
 //    DDSCAPS2 ddscaps;
 //    LPDIRECTDRAW pDD;
