@@ -4,7 +4,7 @@
 #include "extern.hpp"
 
 namespace Game {
-void NeuesSpiel(bool neu); // Neues Spiel starten
+void NewGame(bool neu); // Neues Spiel starten
 void InitStructs(); // Initialisiert die Structs
 void InitWaves(); // Initialisiert die Wav Structs
 void SaveGame(); // Speichert den Spielstand

@@ -2,7 +2,6 @@
 
 #include "headers.hpp"
 #include "miniwin.h"
-#include "dx.h"
 
 #include <SFML/Graphics/Image.hpp>
 

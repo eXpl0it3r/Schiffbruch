@@ -10,7 +10,7 @@
 
 #include <windows.h>
 //#include <windowsx.h>
-#include <ddraw.h>
+//#include <ddraw.h>
 //#include <dinput.h>
 
 #include "ddutil.h"

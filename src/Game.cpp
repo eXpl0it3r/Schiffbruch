@@ -2337,7 +2337,7 @@ void InitWaves()
     }
 }
 
-void NeuesSpiel(bool neu)
+void NewGame(bool neu)
 {
     short x, y;
     bool LoadOK = false;
@@ -2356,10 +2356,8 @@ void NeuesSpiel(bool neu)
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
 
-        ddbltfx.dwFillColor = Renderer::RGB2DWORD(70, 70, 100);
-//            lpDDSPrimary->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
-        ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
-//            lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+        lpDDSPrimary->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(70, 70, 100));
+        lpDDSSchrift->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(255, 0, 255));
 
         // Landschaft erzeugen
 
@@ -2385,7 +2383,7 @@ void NeuesSpiel(bool neu)
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
-        World::Fluss();
+        World::Flow();
         Math::CalcKoor();
 
         Renderer::DrawString("Pflanze Baeume...", 5, 95, 2);
@@ -2394,9 +2392,10 @@ void NeuesSpiel(bool neu)
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
-        World::Baeume(30);
+        World::CreateTrees(30);
+        Renderer::Blitten(lpDDSSchrift, lpDDSPrimary, false);
 
-        World::Piratenwrack();
+        World::CreatePirateWreck();
 
         // Guy Position
         Guy.Pos.x = 1;
@@ -2416,7 +2415,7 @@ void NeuesSpiel(bool neu)
         IsInBoat = false;
 
         if (!IsInBoat) {
-            World::ChangeBootsFahrt();
+            World::ToggleIsInBoat();
         }
 
         Tag = 1;
@@ -2435,7 +2434,8 @@ void NeuesSpiel(bool neu)
     rcRectdes.top = 0;
     rcRectdes.right = MAX_SCREEN_X;
     rcRectdes.bottom = MAX_SCREEN_Y;
-    ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
+    lpDDSSchrift->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color::Transparent);
+//    ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
 //        lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
     bool Anitmp = LAnimation;

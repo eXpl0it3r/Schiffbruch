@@ -98,14 +98,14 @@ sf::Image *lpDDSButtons = nullptr; // DirectDraw Buttons surface
 sf::Image *lpDDSInventar = nullptr; // DirectDraw Inventar surface
 sf::Image *lpDDSScape = nullptr; // DirectDraw Landschaft surface
 sf::Image *lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
-LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
-DDBLTFX ddbltfx; // DirectDraw Effekte
-DDPIXELFORMAT ddpf;
-DDSURFACEDESC2 ddsd, ddsd2; // Zwischenspeicher der SurfaceEigenschaften
+//LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
+//DDBLTFX ddbltfx; // DirectDraw Effekte
+//DDPIXELFORMAT ddpf;
+//DDSURFACEDESC2 ddsd, ddsd2; // Zwischenspeicher der SurfaceEigenschaften
 
-//LPDIRECTDRAWGAMMACONTROL lpDDGammaControl = nullptr; // Die drei sind für das Gammaablenden
-DDGAMMARAMP DDGammaRamp;
-DDGAMMARAMP DDGammaOld;
+////LPDIRECTDRAWGAMMACONTROL lpDDGammaControl = nullptr; // Die drei sind für das Gammaablenden
+//DDGAMMARAMP DDGammaRamp;
+//DDGAMMARAMP DDGammaOld;
 
 // Directinput
 HINSTANCE g_hInst = nullptr;

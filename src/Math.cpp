@@ -22,7 +22,7 @@ void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
     char Text[1024], TextTmp[1024]; // Text für Infoleiste
 
     // Info anzeigen
-    Coordinate Erg = Renderer::GetKachel((MousePosition.x + Camera.x), (MousePosition.y + Camera.y)); // Die angeklickte Kachel
+    Coordinate Erg = Renderer::GetTile((MousePosition.x + Camera.x), (MousePosition.y + Camera.y)); // Die angeklickte Kachel
 
     if (Scape[Erg.x][Erg.y].Discovered) {
         LoadString(g_hInst, 45 + Scape[Erg.x][Erg.y].Terrain, Text, 1024);

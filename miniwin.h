@@ -34,20 +34,20 @@ unsigned int _rotr(unsigned int value, int shift);
 #endif
 
 #include "miniwin/misc.h"
-#include "miniwin/com.h"
+//#include "miniwin/com.h"
 //#include "miniwin/ui.h"
 //#include "miniwin/thread.h"
 //#include "miniwin/rand.h"
 
-using LPDIRECTDRAWSURFACE4 = LPDIRECTDRAWSURFACE;
-using DDSURFACEDESC2 = DDSURFACEDESC;
-using LPDDSURFACEDESC2 = LPDDSURFACEDESC;
-using LPDIRECTDRAW4 = LPDIRECTDRAW;
-using DDSCAPS2 = DDSCAPS;
+//using LPDIRECTDRAWSURFACE4 = LPDIRECTDRAWSURFACE;
+//using DDSURFACEDESC2 = DDSURFACEDESC;
+//using LPDDSURFACEDESC2 = LPDDSURFACEDESC;
+//using LPDIRECTDRAW4 = LPDIRECTDRAW;
+//using DDSCAPS2 = DDSCAPS;
 
 #define ZeroMemory bzero
 
-inline LPDIRECTDRAWSURFACE4 *DDLoadBitmap(LPDIRECTDRAW4 , const char *, int, int) { return nullptr; }
+//inline LPDIRECTDRAWSURFACE4 *DDLoadBitmap(LPDIRECTDRAW4 , const char *, int, int) { return nullptr; }
 
 using LPUNKNOWN  = void*;
 
@@ -56,7 +56,7 @@ using LPUNKNOWN  = void*;
 //};
 inline COLORREF RGB(int r,int g,int b) { return {}; }
 
-inline void LoadString(HINSTANCE , short, char*, int) {}
+inline void LoadString(HINSTANCE , short, char* s, int) { *s=0; }
 inline void TranslateFileName(char *, size_t, LPCSTR ) {}
 
 #define MB_OK 0

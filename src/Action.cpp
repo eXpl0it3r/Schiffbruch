@@ -183,7 +183,7 @@ void intro()
         Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_1].targetRect.left);
         Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
 
-        World::ChangeBootsFahrt();
+        World::ToggleIsInBoat();
         Guy.Pos.x += 2;
         Guy.ScreenPosition.y += 10;
         Guy.AnimationState = GUY_SWIM;
@@ -218,7 +218,7 @@ void restart()
 
     switch (Guy.ActionNumber) {
     case 1: {
-        Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
         if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -254,7 +254,7 @@ void restart()
         }
 
         if (Frage == 1) {
-            Game::NeuesSpiel(true);
+            Game::NewGame(true);
             return;
         }
 
@@ -269,7 +269,7 @@ void day_restart()
 
     switch (Guy.ActionNumber) {
     case 1: {
-        Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
         if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -306,7 +306,7 @@ void day_restart()
         }
 
         if (Frage == 1) {
-            Game::NeuesSpiel(false);
+            Game::NewGame(false);
             return;
         }
 
@@ -322,7 +322,7 @@ void quit()
 
     switch (Guy.ActionNumber) {
     case 1: {
-        Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
         if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -429,7 +429,7 @@ void death()
         if (Frage == 2) {
             Spielzustand = State::OUTRO;
         } else {
-            Game::NeuesSpiel(false);
+            Game::NewGame(false);
         }
 
         Frage = -1;
@@ -511,7 +511,7 @@ void destroy()
         Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
 
         if (i == PIPE) {
-            World::FillRohr();
+            World::FillPipe();
         }
 
         Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -536,7 +536,7 @@ void search()
     while (true) {
         Ziel.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % TILE_SIZE_X;
         Ziel.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % TILE_SIZE_Y;
-        Coordinate Erg = Renderer::GetKachel(Ziel.x, Ziel.y);
+        Coordinate Erg = Renderer::GetTile(Ziel.x, Ziel.y);
 
         if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
             break;    // Wenn das gefundene Ziel in der Kachel, dann fertig
@@ -1386,7 +1386,7 @@ void day_end()
 
         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x = Guy.ScreenPosition.x;
         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y = Guy.ScreenPosition.y;
-        Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+        Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
         if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -1716,7 +1716,7 @@ void rescued()
 
     switch (Guy.ActionNumber) {
     case 1: {
-        Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
         if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -1797,7 +1797,7 @@ void rescued()
         Guy.ScreenPosition.y -= 10;
 
         if (!IsInBoat) {
-            World::ChangeBootsFahrt();
+            World::ToggleIsInBoat();
         }
 
         Guy.IsActive = true;
@@ -2111,7 +2111,7 @@ void pipe()
 
     case 18:
         Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        World::FillRohr();
+        World::FillPipe();
         Bmp[BUTTON_STOP].AnimationPhase = -1;
 
         if (Bmp[PIPE].First) {
@@ -2741,7 +2741,7 @@ void undock()
         break;
 
     case 2:
-        World::ChangeBootsFahrt();
+        World::ToggleIsInBoat();
         Guy.ScreenPosition.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen +
                                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
                                Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
@@ -2823,7 +2823,7 @@ void dock()
         Scape[Guy.Pos.x][Guy.Pos.y].Object = BOAT;
         Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = Bmp[BOAT].RequiredActionCases;
 
-        World::ChangeBootsFahrt();
+        World::ToggleIsInBoat();
         Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = Guy.ScreenPosition.x -
                 Scape[Guy.Pos.x][Guy.Pos.y].xScreen -
                 Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
