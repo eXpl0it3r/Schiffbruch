@@ -28,7 +28,7 @@ void Fade(short RP, short GP, short BP)
         DDGammaRamp.blue[blackloop] = DDGammaOld.blue[blackloop] * BP / 100;
     }
 
-    lpDDGammaControl->SetGammaRamp(0, &DDGammaRamp);
+//    lpDDGammaControl->SetGammaRamp(0, &DDGammaRamp);
 }
 
 void LimitScroll()
@@ -134,6 +134,7 @@ inline void DWORD2RGB(DWORD color)
 
 void Blitten(sf::Image *from, sf::Image *to, bool Transp)
 {
+    puts("Blitting");
 //    HRESULT hr;
 //    short z = 0;
 
@@ -177,22 +178,28 @@ void Blitten(sf::Image *from, sf::Image *to, bool Transp)
 //    }
 }
 
-void PutPixel(short x, short y, DWORD color, LPDDSURFACEDESC2 ddsd)
+void PutPixel(short x, short y, uint8_t r, uint8_t g, uint8_t b, LPDDSURFACEDESC2 ddsd)
 {
-    WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
-    // DWORD pitch = ddsd->dwWidth+2;
-    DWORD pitch = ddsd->lPitch >> 1;
-    pixels[y * pitch + x * 2] = static_cast<WORD>(color);
+    lpDDSBack->setPixel(x, y, {r, g, b});
+//    WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
+//    // DWORD pitch = ddsd->dwWidth+2;
+//    DWORD pitch = ddsd->lPitch >> 1;
+//    pixels[y * pitch + x * 2] = static_cast<WORD>(color);
 }
 
 void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd)
 {
-    WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
-    // DWORD pitch = ddsd->dwWidth;
-    DWORD pitch = ddsd->lPitch >> 1;
-    DWORD color = pixels[y * pitch + x * 2];
+//    WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
+//    // DWORD pitch = ddsd->dwWidth;
+//    DWORD pitch = ddsd->lPitch >> 1;
+//    DWORD color = pixels[y * pitch + x * 2];
 
-    DWORD2RGB(color);
+    // TODO: more efficient
+    sf::Color c = lpDDSBack->getPixel(x, y);
+    rgbStruct.r = c.r;
+    rgbStruct.g = c.g;
+    rgbStruct.b = c.b;
+//    DWORD2RGB(color);
 }
 
 void DrawPicture(short x, short y, short i, RECT Ziel, bool Reverse, short Frucht)
@@ -1134,7 +1141,7 @@ void ShowLogo()
     rcRectdes.bottom = MAX_SCREEN_Y;
 
     // TODO: more efficient way of filling with black
-    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
+    lpDDSBack->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
 
     rcRectsrc.left = 0;
     rcRectsrc.right = 500;

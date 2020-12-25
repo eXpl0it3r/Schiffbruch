@@ -103,7 +103,7 @@ DDBLTFX ddbltfx; // DirectDraw Effekte
 DDPIXELFORMAT ddpf;
 DDSURFACEDESC2 ddsd, ddsd2; // Zwischenspeicher der SurfaceEigenschaften
 
-LPDIRECTDRAWGAMMACONTROL lpDDGammaControl = nullptr; // Die drei sind für das Gammaablenden
+//LPDIRECTDRAWGAMMACONTROL lpDDGammaControl = nullptr; // Die drei sind für das Gammaablenden
 DDGAMMARAMP DDGammaRamp;
 DDGAMMARAMP DDGammaOld;
 
