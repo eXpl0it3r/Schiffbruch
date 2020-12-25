@@ -46,16 +46,16 @@ extern TEXTBEREICH TextBereich[TEXTANZ];
 extern ZWEID Camera, // aktueller Kartenausschnitt
              MousePosition, //     "    Mauskoordinaten
              RouteZiel, RouteStart, // Koordinaten des Starts und des Endes der Route
-             Route[MAXXKACH * MAXYKACH], // Liste der Routenpunkte
-             RouteKoor[2 * MAXXKACH * MAXYKACH], // Liste der Routenkoordinaten
+             Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
+             RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
              SchatzPos; // Hier ist der Schatz vergraben
 
 extern RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 extern GUY Guy;
-extern BMP Bmp[BILDANZ];
+extern BMP Bmp[SPRITE_COUNT];
 extern WAV Wav[25]; // Sound::COUNT;
 extern ABSPANN AbspannListe[10][10]; // Namenabfolge im Abspann
-extern SCAPE Scape[MAXXKACH][MAXYKACH];
+extern SCAPE Scape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
 extern LPDIRECTDRAWSURFACE4 lpDDSPrimary; // DirectDraw primary surface

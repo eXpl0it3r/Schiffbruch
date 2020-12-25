@@ -4,8 +4,8 @@
 
 namespace Routing
 {
-    int LenMap[MAXXKACH][MAXYKACH];
-    ZWEID SaveRoute[MAXXKACH * MAXYKACH]; // Zum zwischenspeichern der Route
+    int LenMap[MAX_TILES_X][MAX_TILESY];
+    ZWEID SaveRoute[MAX_TILES_X * MAX_TILESY]; // Zum zwischenspeichern der Route
     ZWEID NewPos; // Nur innerhalb des Pathfindings benutzt
 
     void MarkRoute(bool Mark)
@@ -56,15 +56,15 @@ namespace Routing
     {
         short Dir;
 
-        ZWEID Plist[MAXXKACH * MAXYKACH]; // Besuchte Punkte merken
-        short Llist[MAXXKACH * MAXYKACH]; // Länge vom Punkt zum Ziel
+        ZWEID Plist[MAX_TILES_X * MAX_TILESY]; // Besuchte Punkte merken
+        short Llist[MAX_TILES_X * MAX_TILESY]; // Länge vom Punkt zum Ziel
 
         ZWEID ShPos{0, 0};
         ZWEID BestLine{0, 0};
         ZWEID ShortKoor{0, 0};
 
-        for (short AI = 0; AI < MAXYKACH; AI++)
-            for (short BI = 0; BI < MAXXKACH; BI++)
+        for (short AI = 0; AI < MAX_TILESY; AI++)
+            for (short BI = 0; BI < MAX_TILES_X; BI++)
             {
                 LenMap[AI][BI] = 65535;
                 Llist[AI * BI] = 0;
@@ -220,11 +220,11 @@ namespace Routing
             SaveRoute[i].y = Pos.y;
 
             RouteKoor[2 * i].x =
-            (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
-                Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
+            (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].x +
+                Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].x) / 2;
             RouteKoor[2 * i].y =
-            (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
-                Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
+            (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].y +
+                Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].y) / 2;
 
             NewPos.x = Pos.x;
             NewPos.y = Pos.y - 1; // oben mit nachschauen anfangen
@@ -238,35 +238,35 @@ namespace Routing
                     {
                     case 0:
                         RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].x +
+                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].x) / 2;
                         RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].y +
+                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].y) / 2;
                         break;
                     case 1:
                         RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].x +
+                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].x) / 2;
                         RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][2].y +
+                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].y) / 2;
                         break;
                     case 2:
                         RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].x +
+                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].x) / 2;
                         RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][3].y +
+                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].y) / 2;
                         break;
                     case 3:
                         RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x) / 2;
+                        (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].x +
+                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].x) / 2;
                         RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y) / 2;
+                        (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][0].y +
+                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Type][1].y) / 2;
                         break;
                     }
                     break;
@@ -298,8 +298,8 @@ namespace Routing
 
         // Die Animation gleich anschließend starten
         Guy.Aktiv = true;
-        if ((BootsFahrt) && (Guy.Zustand != GUYSCHWIMMEN)) Guy.Zustand = GUYBOOTLINKS;
-        else if (Guy.Zustand != GUYSCHWIMMEN) Guy.Zustand = GUYLINKS;
+        if ((BootsFahrt) && (Guy.Zustand != GUY_SWIM)) Guy.Zustand = GUY_BOAT_LEFT;
+        else if (Guy.Zustand != GUY_SWIM) Guy.Zustand = GUY_LEFT;
         RoutePunkt = -1;
         Steps = 0;
         Step = 0;

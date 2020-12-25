@@ -37,10 +37,10 @@ short Step, Steps;
 
 //Bereiche
 //                             links,      oben,                      rechts,                             unten
-RECT rcGesamt = {0, 0, MAXX, MAXY};
-RECT rcSpielflaeche = {0, 0, MAXX - 195, MAXY - 20};
-RECT rcPanel = {MAXX - 205, 0, MAXX, MAXY};
-RECT rcKarte = {MAXX - 158, 27, rcKarte.left + MAXXKACH * 2, rcKarte.top + (MAXYKACH + 13) * 2};
+RECT rcGesamt = {0, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
+RECT rcSpielflaeche = {0, 0, MAX_SCREEN_X - 195, MAX_SCREEN_Y - 20};
+RECT rcPanel = {MAX_SCREEN_X - 205, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
+RECT rcKarte = {MAX_SCREEN_X - 158, 27, rcKarte.left + MAX_TILES_X * 2, rcKarte.top + (MAX_TILESY + 13) * 2};
 
 //Die Eckkoordinaten der Kacheln (Achtung: mit überlappendem Rand)
 ZWEID EckKoor[13][4] =
@@ -66,15 +66,15 @@ TEXTBEREICH TextBereich[TEXTANZ];
 ZWEID Camera, // aktueller Kartenausschnitt
       MousePosition, //     "    Mauskoordinaten
       RouteZiel, RouteStart, // Koordinaten des Starts und des Endes der Route
-      Route[MAXXKACH * MAXYKACH], // Liste der Routenpunkte
-      RouteKoor[2 * MAXXKACH * MAXYKACH], // Liste der Routenkoordinaten
+      Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
+      RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
       SchatzPos; // Hier ist der Schatz vergraben
 RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 GUY Guy;
-BMP Bmp[BILDANZ];
+BMP Bmp[SPRITE_COUNT];
 WAV Wav[25]; // Sound::COUNT
 ABSPANN AbspannListe[10][10]; // Namenabfolge im Abspann
-SCAPE Scape[MAXXKACH][MAXYKACH];
+SCAPE Scape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
 LPDIRECTDRAWSURFACE4 lpDDSPrimary = nullptr; // DirectDraw primary surface
