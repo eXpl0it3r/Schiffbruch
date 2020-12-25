@@ -142,9 +142,9 @@ void MouseInPanel(short Button, short Push)
         short mx = MousePosition.x - static_cast<short>(rcKarte.left);
         short my = MousePosition.y - static_cast<short>(rcKarte.top);
         Camera.x = ((TILE_SIZE_X / 4) * (mx - my) + MAX_TILES_X * TILE_SIZE_X / 2)
-                   - static_cast<short>((rcSpielflaeche.right - rcSpielflaeche.left) / 2);
+                   - static_cast<short>((rcPlayingSurface.right - rcPlayingSurface.left) / 2);
         Camera.y = ((TILE_SIZE_X / 7) * (my + mx))
-                   - static_cast<short>((rcSpielflaeche.bottom - rcSpielflaeche.top) / 2);
+                   - static_cast<short>((rcPlayingSurface.bottom - rcPlayingSurface.top) / 2);
     } else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_GRID].targetRect)) {
         if (Gitter) {
             Renderer::DrawText(GITTERAUS, TXTTEXTFELD, 2);

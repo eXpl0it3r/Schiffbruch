@@ -360,7 +360,7 @@ void CheckMouse(const sf::Window &win)
     }
 
     // die Maus ist in der Spielflaeche ->
-    if (Math::InRect(MousePosition.x, MousePosition.y, rcSpielflaeche)) {
+    if (Math::InRect(MousePosition.x, MousePosition.y, rcPlayingSurface)) {
         Math::MouseInSpielflaeche(Button, Push, xDiff, yDiff);
     }
 
@@ -409,8 +409,8 @@ short CheckKey()
             RouteStart.y = -1;
             RouteDestination.x = -1;
             RouteDestination.y = -1;
-            Camera.x = Guy.ScreenPosition.x - static_cast<short>(rcSpielflaeche.right / 2);
-            Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcSpielflaeche.bottom / 2);
+            Camera.x = Guy.ScreenPosition.x - static_cast<short>(rcPlayingSurface.right / 2);
+            Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcPlayingSurface.bottom / 2);
 
             if (IsInBoat) {
                 World::ToggleIsInBoat();

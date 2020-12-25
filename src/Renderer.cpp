@@ -38,16 +38,16 @@ void LimitScroll()
         Camera.x = static_cast<short>(ScapeGrenze.left);
     }
 
-    if (Camera.x + rcSpielflaeche.right > ScapeGrenze.right) {
-        Camera.x = static_cast<short>(ScapeGrenze.right) - static_cast<short>(rcSpielflaeche.right);
+    if (Camera.x + rcPlayingSurface.right > ScapeGrenze.right) {
+        Camera.x = static_cast<short>(ScapeGrenze.right) - static_cast<short>(rcPlayingSurface.right);
     }
 
     if (Camera.y < ScapeGrenze.top) {
         Camera.y = static_cast<short>(ScapeGrenze.top);
     }
 
-    if (Camera.y + rcSpielflaeche.bottom > ScapeGrenze.bottom) {
-        Camera.y = static_cast<short>(ScapeGrenze.bottom) - static_cast<short>(rcSpielflaeche.bottom);
+    if (Camera.y + rcPlayingSurface.bottom > ScapeGrenze.bottom) {
+        Camera.y = static_cast<short>(ScapeGrenze.bottom) - static_cast<short>(rcPlayingSurface.bottom);
     }
 }
 
@@ -267,7 +267,7 @@ void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fru
     rcRectsrc = Bmp[i].sourceRect;
 
     if (!Reverse) {
-        rcRectsrc.top += Phase * (Bmp[i].AnimationPhaseCount);
+        rcRectsrc.top += Phase * (Bmp[i].Height);
     } else {
         rcRectsrc.top = Bmp[i].sourceRect.top + (Bmp[i].AnimationPhaseCount - 1) * Bmp[i].Height - Phase * Bmp[i].Height;
     }
@@ -285,20 +285,20 @@ void DrawObjects()
 {
     for (short y = 0; y < MAX_TILESY; y++) {
         for (short x = 0; x < MAX_TILES_X; x++) {
-            bool Guyzeichnen = false;
+            bool drawGuy = false;
 
             if ((Guy.Pos.x == x) && (Guy.Pos.y == y)) {
-                Guyzeichnen = true;
+                drawGuy = true;
             }
 
             // Die nichtsichbaren Kacheln (oder nicht betroffenen) ausfiltern
 
-            if (!((Scape[x][y].xScreen > Camera.x + rcSpielflaeche.left - TILE_SIZE_X) &&
-                    (Scape[x][y].xScreen < Camera.x + rcSpielflaeche.right + TILE_SIZE_X) &&
-                    (Scape[x][y].yScreen > Camera.y + rcSpielflaeche.top - TILE_SIZE_Y) &&
-                    (Scape[x][y].yScreen < Camera.y + rcSpielflaeche.bottom + TILE_SIZE_Y) &&
+            if (!((Scape[x][y].xScreen > Camera.x + rcPlayingSurface.left - TILE_SIZE_X) &&
+                    (Scape[x][y].xScreen < Camera.x + rcPlayingSurface.right + TILE_SIZE_X) &&
+                    (Scape[x][y].yScreen > Camera.y + rcPlayingSurface.top - TILE_SIZE_Y) &&
+                    (Scape[x][y].yScreen < Camera.y + rcPlayingSurface.bottom + TILE_SIZE_Y) &&
                     (Scape[x][y].Discovered) &&
-                    ((Scape[x][y].Marked) || (Scape[x][y].Object != -1) || (Guyzeichnen)))) {
+                    ((Scape[x][y].Marked) || (Scape[x][y].Object != -1) || (drawGuy)))) {
                 continue;
             }
 
@@ -311,7 +311,7 @@ void DrawObjects()
                 rcRectdes.right = rcRectdes.left + TILE_SIZE_X;
                 rcRectdes.top = Scape[x][y].yScreen - Camera.y;
                 rcRectdes.bottom = rcRectdes.top + TILE_SIZE_Y;
-                Math::CalcRect(rcSpielflaeche);
+                Math::CalcRect(rcPlayingSurface);
                 Blitten(lpDDSMisc, lpDDSBack, true);
             }
 
@@ -334,7 +334,7 @@ void DrawObjects()
 
                 DrawPicture(Scape[x][y].xScreen + Scape[x][y].ObjectPosOffset.x - Camera.x,
                               Scape[x][y].yScreen + Scape[x][y].ObjectPosOffset.y - Camera.y,
-                              Scape[x][y].Object, rcSpielflaeche, Scape[x][y].ReverseAnimation,
+                              Scape[x][y].Object, rcPlayingSurface, Scape[x][y].ReverseAnimation,
                               static_cast<short>(Scape[x][y].AnimationPhase));
             } else {
                 if (((Scape[x][y].Object >= TREE_1) && (Scape[x][y].Object <= TREE_DOWN_4)) ||
@@ -352,22 +352,22 @@ void DrawObjects()
                         }
                     }
 
-                    if (Guyzeichnen) {
+                    if (drawGuy) {
                         if ((Guy.ScreenPosition.y) < (Scape[x][y].yScreen + Scape[x][y].ObjectPosOffset.y
                                                  + Bmp[Scape[x][y].Object].Height)) {
                             DrawGuy();
-                            Guyzeichnen = false;
+                            drawGuy = false;
                         }
                     }
 
                     DrawPicture(Scape[x][y].xScreen + Scape[x][y].ObjectPosOffset.x - Camera.x,
                                   Scape[x][y].yScreen + Scape[x][y].ObjectPosOffset.y - Camera.y,
-                                  Scape[x][y].Object, rcSpielflaeche, false,
+                                  Scape[x][y].Object, rcPlayingSurface, false,
                                   static_cast<short>(Scape[x][y].AnimationPhase));
                 }
             }
 
-            if (Guyzeichnen) {
+            if (drawGuy) {
                 DrawGuy();
             }
         }
@@ -380,16 +380,16 @@ void DrawGuy()
         if (Guy.AnimationState == GUY_SHIP) {
             DrawPicture(Guy.ScreenPosition.x - 30 - Camera.x,
                           Guy.ScreenPosition.y - 28 - Camera.y,
-                          Guy.AnimationState, rcSpielflaeche, false, -1);
+                          Guy.AnimationState, rcPlayingSurface, false, -1);
         } else {
             DrawPicture(Guy.ScreenPosition.x - (Bmp[Guy.AnimationState].Width) / 2 - Camera.x,
                           Guy.ScreenPosition.y - (Bmp[Guy.AnimationState].Height) / 2 - Camera.y,
-                          Guy.AnimationState, rcSpielflaeche, false, -1);
+                          Guy.AnimationState, rcPlayingSurface, false, -1);
         }
     } else
         DrawPicture(Guy.ScreenPosition.x - (Bmp[Guy.AnimationState].Width) / 2 - Camera.x,
                       Guy.ScreenPosition.y - (Bmp[Guy.AnimationState].Height) - Camera.y,
-                      Guy.AnimationState, rcSpielflaeche, false, -1);
+                      Guy.AnimationState, rcPlayingSurface, false, -1);
 
     // Sound abspielen
     if (Guy.IsActive) {
@@ -941,14 +941,14 @@ void Show()
 {
     char Stringsave1[128], Stringsave2[128]; // Für die Zeitausgabe
 
-    rcRectsrc.left = Camera.x + rcSpielflaeche.left;
-    rcRectsrc.top = Camera.y + rcSpielflaeche.top;
-    rcRectsrc.right = Camera.x + rcSpielflaeche.right;
-    rcRectsrc.bottom = Camera.y + rcSpielflaeche.bottom;
-    rcRectdes.left = rcSpielflaeche.left;
-    rcRectdes.top = rcSpielflaeche.top;
-    rcRectdes.right = rcSpielflaeche.right;
-    rcRectdes.bottom = rcSpielflaeche.bottom;
+    rcRectsrc.left = Camera.x + rcPlayingSurface.left;
+    rcRectsrc.top = Camera.y + rcPlayingSurface.top;
+    rcRectsrc.right = Camera.x + rcPlayingSurface.right;
+    rcRectsrc.bottom = Camera.y + rcPlayingSurface.bottom;
+    rcRectdes.left = rcPlayingSurface.left;
+    rcRectdes.top = rcPlayingSurface.top;
+    rcRectdes.right = rcPlayingSurface.right;
+    rcRectdes.bottom = rcPlayingSurface.bottom;
 
     Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 
@@ -1058,14 +1058,14 @@ void ShowIntro()
     // TODO: more efficient way of filling with black
     lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
 
-    rcRectsrc.left = Camera.x + rcSpielflaeche.left;
-    rcRectsrc.top = Camera.y + rcSpielflaeche.top;
-    rcRectsrc.right = Camera.x + rcSpielflaeche.right;
-    rcRectsrc.bottom = Camera.y + rcSpielflaeche.bottom;
-    rcRectdes.left = rcSpielflaeche.left;
-    rcRectdes.top = rcSpielflaeche.top;
-    rcRectdes.right = rcSpielflaeche.right;
-    rcRectdes.bottom = rcSpielflaeche.bottom;
+    rcRectsrc.left = Camera.x + rcPlayingSurface.left;
+    rcRectsrc.top = Camera.y + rcPlayingSurface.top;
+    rcRectsrc.right = Camera.x + rcPlayingSurface.right;
+    rcRectsrc.bottom = Camera.y + rcPlayingSurface.bottom;
+    rcRectdes.left = rcPlayingSurface.left;
+    rcRectdes.top = rcPlayingSurface.top;
+    rcRectdes.right = rcPlayingSurface.right;
+    rcRectdes.bottom = rcPlayingSurface.bottom;
 
     Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 

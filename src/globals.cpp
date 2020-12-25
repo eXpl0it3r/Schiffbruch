@@ -38,7 +38,7 @@ short Step, Steps;
 //Bereiche
 //                             links,      oben,                      rechts,                             unten
 RECT rcGesamt = {0, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
-RECT rcSpielflaeche = {0, 0, MAX_SCREEN_X - 195, MAX_SCREEN_Y - 20};
+RECT rcPlayingSurface = {0, 0, MAX_SCREEN_X - 195, MAX_SCREEN_Y - 20};
 RECT rcPanel = {MAX_SCREEN_X - 205, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
 RECT rcKarte = {MAX_SCREEN_X - 158, 27, rcKarte.left + MAX_TILES_X * 2, rcKarte.top + (MAX_TILESY + 13) * 2};
 
