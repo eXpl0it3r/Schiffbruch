@@ -76,8 +76,8 @@ namespace Routing
 
         short PCnt = 1;
         Plist[0] = RouteStart;
-        short DiffX = (RouteStart.x - RouteZiel.x);
-        short DiffY = (RouteStart.y - RouteZiel.y);
+        short DiffX = (RouteStart.x - RouteDestination.x);
+        short DiffY = (RouteStart.y - RouteDestination.y);
         Llist[0] = (DiffX * DiffX) + (DiffY * DiffY);
 
         LenMap[RouteStart.x][RouteStart.y] = 0;
@@ -122,13 +122,13 @@ namespace Routing
                     LenMap[NewPos.x][NewPos.y] = StepCnt;
                     Plist[PCnt] = NewPos;
                     // Die Entfernung in die Liste aufnehmen
-                    DiffX = (NewPos.x - RouteZiel.x);
-                    DiffY = (NewPos.y - RouteZiel.y);
+                    DiffX = (NewPos.x - RouteDestination.x);
+                    DiffY = (NewPos.y - RouteDestination.y);
                     Llist[PCnt] = (DiffX * DiffX) + (DiffY * DiffY);
                     PCnt++;
                 }
                 // Ziel erreicht?
-                if ((NewPos.x == RouteZiel.x) && (NewPos.y == RouteZiel.y))
+                if ((NewPos.x == RouteDestination.x) && (NewPos.y == RouteDestination.y))
                 {
                     GoalReached = true;
                     BI = 3;
@@ -136,17 +136,17 @@ namespace Routing
                 Dir = RotateRight(Dir);
             }
         }
-        if ((PCnt == 0) || (!Scape[RouteZiel.x][RouteZiel.y].Walkable))
+        if ((PCnt == 0) || (!Scape[RouteDestination.x][RouteDestination.y].Walkable))
         {
-            RouteZiel.x = ShortKoor.x;
-            RouteZiel.y = ShortKoor.y;
+            RouteDestination.x = ShortKoor.x;
+            RouteDestination.y = ShortKoor.y;
 
             if (FindTheWay()) return true;
             return false;
         }
         if (GoalReached) // Punkt rückwärts durchgehen und Abkürzungen finden
         {
-            Pos = RouteZiel;
+            Pos = RouteDestination;
             Coordinate LineStartPos = Pos;
             while ((Pos.x != RouteStart.x) || (Pos.y != RouteStart.y))
             {
@@ -287,18 +287,18 @@ namespace Routing
     void ShortRoute(short Zielx, short Ziely)
     {
         RouteLaenge = 1;
-        Route[0].x = Guy.CurrentPosition.x;
-        Route[0].y = Guy.CurrentPosition.y;
+        Route[0].x = Guy.Pos.x;
+        Route[0].y = Guy.Pos.y;
         RouteKoor[0].x = Guy.ScreenPosition.x;
         RouteKoor[0].y = Guy.ScreenPosition.y;
-        Route[1].x = Guy.CurrentPosition.x;
-        Route[1].y = Guy.CurrentPosition.y;
+        Route[1].x = Guy.Pos.x;
+        Route[1].y = Guy.Pos.y;
         RouteKoor[1].x = Zielx;
         RouteKoor[1].y = Ziely;
 
         // Die Animation gleich anschließend starten
         Guy.IsActive = true;
-        if ((BootsFahrt) && (Guy.AnimationState != GUY_SWIM)) Guy.AnimationState = GUY_BOAT_LEFT;
+        if ((IsInBoat) && (Guy.AnimationState != GUY_SWIM)) Guy.AnimationState = GUY_BOAT_LEFT;
         else if (Guy.AnimationState != GUY_SWIM) Guy.AnimationState = GUY_LEFT;
         RoutePunkt = -1;
         Steps = 0;

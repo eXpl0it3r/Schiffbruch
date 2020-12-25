@@ -99,13 +99,13 @@ namespace Math
         {
             if ((Erg.x != -1) && (Erg.y != -1) &&
                 (Scape[Erg.x][Erg.y].Discovered) && (!Guy.IsActive) &&
-                ((Erg.x != Guy.CurrentPosition.x) || (Erg.y != Guy.CurrentPosition.y)) &&
+                ((Erg.x != Guy.Pos.x) || (Erg.y != Guy.Pos.y)) &&
                 (Erg.x > 0) && (Erg.x < MAX_TILES_X - 1) &&
                 (Erg.y > 0) && (Erg.y < MAX_TILESY - 1))
             {
                 // Klicksound abspielen
                 PlaySound(Sound::CLICK2, 100);
-                if ((Erg.x == RouteZiel.x) && (Erg.y == RouteZiel.y))
+                if ((Erg.x == RouteDestination.x) && (Erg.y == RouteDestination.y))
                 {
                     Routing::MarkRoute(false);
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
@@ -117,17 +117,17 @@ namespace Math
                 else
                 {
                     Routing::MarkRoute(false);
-                    RouteStart.x = Guy.CurrentPosition.x;
-                    RouteStart.y = Guy.CurrentPosition.y;
-                    RouteZiel.x = Erg.x;
-                    RouteZiel.y = Erg.y;
+                    RouteStart.x = Guy.Pos.x;
+                    RouteStart.y = Guy.Pos.y;
+                    RouteDestination.x = Erg.x;
+                    RouteDestination.y = Erg.y;
                     if (Routing::FindTheWay()) Routing::MarkRoute(true);
                     else // Wenn keine Route gefunden
                     {
                         RouteStart.x = -1;
                         RouteStart.y = -1;
-                        RouteZiel.x = -1;
-                        RouteZiel.y = -1;
+                        RouteDestination.x = -1;
+                        RouteDestination.y = -1;
                         MessageBeep(MB_OK);
                     }
                 }
@@ -278,12 +278,12 @@ namespace Math
                 PlaySound(Sound::CLICK2, 100);
                 Bmp[BUTTON_STOP].AnimationPhase = 0;
                 Routing::MarkRoute(false);
-                RouteZiel.x = -1;
-                RouteZiel.y = -1;
+                RouteDestination.x = -1;
+                RouteDestination.y = -1;
                 Guy.OriginalPosition = Guy.ScreenPosition;
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
-                switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object)
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
+                switch (Scape[Guy.Pos.x][Guy.Pos.y].Object)
                 {
                 case TENT: Guy.CurrentAction = Action::TENT;
                     break;
@@ -330,7 +330,7 @@ namespace Math
             {
                 PlaySound(Sound::CLICK2, 100);
                 Guy.ActionNumber = 0;
-                if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain != 1) Guy.CurrentAction = Action::UNDOCK;
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) Guy.CurrentAction = Action::UNDOCK;
                 else Guy.CurrentAction = Action::DOCK;
             }
         }
@@ -355,14 +355,14 @@ namespace Math
             {
                 PlaySound(Sound::CLICK2, 100);
                 Guy.ActionNumber = 0;
-                if (((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == BUSH) ||
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == FIELD)) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase == Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount - 1))
+                if (((Scape[Guy.Pos.x][Guy.Pos.y].Object == BUSH) ||
+                        (Scape[Guy.Pos.x][Guy.Pos.y].Object == FIELD)) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase == Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount - 1))
                     Guy.CurrentAction = Action::EAT;
-                else if (((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= RIVER_1) &&
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= FLOODGATE_6)) ||
-                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == PIPE) &&
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase == 1)))
+                else if (((Scape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) &&
+                        (Scape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6)) ||
+                    ((Scape[Guy.Pos.x][Guy.Pos.y].Object == PIPE) &&
+                        (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase == 1)))
                     Guy.CurrentAction = Action::DRINK;
                 else PapierText = Renderer::DrawText(KEINESSENTRINKEN, TXTPAPIER, 1);
             }
@@ -375,7 +375,7 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain != 1)
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Terrain != 1)
                 {
                     Guy.ActionNumber = 0;
                     Guy.CurrentAction = Action::SLEEP;
@@ -394,14 +394,14 @@ namespace Math
                 Guy.ActionNumber = 0;
                 if (Guy.Inventory[RAW_TREE_TRUNK] <= 10)
                 {
-                    if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= TREE_1) &&
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= TREE_4))
+                    if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
+                        (Scape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4))
                     {
                         Guy.CurrentAction = Action::LOG;
                     }
-                    else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TREE_BIG) ||
-                        ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= HOUSE_1) &&
-                            (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= HOUSE_3)))
+                    else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) ||
+                        ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) &&
+                            (Scape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3)))
                         PapierText = Renderer::DrawText(BAUMZUGROSS, TXTPAPIER, 1);
                     else PapierText = Renderer::DrawText(KEINBAUM, TXTPAPIER, 1);
                 }
@@ -417,9 +417,9 @@ namespace Math
             {
                 PlaySound(Sound::CLICK2, 100);
                 Guy.ActionNumber = 0;
-                if (((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= RIVER_1) &&
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= FLOODGATE_6)) ||
-                    (BootsFahrt))
+                if (((Scape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) &&
+                        (Scape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6)) ||
+                    (IsInBoat))
                     Guy.CurrentAction = Action::FISH;
                 else PapierText = Renderer::DrawText(KEINWASSER, TXTPAPIER, 1);
             }
@@ -433,8 +433,8 @@ namespace Math
             {
                 PlaySound(Sound::CLICK2, 100);
                 Guy.ActionNumber = 0;
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == BONFIRE) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == BONFIRE) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
                     Guy.CurrentAction = Action::LIGHT;
                 else PapierText = Renderer::DrawText(KEINEFEUERST, TXTPAPIER, 1);
             }
@@ -448,7 +448,7 @@ namespace Math
             {
                 PlaySound(Sound::CLICK2, 100);
                 Guy.ActionNumber = 0;
-                if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain != 1)
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Terrain != 1)
                 {
                     Guy.ActionNumber = 0;
                     Guy.CurrentAction = Action::LOOKOUT;
@@ -465,9 +465,9 @@ namespace Math
             {
                 PlaySound(Sound::CLICK2, 100);
                 Guy.ActionNumber = 0;
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain != 1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type == 0) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == -1))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Type == 0) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == -1))
                 {
                     Guy.ActionNumber = 0;
                     Guy.CurrentAction = Action::TREASURE;
@@ -484,15 +484,15 @@ namespace Math
             {
                 PlaySound(Sound::CLICK2, 100);
                 Guy.ActionNumber = 0;
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= TREE_1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= TREE_4))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4))
                 {
                     Guy.ActionNumber = 0;
                     Guy.CurrentAction = Action::SLINGSHOT;
                 }
-                else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TREE_BIG) ||
-                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= HOUSE_1) &&
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= HOUSE_3)))
+                else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) ||
+                    ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) &&
+                        (Scape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3)))
                     PapierText = Renderer::DrawText(BAUMZUGROSS, TXTPAPIER, 1);
                 else PapierText = Renderer::DrawText(KEINVOGEL, TXTPAPIER, 1);
             }
@@ -522,20 +522,20 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type == 0) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain == 4))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Type == 0) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Terrain == 4))
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::FIELD;
                 }
-                else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == FIELD))
+                else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) && (Scape[Guy.Pos.x][Guy.Pos.y].Object == FIELD))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::FIELD;
                 }
                 else PapierText = Renderer::DrawText(FELDBEDINGUNGEN, TXTPAPIER, 1);
@@ -555,21 +555,21 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type == 0) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain != -1))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Type == 0) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Terrain != -1))
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::TENT;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::TENT;
                 }
                 else PapierText = Renderer::DrawText(ZELTBEDINGUNGEN, TXTPAPIER, 1);
@@ -589,24 +589,24 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain == 2) &&
-                    ((Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Terrain == 1) ||
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Terrain == 1) ||
-                        (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Terrain == 1) ||
-                        (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Terrain == 1)))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Terrain == 2) &&
+                    ((Scape[Guy.Pos.x - 1][Guy.Pos.y].Terrain == 1) ||
+                        (Scape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1) ||
+                        (Scape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1) ||
+                        (Scape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1)))
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::BOAT;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == BOAT))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == BOAT))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::BOAT;
                 }
                 else PapierText = Renderer::DrawText(BOOTBEDINGUNGEN, TXTPAPIER, 1);
@@ -626,20 +626,20 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type == 0))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Type == 0))
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::PIPE;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == PIPE))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == PIPE))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::PIPE;
                 }
                 else PapierText = Renderer::DrawText(ROHRBEDINGUNGEN, TXTPAPIER, 1);
@@ -659,20 +659,20 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type == 0))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Type == 0))
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::SOS_SIGN;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == SOS))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == SOS))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::SOS_SIGN;
                 }
                 else PapierText = Renderer::DrawText(SOSBEDINGUNGEN, TXTPAPIER, 1);
@@ -692,22 +692,22 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= TREE_1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= TREE_4))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4))
                     PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-                else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TREE_BIG)
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG)
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::HOUSE1;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_1))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_1))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::HOUSE1;
                 }
                 else PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
@@ -727,24 +727,24 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= TREE_1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= TREE_4))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4))
                     PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-                else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TREE_BIG)
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG)
                     PapierText = Renderer::DrawText(NICHTOHNELEITER, TXTPAPIER, 1);
-                else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_1)
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_1)
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::HOUSE2;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_2))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_2))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::HOUSE2;
                 }
                 else PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
@@ -764,25 +764,25 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= TREE_1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= TREE_4))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4))
                     PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-                else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TREE_BIG) ||
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_1))
+                else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) ||
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_1))
                     PapierText = Renderer::DrawText(NICHTOHNEPLATTFORM, TXTPAPIER, 1);
-                else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_2)
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_2)
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::HOUSE3;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::HOUSE3;
                 }
                 else PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
@@ -802,20 +802,20 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type == 0))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Type == 0))
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.CurrentAction = Action::FIREPLACE;
                 }
                 else if ((Bmp[BUTTON_CONTINUE].AnimationPhase != -1) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == BONFIRE))
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object == BONFIRE))
                 {
                     Bmp[BUTTON_STOP].AnimationPhase = 0;
                     Guy.OriginalPosition = Guy.ScreenPosition;
-                    Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x,
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y);
+                    Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
+                                        Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                     Guy.CurrentAction = Action::FIREPLACE;
                 }
                 else PapierText = Renderer::DrawText(FEUERSTELLENBEDINGUNGEN, TXTPAPIER, 1);
@@ -829,8 +829,8 @@ namespace Math
             if ((Button == 0) && (Push == 1))
             {
                 PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= FIELD) &&
-                    (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= BONFIRE))
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= FIELD) &&
+                    (Scape[Guy.Pos.x][Guy.Pos.y].Object <= BONFIRE))
                 {
                     Guy.ActionNumber = 0;
                     Guy.CurrentAction = Action::DESTROY;
@@ -942,22 +942,22 @@ namespace Math
                 if (RouteLaenge > 1) Bmp[BUTTON_STOP].AnimationPhase = -1;
                 Bmp[Guy.AnimationState].AnimationPhase = 0;
                 Guy.IsActive = false;
-                RouteZiel.x = -1;
-                RouteZiel.y = -1;
+                RouteDestination.x = -1;
+                RouteDestination.y = -1;
                 return;
             }
-            Guy.CurrentPosition.x = Route[(RoutePunkt + 1) / 2].x;
-            Guy.CurrentPosition.y = Route[(RoutePunkt + 1) / 2].y;
+            Guy.Pos.x = Route[(RoutePunkt + 1) / 2].x;
+            Guy.Pos.y = Route[(RoutePunkt + 1) / 2].y;
             World::Entdecken();
 
-            if (BootsFahrt)
+            if (IsInBoat)
                 World::AddTime(0, Scape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].RunningTime * 3);
             else World::AddTime(0, Scape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].RunningTime * 5);
             World::AddResource(NAHRUNG, -1);
             World::AddResource(WASSER, -1);
 
             if ((Guy.AnimationState == GUY_SHIP) || (Guy.AnimationState == GUY_SWIM)) Guy.AnimationState -= 2; // nichts machen
-            else if (BootsFahrt) Guy.AnimationState = GUY_BOAT_LEFT;
+            else if (IsInBoat) Guy.AnimationState = GUY_BOAT_LEFT;
             else Guy.AnimationState = GUY_LEFT;
 
             if (RouteLaenge > 1) // Bei normaler Routenabarbeitung die Richung Kachelmäßig rausfinden
@@ -1009,11 +1009,11 @@ namespace Math
             }
         }
 
-        if (Bild % Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RunningTime == 0)
+        if (Bild % Scape[Guy.Pos.x][Guy.Pos.y].RunningTime == 0)
         {
             Step++;
             short i;
-            if (BootsFahrt) i = 4;
+            if (IsInBoat) i = 4;
             else i = 2;
             if (Step % i == 0)
             {
@@ -1262,7 +1262,7 @@ namespace Math
             if (i < 1) i = 1;
             if (LastBild - Bmp[Guy.AnimationState].Speed < 0) loop = 2;
             else loop = 1;
-            if (BootsFahrt) loop = loop * 2;
+            if (IsInBoat) loop = loop * 2;
             for (short k = 0; k < loop; k++) if ((Bild % i == 0) && (Guy.IsActive)) CalcGuyKoor();
             return;
         }

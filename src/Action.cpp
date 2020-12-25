@@ -16,8 +16,8 @@ namespace Action
         if (event != NOTHING)
         {
             Routing::MarkRoute(false);
-            RouteZiel.x = -1;
-            RouteZiel.y = -1;
+            RouteDestination.x = -1;
+            RouteDestination.y = -1;
         }
         switch (event)
         {
@@ -127,13 +127,13 @@ namespace Action
             RoutePunkt = -1;
             Steps = 0;
             Step = 0;
-            RouteStart.x = Guy.CurrentPosition.x;
-            RouteStart.y = Guy.CurrentPosition.y;
-            RouteZiel.y = Guy.CurrentPosition.y;
-            for (short x = Guy.CurrentPosition.x; x < MAX_TILES_X; x++) // Zielkoordinate für Introroute finden
+            RouteStart.x = Guy.Pos.x;
+            RouteStart.y = Guy.Pos.y;
+            RouteDestination.y = Guy.Pos.y;
+            for (short x = Guy.Pos.x; x < MAX_TILES_X; x++) // Zielkoordinate für Introroute finden
             {
-                if (Scape[x][Guy.CurrentPosition.y].Terrain != 1) break;
-                RouteZiel.x = x - 1;
+                if (Scape[x][Guy.Pos.y].Terrain != 1) break;
+                RouteDestination.x = x - 1;
             }
             Routing::FindTheWay();
             break;
@@ -145,26 +145,26 @@ namespace Action
             PlaySound(Sound::CRASH, 100);
             break;
         case 3:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = WRECK_1;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_1].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = WRECK_1;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_1].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
 
             World::ChangeBootsFahrt();
-            Guy.CurrentPosition.x += 2;
+            Guy.Pos.x += 2;
             Guy.ScreenPosition.y += 10;
             Guy.AnimationState = GUY_SWIM;
-            Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].x) / 2),
-                                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].y +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y) / 2));
             break;
         case 4:
             StopSound(Sound::SWIM); // Sound hier sofort stoppen
             Guy.AnimationState = GUY_LEFT;
-            Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x) / 2),
-                                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 5:
             Guy.OriginalPosition = Guy.ScreenPosition;
@@ -183,7 +183,7 @@ namespace Action
         {
         case 1: {
             Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-            if ((Erg.x == Guy.CurrentPosition.x) && (Erg.y == Guy.CurrentPosition.y))
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             else if (RoutePunkt % 2 == 0)
                 Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
@@ -194,7 +194,7 @@ namespace Action
         }
         case 2:
             Guy.IsActive = true;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_WAITING;
             else
                 Guy.AnimationState = GUY_WAITING;
@@ -203,7 +203,7 @@ namespace Action
             break;
         case 3:
             Guy.CurrentAction = NOTHING;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_LEFT;
             else
                 Guy.AnimationState = GUY_LEFT;
@@ -225,7 +225,7 @@ namespace Action
         {
         case 1: {
             Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-            if ((Erg.x == Guy.CurrentPosition.x) && (Erg.y == Guy.CurrentPosition.y))
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             else if (RoutePunkt % 2 == 0)
                 Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
@@ -237,7 +237,7 @@ namespace Action
         }
         case 2: {
             Guy.IsActive = true;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_WAITING;
             else
                 Guy.AnimationState = GUY_WAITING;
@@ -247,7 +247,7 @@ namespace Action
         }
         case 3: {
             Guy.CurrentAction = NOTHING;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_LEFT;
             else
                 Guy.AnimationState = GUY_LEFT;
@@ -270,7 +270,7 @@ namespace Action
         {
         case 1: {
             Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-            if ((Erg.x == Guy.CurrentPosition.x) && (Erg.y == Guy.CurrentPosition.y))
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             else if (RoutePunkt % 2 == 0)
                 Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
@@ -282,7 +282,7 @@ namespace Action
         }
         case 2:
             Guy.IsActive = true;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_WAITING;
             else
                 Guy.AnimationState = GUY_WAITING;
@@ -291,7 +291,7 @@ namespace Action
             break;
         case 3:
             Guy.CurrentAction = NOTHING;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_LEFT;
             else
                 Guy.AnimationState = GUY_LEFT;
@@ -315,7 +315,7 @@ namespace Action
         {
         case 1:
             Guy.IsActive = true;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_WAITING;
             else
                 Guy.AnimationState = GUY_WAITING;
@@ -323,7 +323,7 @@ namespace Action
             PapierText = Renderer::DrawText(TOD, TXTPAPIER, 1);
             break;
         case 2:
-            if (!BootsFahrt)
+            if (!IsInBoat)
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_LAYING_TENT;
@@ -333,7 +333,7 @@ namespace Action
             Guy.IsActive = true;
             Nacht = false;
             Renderer::Fade(100, 100, 100);
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_DEAD;
             else
                 Guy.AnimationState = GUY_DEAD;
@@ -347,7 +347,7 @@ namespace Action
             break;
         case 5:
             Nacht = false;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_LEFT;
             else
                 Guy.AnimationState = GUY_LEFT;
@@ -369,13 +369,13 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x = Guy.ScreenPosition.x;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y = Guy.ScreenPosition.y;
+            Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x = Guy.ScreenPosition.x;
+            Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y = Guy.ScreenPosition.y;
 
-            Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x) / 2),
-                                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 2:
             Guy.CurrentAction = NOTHING;
@@ -392,10 +392,10 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width + 4,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width + 4,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height);
             break;
         case 2: case 4:
             Guy.IsActive = true;
@@ -413,21 +413,21 @@ namespace Action
             break;
         case 6:
             {
-                if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == SOS)
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Object == SOS)
                     Chance -= 0.1f;
 
-                short i = Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object; // Um sich kurz das Objekt zu merken 
+                short i = Scape[Guy.Pos.x][Guy.Pos.y].Object; // Um sich kurz das Objekt zu merken
 
                 if ((i >= HOUSE_1) && (i <= HOUSE_3))
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = TREE_BIG;
+                    Scape[Guy.Pos.x][Guy.Pos.y].Object = TREE_BIG;
                 else
                 {
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = -1;
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = 0;
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = 0;
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = -1;
+                    Scape[Guy.Pos.x][Guy.Pos.y].Object = -1;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 0;
+                    Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = -1;
                 }
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = 0;
+                Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
 
                 if (i == PIPE)
                     World::FillRohr();
@@ -452,17 +452,17 @@ namespace Action
         }
         while (true)
         {
-            Ziel.x = Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + rand() % TILE_SIZE_X;
-            Ziel.y = Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + rand() % TILE_SIZE_Y;
+            Ziel.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % TILE_SIZE_X;
+            Ziel.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % TILE_SIZE_Y;
             Coordinate Erg = Renderer::GetKachel(Ziel.x, Ziel.y);
-            if ((Erg.x == Guy.CurrentPosition.x) && (Erg.y == Guy.CurrentPosition.y))
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 break; // Wenn das gefundene Ziel in der Kachel, dann fertig
         }
         Guy.ActionNumber++;
         switch (Guy.ActionNumber)
         {
         case 1: case 3: case 5: case 7:
-            if (BootsFahrt)
+            if (IsInBoat)
             {
                 if (Guy.ActionNumber == 1)
                 {
@@ -478,7 +478,7 @@ namespace Action
             break;
         case 2: case 4: case 6: case 8:
             Guy.IsActive = true;
-            if (BootsFahrt)
+            if (IsInBoat)
             {
                 if (Guy.ActionNumber == 2)
                     Guy.ScreenPosition.y += 5;
@@ -491,7 +491,7 @@ namespace Action
             World::AddTime(0, 4);
             break;
         case 9:
-            if (BootsFahrt)
+            if (IsInBoat)
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_DIVING_3;
@@ -503,11 +503,11 @@ namespace Action
             break;
         case 11:
             Guy.IsActive = true;
-            if (BootsFahrt)
+            if (IsInBoat)
                 Guy.AnimationState = GUY_BOAT_LEFT;
 
             // Auf Strand und Fluss
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain == 2) || ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= RIVER_1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= FLOODGATE_6)))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Terrain == 2) || ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) && (Scape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6)))
             {
                 if (Guy.Inventory[RAW_STONE] < 10)
                 {
@@ -520,7 +520,7 @@ namespace Action
                 else
                     PapierText = Renderer::DrawText(ROHSTEINZUVIEL, TXTPAPIER, 1);
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == BUSH)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y].Object == BUSH)
             {
                 i = rand() % 2;
                 switch (i)
@@ -544,8 +544,8 @@ namespace Action
                     break;
                 }
             }
-            else if (((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= TREE_1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= TREE_BIG)) ||
-                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= HOUSE_1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= HOUSE_3)))
+            else if (((Scape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) && (Scape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_BIG)) ||
+                ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) && (Scape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3)))
             {
                 i = rand() % 3;
                 switch (i)
@@ -582,9 +582,9 @@ namespace Action
                     break;
                 }
             }
-            else if (BootsFahrt)
+            else if (IsInBoat)
             {
-                if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == WRECK_1)
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Object == WRECK_1)
                 {
                     if (Guy.Inventory[RAW_TELESCOPE] == 0)
                     {
@@ -599,7 +599,7 @@ namespace Action
                     else
                         PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
                 }
-                else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == WRECK_2)
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Object == WRECK_2)
                 {
                     if (Guy.Inventory[RAW_MAP] == 0)
                     {
@@ -635,10 +635,10 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width / 2,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height + 2);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height + 2);
             break;
         case 2: case 3:
             Guy.IsActive = true;
@@ -647,7 +647,7 @@ namespace Action
             World::AddTime(0, 2);
             break;
         case 4:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 5:
@@ -666,10 +666,10 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width / 2 - 14,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height + 9);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2 - 14,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height + 9);
             break;
         case 2:
             Guy.IsActive = true;
@@ -680,10 +680,10 @@ namespace Action
             break;
         case 3:
             Guy.ScreenPosition.x -= 5;
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width / 2 + 6,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height + 2);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2 + 6,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height + 2);
             break;
         case 4:
             Guy.IsActive = true;
@@ -738,10 +738,10 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width / 2 + 9,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height + 3);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2 + 9,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height + 3);
             break;
         case 2: case 3: case 4: case 5: case 6:
             Guy.IsActive = true;
@@ -754,10 +754,10 @@ namespace Action
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_WAITING;
-                short i = Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object + (TREE_DOWN_1 - TREE_1);
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = i;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x -= 17;
+                short i = Scape[Guy.Pos.x][Guy.Pos.y].Object + (TREE_DOWN_1 - TREE_1);
+                Scape[Guy.Pos.x][Guy.Pos.y].Object = i;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x -= 17;
                 PlaySound(Sound::TIMBER, 100);
                 break;
             }
@@ -765,7 +765,7 @@ namespace Action
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 9:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = -1;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = -1;
             Guy.Inventory[RAW_TREE_TRUNK]++;
             if (Guy.Inventory[RAW_TREE_TRUNK] > 10) Guy.Inventory[RAW_TREE_TRUNK] = 10;
             Guy.Inventory[RAW_TREE_BRANCH] += 5;
@@ -789,51 +789,51 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object)
+            switch (Scape[Guy.Pos.x][Guy.Pos.y].Object)
             {
             case RIVER_1:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 35,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 26);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 35,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
             case RIVER_2:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 19,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 26);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 19,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
             case RIVER_3:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 22,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 20);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 22,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 20);
                 break;
             case RIVER_4:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 34,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 23);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 34,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 23);
                 break;
             case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 34,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 33);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 34,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 33);
                 break;
             case RIVER_5: case RIVER_9: case RIVER_END_1: case RIVER_START_1: case FLOODGATE_1: case FLOODGATE_5:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 20,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 33);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 20,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 33);
                 break;
             case RIVER_8: case RIVER_END_4: case RIVER_START_3: case FLOODGATE_4:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 22,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 26);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 22,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
             case RIVER_10: case RIVER_END_3: case RIVER_START_4: case FLOODGATE_6:
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + 32,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + 26);
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 32,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
             }
             break;
         case 2:
             Guy.IsActive = true;
             PlaySound(Sound::FISH, 100);
-            if (BootsFahrt)
+            if (IsInBoat)
             {
                 Guy.ScreenPosition.y -= 2;
                 Guy.AnimationState = GUY_BOAT_FISHING_1;
             }
-            switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object)
+            switch (Scape[Guy.Pos.x][Guy.Pos.y].Object)
             {
             case RIVER_1: case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
                 Guy.AnimationState = GUY_FISHING_LEFT_1;
@@ -851,9 +851,9 @@ namespace Action
             break;
         case 3: case 4: case 5: case 6:
             Guy.IsActive = true;
-            if (BootsFahrt) Guy.AnimationState = GUY_BOAT_FISHING_2;
+            if (IsInBoat) Guy.AnimationState = GUY_BOAT_FISHING_2;
 
-            switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object)
+            switch (Scape[Guy.Pos.x][Guy.Pos.y].Object)
             {
             case RIVER_1: case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
                 Guy.AnimationState = GUY_FISHING_LEFT_2;
@@ -873,9 +873,9 @@ namespace Action
             break;
         case 7:
             Guy.IsActive = true;
-            if (BootsFahrt) Guy.AnimationState = GUY_BOAT_FISHING_3;
+            if (IsInBoat) Guy.AnimationState = GUY_BOAT_FISHING_3;
 
-            switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object)
+            switch (Scape[Guy.Pos.x][Guy.Pos.y].Object)
             {
             case RIVER_1: case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
                 Guy.AnimationState = GUY_FISHING_LEFT_3;
@@ -911,10 +911,10 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width / 2 - 10,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y
-                                + Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height + 1);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2 - 10,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y
+                                + Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height + 1);
             break;
         case 2:
             Guy.IsActive = true;
@@ -925,10 +925,10 @@ namespace Action
         case 3:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_WAITING;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = FIRE;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[FIRE].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[FIRE].targetRect.top);
-            Chance += 2 + 2 * Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Height;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = FIRE;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[FIRE].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[FIRE].targetRect.top);
+            Chance += 2 + 2 * Scape[Guy.Pos.x][Guy.Pos.y].Height;
             World::AddTime(0, 2);
             Guy.ScreenPosition.x -= 5;
             break;
@@ -954,7 +954,7 @@ namespace Action
             Guy.IsActive = true;
             Guy.AnimationState = GUY_LOOK_OUT;
             World::AddTime(0, 40);
-            Chance += 1 + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Height;
+            Chance += 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
             break;
         case 2:
             Guy.IsActive = true;
@@ -970,7 +970,7 @@ namespace Action
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 5:
-            Chance -= 1 + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Height;
+            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
             Guy.CurrentAction = NOTHING;
             break;
         }
@@ -999,7 +999,7 @@ namespace Action
             Guy.ScreenPosition.x += 5;
             Guy.ScreenPosition.y -= 1;
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-            if (((Guy.CurrentPosition.x == SchatzPos.x) && (Guy.CurrentPosition.y == SchatzPos.y)) &&
+            if (((Guy.Pos.x == SchatzPos.x) && (Guy.Pos.y == SchatzPos.y)) &&
                 (!SchatzGef))
             {
                 PapierText = Renderer::DrawText(SCHATZGEFUNDEN, TXTPAPIER, 1);
@@ -1017,64 +1017,64 @@ namespace Action
 
     void field()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[FIELD].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = FIELD;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[FIELD].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[FIELD].targetRect.top);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[FIELD].AnimationPhaseCount;
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[FIELD].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = FIELD;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[FIELD].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[FIELD].targetRect.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[FIELD].AnimationPhaseCount;
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 22,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 23);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 23);
             break;
         case 4:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 4;
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 25,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 21);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 4;
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 25,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 30);
             break;
         case 7:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 5;
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 28,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 19);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 5;
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 19);
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 30);
             break;
         case 10:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 6;
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 31,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 17);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 6;
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 17);
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 30);
             break;
         case 13:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 7;
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 34,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 15);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 7;
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 34,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 30);
             break;
         case 16:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 8;
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 36,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 13);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 8;
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 36,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 30);
@@ -1085,12 +1085,12 @@ namespace Action
             break;
         case 19:
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = FIELD;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[FIELD].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[FIELD].targetRect.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = FIELD;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[FIELD].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[FIELD].targetRect.top);
             break;
         case 20:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             if (Bmp[FIELD].First)
             {
@@ -1116,12 +1116,12 @@ namespace Action
             TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
-                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (BootsFahrt))
+                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
                 break;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.x = Guy.ScreenPosition.x;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].GPosAlt.y = Guy.ScreenPosition.y;
+            Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x = Guy.ScreenPosition.x;
+            Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y = Guy.ScreenPosition.y;
             Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-            if ((Erg.x == Guy.CurrentPosition.x) && (Erg.y == Guy.CurrentPosition.y)) Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             else if (RoutePunkt % 2 == 0) Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); // Nur bis zur Mitte der aktuellen Kacheln laufen
             else Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
             break;
@@ -1130,60 +1130,60 @@ namespace Action
             Stunden = 12;
             Minuten = 0;
             if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
-                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (BootsFahrt))
+                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
                 break;
             // Wohnbare Objekte in der Umgebung suchen 
             Erg.x = -1;
             Erg.y = -1;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) || (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) || (Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3))
             {
-                Erg.x = Guy.CurrentPosition.x;
-                Erg.y = Guy.CurrentPosition.y;
+                Erg.x = Guy.Pos.x;
+                Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Object == HOUSE_3)
+            else if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Object == HOUSE_3)
             {
-                Erg.x = Guy.CurrentPosition.x - 1;
-                Erg.y = Guy.CurrentPosition.y;
+                Erg.x = Guy.Pos.x - 1;
+                Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Object == HOUSE_3)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Object == HOUSE_3)
             {
-                Erg.x = Guy.CurrentPosition.x;
-                Erg.y = Guy.CurrentPosition.y - 1;
+                Erg.x = Guy.Pos.x;
+                Erg.y = Guy.Pos.y - 1;
             }
-            else if (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Object == HOUSE_3)
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Object == HOUSE_3)
             {
-                Erg.x = Guy.CurrentPosition.x + 1;
-                Erg.y = Guy.CurrentPosition.y;
+                Erg.x = Guy.Pos.x + 1;
+                Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Object == HOUSE_3)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Object == HOUSE_3)
             {
-                Erg.x = Guy.CurrentPosition.x;
-                Erg.y = Guy.CurrentPosition.y + 1;
+                Erg.x = Guy.Pos.x;
+                Erg.y = Guy.Pos.y + 1;
             }
-            else if (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Object == TENT)
+            else if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Object == TENT)
             {
-                Erg.x = Guy.CurrentPosition.x - 1;
-                Erg.y = Guy.CurrentPosition.y;
+                Erg.x = Guy.Pos.x - 1;
+                Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Object == TENT)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Object == TENT)
             {
-                Erg.x = Guy.CurrentPosition.x;
-                Erg.y = Guy.CurrentPosition.y - 1;
+                Erg.x = Guy.Pos.x;
+                Erg.y = Guy.Pos.y - 1;
             }
-            else if (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Object == TENT)
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Object == TENT)
             {
-                Erg.x = Guy.CurrentPosition.x + 1;
-                Erg.y = Guy.CurrentPosition.y;
+                Erg.x = Guy.Pos.x + 1;
+                Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Object == TENT)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Object == TENT)
             {
-                Erg.x = Guy.CurrentPosition.x;
-                Erg.y = Guy.CurrentPosition.y + 1;
+                Erg.x = Guy.Pos.x;
+                Erg.y = Guy.Pos.y + 1;
             }
             if ((Erg.x != -1) && (Erg.y != -1))
             {
-                Guy.CurrentPosition.x = Erg.x;
-                Guy.CurrentPosition.y = Erg.y;
+                Guy.Pos.x = Erg.x;
+                Guy.Pos.y = Erg.y;
                 if ((Scape[Erg.x][Erg.y].Object == TENT) &&
                     (Scape[Erg.x][Erg.y].AnimationPhase < Bmp[Scape[Erg.x][Erg.y].Object].AnimationPhaseCount))
                     Routing::ShortRoute(Scape[Erg.x][Erg.y].xScreen + Scape[Erg.x][Erg.y].ObjectPosOffset.x + 3,
@@ -1201,10 +1201,10 @@ namespace Action
             Stunden = 12;
             Minuten = 0;
             if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
-                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (BootsFahrt))
+                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
                 break;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_CLIMBING_1;
@@ -1215,16 +1215,16 @@ namespace Action
             Stunden = 12;
             Minuten = 0;
             if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
-                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (BootsFahrt))
+                (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
                 break;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_ENTER_TENT;
             }
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_ENTER_HOUSE;
@@ -1240,16 +1240,16 @@ namespace Action
             Renderer::Fade(55, 50, 55);
             Stunden = 12;
             Minuten = 0;
-            if (BootsFahrt) break;
+            if (IsInBoat) break;
             Guy.IsActive = true;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 if (Guy.AnimationState != GUY_SLEEPING_TENT) Guy.ScreenPosition.x += 4;
                 Guy.AnimationState = GUY_SLEEPING_TENT;
             }
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 if (Guy.AnimationState != GUY_SLEEP_HOUSE) Guy.ScreenPosition.x += 14;
                 Guy.AnimationState = GUY_SLEEP_HOUSE;
@@ -1260,13 +1260,13 @@ namespace Action
             Renderer::Fade(25, 25, 35);
             Stunden = 12;
             Minuten = 0;
-            if (BootsFahrt) break;
+            if (IsInBoat) break;
             Guy.IsActive = true;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
                 Guy.AnimationState = GUY_SLEEPING_TENT;
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
                 Guy.AnimationState = GUY_SLEEP_HOUSE;
             else Guy.AnimationState = GUY_SLEEPING;
             break;
@@ -1277,17 +1277,17 @@ namespace Action
             Minuten = 0;
             PlaySound(Sound::WOLF, 100);
             // Falsche Objekte Löschen
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= TREE_DOWN_1) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= TREE_DOWN_4))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_DOWN_1) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_DOWN_4))
             {
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = -1;
+                Scape[Guy.Pos.x][Guy.Pos.y].Object = -1;
                 Guy.Inventory[RAW_TREE_TRUNK]++;
                 if (Guy.Inventory[RAW_TREE_TRUNK] > 10) Guy.Inventory[RAW_TREE_TRUNK] = 10;
             }
 
             // Je nach Schlafort Zustand verändern
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 World::AddResource(GESUNDHEIT, -5);
                 if (Guy.ResourceAmount[GESUNDHEIT] <= 0)
@@ -1305,14 +1305,14 @@ namespace Action
                     PapierText = Renderer::DrawText(TAGENDE2, TXTPAPIER, 1);
                 }
             }
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 World::AddResource(GESUNDHEIT, +20);
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE4, TXTPAPIER, 1);
             }
-            else if (BootsFahrt)
+            else if (IsInBoat)
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_BOAT_WAITING;
@@ -1350,11 +1350,11 @@ namespace Action
             // if (BootsFahrt) Game::NeuesSpiel(true); // Später hier tot!!
 
             Guy.IsActive = true;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
                 Guy.AnimationState = GUY_SLEEPING_TENT;
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
                 Guy.AnimationState = GUY_SLEEP_HOUSE;
             else Guy.AnimationState = GUY_SLEEPING;
             break;
@@ -1366,11 +1366,11 @@ namespace Action
             Stunden = 0;
             Minuten = 0;
             Guy.IsActive = true;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
                 Guy.AnimationState = GUY_SLEEPING_TENT;
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
                 Guy.AnimationState = GUY_SLEEP_HOUSE;
             else Guy.AnimationState = GUY_SLEEPING;
             break;
@@ -1380,8 +1380,8 @@ namespace Action
             Minuten = 0;
             StopSound(Sound::SNORE);
             Guy.IsActive = true;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.ScreenPosition.x -= 14;
                 Guy.AnimationState = GUY_EXIT_HOUSE;
@@ -1392,8 +1392,8 @@ namespace Action
             Renderer::Fade(90, 80, 80);
             Stunden = 0;
             Minuten = 0;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_CLIMBING_2;
@@ -1417,7 +1417,7 @@ namespace Action
         {
         case 1: {
             Coordinate Erg = Renderer::GetKachel(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-            if ((Erg.x == Guy.CurrentPosition.x) && (Erg.y == Guy.CurrentPosition.y)) Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             else if (RoutePunkt % 2 == 0) Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); //Nur bis zur Mitte der aktuellen Kacheln laufen
             else Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
             TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
@@ -1445,54 +1445,54 @@ namespace Action
             RoutePunkt = -1;
             Steps = 0;
             Step = 0;
-            RouteStart.x = Guy.CurrentPosition.x;
-            RouteStart.y = Guy.CurrentPosition.y;
-            RouteZiel.y = Guy.CurrentPosition.y;
+            RouteStart.x = Guy.Pos.x;
+            RouteStart.y = Guy.Pos.y;
+            RouteDestination.y = Guy.Pos.y;
             for (short x = MAX_TILES_X - 1; x > 1; x--) // Position des Rettungsschiffs festlegen
             {
-                if (Scape[x][Guy.CurrentPosition.y].Terrain != 1) break;
-                RouteZiel.x = x + 1;
+                if (Scape[x][Guy.Pos.y].Terrain != 1) break;
+                RouteDestination.x = x + 1;
             }
             // Schiff hinbauen
-            Scape[RouteZiel.x][RouteZiel.y].AnimationPhase = 0;
-            Scape[RouteZiel.x][RouteZiel.y].Object = GUY_SHIP;
-            Scape[RouteZiel.x][RouteZiel.y].ObjectPosOffset.x = 10;
-            Scape[RouteZiel.x][RouteZiel.y].ObjectPosOffset.y = 10;
-            RouteZiel.x -= 2;
+            Scape[RouteDestination.x][RouteDestination.y].AnimationPhase = 0;
+            Scape[RouteDestination.x][RouteDestination.y].Object = GUY_SHIP;
+            Scape[RouteDestination.x][RouteDestination.y].ObjectPosOffset.x = 10;
+            Scape[RouteDestination.x][RouteDestination.y].ObjectPosOffset.y = 10;
+            RouteDestination.x -= 2;
             Routing::FindTheWay();
             Guy.AnimationState = GUY_LEFT;
             break;
         case 5:
             Guy.AnimationState = GUY_LEFT;
-            Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].x) / 2),
-                                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].y +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 6:
-            Guy.CurrentPosition.x += 2;
+            Guy.Pos.x += 2;
             Guy.AnimationState = GUY_SWIM;
-            Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x) / 2),
-                                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 7:
             Guy.ScreenPosition.y -= 10;
-            if (!BootsFahrt) World::ChangeBootsFahrt();
+            if (!IsInBoat) World::ChangeBootsFahrt();
             Guy.IsActive = true;
             Guy.AnimationState = GUY_SHIP;
             RoutePunkt = -1;
             Steps = 0;
             Step = 0;
-            RouteStart.x = Guy.CurrentPosition.x;
-            RouteStart.y = Guy.CurrentPosition.y;
-            RouteZiel.y = Guy.CurrentPosition.y;
-            RouteZiel.x = MAX_TILES_X - 2;
+            RouteStart.x = Guy.Pos.x;
+            RouteStart.y = Guy.Pos.y;
+            RouteDestination.y = Guy.Pos.y;
+            RouteDestination.x = MAX_TILES_X - 2;
             Routing::FindTheWay();
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[SEA_WAVES].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[SEA_WAVES].targetRect.top);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = SEA_WAVES;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[SEA_WAVES].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[SEA_WAVES].targetRect.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = SEA_WAVES;
             break;
         case 8:
             Guy.IsActive = true;
@@ -1508,27 +1508,27 @@ namespace Action
 
     void tent()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = TENT;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = TENT;
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[TENT].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[TENT].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[TENT].targetRect.top);
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[TENT].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[TENT].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[TENT].targetRect.top);
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 22,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 12);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
             break;
         case 2: case 3: case 12: case 13:
             Guy.IsActive = true;
@@ -1538,17 +1538,17 @@ namespace Action
             World::AddTime(0, 15);
             break;
         case 4:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 2;
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 31,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 20);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 2;
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
             break;
         case 5:
             Routing::ShortRoute(Guy.OriginalPosition.x,
                                 Guy.OriginalPosition.y);
             break;
         case 6:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 3,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 20);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 3,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
 
             break;
         case 7: case 8:
@@ -1559,27 +1559,27 @@ namespace Action
             World::AddTime(0, 15);
             break;
         case 9:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 3;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 3;
             Routing::ShortRoute(Guy.OriginalPosition.x,
                                 Guy.OriginalPosition.y);
             break;
         case 10:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 31,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 20);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
             break;
         case 11:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 22,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 12);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
             break;
         case 14:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 31,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 20);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
             break;
         case 15:
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 16:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             if (Bmp[TENT].First)
             {
@@ -1593,36 +1593,36 @@ namespace Action
 
     void boat()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = BOAT;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = BOAT;
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[BOAT].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[BOAT].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[BOAT].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[BOAT].targetRect.top);
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[BOAT].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[BOAT].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[BOAT].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[BOAT].targetRect.top);
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 30,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 21);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 30,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
             break;
         case 2:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 29,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 20);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 29,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
             break;
         case 3:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 28,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 19);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[BOAT].AnimationPhaseCount + 1);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 19);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[BOAT].AnimationPhaseCount + 1);
             break;
         case 4: case 5: case 6: case 8: case 9: case 10: case 12: case 13: case 14:
             Guy.IsActive = true;
@@ -1632,42 +1632,42 @@ namespace Action
             World::AddTime(0, 15);
             break;
         case 7:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 22,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 16);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[BOAT].AnimationPhaseCount + 2);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 16);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[BOAT].AnimationPhaseCount + 2);
             break;
         case 11:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 14,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 11);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[BOAT].AnimationPhaseCount + 3);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 14,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 11);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[BOAT].AnimationPhaseCount + 3);
             break;
         case 15:
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 16:
-            if (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Terrain == 1)
+            if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Terrain == 1)
             {
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = 0;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = 10;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 10;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Terrain == 1)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1)
             {
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 1;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = 25;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = 10;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 25;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 10;
             }
-            else if (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Terrain == 1)
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1)
             {
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = 30;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = 27;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 30;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 27;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Terrain == 1)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1)
             {
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 1;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = 0;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = 28;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 28;
             }
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             if (Bmp[BOAT].First)
@@ -1682,36 +1682,36 @@ namespace Action
 
     void pipe()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = PIPE;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = PIPE;
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[PIPE].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[PIPE].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[PIPE].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[PIPE].targetRect.top);
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[PIPE].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[PIPE].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[PIPE].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[PIPE].targetRect.top);
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 30,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 21);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 30,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
             break;
         case 2:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 29,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 20);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 29,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
             break;
         case 3:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 28,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 15);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[PIPE].AnimationPhaseCount + 1);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[PIPE].AnimationPhaseCount + 1);
             break;
         case 4: case 5: case 6: case 11: case 12: case 13:
             Guy.IsActive = true;
@@ -1728,15 +1728,15 @@ namespace Action
             World::AddTime(0, 5);
             break;
         case 10:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 17,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 13);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[PIPE].AnimationPhaseCount + 2);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 17,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[PIPE].AnimationPhaseCount + 2);
             break;
         case 17:
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 18:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             World::FillRohr();
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             if (Bmp[PIPE].First)
@@ -1751,52 +1751,52 @@ namespace Action
 
     void sos()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = SOS;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = SOS;
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[SOS].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[SOS].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[SOS].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[SOS].targetRect.top);
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[SOS].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[SOS].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[SOS].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[SOS].targetRect.top);
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 4,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 13);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 4,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
             break;
         case 4:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 12,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 17);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 1);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 12,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 17);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 1);
             break;
         case 7:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 12,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 9);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 2);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 12,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 9);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 2);
             break;
         case 10:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 19,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 12);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 3);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 19,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 3);
             break;
         case 13:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 21,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 5);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 4);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 21,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 5);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 4);
             break;
         case 16:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 28,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 8);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 5);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 8);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 5);
             break;
         case 2: case 5: case 8: case 11: case 14: case 17:
             Guy.IsActive = true;
@@ -1818,8 +1818,8 @@ namespace Action
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 20:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain == 0) || (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Terrain == 4))
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Terrain == 0) || (Scape[Guy.Pos.x][Guy.Pos.y].Terrain == 4))
                 Chance += 1;
             else Chance += 2; // Dürfte nur noch der Strand übrig sein
             Bmp[BUTTON_STOP].AnimationPhase = -1;
@@ -1835,27 +1835,27 @@ namespace Action
 
     void fireplace()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = BONFIRE;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = BONFIRE;
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[BONFIRE].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[BONFIRE].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = static_cast<short>(Bmp[BONFIRE].targetRect.left);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = static_cast<short>(Bmp[BONFIRE].targetRect.top);
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[BONFIRE].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[BONFIRE].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[BONFIRE].targetRect.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[BONFIRE].targetRect.top);
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 4,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 16);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 4,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 16);
             break;
         case 2:
             Guy.IsActive = true;
@@ -1872,11 +1872,11 @@ namespace Action
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 1);
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[BONFIRE].AnimationPhaseCount + 1);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[BONFIRE].AnimationPhaseCount + 1);
             break;
         case 4:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 15);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
             break;
         case 5: case 6: case 7:
             Guy.IsActive = true;
@@ -1884,15 +1884,15 @@ namespace Action
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 1);
-            if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber != 5)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase =
-                    static_cast<short>(Bmp[BONFIRE].AnimationPhaseCount + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber - 4);
+            if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber != 5)
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase =
+                    static_cast<short>(Bmp[BONFIRE].AnimationPhaseCount + Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber - 4);
             break;
         case 8:
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 9:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             if (Bmp[BONFIRE].First)
             {
@@ -1906,26 +1906,26 @@ namespace Action
 
     void house1()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[HOUSE_1].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[HOUSE_1].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = HOUSE_1;
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[HOUSE_1].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[HOUSE_1].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = HOUSE_1;
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x +
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
                                 Bmp[TREE_BIG].Width / 2 - 3,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y +
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
                                 Bmp[TREE_BIG].Height + 1);
             break;
         case 2: case 3: case 4: case 5:
@@ -1938,7 +1938,7 @@ namespace Action
         case 6: case 7: case 8: case 9:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_1;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 1);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 1);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -1946,7 +1946,7 @@ namespace Action
         case 10: case 11: case 12: case 13:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_1;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 2);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 2);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -1954,7 +1954,7 @@ namespace Action
         case 14: case 15: case 16: case 17:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_1;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 3);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 3);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -1963,7 +1963,7 @@ namespace Action
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 19:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             Guy.CurrentAction = NOTHING;
             break;
@@ -1972,26 +1972,26 @@ namespace Action
 
     void house2()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[HOUSE_2].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[HOUSE_2].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = HOUSE_2;
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[HOUSE_2].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[HOUSE_2].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = HOUSE_2;
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x +
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
                                 Bmp[TREE_BIG].Width / 2,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y +
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
                                 Bmp[TREE_BIG].Height + 1);
             break;
         case 2:
@@ -2011,7 +2011,7 @@ namespace Action
         case 7: case 8: case 9: case 10:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 1);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 1);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -2019,7 +2019,7 @@ namespace Action
         case 11: case 12: case 13: case 14:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 2);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 2);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -2027,7 +2027,7 @@ namespace Action
         case 15: case 16: case 17: case 18:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 3);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 3);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -2035,7 +2035,7 @@ namespace Action
         case 19:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_CLIMBING_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 4);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 4);
             World::AddResource(NAHRUNG, -1);
             World::AddResource(WASSER, -1);
             World::AddTime(0, 1);
@@ -2044,7 +2044,7 @@ namespace Action
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 21:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             Guy.CurrentAction = NOTHING;
             break;
@@ -2053,26 +2053,26 @@ namespace Action
 
     void house3()
     {
-        if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber == 0)
+        if (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
         {
             Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
             for (short i = 0; i < SPRITE_COUNT; i++)
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] = Bmp[HOUSE_3].RequiredRawMaterials[i];
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = Bmp[HOUSE_3].AnimationPhaseCount;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = HOUSE_3;
+                Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[HOUSE_3].RequiredRawMaterials[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[HOUSE_3].AnimationPhaseCount;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = HOUSE_3;
         }
-        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber++;
+        Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
         if (!World::CheckRohstoff())
         {
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber--;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
             return;
         }
-        switch (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber)
+        switch (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x +
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
                                 Bmp[TREE_BIG].Width / 2,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y +
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
                                 Bmp[TREE_BIG].Height + 1);
             break;
         case 2:
@@ -2092,7 +2092,7 @@ namespace Action
         case 7: case 8: case 9: case 10:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 1);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 1);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -2100,7 +2100,7 @@ namespace Action
         case 11: case 12: case 13: case 14:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 2);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 2);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -2108,7 +2108,7 @@ namespace Action
         case 15: case 16: case 17: case 18:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_HAMMER_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 3);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 3);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -2116,7 +2116,7 @@ namespace Action
         case 19:
             Guy.IsActive = true;
             Guy.AnimationState = GUY_CLIMBING_2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 4);
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 4);
             World::AddResource(NAHRUNG, -1);
             World::AddResource(WASSER, -1);
             World::AddTime(0, 1);
@@ -2125,7 +2125,7 @@ namespace Action
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
             break;
         case 21:
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+            Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Bmp[BUTTON_STOP].AnimationPhase = -1;
             if (Bmp[HOUSE_3].First)
             {
@@ -2147,20 +2147,20 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 3,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 20);
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
-                Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x +
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 3,
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
+                Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
                                     Bmp[TREE_BIG].Width / 2 + 1,
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
                                     Bmp[TREE_BIG].Height + 1);
             break;
         case 2:
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_CLIMBING_1;
@@ -2169,14 +2169,14 @@ namespace Action
             }
             break;
         case 3:
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_ENTER_TENT;
             }
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_ENTER_HOUSE;
@@ -2190,14 +2190,14 @@ namespace Action
             break;
         case 4: case 5:
             Guy.IsActive = true;
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == TENT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 if (Guy.ActionNumber == 4) Guy.ScreenPosition.x += 4;
                 Guy.AnimationState = GUY_SLEEPING_TENT;
             }
-            else if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 if (Guy.ActionNumber == 4) Guy.ScreenPosition.x += 14;
                 Guy.AnimationState = GUY_SLEEP_HOUSE;
@@ -2209,8 +2209,8 @@ namespace Action
         case 6:
             Guy.IsActive = true;
             StopSound(Sound::SNORE);
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.ScreenPosition.x -= 14;
                 Guy.AnimationState = GUY_EXIT_HOUSE;
@@ -2218,8 +2218,8 @@ namespace Action
             else Guy.AnimationState = GUY_STAND_UP;
             break;
         case 7:
-            if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == HOUSE_3) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
             {
                 Guy.IsActive = true;
                 Guy.AnimationState = GUY_CLIMBING_2;
@@ -2240,26 +2240,26 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            Routing::ShortRoute(Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x + 14,
-                                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y + 11);
+            Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 14,
+                                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 11);
             break;
         case 2:
             World::ChangeBootsFahrt();
-            Guy.ScreenPosition.x = Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen +
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x +
-                Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width / 2;
-            Guy.ScreenPosition.y = Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen +
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y +
-                Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height / 2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = -1;
-            if (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Terrain == 1) Guy.CurrentPosition.x--;
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Terrain == 1) Guy.CurrentPosition.y--;
-            else if (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Terrain == 1) Guy.CurrentPosition.x++;
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Terrain == 1) Guy.CurrentPosition.y++;
-            Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x) / 2),
-                                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2));
+            Guy.ScreenPosition.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen +
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
+                Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
+            Guy.ScreenPosition.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen +
+                Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
+                Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height / 2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = -1;
+            if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Terrain == 1) Guy.Pos.x--;
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1) Guy.Pos.y--;
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1) Guy.Pos.x++;
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1) Guy.Pos.y++;
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
 
             break;
         case 3:
@@ -2276,72 +2276,72 @@ namespace Action
         switch (Guy.ActionNumber)
         {
         case 1:
-            if (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Terrain != 1)
+            if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].x) / 2),
-                                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].y +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y) / 2));
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Terrain != 1)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].x +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x) / 2),
-                                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].y) / 2));
             }
-            else if (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Terrain != 1)
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].x) / 2),
-                                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].y +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Terrain != 1)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].x +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x) / 2),
-                                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y +
-                                        Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].y) / 2));
             }
             break;
         case 2:
-            if (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Terrain != 1)
+            if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1)
             {
-                Guy.CurrentPosition.x--;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+                Guy.Pos.x--;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Terrain != 1)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1)
             {
-                Guy.CurrentPosition.y--;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 1;
+                Guy.Pos.y--;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
             }
-            else if (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Terrain != 1)
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1)
             {
-                Guy.CurrentPosition.x++;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 0;
+                Guy.Pos.x++;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             }
-            else if (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Terrain != 1)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1)
             {
-                Guy.CurrentPosition.y++;
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase = 1;
+                Guy.Pos.y++;
+                Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
             }
 
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object = BOAT;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber = Bmp[BOAT].RequiredActionCases;
+            Scape[Guy.Pos.x][Guy.Pos.y].Object = BOAT;
+            Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = Bmp[BOAT].RequiredActionCases;
 
             World::ChangeBootsFahrt();
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.x = Guy.ScreenPosition.x -
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen -
-                Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Width / 2;
-            Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ObjectPosOffset.y = Guy.ScreenPosition.y -
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen -
-                Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].Height / 2;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = Guy.ScreenPosition.x -
+                Scape[Guy.Pos.x][Guy.Pos.y].xScreen -
+                Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = Guy.ScreenPosition.y -
+                Scape[Guy.Pos.x][Guy.Pos.y].yScreen -
+                Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Height / 2;
 
-            Routing::ShortRoute(((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x) / 2),
-                                ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y +
-                                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
 
             break;
         case 3:

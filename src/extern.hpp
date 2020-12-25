@@ -23,7 +23,7 @@ extern short PapierText; // Wieviel Papier? (in Pixel) -1 = Kein Text
 extern short HauptMenue; // Welches Menü?
 extern short TwoClicks; // Für Aktionen mit zwei Mausklicks
 extern float Chance; // Wie groß ist die Chance am Tag gerettet zu werden
-extern bool BootsFahrt; // Gerade mit dem Boot unterwegs?
+extern bool IsInBoat; // Gerade mit dem Boot unterwegs?
 extern bool Nacht; // Wird die Tageszusammenfassung angezeigt?
 extern short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
 extern short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
@@ -45,7 +45,7 @@ extern TextArea TextBereich[TEXTANZ];
 
 extern Coordinate Camera, // aktueller Kartenausschnitt
              MousePosition, //     "    Mauskoordinaten
-             RouteZiel, RouteStart, // Koordinaten des Starts und des Endes der Route
+             RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
              Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
              RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
              SchatzPos; // Hier ist der Schatz vergraben

@@ -107,7 +107,7 @@ namespace World
             }
         AddResource(GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[WASSER] - 50 + Guy.ResourceAmount[NAHRUNG] - 50) / 1000);
 
-        if ((Spielzustand == State::GAME) && (!BootsFahrt))
+        if ((Spielzustand == State::GAME) && (!IsInBoat))
         {
             for (short i = 0; i <= (60 * h + m); i++)
             {
@@ -267,21 +267,21 @@ namespace World
 
     void CheckSpzButton()
     {
-        if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= FIELD) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= BONFIRE) &&
-            (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase >= Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount) &&
+        if ((Scape[Guy.Pos.x][Guy.Pos.y].Object >= FIELD) && (Scape[Guy.Pos.x][Guy.Pos.y].Object <= BONFIRE) &&
+            (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase >= Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount) &&
             (Bmp[BUTTON_STOP].AnimationPhase == -1))
         {
             if (Bmp[BUTTON_CONTINUE].AnimationPhase == -1) Bmp[BUTTON_CONTINUE].AnimationPhase = 0;
         }
         else Bmp[BUTTON_CONTINUE].AnimationPhase = -1;
 
-        if ((Bmp[BUTTON_STOP].AnimationPhase == -1) && (((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == BOAT) &&
-                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount)) ||
-            ((BootsFahrt) &&
-                (((Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Terrain != 1) && (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Object == -1)) ||
-                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Terrain != 1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Object == -1)) ||
-                    ((Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Terrain != 1) && (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Object == -1)) ||
-                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Terrain != 1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Object == -1))))))
+        if ((Bmp[BUTTON_STOP].AnimationPhase == -1) && (((Scape[Guy.Pos.x][Guy.Pos.y].Object == BOAT) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) ||
+            ((IsInBoat) &&
+                (((Scape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1) && (Scape[Guy.Pos.x - 1][Guy.Pos.y].Object == -1)) ||
+                    ((Scape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1) && (Scape[Guy.Pos.x][Guy.Pos.y - 1].Object == -1)) ||
+                    ((Scape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1) && (Scape[Guy.Pos.x + 1][Guy.Pos.y].Object == -1)) ||
+                    ((Scape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1) && (Scape[Guy.Pos.x][Guy.Pos.y + 1].Object == -1))))))
         {
             if (Bmp[BUTTON_LAY_DOWN].AnimationPhase == -1) Bmp[BUTTON_LAY_DOWN].AnimationPhase = 0;
         }
@@ -291,11 +291,11 @@ namespace World
     bool CheckRohstoff()
     {
         short Benoetigt = 0; // Anzahl der Gesamtbenötigten Rohstoffe
-        for (short i = 0; i < SPRITE_COUNT; i++) Benoetigt += Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].RequiredRawMaterials[i];
+        for (short i = 0; i < SPRITE_COUNT; i++) Benoetigt += Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].RequiredRawMaterials[i];
 
-        float GebrauchtTmp = Benoetigt / static_cast<float>(Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].RequiredActionCases); // Soviel Rohstoffe werden für diesen Schritt benötigt
-        short Gebraucht = static_cast<short>(GebrauchtTmp * Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber -
-            static_cast<short>(GebrauchtTmp * (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber - 1))); // Soviel Rohstoffe werden für diesen Schritt benötigt
+        float GebrauchtTmp = Benoetigt / static_cast<float>(Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].RequiredActionCases); // Soviel Rohstoffe werden für diesen Schritt benötigt
+        short Gebraucht = static_cast<short>(GebrauchtTmp * Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber -
+            static_cast<short>(GebrauchtTmp * (Scape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber - 1))); // Soviel Rohstoffe werden für diesen Schritt benötigt
 
 
         while (true)
@@ -304,11 +304,11 @@ namespace World
             for (short i = 0; i < SPRITE_COUNT; i++)
             {
                 if (Gebraucht == 0) return true;
-                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] > 0) &&
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] > 0) &&
                     (Guy.Inventory[i] > 0))
                 {
                     Guy.Inventory[i]--;
-                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i]--;
+                    Scape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i]--;
                     Gebraucht--;
                     if (Gebraucht == 0) return true;
                     Check = true;
@@ -919,7 +919,7 @@ namespace World
 
     void ChangeBootsFahrt()
     {
-        BootsFahrt = !BootsFahrt;
+        IsInBoat = !IsInBoat;
         // Begehbarkeit umdrehen
         for (short y = 0; y < MAX_TILESY; y++)
             for (short x = 0; x < MAX_TILES_X; x++) Scape[x][y].Walkable = !Scape[x][y].Walkable;
@@ -1434,7 +1434,7 @@ namespace World
         Scape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_2].targetRect.top);
     }
 
-    void Schatz()
+    void Treasure()
     {
         while (true)
         {
@@ -1579,9 +1579,9 @@ namespace World
         for (short i = -1; i <= 1; i++)
             for (short j = -1; j <= 1; j++)
             {
-                if (!Scape[Guy.CurrentPosition.x + i][Guy.CurrentPosition.y + j].Discovered)
+                if (!Scape[Guy.Pos.x + i][Guy.Pos.y + j].Discovered)
                 {
-                    Scape[Guy.CurrentPosition.x + i][Guy.CurrentPosition.y + j].Discovered = true;
+                    Scape[Guy.Pos.x + i][Guy.Pos.y + j].Discovered = true;
                     Aenderung = true;
                 }
             }

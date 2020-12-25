@@ -19,7 +19,7 @@ namespace Game
 
         ofs.write(reinterpret_cast<char*>(Scape), sizeof(Scape));
         ofs.write(reinterpret_cast<char*>(&Guy), sizeof(Guy));
-        ofs.write(reinterpret_cast<char*>(&BootsFahrt), sizeof(BootsFahrt));
+        ofs.write(reinterpret_cast<char*>(&IsInBoat), sizeof(IsInBoat));
         ofs.write(reinterpret_cast<char*>(&Camera), sizeof(Camera));
         ofs.write(reinterpret_cast<char*>(&Chance), sizeof(Chance));
         ofs.write(reinterpret_cast<char*>(&Gitter), sizeof(Gitter));
@@ -49,7 +49,7 @@ namespace Game
 
         ifs.read(reinterpret_cast<char*>(Scape), sizeof(Scape));
         ifs.read(reinterpret_cast<char*>(&Guy), sizeof(Guy));
-        ifs.read(reinterpret_cast<char*>(&BootsFahrt), sizeof(BootsFahrt));
+        ifs.read(reinterpret_cast<char*>(&IsInBoat), sizeof(IsInBoat));
         ifs.read(reinterpret_cast<char*>(&Camera), sizeof(Camera));
         ifs.read(reinterpret_cast<char*>(&Chance), sizeof(Chance));
         ifs.read(reinterpret_cast<char*>(&Gitter), sizeof(Gitter));
@@ -2396,22 +2396,22 @@ namespace Game
             World::Piratenwrack();
 
             // Guy Position
-            Guy.CurrentPosition.x = 1;
-            Guy.CurrentPosition.y = MAX_TILESY / 2;
+            Guy.Pos.x = 1;
+            Guy.Pos.y = MAX_TILESY / 2;
             Guy.ScreenPosition.x =
-            (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][0].x +
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].xScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][2].x) / 2;
+            (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
             Guy.ScreenPosition.y =
-            (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][1].y +
-                Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].yScreen + EckKoor[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Type][3].y) / 2;
+            (Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
 
             Camera.x = Guy.ScreenPosition.x - static_cast<short>(rcGesamt.right / 2);
             Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcGesamt.bottom / 2);
 
             Chance = 0;
 
-            BootsFahrt = false;
-            if (!BootsFahrt) World::ChangeBootsFahrt();
+            IsInBoat = false;
+            if (!IsInBoat) World::ChangeBootsFahrt();
 
             Tag = 1;
             Stunden = 0;
@@ -2445,7 +2445,7 @@ namespace Game
             }
 
         World::Generate(); // Einmal vor dem Schatz schon entdeckt malen
-        World::Schatz();
+        World::Treasure();
 
         for (y = 0; y < MAX_TILESY; y++) for (x = 0; x < MAX_TILES_X; x++) Scape[x][y].Discovered = Entdeckttmp[x][y];
         World::Entdecken();
