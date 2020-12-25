@@ -16,10 +16,10 @@
 #include <cstdlib>
 #include <exception>
 
-Application::Application(const std::string& name, HINSTANCE instance_handle)
+Application::Application(const std::string &name, HINSTANCE instance_handle)
     : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::Fullscreen)
-      , m_name(name)
-      , m_time(std::time(nullptr))
+, m_name(name)
+, m_time(std::time(nullptr))
 {
     // Set globals
     g_hInst = instance_handle;
@@ -38,17 +38,13 @@ Application::Application(const std::string& name, HINSTANCE instance_handle)
 void Application::process_events()
 {
     sf::Event event;
-    while (m_window.pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
-        {
+
+    while (m_window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
             Direct::finiObjects();
             m_window.close();
-        }
-        else if (event.type == sf::Event::KeyReleased)
-        {
-            if (event.key.code == sf::Keyboard::F4)
-            {
+        } else if (event.type == sf::Event::KeyReleased) {
+            if (event.key.code == sf::Keyboard::F4) {
                 Direct::finiObjects();
                 m_window.close();
             }
@@ -60,23 +56,22 @@ void Application::run()
 {
     sf::Clock timer;
 
-    while (m_window.isOpen())
-    {
+    while (m_window.isOpen()) {
         process_events();
 
-        if (timer.getElapsedTime() > sf::milliseconds(1000))
-        {
-            while (true)
-            {
+        if (timer.getElapsedTime() > sf::milliseconds(1000)) {
+            while (true) {
                 Bild++;
                 std::time_t Zeitsave = std::time(nullptr);
-                if (m_time + 5 < Zeitsave)
-                {
+
+                if (m_time + 5 < Zeitsave) {
                     m_time = Zeitsave;
                     LastBild = (LastBild + Bild / 5) / 2;
                     Bild = 0;
-                    if (LastBild == 0)
+
+                    if (LastBild == 0) {
                         LastBild = 50;
+                    }
 
                     // BilderproSec ausgeben
                     /*
@@ -87,36 +82,33 @@ void Application::run()
                     */
                 }
 
-                if (Spielzustand == State::LOGO)
-                {
-                    if (Direct::CheckKey() == 2) // Das Keyboard abfragen
+                if (Spielzustand == State::LOGO) {
+                    if (Direct::CheckKey() == 2) { // Das Keyboard abfragen
                         break;
+                    }
 
                     Renderer::ZeigeLogo(); // Bild auffrischen
-                }
-                else if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED))
-                {
-                    if (Direct::CheckKey() == 0) // Das Keyboard abfragen
-                    {
+                } else if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED)) {
+                    if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
                         m_window.close();
                         break;
                     }
 
                     Math::Animationen(); // Animationen weiterschalten
-                    if (!Guy.IsActive) // Aktionen starten
+
+                    if (!Guy.IsActive) { // Aktionen starten
                         Action::handler(Guy.CurrentAction);
+                    }
 
                     Renderer::ZeigeIntro(); // Bild auffrischen
-                }
-                else if (Spielzustand == State::GAME)
-                {
+                } else if (Spielzustand == State::GAME) {
                     // Hide system cursor
 //                    SetCursor(nullptr);
 
-                    if ((Stunden >= 12) && (Minuten != 0) && (Guy.CurrentAction != Action::DAY_END)) // Hier ist der Tag zuende
-                    {
-                        if (Guy.CurrentAction == Action::LOOKOUT)
+                    if ((Stunden >= 12) && (Minuten != 0) && (Guy.CurrentAction != Action::DAY_END)) { // Hier ist der Tag zuende
+                        if (Guy.CurrentAction == Action::LOOKOUT) {
                             Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
+                        }
 
                         Guy.IsActive = false;
                         Guy.ActionNumber = 0;
@@ -125,21 +117,22 @@ void Application::run()
 
                     World::CheckSpzButton(); // Die Spezialkn�pfe umschalten
                     Direct::CheckMouse(); // Den MouseZustand abchecken
-                    if (Direct::CheckKey() == 0) // Das Keyboard abfragen
-                    {
+
+                    if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
                         m_window.close();
                         break;
                     }
+
                     Renderer::LimitScroll(); // Das Scrollen an die Grenzen der Landschaft anpassen
                     Math::Animationen(); // Die Animationsphasen weiterschalten
-                    if (!Guy.IsActive) // Die Aktionen starten
+
+                    if (!Guy.IsActive) { // Die Aktionen starten
                         Action::handler(Guy.CurrentAction);
+                    }
+
                     Renderer::Zeige(); // Das Bild zeichnen
-                }
-                else if (Spielzustand == State::OUTRO)
-                {
-                    if (Direct::CheckKey() == 0)
-                    {
+                } else if (Spielzustand == State::OUTRO) {
+                    if (Direct::CheckKey() == 0) {
                         m_window.close();
                         break;
                     }

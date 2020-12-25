@@ -24,24 +24,28 @@
 // Name: DDLoadBitmap()
 // Desc: Create a DirectDrawSurface from a bitmap resource.
 //-----------------------------------------------------------------------------
-extern "C" IDirectDrawSurface4*
-DDLoadBitmap(IDirectDraw4* pdd, LPCSTR szBitmap, int dx, int dy)
+extern "C" IDirectDrawSurface4 *
+DDLoadBitmap(IDirectDraw4 *pdd, LPCSTR szBitmap, int dx, int dy)
 {
     HBITMAP hbm;
     BITMAP bm;
     DDSURFACEDESC2 ddsd;
-    IDirectDrawSurface4* pdds;
+    IDirectDrawSurface4 *pdds;
 
     //
     //  Try to load the bitmap as a resource, if that fails, try it as a file
     //
     hbm = (HBITMAP)LoadImage(GetModuleHandle(nullptr), szBitmap, IMAGE_BITMAP, dx,
                              dy, LR_CREATEDIBSECTION);
+
     if (hbm == nullptr)
         hbm = (HBITMAP)LoadImage(nullptr, szBitmap, IMAGE_BITMAP, dx, dy,
                                  LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-    if (hbm == nullptr)
+
+    if (hbm == nullptr) {
         return nullptr;
+    }
+
     //
     // Get size of the bitmap
     //
@@ -55,8 +59,11 @@ DDLoadBitmap(IDirectDraw4* pdd, LPCSTR szBitmap, int dx, int dy)
     ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
     ddsd.dwWidth = bm.bmWidth;
     ddsd.dwHeight = bm.bmHeight;
-    if (pdd->CreateSurface(&ddsd, &pdds, nullptr) != DD_OK)
+
+    if (pdd->CreateSurface(&ddsd, &pdds, nullptr) != DD_OK) {
         return nullptr;
+    }
+
     DDCopyBitmap(pdds, hbm, 0, 0, 0, 0);
     DeleteObject(hbm);
     return pdds;
@@ -69,7 +76,7 @@ DDLoadBitmap(IDirectDraw4* pdd, LPCSTR szBitmap, int dx, int dy)
 //       normaly used to re-load a surface after a restore.
 //-----------------------------------------------------------------------------
 HRESULT
-DDReLoadBitmap(IDirectDrawSurface4* pdds, LPCSTR szBitmap)
+DDReLoadBitmap(IDirectDrawSurface4 *pdds, LPCSTR szBitmap)
 {
     HBITMAP hbm;
     HRESULT hr;
@@ -79,19 +86,22 @@ DDReLoadBitmap(IDirectDrawSurface4* pdds, LPCSTR szBitmap)
     //
     hbm = (HBITMAP)LoadImage(GetModuleHandle(nullptr), szBitmap, IMAGE_BITMAP, 0,
                              0, LR_CREATEDIBSECTION);
+
     if (hbm == nullptr)
         hbm = (HBITMAP)LoadImage(nullptr, szBitmap, IMAGE_BITMAP, 0, 0,
                                  LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-    if (hbm == nullptr)
-    {
+
+    if (hbm == nullptr) {
         OutputDebugString("handle is null\n");
         return E_FAIL;
     }
+
     hr = DDCopyBitmap(pdds, hbm, 0, 0, 0, 0);
-    if (hr != DD_OK)
-    {
+
+    if (hr != DD_OK) {
         OutputDebugString("ddcopybitmap failed\n");
     }
+
     DeleteObject(hbm);
     return hr;
 }
@@ -102,7 +112,7 @@ DDReLoadBitmap(IDirectDrawSurface4* pdds, LPCSTR szBitmap)
 // Desc: Draw a bitmap into a DirectDrawSurface
 //-----------------------------------------------------------------------------
 extern "C" HRESULT
-DDCopyBitmap(IDirectDrawSurface4* pdds, HBITMAP hbm, int x, int y,
+DDCopyBitmap(IDirectDrawSurface4 *pdds, HBITMAP hbm, int x, int y,
              int dx, int dy)
 {
     HDC hdcImage;
@@ -111,8 +121,10 @@ DDCopyBitmap(IDirectDrawSurface4* pdds, HBITMAP hbm, int x, int y,
     DDSURFACEDESC2 ddsd;
     HRESULT hr;
 
-    if (hbm == nullptr || pdds == nullptr)
+    if (hbm == nullptr || pdds == nullptr) {
         return E_FAIL;
+    }
+
     //
     // Make sure this surface is restored.
     //
@@ -121,8 +133,11 @@ DDCopyBitmap(IDirectDrawSurface4* pdds, HBITMAP hbm, int x, int y,
     // Select bitmap into a memoryDC so we can use it.
     //
     hdcImage = CreateCompatibleDC(nullptr);
-    if (!hdcImage)
-    OutputDebugString("createcompatible dc failed\n");
+
+    if (!hdcImage) {
+        OutputDebugString("createcompatible dc failed\n");
+    }
+
     SelectObject(hdcImage, hbm);
     //
     // Get size of the bitmap
@@ -137,12 +152,12 @@ DDCopyBitmap(IDirectDrawSurface4* pdds, HBITMAP hbm, int x, int y,
     ddsd.dwFlags = DDSD_HEIGHT | DDSD_WIDTH;
     pdds->GetSurfaceDesc(&ddsd);
 
-    if ((hr = pdds->GetDC(&hdc)) == DD_OK)
-    {
+    if ((hr = pdds->GetDC(&hdc)) == DD_OK) {
         StretchBlt(hdc, 0, 0, ddsd.dwWidth, ddsd.dwHeight, hdcImage, x, y,
                    dx, dy, SRCCOPY);
         pdds->ReleaseDC(hdc);
     }
+
     DeleteDC(hdcImage);
     return hr;
 }
@@ -154,59 +169,61 @@ DDCopyBitmap(IDirectDrawSurface4* pdds, HBITMAP hbm, int x, int y,
 //       if the resource does not exist or nullptr is passed create a
 //       default 332 palette.
 //-----------------------------------------------------------------------------
-extern "C" IDirectDrawPalette*
-DDLoadPalette(IDirectDraw4* pdd, LPCSTR szBitmap)
+extern "C" IDirectDrawPalette *
+DDLoadPalette(IDirectDraw4 *pdd, LPCSTR szBitmap)
 {
-    IDirectDrawPalette* ddpal;
+    IDirectDrawPalette *ddpal;
     int i;
     int n;
     int fh;
     HRSRC h;
     LPBITMAPINFOHEADER lpbi;
     PALETTEENTRY ape[256];
-    RGBQUAD* prgb;
+    RGBQUAD *prgb;
 
     //
     // Build a 332 palette as the default.
     //
-    for (i = 0; i < 256; i++)
-    {
+    for (i = 0; i < 256; i++) {
         ape[i].peRed = (BYTE)(((i >> 5) & 0x07) * 255 / 7);
         ape[i].peGreen = (BYTE)(((i >> 2) & 0x07) * 255 / 7);
         ape[i].peBlue = (BYTE)(((i >> 0) & 0x03) * 255 / 3);
         ape[i].peFlags = (BYTE)0;
     }
+
     //
     // Get a pointer to the bitmap resource.
     //
-    if (szBitmap && (h = FindResource(nullptr, szBitmap, RT_BITMAP)))
-    {
+    if (szBitmap && (h = FindResource(nullptr, szBitmap, RT_BITMAP))) {
         lpbi = (LPBITMAPINFOHEADER)LockResource(LoadResource(nullptr, h));
-        if (!lpbi)
-        OutputDebugString("lock resource failed\n");
+
+        if (!lpbi) {
+            OutputDebugString("lock resource failed\n");
+        }
+
         prgb = (RGBQUAD *)((BYTE *)lpbi + lpbi->biSize);
-        if (lpbi == nullptr || lpbi->biSize < sizeof(BITMAPINFOHEADER))
+
+        if (lpbi == nullptr || lpbi->biSize < sizeof(BITMAPINFOHEADER)) {
             n = 0;
-        else if (lpbi->biBitCount > 8)
+        } else if (lpbi->biBitCount > 8) {
             n = 0;
-        else if (lpbi->biClrUsed == 0)
+        } else if (lpbi->biClrUsed == 0) {
             n = 1 << lpbi->biBitCount;
-        else
+        } else {
             n = lpbi->biClrUsed;
+        }
+
         //
         //  A DIB color table has its colors stored BGR not RGB
         //  so flip them around.
         //
-        for (i = 0; i < n; i++)
-        {
+        for (i = 0; i < n; i++) {
             ape[i].peRed = prgb[i].rgbRed;
             ape[i].peGreen = prgb[i].rgbGreen;
             ape[i].peBlue = prgb[i].rgbBlue;
             ape[i].peFlags = 0;
         }
-    }
-    else if (szBitmap && (fh = _lopen(szBitmap, OF_READ)) != -1)
-    {
+    } else if (szBitmap && (fh = _lopen(szBitmap, OF_READ)) != -1) {
         BITMAPFILEHEADER bf;
         BITMAPINFOHEADER bi;
 
@@ -214,26 +231,29 @@ DDLoadPalette(IDirectDraw4* pdd, LPCSTR szBitmap)
         _lread(fh, &bi, sizeof(bi));
         _lread(fh, ape, sizeof(ape));
         _lclose(fh);
-        if (bi.biSize != sizeof(BITMAPINFOHEADER))
+
+        if (bi.biSize != sizeof(BITMAPINFOHEADER)) {
             n = 0;
-        else if (bi.biBitCount > 8)
+        } else if (bi.biBitCount > 8) {
             n = 0;
-        else if (bi.biClrUsed == 0)
+        } else if (bi.biClrUsed == 0) {
             n = 1 << bi.biBitCount;
-        else
+        } else {
             n = bi.biClrUsed;
+        }
+
         //
         //  A DIB color table has its colors stored BGR not RGB
         //  so flip them around.
         //
-        for (i = 0; i < n; i++)
-        {
+        for (i = 0; i < n; i++) {
             BYTE r = ape[i].peRed;
 
             ape[i].peRed = ape[i].peBlue;
             ape[i].peBlue = r;
         }
     }
+
     pdd->CreatePalette(DDPCAPS_8BIT, ape, &ddpal, nullptr);
     return ddpal;
 }
@@ -246,7 +266,7 @@ DDLoadPalette(IDirectDraw4* pdd, LPCSTR szBitmap)
 //       then we lock the memory and see what it got mapped to.
 //-----------------------------------------------------------------------------
 extern "C" DWORD
-DDColorMatch(IDirectDrawSurface4* pdds, COLORREF rgb)
+DDColorMatch(IDirectDrawSurface4 *pdds, COLORREF rgb)
 {
     COLORREF rgbT = 0;
     HDC hdc;
@@ -257,36 +277,39 @@ DDColorMatch(IDirectDrawSurface4* pdds, COLORREF rgb)
     //
     //  Use GDI SetPixel to color match for us
     //
-    if (rgb != CLR_INVALID && pdds->GetDC(&hdc) == DD_OK)
-    {
+    if (rgb != CLR_INVALID && pdds->GetDC(&hdc) == DD_OK) {
         rgbT = GetPixel(hdc, 0, 0); // Save current pixel value
         SetPixel(hdc, 0, 0, rgb); // Set our value
         pdds->ReleaseDC(hdc);
     }
+
     //
     // Now lock the surface so we can read back the converted color
     //
     ddsd.dwSize = sizeof(ddsd);
-    while ((hres = pdds->Lock(nullptr, &ddsd, 0, nullptr)) == DDERR_WASSTILLDRAWING)
-    {
+
+    while ((hres = pdds->Lock(nullptr, &ddsd, 0, nullptr)) == DDERR_WASSTILLDRAWING) {
         // Busy wait
     }
 
-    if (hres == DD_OK)
-    {
+    if (hres == DD_OK) {
         dw = *(DWORD *)ddsd.lpSurface; // Get DWORD
-        if (ddsd.ddpfPixelFormat.dwRGBBitCount < 32)
-            dw &= (1 << ddsd.ddpfPixelFormat.dwRGBBitCount) - 1; // Mask it to bpp
+
+        if (ddsd.ddpfPixelFormat.dwRGBBitCount < 32) {
+            dw &= (1 << ddsd.ddpfPixelFormat.dwRGBBitCount) - 1;    // Mask it to bpp
+        }
+
         pdds->Unlock(nullptr);
     }
+
     //
     //  Now put the color that was there back.
     //
-    if (rgb != CLR_INVALID && pdds->GetDC(&hdc) == DD_OK)
-    {
+    if (rgb != CLR_INVALID && pdds->GetDC(&hdc) == DD_OK) {
         SetPixel(hdc, 0, 0, rgbT);
         pdds->ReleaseDC(hdc);
     }
+
     return dw;
 }
 
@@ -298,7 +321,7 @@ DDColorMatch(IDirectDrawSurface4* pdds, COLORREF rgb)
 //       in the upper-left corner will be used.
 //-----------------------------------------------------------------------------
 extern "C" HRESULT
-DDSetColorKey(IDirectDrawSurface4* pdds, COLORREF rgb)
+DDSetColorKey(IDirectDrawSurface4 *pdds, COLORREF rgb)
 {
     DDCOLORKEY ddck;
 

@@ -43,8 +43,8 @@ RECT rcPanel = {MAX_SCREEN_X - 205, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
 RECT rcKarte = {MAX_SCREEN_X - 158, 27, rcKarte.left + MAX_TILES_X * 2, rcKarte.top + (MAX_TILESY + 13) * 2};
 
 //Die Eckkoordinaten der Kacheln (Achtung: mit überlappendem Rand)
-Coordinate EckKoor[13][4] =
-{//       0           1           2           3          Ecke
+Coordinate EckKoor[13][4] = {
+    //       0           1           2           3          Ecke
     {{-1, 29}, {26, 15}, {54, 30}, {27, 44}},//0
     {{-1, 13}, {26, 15}, {54, 30}, {27, 28}},//1
     {{-1, 29}, {26, 15}, {54, 14}, {27, 28}},//2
@@ -64,11 +64,11 @@ Coordinate EckKoor[13][4] =
 TextArea TextBereich[TEXTANZ];
 
 Coordinate Camera, // aktueller Kartenausschnitt
-      MousePosition, //     "    Mauskoordinaten
-      RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
-      Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
-      RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
-      SchatzPos; // Hier ist der Schatz vergraben
+           MousePosition, //     "    Mauskoordinaten
+           RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
+           Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
+           RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
+           SchatzPos; // Hier ist der Schatz vergraben
 RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 GUY Guy;
 BMP Bmp[SPRITE_COUNT];
@@ -99,7 +99,7 @@ LPDIRECTDRAWSURFACE4 lpDDSInventar = nullptr; // DirectDraw Inventar surface
 LPDIRECTDRAWSURFACE4 lpDDSScape = nullptr; // DirectDraw Landschaft surface
 LPDIRECTDRAWSURFACE4 lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
 LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
-DDBLTFX ddbltfx; // DirectDraw Effekte 
+DDBLTFX ddbltfx; // DirectDraw Effekte
 DDPIXELFORMAT ddpf;
 DDSURFACEDESC2 ddsd, ddsd2; // Zwischenspeicher der SurfaceEigenschaften
 

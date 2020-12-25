@@ -44,11 +44,11 @@ extern Coordinate EckKoor[13][4];
 extern TextArea TextBereich[TEXTANZ];
 
 extern Coordinate Camera, // aktueller Kartenausschnitt
-             MousePosition, //     "    Mauskoordinaten
-             RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
-             Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
-             RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
-             SchatzPos; // Hier ist der Schatz vergraben
+       MousePosition, //     "    Mauskoordinaten
+       RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
+       Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
+       RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
+       SchatzPos; // Hier ist der Schatz vergraben
 
 extern RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 extern GUY Guy;
@@ -80,7 +80,7 @@ extern LPDIRECTDRAWSURFACE4 lpDDSInventar; // DirectDraw Inventar surface
 extern LPDIRECTDRAWSURFACE4 lpDDSScape; // DirectDraw Landschaft surface
 extern LPDIRECTDRAWSURFACE4 lpDDSSchatzkarte; // SchatzkartenSurface
 extern LPDIRECTDRAWPALETTE lpDDPal; // DirectDraw palette
-extern DDBLTFX ddbltfx; // DirectDraw Effekte 
+extern DDBLTFX ddbltfx; // DirectDraw Effekte
 extern DDPIXELFORMAT ddpf;
 extern DDSURFACEDESC2 ddsd, ddsd2; // Zwischenspeicher der SurfaceEigenschaften
 
