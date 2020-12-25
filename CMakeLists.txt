@@ -10,7 +10,6 @@ FetchContent_MakeAvailable(SFML)
 add_executable(Schiffbruch WIN32
     src/Action.cpp
     src/Application.cpp
-    src/ddutil.cpp
     src/Direct.cpp
     src/Game.cpp
     src/globals.cpp
