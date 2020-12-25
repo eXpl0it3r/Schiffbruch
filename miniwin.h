@@ -54,10 +54,6 @@ using LPUNKNOWN  = void*;
 //struct COLORREF {
 //    int r,g,b;
 //};
-inline COLORREF RGB(int r,int g,int b) { return {}; }
-
-inline void LoadString(HINSTANCE , short, char* s, int) { *s=0; }
-inline void TranslateFileName(char *, size_t, LPCSTR ) {}
 
 #define MB_OK 0
 inline void MessageBeep(int) {}

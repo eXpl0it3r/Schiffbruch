@@ -52,29 +52,30 @@ void MakeRohString(short x, short y, short Objekt)
 
         strcat(RohString, " ");
 
+        const char *name = "";
         switch (i) {
         case RAW_TREE_BRANCH:
-            LoadString(g_hInst, AST, TmpString, 1024);
+            name = GetLanguageString(AST);
             break;
 
         case RAW_STONE:
-            LoadString(g_hInst, STEIN, TmpString, 1024);
+            name = GetLanguageString(STEIN);
             break;
 
         case RAW_LEAF:
-            LoadString(g_hInst, BLATT, TmpString, 1024);
+            name = GetLanguageString(BLATT);
             break;
 
         case RAW_LIANA:
-            LoadString(g_hInst, LIANE, TmpString, 1024);
+            name = GetLanguageString(LIANE);
             break;
 
         case RAW_TREE_TRUNK:
-            LoadString(g_hInst, STAMM, TmpString, 1024);
+            name = GetLanguageString(STAMM);
             break;
         }
 
-        strcat(RohString, TmpString);
+        strcat(RohString, name);
         strcat(RohString, "=");
 
         if (Objekt == -1) {

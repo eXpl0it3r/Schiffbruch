@@ -89,5 +89,7 @@ extern sf::Image *lpDDSSchatzkarte; // SchatzkartenSurface
 //extern DDGAMMARAMP DDGammaRamp;
 //extern DDGAMMARAMP DDGammaOld;
 
+const char *GetLanguageString(const int index);
+
 // Directinput
 extern HINSTANCE g_hInst;

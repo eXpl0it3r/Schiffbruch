@@ -19,71 +19,67 @@ Coordinate GuyPosScreenStart; // Absolute StartPosition bei einem Schritt (Für 
 
 void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
 {
-    char Text[1024], TextTmp[1024]; // Text für Infoleiste
+//    char Text[1024], TextTmp[1024]; // Text für Infoleiste
+    std::string Text;
+
 
     // Info anzeigen
     Coordinate Erg = Renderer::GetTile((MousePosition.x + Camera.x), (MousePosition.y + Camera.y)); // Die angeklickte Kachel
 
     if (Scape[Erg.x][Erg.y].Discovered) {
-        LoadString(g_hInst, 45 + Scape[Erg.x][Erg.y].Terrain, Text, 1024);
+        Text = GetLanguageString(45 + Scape[Erg.x][Erg.y].Terrain);
 
         if ((Scape[Erg.x][Erg.y].Object != -1) && (Scape[Erg.x][Erg.y].Object != SEA_WAVES)) {
-            LoadString(g_hInst, MIT, TextTmp, 1024);
-            strcat(Text, " ");
-            strcat(Text, TextTmp);
-            strcat(Text, " ");
+            Text += " ";
+            Text += GetLanguageString(MIT);
+            Text += " ";
 
             if ((Scape[Erg.x][Erg.y].Object >= TREE_1) && (Scape[Erg.x][Erg.y].Object <= TREE_4)) {
-                LoadString(g_hInst, BAUMTEXT, TextTmp, 1024);
+                Text += GetLanguageString(BAUMTEXT);
             } else if ((Scape[Erg.x][Erg.y].Object >= RIVER_1) && (Scape[Erg.x][Erg.y].Object <= FLOODGATE_6)) {
-                LoadString(g_hInst, FLUSSTEXT, TextTmp, 1024);
+                Text += GetLanguageString(FLUSSTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == BUSH) {
-                LoadString(g_hInst, BUSCHTEXT, TextTmp, 1024);
+                Text += GetLanguageString(BUSCHTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == TENT) {
-                LoadString(g_hInst, ZELTTEXT, TextTmp, 1024);
+                Text += GetLanguageString(ZELTTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == FIELD) {
-                LoadString(g_hInst, FELDTEXT, TextTmp, 1024);
+                Text += GetLanguageString(FELDTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == BOAT) {
-                LoadString(g_hInst, BOOTTEXT, TextTmp, 1024);
+                Text += GetLanguageString(BOOTTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == PIPE) {
-                LoadString(g_hInst, ROHRTEXT, TextTmp, 1024);
+                Text += GetLanguageString(ROHRTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == SOS) {
-                LoadString(g_hInst, SOSTEXT, TextTmp, 1024);
+                Text += GetLanguageString(SOSTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == HOUSE_1) {
-                LoadString(g_hInst, HAUS1TEXT, TextTmp, 1024);
+                Text += GetLanguageString(HAUS1TEXT);
             } else if (Scape[Erg.x][Erg.y].Object == HOUSE_2) {
-                LoadString(g_hInst, HAUS2TEXT, TextTmp, 1024);
+                Text += GetLanguageString(HAUS2TEXT);
             } else if (Scape[Erg.x][Erg.y].Object == HOUSE_3) {
-                LoadString(g_hInst, HAUS3TEXT, TextTmp, 1024);
+                Text += GetLanguageString(HAUS3TEXT);
             } else if (Scape[Erg.x][Erg.y].Object == TREE_BIG) {
-                LoadString(g_hInst, BAUMGROSSTEXT, TextTmp, 1024);
+                Text += GetLanguageString(BAUMGROSSTEXT);
             } else if (Scape[Erg.x][Erg.y].Object == BONFIRE) {
-                LoadString(g_hInst, FEUERSTELLETEXT, TextTmp, 1024);
+                Text += GetLanguageString(FEUERSTELLETEXT);
             } else if (Scape[Erg.x][Erg.y].Object == FIRE) {
-                LoadString(g_hInst, FEUERTEXT, TextTmp, 1024);
+                Text += GetLanguageString(FEUERTEXT);
             } else if ((Scape[Erg.x][Erg.y].Object == WRECK_1) || (Scape[Erg.x][Erg.y].Object == WRECK_2)) {
-                LoadString(g_hInst, WRACKTEXT, TextTmp, 1024);
+                Text += GetLanguageString(WRACKTEXT);
             }
-
-            strcat(Text, TextTmp);
 
             if ((Scape[Erg.x][Erg.y].Object >= FIELD) &&
                     (Scape[Erg.x][Erg.y].Object <= BONFIRE)) {
                 // Baufortschrittanzeigen
-                strcat(Text, " ");
-                strcat(Text, "(");
-                std::sprintf(TextTmp, "%d", (Scape[Erg.x][Erg.y].ConstructionActionNumber * 100) / Bmp[Scape[Erg.x][Erg.y].Object].RequiredActionCases);
-                strcat(Text, TextTmp);
-                strcat(Text, "%");
-                strcat(Text, ")");
+                Text += " (";
+                Text += std::to_string((Scape[Erg.x][Erg.y].ConstructionActionNumber * 100) / Bmp[Scape[Erg.x][Erg.y].Object].RequiredActionCases);
+                Text += "%)";
                 // benötigte Rohstoffe anzeigen
                 World::MakeRohString(Erg.x, Erg.y, -1);
-                strcat(Text, RohString);
+                Text += RohString;
             }
         }
 
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(Text, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(Text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
     }
 
@@ -530,11 +526,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_FARM].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_FARM].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNFELD, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNFELD);
         World::MakeRohString(-1, -1, FIELD);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_FARM].IsAnimationRunning = true;
@@ -560,11 +556,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_TENT].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_TENT].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNZELT, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNZELT);
         World::MakeRohString(-1, -1, TENT);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_TENT].IsAnimationRunning = true;
@@ -591,11 +587,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_BOAT].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_BOAT].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNBOOT, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNBOOT);
         World::MakeRohString(-1, -1, BOAT);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_BOAT].IsAnimationRunning = true;
@@ -625,11 +621,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_PIPE].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_PIPE].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNROHR, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNROHR);
         World::MakeRohString(-1, -1, PIPE);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_PIPE].IsAnimationRunning = true;
@@ -655,11 +651,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_SOS].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_SOS].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNSOS, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNSOS);
         World::MakeRohString(-1, -1, SOS);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_SOS].IsAnimationRunning = true;
@@ -685,11 +681,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_HOUSE_1].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_HOUSE_1].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNHAUS1, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNHAUS1);
         World::MakeRohString(-1, -1, HOUSE_1);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_HOUSE_1].IsAnimationRunning = true;
@@ -717,11 +713,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_HOUSE_2].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_HOUSE_2].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNHAUS2, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNHAUS2);
         World::MakeRohString(-1, -1, HOUSE_2);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_HOUSE_2].IsAnimationRunning = true;
@@ -751,11 +747,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_HOUSE_3].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_HOUSE_3].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNHAUS3, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNHAUS3);
         World::MakeRohString(-1, -1, HOUSE_3);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_HOUSE_3].IsAnimationRunning = true;
@@ -786,11 +782,11 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_FIRE].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_FIRE].AnimationPhase != -1)) {
-        LoadString(g_hInst, BEGINNFEUERSTELLE, StdString, 1024);
+        std::string text = GetLanguageString(BEGINNFEUERSTELLE);
         World::MakeRohString(-1, -1, BONFIRE);
-        strcat(StdString, RohString);
+        text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
-        Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
+        Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
                              static_cast<short>(TextBereich[TXTTEXTFELD].textRect.top), 2);
 
         Bmp[BUTTON_FIRE].IsAnimationRunning = true;
