@@ -1701,8 +1701,8 @@ void Treasure()
                 SchatzPos.y = y;
             }
 
-            lpDDSScape->Lock(nullptr, &ddsd, DDLOCK_WAIT, nullptr);
-            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
+//            lpDDSScape->Lock(nullptr, &ddsd, DDLOCK_WAIT, nullptr);
+//            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
             for (short i = 0; i < TREASUREMAP_WIDTH; i++)
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
@@ -1713,8 +1713,8 @@ void Treasure()
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100 * 3 / 4), &ddsd2);
                 }
 
-            lpDDSScape->Unlock(nullptr);
-            lpDDSSchatzkarte->Unlock(nullptr);
+//            lpDDSScape->Unlock(nullptr);
+//            lpDDSSchatzkarte->Unlock(nullptr);
 
             rcRectsrc = Bmp[CROSS].sourceRect;
             rcRectdes.left = TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2;
@@ -1723,7 +1723,7 @@ void Treasure()
             rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
             Renderer::Blitten(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
 
-            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
+//            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
             // Weichzeichnen
             for (short i = 0; i < TREASUREMAP_WIDTH; i++)
@@ -1746,7 +1746,7 @@ void Treasure()
                     }
                 }
 
-            lpDDSSchatzkarte->Unlock(nullptr);
+//            lpDDSSchatzkarte->Unlock(nullptr);
             break;
         }
     }

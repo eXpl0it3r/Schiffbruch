@@ -19,7 +19,7 @@ private:
     void process_events();
 
 private:
-    sf::Window m_window;
+    sf::RenderWindow m_window;
 
     std::string m_name;
     std::time_t m_time; // Beginning of the second
