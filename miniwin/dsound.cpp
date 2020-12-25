@@ -1,4 +1,3 @@
-#include "devilution.h"
 #include "miniwin/dsound.h"
 #include "stubs.h"
 #include <SDL.h>

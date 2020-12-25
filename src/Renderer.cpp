@@ -13,6 +13,10 @@
 #include <cstdio>
 #include <cstring>
 
+#include <SFML/Window.hpp>
+
+#define MB_LEFT sf::Mouse::Left;
+
 namespace Renderer
 {
     double pi = 3.1415926535; // pi, was sonst
@@ -108,7 +112,7 @@ namespace Renderer
         else
         {
             Erg = 0;
-            MessageBeep(MB_OK);
+//            MessageBeep(MB_OK);
         }
         return Erg;
     }

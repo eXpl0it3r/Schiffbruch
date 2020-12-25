@@ -1,9 +1,8 @@
 #include "devilution.h"
 #include "miniwin/ddraw.h"
 #include "stubs.h"
+#include "dx.h"
 #include <SDL.h>
-
-#include "DiabloUI/diabloui.h"
 
 namespace dvl {
 
@@ -258,10 +257,10 @@ HRESULT StubPalette::GetCaps(LPDWORD lpdwCaps)
 HRESULT StubPalette::GetEntries(DWORD dwFlags, DWORD dwBase, DWORD dwNumEntries, LPPALETTEENTRY lpEntries)
 {
 	for (int i = 0; i < dwNumEntries; i++) {
-		lpEntries[i].peFlags = 0;
-		lpEntries[i].peRed = system_palette[i].peRed;
-		lpEntries[i].peGreen = system_palette[i].peGreen;
-		lpEntries[i].peBlue = system_palette[i].peBlue;
+//		lpEntries[i].peFlags = 0;
+//		lpEntries[i].peRed = system_palette[i].peRed;
+//		lpEntries[i].peGreen = system_palette[i].peGreen;
+//		lpEntries[i].peBlue = system_palette[i].peBlue;
 	}
 	return DVL_S_OK;
 }
@@ -269,12 +268,12 @@ HRESULT StubPalette::GetEntries(DWORD dwFlags, DWORD dwBase, DWORD dwNumEntries,
 HRESULT StubPalette::SetEntries(DWORD dwFlags, DWORD dwStartingEntry, DWORD dwCount, LPPALETTEENTRY lpEntries)
 {
 	for (int i = 0; i < dwCount; i++) {
-		system_palette[i].peFlags = 0;
-		system_palette[i].peRed = lpEntries[i].peRed;
-		system_palette[i].peGreen = lpEntries[i].peGreen;
-		system_palette[i].peBlue = lpEntries[i].peBlue;
+//		system_palette[i].peFlags = 0;
+//		system_palette[i].peRed = lpEntries[i].peRed;
+//		system_palette[i].peGreen = lpEntries[i].peGreen;
+//		system_palette[i].peBlue = lpEntries[i].peBlue;
 	}
-	palette_update();
+//	palette_update();
 	return DVL_S_OK;
 }
 

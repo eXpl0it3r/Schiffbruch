@@ -2,23 +2,23 @@
 
 const int KXPIXEL = 54; // Breite der Kacheln
 const int KYPIXEL = 44; // Hoehe der Kacheln
-const unsigned int S1XPIXEL = 20; // Breite der Schrift1
-const unsigned int S1YPIXEL = 20; // Höhe der Schrift1
-const unsigned int S1ABSTAND = 13; // Abstand zum nächsten Buchstaben
-const unsigned int S2XPIXEL = 10; // Breite der Schrift2
-const unsigned int S2YPIXEL = 15; // Höhe der Schrift2
-const unsigned int S2ABSTAND = 10; // Abstand zum nächsten Buchstaben
-const unsigned int MAXXKACH = 60; // Anzahl der Kacheln
-const unsigned int MAXYKACH = 60;
-const unsigned int MAXSCAPEX = 3360; // Größe der Scapesurface
-const unsigned int MAXSCAPEY = 1700;
-const unsigned int MAXX = 1280; // Bildschirmauflösung
-const unsigned int MAXY = 720;
-const unsigned int GIPFEL = 3; // Hoehe des Gipfels
-const unsigned int MAXFLUSS = 1000; // Maximale Flusslänge
-const unsigned int FLUSSANZAHL = 1; // Wieviele Flüsse? Mehr als 1 funktioniert seltsamerweise nicht mehr..
-const unsigned int SKARTEX = 370; // Schatzkartenbreite
-const unsigned int SKARTEY = 370; // Schatzkartenhöhe
+const int S1XPIXEL = 20; // Breite der Schrift1
+const int S1YPIXEL = 20; // Höhe der Schrift1
+const int S1ABSTAND = 13; // Abstand zum nächsten Buchstaben
+const int S2XPIXEL = 10; // Breite der Schrift2
+const int S2YPIXEL = 15; // Höhe der Schrift2
+const int S2ABSTAND = 10; // Abstand zum nächsten Buchstaben
+const int MAXXKACH = 60; // Anzahl der Kacheln
+const int MAXYKACH = 60;
+const int MAXSCAPEX = 3360; // Größe der Scapesurface
+const int MAXSCAPEY = 1700;
+const int MAXX = 1280; // Bildschirmauflösung
+const int MAXY = 720;
+const int GIPFEL = 3; // Hoehe des Gipfels
+const int MAXFLUSS = 1000; // Maximale Flusslänge
+const int FLUSSANZAHL = 1; // Wieviele Flüsse? Mehr als 1 funktioniert seltsamerweise nicht mehr..
+const int SKARTEX = 370; // Schatzkartenbreite
+const int SKARTEY = 370; // Schatzkartenhöhe
 
 enum Tiles
 {

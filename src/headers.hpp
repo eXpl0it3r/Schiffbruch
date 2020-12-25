@@ -9,9 +9,9 @@
 #define DIRECTDRAW_VERSION 0x0500
 
 #include <windows.h>
-#include <windowsx.h>
+//#include <windowsx.h>
 #include <ddraw.h>
-#include <dinput.h>
+//#include <dinput.h>
 
 #include "ddutil.h"
 #include "resource.h"

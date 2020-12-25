@@ -181,7 +181,7 @@ namespace Action
         Guy.AkNummer++;
         switch (Guy.AkNummer)
         {
-        case 1:
+        case 1: {
             ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
             if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -191,6 +191,7 @@ namespace Action
                 Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
             TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
             break;
+        }
         case 2:
             Guy.Aktiv = true;
             if (BootsFahrt)
@@ -222,7 +223,7 @@ namespace Action
         Guy.AkNummer++;
         switch (Guy.AkNummer)
         {
-        case 1:
+        case 1: {
             ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
             if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -233,7 +234,8 @@ namespace Action
 
             TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
             break;
-        case 2:
+        }
+        case 2: {
             Guy.Aktiv = true;
             if (BootsFahrt)
                 Guy.Zustand = GUYBOOTWARTEN;
@@ -242,7 +244,8 @@ namespace Action
 
             PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
             break;
-        case 3:
+        }
+        case 3: {
             Guy.Aktion = NOTHING;
             if (BootsFahrt)
                 Guy.Zustand = GUYBOOTLINKS;
@@ -257,6 +260,7 @@ namespace Action
             Frage = -1;
             break;
         }
+        }
     }
 
     void quit()
@@ -264,7 +268,7 @@ namespace Action
         Guy.AkNummer++;
         switch (Guy.AkNummer)
         {
-        case 1:
+        case 1: {
             ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
             if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -275,6 +279,7 @@ namespace Action
 
             TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
             break;
+        }
         case 2:
             Guy.Aktiv = true;
             if (BootsFahrt)
@@ -1410,13 +1415,14 @@ namespace Action
         Guy.AkNummer++;
         switch (Guy.AkNummer)
         {
-        case 1:
+        case 1: {
             ZWEID Erg = Renderer::GetKachel(Guy.PosAlt.x, Guy.PosAlt.y);
             if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
             else if (RoutePunkt % 2 == 0) Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y); //Nur bis zur Mitte der aktuellen Kacheln laufen
             else Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
             TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
             break;
+        }
         case 2:
             Guy.Aktiv = true;
             Guy.Zustand = GUYWARTEN;
