@@ -33,7 +33,7 @@ struct GUY
     short Zustand; // Was macht er gerade? (Animation)(linkslaufen,rechtslaufen...,angeln..)
     short AkNummer; // Bei welcher Aktion (für die Aktionsprozeduren)
     float Resource[3]; // Wieviel Wasservorrat usw
-    short Inventar[BILDANZ]; // Welche Rohstoffe usw. besitzt man
+    short Inventar[SPRITE_COUNT]; // Welche Rohstoffe usw. besitzt man
 };
 
 struct BMP
@@ -49,7 +49,7 @@ struct BMP
     short Geschwindigkeit; // Wieviel Bilder/sec
     short Sound; // Welcher Sound gehört dazu
     //zum bauen
-    short Rohstoff[BILDANZ]; // Anzahl des i.Rohstoffs, den man zum Bau benötigt
+    short Rohstoff[SPRITE_COUNT]; // Anzahl des i.Rohstoffs, den man zum Bau benötigt
     short AkAnzahl; // Anzahl der Aktionsfaellen, die zum Bau benötigt werden
     bool First; // Ist es das erstemal gebaut, dann Hilfetext
 };
@@ -69,9 +69,9 @@ struct ABSPANN
 
 struct SCAPE
 {
-    short Typ; // Flach, Hang usw.
+    short Type; // Flach, Hang usw.
     short Art; // Sand, Moor ...
-    short Hoehe; // Die Hoehe der Kachel
+    short Height; // Die Hoehe der Kachel
     bool Markiert; // Ist diese Kachel markiert?
     short xScreen, yScreen; // Die Koordinaten in der Scape-Surface
     bool Begehbar; // notwendig für Pathfinding
@@ -83,7 +83,7 @@ struct SCAPE
     float Phase; // Welche Animationsphase oder Bildversion
     short AkNummer; // Welche Aktionsnummer (um Baustellen vortzusetzen)
     ZWEID GPosAlt; // Damit der Guy an der richtigen Stelle (x,y) weiterbaut
-    short Rohstoff[BILDANZ]; //Anzahl des i.Rohstoffs, den man noch zum bauen braucht
+    short Rohstoff[SPRITE_COUNT]; //Anzahl des i.Rohstoffs, den man noch zum bauen braucht
     float Timer; //Bis jetzt nur fürs Feuer nötig
 };
 

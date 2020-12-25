@@ -130,7 +130,7 @@ namespace Action
             RouteStart.x = Guy.Pos.x;
             RouteStart.y = Guy.Pos.y;
             RouteZiel.y = Guy.Pos.y;
-            for (short x = Guy.Pos.x; x < MAXXKACH; x++) // Zielkoordinate für Introroute finden
+            for (short x = Guy.Pos.x; x < MAX_TILES_X; x++) // Zielkoordinate für Introroute finden
             {
                 if (Scape[x][Guy.Pos.y].Art != 1) break;
                 RouteZiel.x = x - 1;
@@ -140,31 +140,31 @@ namespace Action
         case 2:
             Guy.PosScreen.y -= 10;
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHIFFDOWN;
+            Guy.Zustand = GUY_SHIP_DOWN;
             PlaySound(Sound::SPLAT, 100);
             PlaySound(Sound::CRASH, 100);
             break;
         case 3:
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = WRACK;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[WRACK].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[WRACK].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = WRECK_1;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[WRECK_1].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[WRECK_1].rcDes.top);
 
             World::ChangeBootsFahrt();
             Guy.Pos.x += 2;
             Guy.PosScreen.y += 10;
-            Guy.Zustand = GUYSCHWIMMEN;
-            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].x) / 2),
-                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].y +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y) / 2));
+            Guy.Zustand = GUY_SWIM;
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y) / 2));
             break;
         case 4:
             StopSound(Sound::SWIM); // Sound hier sofort stoppen
-            Guy.Zustand = GUYLINKS;
-            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2),
-                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2));
+            Guy.Zustand = GUY_LEFT;
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 5:
             Guy.PosAlt = Guy.PosScreen;
@@ -195,18 +195,18 @@ namespace Action
         case 2:
             Guy.Aktiv = true;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTWARTEN;
+                Guy.Zustand = GUY_BOAT_WAITING;
             else
-                Guy.Zustand = GUYWARTEN;
+                Guy.Zustand = GUY_WAITING;
 
             PapierText = Renderer::DrawText(NEUBEGINNEN, TXTPAPIER, 1);
             break;
         case 3:
             Guy.Aktion = NOTHING;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTLINKS;
+                Guy.Zustand = GUY_BOAT_LEFT;
             else
-                Guy.Zustand = GUYLINKS;
+                Guy.Zustand = GUY_LEFT;
 
             if (Frage == 1)
             {
@@ -238,9 +238,9 @@ namespace Action
         case 2: {
             Guy.Aktiv = true;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTWARTEN;
+                Guy.Zustand = GUY_BOAT_WAITING;
             else
-                Guy.Zustand = GUYWARTEN;
+                Guy.Zustand = GUY_WAITING;
 
             PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
             break;
@@ -248,9 +248,9 @@ namespace Action
         case 3: {
             Guy.Aktion = NOTHING;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTLINKS;
+                Guy.Zustand = GUY_BOAT_LEFT;
             else
-                Guy.Zustand = GUYLINKS;
+                Guy.Zustand = GUY_LEFT;
 
             if (Frage == 1)
             {
@@ -283,18 +283,18 @@ namespace Action
         case 2:
             Guy.Aktiv = true;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTWARTEN;
+                Guy.Zustand = GUY_BOAT_WAITING;
             else
-                Guy.Zustand = GUYWARTEN;
+                Guy.Zustand = GUY_WAITING;
 
             PapierText = Renderer::DrawText(SPIELVERLASSEN, TXTPAPIER, 1);
             break;
         case 3:
             Guy.Aktion = NOTHING;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTLINKS;
+                Guy.Zustand = GUY_BOAT_LEFT;
             else
-                Guy.Zustand = GUYLINKS;
+                Guy.Zustand = GUY_LEFT;
 
             if (Frage == 1)
             {
@@ -316,9 +316,9 @@ namespace Action
         case 1:
             Guy.Aktiv = true;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTWARTEN;
+                Guy.Zustand = GUY_BOAT_WAITING;
             else
-                Guy.Zustand = GUYWARTEN;
+                Guy.Zustand = GUY_WAITING;
 
             PapierText = Renderer::DrawText(TOD, TXTPAPIER, 1);
             break;
@@ -326,7 +326,7 @@ namespace Action
             if (!BootsFahrt)
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYHINLEGEN;
+                Guy.Zustand = GUY_LAYING_TENT;
             }
             break;
         case 3:
@@ -334,23 +334,23 @@ namespace Action
             Nacht = false;
             Renderer::Fade(100, 100, 100);
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTTOD;
+                Guy.Zustand = GUY_BOAT_DEAD;
             else
-                Guy.Zustand = GUYTOD;
+                Guy.Zustand = GUY_DEAD;
 
             break;
         case 4:
             Guy.Aktiv = true;
             Nacht = true;
-            Guy.Zustand = GUYWARTEN;
+            Guy.Zustand = GUY_WAITING;
             PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
             break;
         case 5:
             Nacht = false;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTLINKS;
+                Guy.Zustand = GUY_BOAT_LEFT;
             else
-                Guy.Zustand = GUYLINKS;
+                Guy.Zustand = GUY_LEFT;
 
             Guy.Aktion = NOTHING;
             if (Frage == 2)
@@ -372,10 +372,10 @@ namespace Action
             Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x = Guy.PosScreen.x;
             Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y = Guy.PosScreen.y;
 
-            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2),
-                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 2:
             Guy.Aktion = NOTHING;
@@ -399,14 +399,14 @@ namespace Action
             break;
         case 2: case 4:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYFAELLEN;
+            Guy.Zustand = GUY_CHOP;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 5);
             break;
         case 3: case 5:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHLAGEN;
+            Guy.Zustand = GUY_BEAT;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 5);
@@ -418,8 +418,8 @@ namespace Action
 
                 short i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt; // Um sich kurz das Objekt zu merken 
 
-                if ((i >= HAUS1) && (i <= HAUS3))
-                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BAUMGROSS;
+                if ((i >= HOUSE_1) && (i <= HOUSE_3))
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt = TREE_BIG;
                 else
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].Objekt = -1;
@@ -429,7 +429,7 @@ namespace Action
                 }
                 Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
 
-                if (i == ROHR)
+                if (i == PIPE)
                     World::FillRohr();
 
                 Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -452,8 +452,8 @@ namespace Action
         }
         while (true)
         {
-            Ziel.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % KXPIXEL;
-            Ziel.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % KYPIXEL;
+            Ziel.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % TILE_SIZE_X;
+            Ziel.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % TILE_SIZE_Y;
             ZWEID Erg = Renderer::GetKachel(Ziel.x, Ziel.y);
             if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
                 break; // Wenn das gefundene Ziel in der Kachel, dann fertig
@@ -468,7 +468,7 @@ namespace Action
                 {
                     Guy.Aktiv = true;
                     Guy.PosScreen.y -= 2;
-                    Guy.Zustand = GUYTAUCHEN1;
+                    Guy.Zustand = GUY_DIVING_1;
                     PlaySound(Sound::SPLAT, 100);
                 }
             }
@@ -483,10 +483,10 @@ namespace Action
                 if (Guy.AkNummer == 2)
                     Guy.PosScreen.y += 5;
 
-                Guy.Zustand = GUYTAUCHEN2;
+                Guy.Zustand = GUY_DIVING_2;
             }
             else
-                Guy.Zustand = GUYSUCHEN;
+                Guy.Zustand = GUY_SEARCH;
 
             World::AddTime(0, 4);
             break;
@@ -494,7 +494,7 @@ namespace Action
             if (BootsFahrt)
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYTAUCHEN3;
+                Guy.Zustand = GUY_DIVING_3;
                 PlaySound(Sound::SPLAT, 100);
             }
             break;
@@ -504,77 +504,77 @@ namespace Action
         case 11:
             Guy.Aktiv = true;
             if (BootsFahrt)
-                Guy.Zustand = GUYBOOTLINKS;
+                Guy.Zustand = GUY_BOAT_LEFT;
 
             // Auf Strand und Fluss
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Art == 2) || ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FLUSS1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= SCHLEUSE6)))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Art == 2) || ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= RIVER_1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= FLOODGATE_6)))
             {
-                if (Guy.Inventar[ROHSTEIN] < 10)
+                if (Guy.Inventar[RAW_STONE] < 10)
                 {
                     PapierText = Renderer::DrawText(ROHSTEINGEFUNDEN, TXTPAPIER, 1);
-                    Guy.Inventar[ROHSTEIN] += 3;
+                    Guy.Inventar[RAW_STONE] += 3;
 
-                    if (Guy.Inventar[ROHSTEIN] > 10)
-                        Guy.Inventar[ROHSTEIN] = 10;
+                    if (Guy.Inventar[RAW_STONE] > 10)
+                        Guy.Inventar[RAW_STONE] = 10;
                 }
                 else
                     PapierText = Renderer::DrawText(ROHSTEINZUVIEL, TXTPAPIER, 1);
             }
-            else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BUSCH)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BUSH)
             {
                 i = rand() % 2;
                 switch (i)
                 {
                 case 0:
-                    if (Guy.Inventar[ROHAST] < 10)
+                    if (Guy.Inventar[RAW_TREE_BRANCH] < 10)
                     {
                         PapierText = Renderer::DrawText(ROHASTGEFUNDEN, TXTPAPIER, 1);
-                        Guy.Inventar[ROHAST]++;
+                        Guy.Inventar[RAW_TREE_BRANCH]++;
                     }
                     else PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
                     break;
                 case 1:
-                    if (Guy.Inventar[ROHBLATT] < 10)
+                    if (Guy.Inventar[RAW_LEAF] < 10)
                     {
                         PapierText = Renderer::DrawText(ROHBLATTGEFUNDEN, TXTPAPIER, 1);
-                        Guy.Inventar[ROHBLATT]++;
+                        Guy.Inventar[RAW_LEAF]++;
                     }
                     else
                         PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
                     break;
                 }
             }
-            else if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUMGROSS)) ||
-                ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= HAUS1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= HAUS3)))
+            else if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= TREE_1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= TREE_BIG)) ||
+                ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= HOUSE_1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= HOUSE_3)))
             {
                 i = rand() % 3;
                 switch (i)
                 {
                 case 0:
-                    if (Guy.Inventar[ROHAST] < 10)
+                    if (Guy.Inventar[RAW_TREE_BRANCH] < 10)
                     {
                         PapierText = Renderer::DrawText(ROHASTGEFUNDEN, TXTPAPIER, 1);
-                        Guy.Inventar[ROHAST]++;
+                        Guy.Inventar[RAW_TREE_BRANCH]++;
                     }
                     else
                         PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
 
                     break;
                 case 1:
-                    if (Guy.Inventar[ROHBLATT] < 10)
+                    if (Guy.Inventar[RAW_LEAF] < 10)
                     {
                         PapierText = Renderer::DrawText(ROHBLATTGEFUNDEN, TXTPAPIER, 1);
-                        Guy.Inventar[ROHBLATT]++;
+                        Guy.Inventar[RAW_LEAF]++;
                     }
                     else
                         PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
 
                     break;
                 case 2:
-                    if (Guy.Inventar[ROHLIANE] < 10)
+                    if (Guy.Inventar[RAW_LIANA] < 10)
                     {
                         PapierText = Renderer::DrawText(ROHLIANEGEFUNDEN, TXTPAPIER, 1);
-                        Guy.Inventar[ROHLIANE]++;
+                        Guy.Inventar[RAW_LIANA]++;
                     }
                     else
                         PapierText = Renderer::DrawText(ROHLIANEZUVIEL, TXTPAPIER, 1);
@@ -584,30 +584,30 @@ namespace Action
             }
             else if (BootsFahrt)
             {
-                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == WRACK)
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == WRECK_1)
                 {
-                    if (Guy.Inventar[ROHFERNROHR] == 0)
+                    if (Guy.Inventar[RAW_TELESCOPE] == 0)
                     {
                         PapierText = Renderer::DrawText(FERNROHRGEFUNDEN, TXTPAPIER, 1);
-                        Guy.Inventar[ROHFERNROHR] = 1;
-                        Bmp[BUTTAUSSCHAU].Phase = 0;
-                        Guy.Inventar[ROHHAMMER] = 1;
-                        Bmp[BUTTHAUS1].Phase = 0;
-                        Bmp[BUTTHAUS2].Phase = 0;
-                        Bmp[BUTTHAUS3].Phase = 0;
+                        Guy.Inventar[RAW_TELESCOPE] = 1;
+                        Bmp[BUTTON_LOOK_OUT].Phase = 0;
+                        Guy.Inventar[RAW_HAMMER] = 1;
+                        Bmp[BUTTON_HOUSE_1].Phase = 0;
+                        Bmp[BUTTON_HOUSE_2].Phase = 0;
+                        Bmp[BUTTON_HOUSE_3].Phase = 0;
                     }
                     else
                         PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
                 }
-                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == WRACK2)
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == WRECK_2)
                 {
-                    if (Guy.Inventar[ROHKARTE] == 0)
+                    if (Guy.Inventar[RAW_MAP] == 0)
                     {
                         PapierText = Renderer::DrawText(KARTEGEFUNDEN, TXTPAPIER, 1);
-                        Guy.Inventar[ROHKARTE] = 1;
-                        Bmp[BUTTSCHATZKARTE].Phase = 0;
-                        Guy.Inventar[ROHSCHAUFEL] = 1;
-                        Bmp[BUTTSCHATZ].Phase = 0;
+                        Guy.Inventar[RAW_MAP] = 1;
+                        Bmp[BUTTON_TREASUREMAP].Phase = 0;
+                        Guy.Inventar[RAW_SHOVEL] = 1;
+                        Bmp[BUTTON_TREASURE].Phase = 0;
                     }
                     else
                         PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
@@ -642,7 +642,7 @@ namespace Action
             break;
         case 2: case 3:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYESSEN;
+            Guy.Zustand = GUY_EAT;
             World::AddResource(NAHRUNG, 15);
             World::AddTime(0, 2);
             break;
@@ -673,7 +673,7 @@ namespace Action
             break;
         case 2:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHLEUDER;
+            Guy.Zustand = GUY_SLINGSHOT;
             Guy.PosScreen.x += 5;
             World::AddTime(0, 2);
             PlaySound(Sound::SLINGSHOT, 100);
@@ -687,7 +687,7 @@ namespace Action
             break;
         case 4:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSUCHEN;
+            Guy.Zustand = GUY_SEARCH;
             World::AddResource(NAHRUNG, 5);
             World::AddTime(0, 20);
             break;
@@ -715,7 +715,7 @@ namespace Action
             break;
         case 2: case 3:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYTRINKEN;
+            Guy.Zustand = GUY_DRINK;
             World::AddResource(WASSER, 30);
             World::AddTime(0, 3);
             break;
@@ -745,7 +745,7 @@ namespace Action
             break;
         case 2: case 3: case 4: case 5: case 6:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYFAELLEN;
+            Guy.Zustand = GUY_CHOP;
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 10);
@@ -753,8 +753,8 @@ namespace Action
         case 7:
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYWARTEN;
-                short i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt + (BAUM1DOWN - BAUM1);
+                Guy.Zustand = GUY_WAITING;
+                short i = Scape[Guy.Pos.x][Guy.Pos.y].Objekt + (TREE_DOWN_1 - TREE_1);
                 Scape[Guy.Pos.x][Guy.Pos.y].Objekt = i;
                 Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
                 Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x -= 17;
@@ -766,14 +766,14 @@ namespace Action
             break;
         case 9:
             Scape[Guy.Pos.x][Guy.Pos.y].Objekt = -1;
-            Guy.Inventar[ROHSTAMM]++;
-            if (Guy.Inventar[ROHSTAMM] > 10) Guy.Inventar[ROHSTAMM] = 10;
-            Guy.Inventar[ROHAST] += 5;
-            if (Guy.Inventar[ROHAST] > 10) Guy.Inventar[ROHAST] = 10;
-            Guy.Inventar[ROHBLATT] += 5;
-            if (Guy.Inventar[ROHBLATT] > 10) Guy.Inventar[ROHBLATT] = 10;
-            Guy.Inventar[ROHLIANE] += 2;
-            if (Guy.Inventar[ROHLIANE] > 10) Guy.Inventar[ROHLIANE] = 10;
+            Guy.Inventar[RAW_TREE_TRUNK]++;
+            if (Guy.Inventar[RAW_TREE_TRUNK] > 10) Guy.Inventar[RAW_TREE_TRUNK] = 10;
+            Guy.Inventar[RAW_TREE_BRANCH] += 5;
+            if (Guy.Inventar[RAW_TREE_BRANCH] > 10) Guy.Inventar[RAW_TREE_BRANCH] = 10;
+            Guy.Inventar[RAW_LEAF] += 5;
+            if (Guy.Inventar[RAW_LEAF] > 10) Guy.Inventar[RAW_LEAF] = 10;
+            Guy.Inventar[RAW_LIANA] += 2;
+            if (Guy.Inventar[RAW_LIANA] > 10) Guy.Inventar[RAW_LIANA] = 10;
             Guy.Aktion = NOTHING;
             break;
         }
@@ -791,35 +791,35 @@ namespace Action
         case 1:
             switch (Scape[Guy.Pos.x][Guy.Pos.y].Objekt)
             {
-            case FLUSS1:
+            case RIVER_1:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 35,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
-            case FLUSS2:
+            case RIVER_2:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 19,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
-            case FLUSS3:
+            case RIVER_3:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 22,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 20);
                 break;
-            case FLUSS4:
+            case RIVER_4:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 34,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 23);
                 break;
-            case FLUSS6: case FLUSS7: case MUENDUNG2: case QUELLE2: case SCHLEUSE2: case SCHLEUSE3:
+            case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 34,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 33);
                 break;
-            case FLUSS5: case FLUSS9: case MUENDUNG1: case QUELLE1: case SCHLEUSE1: case SCHLEUSE5:
+            case RIVER_5: case RIVER_9: case RIVER_END_1: case RIVER_START_1: case FLOODGATE_1: case FLOODGATE_5:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 20,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 33);
                 break;
-            case FLUSS8: case MUENDUNG4: case QUELLE3: case SCHLEUSE4:
+            case RIVER_8: case RIVER_END_4: case RIVER_START_3: case FLOODGATE_4:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 22,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
-            case FLUSS10: case MUENDUNG3: case QUELLE4: case SCHLEUSE6:
+            case RIVER_10: case RIVER_END_3: case RIVER_START_4: case FLOODGATE_6:
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + 32,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
                 break;
@@ -831,41 +831,41 @@ namespace Action
             if (BootsFahrt)
             {
                 Guy.PosScreen.y -= 2;
-                Guy.Zustand = GUYBOOTANGELN1;
+                Guy.Zustand = GUY_BOAT_FISHING_1;
             }
             switch (Scape[Guy.Pos.x][Guy.Pos.y].Objekt)
             {
-            case FLUSS1: case FLUSS6: case FLUSS7: case MUENDUNG2: case QUELLE2: case SCHLEUSE2: case SCHLEUSE3:
-                Guy.Zustand = GUYANGELN1LINKS;
+            case RIVER_1: case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
+                Guy.Zustand = GUY_FISHING_LEFT_1;
                 break;
-            case FLUSS2: case FLUSS5: case FLUSS9: case MUENDUNG1: case QUELLE1: case SCHLEUSE1: case SCHLEUSE5:
-                Guy.Zustand = GUYANGELN1OBEN;
+            case RIVER_2: case RIVER_5: case RIVER_9: case RIVER_END_1: case RIVER_START_1: case FLOODGATE_1: case FLOODGATE_5:
+                Guy.Zustand = GUY_FISHING_ABOVE_1;
                 break;
-            case FLUSS3: case FLUSS8: case MUENDUNG4: case QUELLE3: case SCHLEUSE4:
-                Guy.Zustand = GUYANGELN1RECHTS;
+            case RIVER_3: case RIVER_8: case RIVER_END_4: case RIVER_START_3: case FLOODGATE_4:
+                Guy.Zustand = GUY_FISHING_RIGHT_1;
                 break;
-            case FLUSS4: case FLUSS10: case MUENDUNG3: case QUELLE4: case SCHLEUSE6:
-                Guy.Zustand = GUYANGELN1UNTEN;
+            case RIVER_4: case RIVER_10: case RIVER_END_3: case RIVER_START_4: case FLOODGATE_6:
+                Guy.Zustand = GUY_FISHING_BELOW_1;
                 break;
             }
             break;
         case 3: case 4: case 5: case 6:
             Guy.Aktiv = true;
-            if (BootsFahrt) Guy.Zustand = GUYBOOTANGELN2;
+            if (BootsFahrt) Guy.Zustand = GUY_BOAT_FISHING_2;
 
             switch (Scape[Guy.Pos.x][Guy.Pos.y].Objekt)
             {
-            case FLUSS1: case FLUSS6: case FLUSS7: case MUENDUNG2: case QUELLE2: case SCHLEUSE2: case SCHLEUSE3:
-                Guy.Zustand = GUYANGELN2LINKS;
+            case RIVER_1: case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
+                Guy.Zustand = GUY_FISHING_LEFT_2;
                 break;
-            case FLUSS2: case FLUSS5: case FLUSS9: case MUENDUNG1: case QUELLE1: case SCHLEUSE1: case SCHLEUSE5:
-                Guy.Zustand = GUYANGELN2OBEN;
+            case RIVER_2: case RIVER_5: case RIVER_9: case RIVER_END_1: case RIVER_START_1: case FLOODGATE_1: case FLOODGATE_5:
+                Guy.Zustand = GUY_FISHING_ABOVE_2;
                 break;
-            case FLUSS3: case FLUSS8: case MUENDUNG4: case QUELLE3: case SCHLEUSE4:
-                Guy.Zustand = GUYANGELN2RECHTS;
+            case RIVER_3: case RIVER_8: case RIVER_END_4: case RIVER_START_3: case FLOODGATE_4:
+                Guy.Zustand = GUY_FISHING_RIGHT_2;
                 break;
-            case FLUSS4: case FLUSS10: case MUENDUNG3: case QUELLE4: case SCHLEUSE6:
-                Guy.Zustand = GUYANGELN2UNTEN;
+            case RIVER_4: case RIVER_10: case RIVER_END_3: case RIVER_START_4: case FLOODGATE_6:
+                Guy.Zustand = GUY_FISHING_BELOW_2;
                 break;
             }
             Guy.Resource[GESUNDHEIT] += 2;
@@ -873,21 +873,21 @@ namespace Action
             break;
         case 7:
             Guy.Aktiv = true;
-            if (BootsFahrt) Guy.Zustand = GUYBOOTANGELN3;
+            if (BootsFahrt) Guy.Zustand = GUY_BOAT_FISHING_3;
 
             switch (Scape[Guy.Pos.x][Guy.Pos.y].Objekt)
             {
-            case FLUSS1: case FLUSS6: case FLUSS7: case MUENDUNG2: case QUELLE2: case SCHLEUSE2: case SCHLEUSE3:
-                Guy.Zustand = GUYANGELN3LINKS;
+            case RIVER_1: case RIVER_6: case RIVER_7: case RIVER_END_2: case RIVER_START_2: case FLOODGATE_2: case FLOODGATE_3:
+                Guy.Zustand = GUY_FISHING_LEFT_3;
                 break;
-            case FLUSS2: case FLUSS5: case FLUSS9: case MUENDUNG1: case QUELLE1: case SCHLEUSE1: case SCHLEUSE5:
-                Guy.Zustand = GUYANGELN3OBEN;
+            case RIVER_2: case RIVER_5: case RIVER_9: case RIVER_END_1: case RIVER_START_1: case FLOODGATE_1: case FLOODGATE_5:
+                Guy.Zustand = GUY_FISHING_ABOVE_3;
                 break;
-            case FLUSS3: case FLUSS8: case MUENDUNG4: case QUELLE3: case SCHLEUSE4:
-                Guy.Zustand = GUYANGELN3RECHTS;
+            case RIVER_3: case RIVER_8: case RIVER_END_4: case RIVER_START_3: case FLOODGATE_4:
+                Guy.Zustand = GUY_FISHING_RIGHT_3;
                 break;
-            case FLUSS4: case FLUSS10: case MUENDUNG3: case QUELLE4: case SCHLEUSE6:
-                Guy.Zustand = GUYANGELN3UNTEN;
+            case RIVER_4: case RIVER_10: case RIVER_END_3: case RIVER_START_4: case FLOODGATE_6:
+                Guy.Zustand = GUY_FISHING_BELOW_3;
                 break;
             }
             break;
@@ -918,17 +918,17 @@ namespace Action
             break;
         case 2:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYANZUENDEN;
+            Guy.Zustand = GUY_SET_FIRE;
             Guy.PosScreen.x += 5;
             World::AddTime(0, 1);
             break;
         case 3:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYWARTEN;
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FEUER;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FEUER].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FEUER].rcDes.top);
-            Chance += 2 + 2 * Scape[Guy.Pos.x][Guy.Pos.y].Hoehe;
+            Guy.Zustand = GUY_WAITING;
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FIRE;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FIRE].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FIRE].rcDes.top);
+            Chance += 2 + 2 * Scape[Guy.Pos.x][Guy.Pos.y].Height;
             World::AddTime(0, 2);
             Guy.PosScreen.x -= 5;
             break;
@@ -952,25 +952,25 @@ namespace Action
         {
         case 1:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYAUSSCHAU;
+            Guy.Zustand = GUY_LOOK_OUT;
             World::AddTime(0, 40);
-            Chance += 1 + Scape[Guy.Pos.x][Guy.Pos.y].Hoehe;
+            Chance += 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
             break;
         case 2:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYWARTEN;
+            Guy.Zustand = GUY_WAITING;
             World::AddTime(0, 40);
             break;
         case 3:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYAUSSCHAU;
+            Guy.Zustand = GUY_LOOK_OUT;
             World::AddTime(0, 40);
             break;
         case 4:
             Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
             break;
         case 5:
-            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Hoehe;
+            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
             Guy.Aktion = NOTHING;
             break;
         }
@@ -990,7 +990,7 @@ namespace Action
             Guy.PosScreen.x -= 5;
             Guy.PosScreen.y += 1;
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHAUFELN;
+            Guy.Zustand = GUY_SHOVEL;
             break;
         case 2:
             World::AddTime(0, 20);
@@ -1003,8 +1003,8 @@ namespace Action
                 (!SchatzGef))
             {
                 PapierText = Renderer::DrawText(SCHATZGEFUNDEN, TXTPAPIER, 1);
-                Guy.Inventar[ROHSTREICHHOLZ] = 1;
-                Bmp[BUTTANZUENDEN].Phase = 0;
+                Guy.Inventar[RAW_MATCH] = 1;
+                Bmp[BUTTON_IGNITE].Phase = 0;
                 SchatzGef = true;
             }
             else PapierText = Renderer::DrawText(KEINSCHATZ, TXTPAPIER, 1);
@@ -1020,12 +1020,12 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[FELD].Rohstoff[i];
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FELD;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FELD].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FELD].rcDes.top);
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[FELD].Anzahl;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[FIELD].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FIELD;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FIELD].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FIELD].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[FIELD].Anzahl;
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -1081,21 +1081,21 @@ namespace Action
             break;
         case 2: case 3: case 5: case 6: case 8: case 9: case 11: case 12: case 14: case 15: case 17: case 18:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYFELD;
+            Guy.Zustand = GUY_FARMING;
             break;
         case 19:
             Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FELD;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FELD].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FELD].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FIELD;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FIELD].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FIELD].rcDes.top);
             break;
         case 20:
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
-            Bmp[BUTTSTOP].Phase = -1;
-            if (Bmp[FELD].First)
+            Bmp[BUTTON_STOP].Phase = -1;
+            if (Bmp[FIELD].First)
             {
                 PapierText = Renderer::DrawText(FELDHILFE, TXTPAPIER, 1);
-                Bmp[FELD].First = false;
+                Bmp[FIELD].First = false;
             }
             Guy.Aktion = NOTHING;
             break;
@@ -1114,9 +1114,9 @@ namespace Action
             Stunden = 12;
             Minuten = 0;
             TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
-            Bmp[BUTTSTOP].Phase = -1;
-            if ((Guy.Zustand == GUYSCHLAFZELT) || (Guy.Zustand == GUYSCHLAFEN) ||
-                (Guy.Zustand == GUYSCHLAFHAUS) || (BootsFahrt))
+            Bmp[BUTTON_STOP].Phase = -1;
+            if ((Guy.Zustand == GUY_SLEEPING_TENT) || (Guy.Zustand == GUY_SLEEPING) ||
+                (Guy.Zustand == GUY_SLEEP_HOUSE) || (BootsFahrt))
                 break;
             Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x = Guy.PosScreen.x;
             Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y = Guy.PosScreen.y;
@@ -1129,53 +1129,53 @@ namespace Action
             Renderer::Fade(95, 80, 80);
             Stunden = 12;
             Minuten = 0;
-            if ((Guy.Zustand == GUYSCHLAFZELT) || (Guy.Zustand == GUYSCHLAFEN) ||
-                (Guy.Zustand == GUYSCHLAFHAUS) || (BootsFahrt))
+            if ((Guy.Zustand == GUY_SLEEPING_TENT) || (Guy.Zustand == GUY_SLEEPING) ||
+                (Guy.Zustand == GUY_SLEEP_HOUSE) || (BootsFahrt))
                 break;
             // Wohnbare Objekte in der Umgebung suchen 
             Erg.x = -1;
             Erg.y = -1;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) || (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) || (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3))
             {
                 Erg.x = Guy.Pos.x;
                 Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Objekt == HAUS3)
+            else if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Objekt == HOUSE_3)
             {
                 Erg.x = Guy.Pos.x - 1;
                 Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Objekt == HAUS3)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Objekt == HOUSE_3)
             {
                 Erg.x = Guy.Pos.x;
                 Erg.y = Guy.Pos.y - 1;
             }
-            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Objekt == HAUS3)
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Objekt == HOUSE_3)
             {
                 Erg.x = Guy.Pos.x + 1;
                 Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Objekt == HAUS3)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Objekt == HOUSE_3)
             {
                 Erg.x = Guy.Pos.x;
                 Erg.y = Guy.Pos.y + 1;
             }
-            else if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Objekt == ZELT)
+            else if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Objekt == TENT)
             {
                 Erg.x = Guy.Pos.x - 1;
                 Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Objekt == ZELT)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Objekt == TENT)
             {
                 Erg.x = Guy.Pos.x;
                 Erg.y = Guy.Pos.y - 1;
             }
-            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Objekt == ZELT)
+            else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Objekt == TENT)
             {
                 Erg.x = Guy.Pos.x + 1;
                 Erg.y = Guy.Pos.y;
             }
-            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Objekt == ZELT)
+            else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Objekt == TENT)
             {
                 Erg.x = Guy.Pos.x;
                 Erg.y = Guy.Pos.y + 1;
@@ -1184,56 +1184,56 @@ namespace Action
             {
                 Guy.Pos.x = Erg.x;
                 Guy.Pos.y = Erg.y;
-                if ((Scape[Erg.x][Erg.y].Objekt == ZELT) &&
+                if ((Scape[Erg.x][Erg.y].Objekt == TENT) &&
                     (Scape[Erg.x][Erg.y].Phase < Bmp[Scape[Erg.x][Erg.y].Objekt].Anzahl))
                     Routing::ShortRoute(Scape[Erg.x][Erg.y].xScreen + Scape[Erg.x][Erg.y].ObPos.x + 3,
                                         Scape[Erg.x][Erg.y].yScreen + Scape[Erg.x][Erg.y].ObPos.y + 20);
-                else if ((Scape[Erg.x][Erg.y].Objekt == HAUS3) &&
+                else if ((Scape[Erg.x][Erg.y].Objekt == HOUSE_3) &&
                     (Scape[Erg.x][Erg.y].Phase < Bmp[Scape[Erg.x][Erg.y].Objekt].Anzahl))
                     Routing::ShortRoute(Scape[Erg.x][Erg.y].xScreen + Scape[Erg.x][Erg.y].ObPos.x +
-                                        Bmp[BAUMGROSS].Breite / 2,
+                                        Bmp[TREE_BIG].Breite / 2,
                                         Scape[Erg.x][Erg.y].yScreen + Scape[Erg.x][Erg.y].ObPos.y +
-                                        Bmp[BAUMGROSS].Hoehe + 1);
+                                        Bmp[TREE_BIG].Hoehe + 1);
             }
             break;
         case 3:
             Renderer::Fade(90, 70, 70);
             Stunden = 12;
             Minuten = 0;
-            if ((Guy.Zustand == GUYSCHLAFZELT) || (Guy.Zustand == GUYSCHLAFEN) ||
-                (Guy.Zustand == GUYSCHLAFHAUS) || (BootsFahrt))
+            if ((Guy.Zustand == GUY_SLEEPING_TENT) || (Guy.Zustand == GUY_SLEEPING) ||
+                (Guy.Zustand == GUY_SLEEP_HOUSE) || (BootsFahrt))
                 break;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYKLETTERN1;
+                Guy.Zustand = GUY_CLIMBING_1;
             }
             break;
         case 4:
             Renderer::Fade(70, 60, 60);
             Stunden = 12;
             Minuten = 0;
-            if ((Guy.Zustand == GUYSCHLAFZELT) || (Guy.Zustand == GUYSCHLAFEN) ||
-                (Guy.Zustand == GUYSCHLAFHAUS) || (BootsFahrt))
+            if ((Guy.Zustand == GUY_SLEEPING_TENT) || (Guy.Zustand == GUY_SLEEPING) ||
+                (Guy.Zustand == GUY_SLEEP_HOUSE) || (BootsFahrt))
                 break;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYGEHINZELT;
+                Guy.Zustand = GUY_ENTER_TENT;
             }
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYGEHINHAUS;
+                Guy.Zustand = GUY_ENTER_HOUSE;
             }
             else
             {
                 Guy.PosScreen.x += 3;
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYHINLEGEN;
+                Guy.Zustand = GUY_LAYING_TENT;
             }
             break;
         case 5:
@@ -1242,19 +1242,19 @@ namespace Action
             Minuten = 0;
             if (BootsFahrt) break;
             Guy.Aktiv = true;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
-                if (Guy.Zustand != GUYSCHLAFZELT) Guy.PosScreen.x += 4;
-                Guy.Zustand = GUYSCHLAFZELT;
+                if (Guy.Zustand != GUY_SLEEPING_TENT) Guy.PosScreen.x += 4;
+                Guy.Zustand = GUY_SLEEPING_TENT;
             }
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
-                if (Guy.Zustand != GUYSCHLAFHAUS) Guy.PosScreen.x += 14;
-                Guy.Zustand = GUYSCHLAFHAUS;
+                if (Guy.Zustand != GUY_SLEEP_HOUSE) Guy.PosScreen.x += 14;
+                Guy.Zustand = GUY_SLEEP_HOUSE;
             }
-            else Guy.Zustand = GUYSCHLAFEN;
+            else Guy.Zustand = GUY_SLEEPING;
             break;
         case 6:
             Renderer::Fade(25, 25, 35);
@@ -1262,13 +1262,13 @@ namespace Action
             Minuten = 0;
             if (BootsFahrt) break;
             Guy.Aktiv = true;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
-                Guy.Zustand = GUYSCHLAFZELT;
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+                Guy.Zustand = GUY_SLEEPING_TENT;
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
-                Guy.Zustand = GUYSCHLAFHAUS;
-            else Guy.Zustand = GUYSCHLAFEN;
+                Guy.Zustand = GUY_SLEEP_HOUSE;
+            else Guy.Zustand = GUY_SLEEPING;
             break;
         case 7:
             Renderer::Fade(0, 0, 0); // Nicht verwirren lassen, da das Bild in Zeige() schwarz übermalt wird
@@ -1277,16 +1277,16 @@ namespace Action
             Minuten = 0;
             PlaySound(Sound::WOLF, 100);
             // Falsche Objekte Löschen
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1DOWN) &&
-                (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4DOWN))
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= TREE_DOWN_1) &&
+                (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= TREE_DOWN_4))
             {
                 Scape[Guy.Pos.x][Guy.Pos.y].Objekt = -1;
-                Guy.Inventar[ROHSTAMM]++;
-                if (Guy.Inventar[ROHSTAMM] > 10) Guy.Inventar[ROHSTAMM] = 10;
+                Guy.Inventar[RAW_TREE_TRUNK]++;
+                if (Guy.Inventar[RAW_TREE_TRUNK] > 10) Guy.Inventar[RAW_TREE_TRUNK] = 10;
             }
 
             // Je nach Schlafort Zustand verändern
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 World::AddResource(GESUNDHEIT, -5);
@@ -1305,7 +1305,7 @@ namespace Action
                     PapierText = Renderer::DrawText(TAGENDE2, TXTPAPIER, 1);
                 }
             }
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 World::AddResource(GESUNDHEIT, +20);
@@ -1315,7 +1315,7 @@ namespace Action
             else if (BootsFahrt)
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYBOOTWARTEN;
+                Guy.Zustand = GUY_BOAT_WAITING;
                 PapierText = Renderer::DrawText(TAGENDE3, TXTPAPIER, 1);
                 Guy.AkNummer = 2;
                 Guy.Aktion = DEATH;
@@ -1350,13 +1350,13 @@ namespace Action
             // if (BootsFahrt) Game::NeuesSpiel(true); // Später hier tot!!
 
             Guy.Aktiv = true;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
-                Guy.Zustand = GUYSCHLAFZELT;
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+                Guy.Zustand = GUY_SLEEPING_TENT;
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
-                Guy.Zustand = GUYSCHLAFHAUS;
-            else Guy.Zustand = GUYSCHLAFEN;
+                Guy.Zustand = GUY_SLEEP_HOUSE;
+            else Guy.Zustand = GUY_SLEEPING;
             break;
         case 9:
             Renderer::Fade(40, 40, 40);
@@ -1366,13 +1366,13 @@ namespace Action
             Stunden = 0;
             Minuten = 0;
             Guy.Aktiv = true;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
-                Guy.Zustand = GUYSCHLAFZELT;
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+                Guy.Zustand = GUY_SLEEPING_TENT;
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
-                Guy.Zustand = GUYSCHLAFHAUS;
-            else Guy.Zustand = GUYSCHLAFEN;
+                Guy.Zustand = GUY_SLEEP_HOUSE;
+            else Guy.Zustand = GUY_SLEEPING;
             break;
         case 10:
             Renderer::Fade(70, 60, 60);
@@ -1380,30 +1380,30 @@ namespace Action
             Minuten = 0;
             StopSound(Sound::SNORE);
             Guy.Aktiv = true;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.PosScreen.x -= 14;
-                Guy.Zustand = GUYGEHAUSHAUS;
+                Guy.Zustand = GUY_EXIT_HOUSE;
             }
-            else Guy.Zustand = GUYAUFSTEHEN;
+            else Guy.Zustand = GUY_STAND_UP;
             break;
         case 11:
             Renderer::Fade(90, 80, 80);
             Stunden = 0;
             Minuten = 0;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYKLETTERN2;
+                Guy.Zustand = GUY_CLIMBING_2;
             }
             break;
         case 12:
             Renderer::Fade(100, 100, 100);
             Stunden = 0;
             Minuten = 0;
-            Guy.Zustand = GUYLINKS;
+            Guy.Zustand = GUY_LEFT;
             Guy.Aktion = NOTHING;
             if (Guy.Resource[GESUNDHEIT] > 10) Game::SaveGame();
             break;
@@ -1425,7 +1425,7 @@ namespace Action
         }
         case 2:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYWARTEN;
+            Guy.Zustand = GUY_WAITING;
             PapierText = Renderer::DrawText(GERETTET, TXTPAPIER, 1);
             break;
         case 3:
@@ -1441,66 +1441,66 @@ namespace Action
         case 4:
             // Route herstellen
             Guy.Aktiv = true;
-            Guy.Zustand = GUYLINKS;
+            Guy.Zustand = GUY_LEFT;
             RoutePunkt = -1;
             Steps = 0;
             Step = 0;
             RouteStart.x = Guy.Pos.x;
             RouteStart.y = Guy.Pos.y;
             RouteZiel.y = Guy.Pos.y;
-            for (short x = MAXXKACH - 1; x > 1; x--) // Position des Rettungsschiffs festlegen
+            for (short x = MAX_TILES_X - 1; x > 1; x--) // Position des Rettungsschiffs festlegen
             {
                 if (Scape[x][Guy.Pos.y].Art != 1) break;
                 RouteZiel.x = x + 1;
             }
             // Schiff hinbauen
             Scape[RouteZiel.x][RouteZiel.y].Phase = 0;
-            Scape[RouteZiel.x][RouteZiel.y].Objekt = GUYSCHIFF;
+            Scape[RouteZiel.x][RouteZiel.y].Objekt = GUY_SHIP;
             Scape[RouteZiel.x][RouteZiel.y].ObPos.x = 10;
             Scape[RouteZiel.x][RouteZiel.y].ObPos.y = 10;
             RouteZiel.x -= 2;
             Routing::FindTheWay();
-            Guy.Zustand = GUYLINKS;
+            Guy.Zustand = GUY_LEFT;
             break;
         case 5:
-            Guy.Zustand = GUYLINKS;
-            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].x) / 2),
-                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].y +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2));
+            Guy.Zustand = GUY_LEFT;
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 6:
             Guy.Pos.x += 2;
-            Guy.Zustand = GUYSCHWIMMEN;
-            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2),
-                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2));
+            Guy.Zustand = GUY_SWIM;
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             break;
         case 7:
             Guy.PosScreen.y -= 10;
             if (!BootsFahrt) World::ChangeBootsFahrt();
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHIFF;
+            Guy.Zustand = GUY_SHIP;
             RoutePunkt = -1;
             Steps = 0;
             Step = 0;
             RouteStart.x = Guy.Pos.x;
             RouteStart.y = Guy.Pos.y;
             RouteZiel.y = Guy.Pos.y;
-            RouteZiel.x = MAXXKACH - 2;
+            RouteZiel.x = MAX_TILES_X - 2;
             Routing::FindTheWay();
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[MEERWELLEN].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[MEERWELLEN].rcDes.top);
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = MEERWELLEN;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[SEA_WAVES].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[SEA_WAVES].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = SEA_WAVES;
             break;
         case 8:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHIFF;
+            Guy.Zustand = GUY_SHIP;
             break;
         case 9:
             Guy.Aktion = NOTHING;
-            Guy.Zustand = GUYLINKS;
+            Guy.Zustand = GUY_LEFT;
             Spielzustand = State::OUTRO;
             break;
         }
@@ -1511,12 +1511,12 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = ZELT;
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[ZELT].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = TENT;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[TENT].Rohstoff[i];
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[ZELT].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[ZELT].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[TENT].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[TENT].rcDes.top);
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -1532,7 +1532,7 @@ namespace Action
             break;
         case 2: case 3: case 12: case 13:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYBINDENUNTEN;
+            Guy.Zustand = GUY_TIE_DOWN;
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 15);
@@ -1553,7 +1553,7 @@ namespace Action
             break;
         case 7: case 8:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYBINDENOBEN;
+            Guy.Zustand = GUY_TIE_UP;
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 15);
@@ -1580,11 +1580,11 @@ namespace Action
             break;
         case 16:
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
-            Bmp[BUTTSTOP].Phase = -1;
-            if (Bmp[ZELT].First)
+            Bmp[BUTTON_STOP].Phase = -1;
+            if (Bmp[TENT].First)
             {
                 PapierText = Renderer::DrawText(ZELTHILFE, TXTPAPIER, 1);
-                Bmp[ZELT].First = false;
+                Bmp[TENT].First = false;
             }
             Guy.Aktion = NOTHING;
             break;
@@ -1596,12 +1596,12 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BOOT;
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[BOOT].Rohstoff[i];
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[BOOT].Anzahl;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[BOOT].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[BOOT].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BOAT;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[BOAT].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[BOAT].Anzahl;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[BOAT].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[BOAT].rcDes.top);
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -1622,11 +1622,11 @@ namespace Action
         case 3:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 28,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 19);
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOOT].Anzahl + 1);
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOAT].Anzahl + 1);
             break;
         case 4: case 5: case 6: case 8: case 9: case 10: case 12: case 13: case 14:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHLAGEN;
+            Guy.Zustand = GUY_BEAT;
             World::AddResource(WASSER, -2);
             World::AddResource(NAHRUNG, -2);
             World::AddTime(0, 15);
@@ -1634,12 +1634,12 @@ namespace Action
         case 7:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 22,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 16);
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOOT].Anzahl + 2);
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOAT].Anzahl + 2);
             break;
         case 11:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 14,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 11);
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOOT].Anzahl + 3);
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BOAT].Anzahl + 3);
             break;
         case 15:
             Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -1669,11 +1669,11 @@ namespace Action
                 Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = 0;
                 Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = 28;
             }
-            Bmp[BUTTSTOP].Phase = -1;
-            if (Bmp[BOOT].First)
+            Bmp[BUTTON_STOP].Phase = -1;
+            if (Bmp[BOAT].First)
             {
                 PapierText = Renderer::DrawText(BOOTHILFE, TXTPAPIER, 1);
-                Bmp[BOOT].First = false;
+                Bmp[BOAT].First = false;
             }
             Guy.Aktion = NOTHING;
             break;
@@ -1685,12 +1685,12 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = ROHR;
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[ROHR].Rohstoff[i];
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[ROHR].Anzahl;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[ROHR].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[ROHR].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = PIPE;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[PIPE].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[PIPE].Anzahl;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[PIPE].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[PIPE].rcDes.top);
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -1711,18 +1711,18 @@ namespace Action
         case 3:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 28,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 15);
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[ROHR].Anzahl + 1);
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[PIPE].Anzahl + 1);
             break;
         case 4: case 5: case 6: case 11: case 12: case 13:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYSCHLAGEN;
+            Guy.Zustand = GUY_BEAT;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 5);
             break;
         case 7: case 8: case 9: case 14: case 15: case 16:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYFAELLEN;
+            Guy.Zustand = GUY_CHOP;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 5);
@@ -1730,7 +1730,7 @@ namespace Action
         case 10:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 17,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 13);
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[ROHR].Anzahl + 2);
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[PIPE].Anzahl + 2);
             break;
         case 17:
             Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
@@ -1738,11 +1738,11 @@ namespace Action
         case 18:
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
             World::FillRohr();
-            Bmp[BUTTSTOP].Phase = -1;
-            if (Bmp[ROHR].First)
+            Bmp[BUTTON_STOP].Phase = -1;
+            if (Bmp[PIPE].First)
             {
                 PapierText = Renderer::DrawText(ROHRHILFE, TXTPAPIER, 1);
-                Bmp[ROHR].First = false;
+                Bmp[PIPE].First = false;
             }
             Guy.Aktion = NOTHING;
             break;
@@ -1755,7 +1755,7 @@ namespace Action
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
             Scape[Guy.Pos.x][Guy.Pos.y].Objekt = SOS;
-            for (short i = 0; i < BILDANZ; i++)
+            for (short i = 0; i < SPRITE_COUNT; i++)
                 Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[SOS].Rohstoff[i];
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[SOS].Anzahl;
             Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[SOS].rcDes.left);
@@ -1801,7 +1801,7 @@ namespace Action
         case 2: case 5: case 8: case 11: case 14: case 17:
             Guy.Aktiv = true;
             Guy.PosScreen.x += 4;
-            Guy.Zustand = GUYHINLEGEN;
+            Guy.Zustand = GUY_LAYING_TENT;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 1);
@@ -1809,7 +1809,7 @@ namespace Action
         case 3: case 6: case 9: case 12: case 15: case 18:
             Guy.Aktiv = true;
             Guy.PosScreen.x -= 4;
-            Guy.Zustand = GUYAUFSTEHEN;
+            Guy.Zustand = GUY_STAND_UP;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 1);
@@ -1822,7 +1822,7 @@ namespace Action
             if ((Scape[Guy.Pos.x][Guy.Pos.y].Art == 0) || (Scape[Guy.Pos.x][Guy.Pos.y].Art == 4))
                 Chance += 1;
             else Chance += 2; // Dürfte nur noch der Strand übrig sein
-            Bmp[BUTTSTOP].Phase = -1;
+            Bmp[BUTTON_STOP].Phase = -1;
             if (Bmp[SOS].First)
             {
                 PapierText = Renderer::DrawText(SOSHILFE, TXTPAPIER, 1);
@@ -1838,12 +1838,12 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = FEUERSTELLE;
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[FEUERSTELLE].Rohstoff[i];
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[FEUERSTELLE].Anzahl;
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[FEUERSTELLE].rcDes.left);
-            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[FEUERSTELLE].rcDes.top);
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BONFIRE;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[BONFIRE].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[BONFIRE].Anzahl;
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[BONFIRE].rcDes.left);
+            Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[BONFIRE].rcDes.top);
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -1860,7 +1860,7 @@ namespace Action
         case 2:
             Guy.Aktiv = true;
             Guy.PosScreen.x += 4;
-            Guy.Zustand = GUYHINLEGEN;
+            Guy.Zustand = GUY_LAYING_TENT;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 1);
@@ -1868,11 +1868,11 @@ namespace Action
         case 3:
             Guy.Aktiv = true;
             Guy.PosScreen.x -= 4;
-            Guy.Zustand = GUYAUFSTEHEN;
+            Guy.Zustand = GUY_STAND_UP;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 1);
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[FEUERSTELLE].Anzahl + 1);
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[BONFIRE].Anzahl + 1);
             break;
         case 4:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x,
@@ -1880,24 +1880,24 @@ namespace Action
             break;
         case 5: case 6: case 7:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYBINDENOBEN;
+            Guy.Zustand = GUY_TIE_UP;
             World::AddResource(WASSER, -1);
             World::AddResource(NAHRUNG, -1);
             World::AddTime(0, 1);
             if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer != 5)
                 Scape[Guy.Pos.x][Guy.Pos.y].Phase =
-                    static_cast<short>(Bmp[FEUERSTELLE].Anzahl + Scape[Guy.Pos.x][Guy.Pos.y].AkNummer - 4);
+                    static_cast<short>(Bmp[BONFIRE].Anzahl + Scape[Guy.Pos.x][Guy.Pos.y].AkNummer - 4);
             break;
         case 8:
             Routing::ShortRoute(Guy.PosAlt.x, Guy.PosAlt.y);
             break;
         case 9:
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
-            Bmp[BUTTSTOP].Phase = -1;
-            if (Bmp[FEUERSTELLE].First)
+            Bmp[BUTTON_STOP].Phase = -1;
+            if (Bmp[BONFIRE].First)
             {
                 PapierText = Renderer::DrawText(FEUERSTELLEHILFE, TXTPAPIER, 1);
-                Bmp[FEUERSTELLE].First = false;
+                Bmp[BONFIRE].First = false;
             }
             Guy.Aktion = NOTHING;
             break;
@@ -1909,10 +1909,10 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HAUS1].Rohstoff[i];
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HAUS1].Anzahl;
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HAUS1;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HOUSE_1].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HOUSE_1].Anzahl;
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HOUSE_1;
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -1924,37 +1924,37 @@ namespace Action
         {
         case 1:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x +
-                                Bmp[BAUMGROSS].Breite / 2 - 3,
+                                Bmp[TREE_BIG].Breite / 2 - 3,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y +
-                                Bmp[BAUMGROSS].Hoehe + 1);
+                                Bmp[TREE_BIG].Hoehe + 1);
             break;
         case 2: case 3: case 4: case 5:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER;
+            Guy.Zustand = GUY_HAMMER_1;
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 6: case 7: case 8: case 9:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS1].Anzahl + 1);
+            Guy.Zustand = GUY_HAMMER_1;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_1].Anzahl + 1);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 10: case 11: case 12: case 13:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS1].Anzahl + 2);
+            Guy.Zustand = GUY_HAMMER_1;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_1].Anzahl + 2);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 14: case 15: case 16: case 17:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS1].Anzahl + 3);
+            Guy.Zustand = GUY_HAMMER_1;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_1].Anzahl + 3);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
@@ -1964,7 +1964,7 @@ namespace Action
             break;
         case 19:
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
-            Bmp[BUTTSTOP].Phase = -1;
+            Bmp[BUTTON_STOP].Phase = -1;
             Guy.Aktion = NOTHING;
             break;
         }
@@ -1975,10 +1975,10 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HAUS2].Rohstoff[i];
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HAUS2].Anzahl;
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HAUS2;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HOUSE_2].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HOUSE_2].Anzahl;
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HOUSE_2;
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -1990,52 +1990,52 @@ namespace Action
         {
         case 1:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x +
-                                Bmp[BAUMGROSS].Breite / 2,
+                                Bmp[TREE_BIG].Breite / 2,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y +
-                                Bmp[BAUMGROSS].Hoehe + 1);
+                                Bmp[TREE_BIG].Hoehe + 1);
             break;
         case 2:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYKLETTERN1;
+            Guy.Zustand = GUY_CLIMBING_1;
             World::AddResource(NAHRUNG, -1);
             World::AddResource(WASSER, -1);
             World::AddTime(0, 1);
             break;
         case 3: case 4: case 5: case 6:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
+            Guy.Zustand = GUY_HAMMER_2;
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 7: case 8: case 9: case 10:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 1);
+            Guy.Zustand = GUY_HAMMER_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_2].Anzahl + 1);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 11: case 12: case 13: case 14:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 2);
+            Guy.Zustand = GUY_HAMMER_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_2].Anzahl + 2);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 15: case 16: case 17: case 18:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 3);
+            Guy.Zustand = GUY_HAMMER_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_2].Anzahl + 3);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 19:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYKLETTERN2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS2].Anzahl + 4);
+            Guy.Zustand = GUY_CLIMBING_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_2].Anzahl + 4);
             World::AddResource(NAHRUNG, -1);
             World::AddResource(WASSER, -1);
             World::AddTime(0, 1);
@@ -2045,7 +2045,7 @@ namespace Action
             break;
         case 21:
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
-            Bmp[BUTTSTOP].Phase = -1;
+            Bmp[BUTTON_STOP].Phase = -1;
             Guy.Aktion = NOTHING;
             break;
         }
@@ -2056,10 +2056,10 @@ namespace Action
         if (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer == 0)
         {
             Guy.PosAlt = Guy.PosScreen; // Die Originalposition merken
-            for (short i = 0; i < BILDANZ; i++)
-                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HAUS3].Rohstoff[i];
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HAUS3].Anzahl;
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HAUS3;
+            for (short i = 0; i < SPRITE_COUNT; i++)
+                Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] = Bmp[HOUSE_3].Rohstoff[i];
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = Bmp[HOUSE_3].Anzahl;
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = HOUSE_3;
         }
         Scape[Guy.Pos.x][Guy.Pos.y].AkNummer++;
         if (!World::CheckRohstoff())
@@ -2071,52 +2071,52 @@ namespace Action
         {
         case 1:
             Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x +
-                                Bmp[BAUMGROSS].Breite / 2,
+                                Bmp[TREE_BIG].Breite / 2,
                                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y +
-                                Bmp[BAUMGROSS].Hoehe + 1);
+                                Bmp[TREE_BIG].Hoehe + 1);
             break;
         case 2:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYKLETTERN1;
+            Guy.Zustand = GUY_CLIMBING_1;
             World::AddResource(NAHRUNG, -1);
             World::AddResource(WASSER, -1);
             World::AddTime(0, 1);
             break;
         case 3: case 4: case 5: case 6:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
+            Guy.Zustand = GUY_HAMMER_2;
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 7: case 8: case 9: case 10:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 1);
+            Guy.Zustand = GUY_HAMMER_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_3].Anzahl + 1);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 11: case 12: case 13: case 14:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 2);
+            Guy.Zustand = GUY_HAMMER_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_3].Anzahl + 2);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 15: case 16: case 17: case 18:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYHAMMER2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 3);
+            Guy.Zustand = GUY_HAMMER_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_3].Anzahl + 3);
             World::AddResource(NAHRUNG, -0.5);
             World::AddResource(WASSER, -0.5);
             World::AddTime(0, 1);
             break;
         case 19:
             Guy.Aktiv = true;
-            Guy.Zustand = GUYKLETTERN2;
-            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HAUS3].Anzahl + 4);
+            Guy.Zustand = GUY_CLIMBING_2;
+            Scape[Guy.Pos.x][Guy.Pos.y].Phase = static_cast<short>(Bmp[HOUSE_3].Anzahl + 4);
             World::AddResource(NAHRUNG, -1);
             World::AddResource(WASSER, -1);
             World::AddTime(0, 1);
@@ -2126,11 +2126,11 @@ namespace Action
             break;
         case 21:
             Scape[Guy.Pos.x][Guy.Pos.y].Phase = 0;
-            Bmp[BUTTSTOP].Phase = -1;
-            if (Bmp[HAUS3].First)
+            Bmp[BUTTON_STOP].Phase = -1;
+            if (Bmp[HOUSE_3].First)
             {
                 PapierText = Renderer::DrawText(HAUS3HILFE, TXTPAPIER, 1);
-                Bmp[HAUS3].First = false;
+                Bmp[HOUSE_3].First = false;
             }
             Guy.Aktion = NOTHING;
             break;
@@ -2147,82 +2147,82 @@ namespace Action
         switch (Guy.AkNummer)
         {
         case 1:
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x + 3,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y + 20);
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
                 Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].xScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x +
-                                    Bmp[BAUMGROSS].Breite / 2 + 1,
+                                    Bmp[TREE_BIG].Breite / 2 + 1,
                                     Scape[Guy.Pos.x][Guy.Pos.y].yScreen + Scape[Guy.Pos.x][Guy.Pos.y].ObPos.y +
-                                    Bmp[BAUMGROSS].Hoehe + 1);
+                                    Bmp[TREE_BIG].Hoehe + 1);
             break;
         case 2:
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYKLETTERN1;
+                Guy.Zustand = GUY_CLIMBING_1;
                 World::AddResource(NAHRUNG, -1);
                 World::AddResource(WASSER, -1);
             }
             break;
         case 3:
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYGEHINZELT;
+                Guy.Zustand = GUY_ENTER_TENT;
             }
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYGEHINHAUS;
+                Guy.Zustand = GUY_ENTER_HOUSE;
             }
             else
             {
                 Guy.PosScreen.x += 3;
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYHINLEGEN;
+                Guy.Zustand = GUY_LAYING_TENT;
             }
             break;
         case 4: case 5:
             Guy.Aktiv = true;
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == TENT) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 if (Guy.AkNummer == 4) Guy.PosScreen.x += 4;
-                Guy.Zustand = GUYSCHLAFZELT;
+                Guy.Zustand = GUY_SLEEPING_TENT;
             }
-            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 if (Guy.AkNummer == 4) Guy.PosScreen.x += 14;
-                Guy.Zustand = GUYSCHLAFHAUS;
+                Guy.Zustand = GUY_SLEEP_HOUSE;
             }
-            else Guy.Zustand = GUYSCHLAFEN;
+            else Guy.Zustand = GUY_SLEEPING;
             World::AddResource(GESUNDHEIT, 5);
             World::AddTime(0, 30);
             break;
         case 6:
             Guy.Aktiv = true;
             StopSound(Sound::SNORE);
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.PosScreen.x -= 14;
-                Guy.Zustand = GUYGEHAUSHAUS;
+                Guy.Zustand = GUY_EXIT_HOUSE;
             }
-            else Guy.Zustand = GUYAUFSTEHEN;
+            else Guy.Zustand = GUY_STAND_UP;
             break;
         case 7:
-            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3) &&
+            if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
             {
                 Guy.Aktiv = true;
-                Guy.Zustand = GUYKLETTERN2;
+                Guy.Zustand = GUY_CLIMBING_2;
                 World::AddResource(NAHRUNG, -1);
                 World::AddResource(WASSER, -1);
             }
@@ -2256,10 +2256,10 @@ namespace Action
             else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Art == 1) Guy.Pos.y--;
             else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Art == 1) Guy.Pos.x++;
             else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Art == 1) Guy.Pos.y++;
-            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2),
-                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
 
             break;
         case 3:
@@ -2278,31 +2278,31 @@ namespace Action
         case 1:
             if (Scape[Guy.Pos.x - 1][Guy.Pos.y].Art != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].x) / 2),
-                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].y +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y) / 2));
             }
             else if (Scape[Guy.Pos.x][Guy.Pos.y - 1].Art != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].x +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2),
-                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].y) / 2));
             }
             else if (Scape[Guy.Pos.x + 1][Guy.Pos.y].Art != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].x) / 2),
-                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].y +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
             }
             else if (Scape[Guy.Pos.x][Guy.Pos.y + 1].Art != 1)
             {
-                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].x +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x) / 2),
-                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y +
-                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].y) / 2));
+                Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].x +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x) / 2),
+                                    ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y +
+                                        Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].y) / 2));
             }
             break;
         case 2:
@@ -2327,8 +2327,8 @@ namespace Action
                 Scape[Guy.Pos.x][Guy.Pos.y].Phase = 1;
             }
 
-            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BOOT;
-            Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = Bmp[BOOT].AkAnzahl;
+            Scape[Guy.Pos.x][Guy.Pos.y].Objekt = BOAT;
+            Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = Bmp[BOAT].AkAnzahl;
 
             World::ChangeBootsFahrt();
             Scape[Guy.Pos.x][Guy.Pos.y].ObPos.x = Guy.PosScreen.x -
@@ -2338,10 +2338,10 @@ namespace Action
                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen -
                 Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Hoehe / 2;
 
-            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][2].x) / 2),
-                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][1].y +
-                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][3].y) / 2));
+            Routing::ShortRoute(((Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+                                ((Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                                    Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
 
             break;
         case 3:

@@ -17,7 +17,7 @@
 #include <exception>
 
 Application::Application(const std::string& name, HINSTANCE instance_handle)
-    : m_window({MAXX, MAXY}, name, sf::Style::Fullscreen)
+    : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::Fullscreen)
       , m_name(name)
       , m_time(std::time(nullptr))
 {
@@ -116,7 +116,7 @@ void Application::run()
                     if ((Stunden >= 12) && (Minuten != 0) && (Guy.Aktion != Action::DAY_END)) // Hier ist der Tag zuende
                     {
                         if (Guy.Aktion == Action::LOOKOUT)
-                            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Hoehe;
+                            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
 
                         Guy.Aktiv = false;
                         Guy.AkNummer = 0;
