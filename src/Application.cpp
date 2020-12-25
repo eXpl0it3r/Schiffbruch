@@ -71,7 +71,7 @@ void Application::run()
         // I'm almost proud.
 
         if (timer.getElapsedTime() > sf::milliseconds(1000)) {
-            while (true) {
+            while (m_window.isOpen()) {
                 process_events();
                 Bild++;
                 std::time_t Zeitsave = std::time(nullptr);
