@@ -6,25 +6,21 @@
 
 using namespace dvl;
 
-struct TextArea
-{
+struct TextArea {
     bool HasText; // Steht Text in diesem Bereich?
     RECT textRect; // Die Position des Ausgabe
 };
 
-struct Coordinate
-{
+struct Coordinate {
     short x;
     short y;
 };
 
-struct RGBSTRUCT
-{
+struct RGBSTRUCT {
     uint8_t r, g, b;
 };
 
-struct GUY
-{
+struct GUY {
     bool IsActive; // Ist er aktiv?
     short CurrentAction; // Welche Aktion (Suchen, fischen ...) (Übergeordnet über Zustand)
     Coordinate Pos; // KachelPosition der Spielfigur
@@ -36,8 +32,7 @@ struct GUY
     short Inventory[SPRITE_COUNT]; // Welche Rohstoffe usw. besitzt man
 };
 
-struct BMP
-{
+struct BMP {
     LPDIRECTDRAWSURFACE4 Surface; // in welcher Surface gespeichert?
     bool IsAnimationRunning; // Läuft die Animations?
     short AnimationPhaseCount; // Anzahl der Animationsphasen
@@ -54,21 +49,18 @@ struct BMP
     bool First; // Ist es das erstemal gebaut, dann Hilfetext
 };
 
-struct WAV
-{
-    const char* Filename; // Dateiname der Wavdatei
+struct WAV {
+    const char *Filename; // Dateiname der Wavdatei
     bool Loop; // Nur einmal abspielen und ständig
     short Volume; // Die Standardlautstärke in Prozent
 };
 
-struct CREDITS
-{
+struct CREDITS {
     bool IsRunning; // Bewegt sich gerade
     short Picture; // welches Bild
 };
 
-struct SCAPE
-{
+struct SCAPE {
     short Type; // Flach, Hang usw.
     short Terrain; // Sand, Moor ...
     short Height; // Die Hoehe der Kachel
@@ -87,8 +79,7 @@ struct SCAPE
     float FireTimer; //Bis jetzt nur fürs Feuer nötig
 };
 
-struct RiverRun
-{
+struct RiverRun {
     short x, y;
 };
 

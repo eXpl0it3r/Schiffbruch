@@ -10,7 +10,7 @@
 class Application
 {
 public:
-    Application(const std::string& name, HINSTANCE instance_handle);
+    Application(const std::string &name, HINSTANCE instance_handle);
 
     void run();
     void update();
