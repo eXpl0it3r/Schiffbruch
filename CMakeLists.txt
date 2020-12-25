@@ -32,16 +32,6 @@ add_executable(schiffbruch
     src/State.hpp
     src/types.hpp
     src/World.hpp
-
-#    miniwin/ddraw.cpp
-##    miniwin/dsound.cpp
-##    miniwin/misc.cpp
-#    miniwin/misc_dx.cpp
-#    miniwin/misc_io.cpp
-##    miniwin/misc_msg.cpp
-#    miniwin/rand.cpp
-#    miniwin/thread.cpp
-#    miniwin/dx.cpp
 )
 
 add_definitions(-Wno-writable-strings)

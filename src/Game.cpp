@@ -2401,11 +2401,11 @@ void NewGame(bool neu)
         Guy.Pos.x = 1;
         Guy.Pos.y = MAX_TILESY / 2;
         Guy.ScreenPosition.x =
-            (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-             Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
+            (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+             Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
         Guy.ScreenPosition.y =
-            (Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-             Scape[Guy.Pos.x][Guy.Pos.y].yScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
+            (Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+             Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
 
         Camera.x = Guy.ScreenPosition.x - static_cast<short>(rcGesamt.right / 2);
         Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcGesamt.bottom / 2);
