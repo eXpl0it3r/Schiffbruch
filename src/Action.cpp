@@ -397,7 +397,7 @@ void death()
 
     case 3:
         Guy.IsActive = true;
-        Nacht = false;
+        Night = false;
         Renderer::Fade(100, 100, 100);
 
         if (IsInBoat) {
@@ -410,13 +410,13 @@ void death()
 
     case 4:
         Guy.IsActive = true;
-        Nacht = true;
+        Night = true;
         Guy.AnimationState = GUY_WAITING;
         PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
         break;
 
     case 5:
-        Nacht = false;
+        Night = false;
 
         if (IsInBoat) {
             Guy.AnimationState = GUY_BOAT_LEFT;
@@ -526,7 +526,7 @@ void destroy()
 
 void search()
 {
-    Coordinate Ziel;
+    Coordinate target;
     short i;
 
     if (Guy.ActionNumber == 0) {
@@ -534,9 +534,9 @@ void search()
     }
 
     while (true) {
-        Ziel.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % TILE_SIZE_X;
-        Ziel.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % TILE_SIZE_Y;
-        Coordinate Erg = Renderer::GetTile(Ziel.x, Ziel.y);
+        target.x = Scape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % TILE_SIZE_X;
+        target.y = Scape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % TILE_SIZE_Y;
+        Coordinate Erg = Renderer::GetTile(target.x, target.y);
 
         if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
             break;    // Wenn das gefundene Ziel in der Kachel, dann fertig
@@ -558,7 +558,7 @@ void search()
                 PlaySound(Sound::SPLAT, 100);
             }
         } else {
-            Routing::ShortRoute(Ziel.x, Ziel.y);
+            Routing::ShortRoute(target.x, target.y);
         }
 
         break;
@@ -1374,8 +1374,8 @@ void day_end()
     switch (Guy.ActionNumber) {
     case 1:
         Renderer::Fade(100, 90, 90);
-        Stunden = 12;
-        Minuten = 0;
+        Hours = 12;
+        Minutes = 0;
         TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
         Bmp[BUTTON_STOP].AnimationPhase = -1;
 
@@ -1400,8 +1400,8 @@ void day_end()
 
     case 2:
         Renderer::Fade(95, 80, 80);
-        Stunden = 12;
-        Minuten = 0;
+        Hours = 12;
+        Minutes = 0;
 
         if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
                 (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat)) {
@@ -1461,8 +1461,8 @@ void day_end()
 
     case 3:
         Renderer::Fade(90, 70, 70);
-        Stunden = 12;
-        Minuten = 0;
+        Hours = 12;
+        Minutes = 0;
 
         if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
                 (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat)) {
@@ -1479,8 +1479,8 @@ void day_end()
 
     case 4:
         Renderer::Fade(70, 60, 60);
-        Stunden = 12;
-        Minuten = 0;
+        Hours = 12;
+        Minutes = 0;
 
         if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
                 (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat)) {
@@ -1505,8 +1505,8 @@ void day_end()
 
     case 5:
         Renderer::Fade(55, 50, 55);
-        Stunden = 12;
-        Minuten = 0;
+        Hours = 12;
+        Minutes = 0;
 
         if (IsInBoat) {
             break;
@@ -1536,8 +1536,8 @@ void day_end()
 
     case 6:
         Renderer::Fade(25, 25, 35);
-        Stunden = 12;
-        Minuten = 0;
+        Hours = 12;
+        Minutes = 0;
 
         if (IsInBoat) {
             break;
@@ -1558,10 +1558,10 @@ void day_end()
         break;
 
     case 7:
-        Renderer::Fade(0, 0, 0); // Nicht verwirren lassen, da das Bild in Zeige() schwarz übermalt wird
-        Nacht = true;
-        Stunden = 12;
-        Minuten = 0;
+        Renderer::Fade(0, 0, 0);// Don't get confused as the picture in Show () will be painted over in black
+        Night = true;
+        Hours = 12;
+        Minutes = 0;
         PlaySound(Sound::WOLF, 100);
 
         // Falsche Objekte Löschen
@@ -1585,8 +1585,8 @@ void day_end()
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
                 Guy.CurrentAction = DEATH;
-                Stunden = 0;
-                Minuten = 0;
+                Hours = 0;
+                Minutes = 0;
             } else {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE2, TXTPAPIER, 1);
@@ -1602,8 +1602,8 @@ void day_end()
             PapierText = Renderer::DrawText(TAGENDE3, TXTPAPIER, 1);
             Guy.ActionNumber = 2;
             Guy.CurrentAction = DEATH;
-            Stunden = 0;
-            Minuten = 0;
+            Hours = 0;
+            Minutes = 0;
         } else {
             World::AddResource(GESUNDHEIT, -20);
 
@@ -1612,8 +1612,8 @@ void day_end()
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
                 Guy.CurrentAction = DEATH;
-                Stunden = 0;
-                Minuten = 0;
+                Hours = 0;
+                Minutes = 0;
             } else {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE1, TXTPAPIER, 1);
@@ -1624,10 +1624,10 @@ void day_end()
 
     case 8:
         Renderer::Fade(20, 20, 30);
-        Nacht = false;
+        Night = false;
         Tag++;
-        Stunden = 0;
-        Minuten = 0;
+        Hours = 0;
+        Minutes = 0;
         // if (BootsFahrt) Game::NeuesSpiel(true); // Später hier tot!!
 
         Guy.IsActive = true;
@@ -1646,11 +1646,11 @@ void day_end()
 
     case 9:
         Renderer::Fade(40, 40, 40);
-        Stunden = 0;
-        Minuten = 0;
+        Hours = 0;
+        Minutes = 0;
 
-        Stunden = 0;
-        Minuten = 0;
+        Hours = 0;
+        Minutes = 0;
         Guy.IsActive = true;
 
         if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == TENT) &&
@@ -1667,8 +1667,8 @@ void day_end()
 
     case 10:
         Renderer::Fade(70, 60, 60);
-        Stunden = 0;
-        Minuten = 0;
+        Hours = 0;
+        Minutes = 0;
         StopSound(Sound::SNORE);
         Guy.IsActive = true;
 
@@ -1684,8 +1684,8 @@ void day_end()
 
     case 11:
         Renderer::Fade(90, 80, 80);
-        Stunden = 0;
-        Minuten = 0;
+        Hours = 0;
+        Minutes = 0;
 
         if ((Scape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
                 (Scape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
@@ -1697,8 +1697,8 @@ void day_end()
 
     case 12:
         Renderer::Fade(100, 100, 100);
-        Stunden = 0;
-        Minuten = 0;
+        Hours = 0;
+        Minutes = 0;
         Guy.AnimationState = GUY_LEFT;
         Guy.CurrentAction = NOTHING;
 

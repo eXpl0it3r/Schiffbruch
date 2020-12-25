@@ -40,6 +40,8 @@ bool InitDDraw()
 {
 //    DDSCAPS2 ddscaps;
 //    LPDIRECTDRAW pDD;
+    darknessOverlay = new sf::Image;
+    darknessOverlay->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0, 0));
 
     lpDDSBack = new sf::Image;
     lpDDSBack->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
