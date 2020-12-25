@@ -36,7 +36,7 @@ extern short Step, Steps;
 
 // Should be const
 extern RECT rcGesamt;
-extern RECT rcSpielflaeche;
+extern RECT rcPlayingSurface;
 extern RECT rcPanel;
 extern RECT rcKarte;
 
