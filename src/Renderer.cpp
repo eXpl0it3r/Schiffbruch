@@ -22,6 +22,9 @@ double pi = 3.1415926535; // pi, was sonst
 
 void Fade(short RP, short GP, short BP)
 {
+    // TODO: different colors
+    darknessOverlay->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0, 255 - 255 * RP / 100));
+
     // TODO
 //    for (short blackloop = 0; blackloop < 256; blackloop++) {
 //        DDGammaRamp.red[blackloop] = DDGammaOld.red[blackloop] * RP / 100;
@@ -666,7 +669,7 @@ void DrawPanel()
     // Sonnenanzeige
     short diffx = (static_cast<short>(Bmp[SUN].targetRect.right) - static_cast<short>(Bmp[SUN].targetRect.left) - Bmp[SUN].Width) / 2;
     short diffy = static_cast<short>(Bmp[SUN].targetRect.bottom) - static_cast<short>(Bmp[SUN].targetRect.top) - Bmp[SUN].Height / 2;
-    short TagesZeit = (Stunden * 10 + Minuten * 10 / 60);
+    short TagesZeit = (Hours * 10 + Minutes * 10 / 60);
 
     DrawPicture(static_cast<short>(Bmp[SUN].targetRect.left + diffx * cos(pi - pi * TagesZeit / 120) + diffx),
                   static_cast<short>(Bmp[SUN].targetRect.top + (-diffy * sin(pi - pi * TagesZeit / 120) + diffy)),
@@ -953,18 +956,18 @@ void Show()
     // Die TagesZeit ausgeben
     HideText(TXTTAGESZEIT);
     TextBereich[TXTTAGESZEIT].HasText = true;
-    std::sprintf(Stringsave1, "%d", Stunden + 6);
-    std::sprintf(Stringsave2, "%d", Minuten);
+    std::sprintf(Stringsave1, "%d", Hours + 6);
+    std::sprintf(Stringsave2, "%d", Minutes);
     strcpy(StdString, "");
 
-    if (Stunden + 6 < 10) {
+    if (Hours + 6 < 10) {
         strncat(StdString, "0", TXTTAGESZEIT);
     }
 
     strncat(StdString, Stringsave1, TXTTAGESZEIT);
     strncat(StdString, ":", TXTTAGESZEIT);
 
-    if (Minuten < 10) {
+    if (Minutes < 10) {
         strncat(StdString, "0", TXTTAGESZEIT);
     }
 
@@ -988,7 +991,7 @@ void Show()
     }
 
     // Alles schwarz übermalen und nur das Papier mit Text anzeigen
-    if (Nacht) {
+    if (Night) {
         rcRectdes.left = 0;
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
@@ -1037,7 +1040,7 @@ void Show()
 //    }
 
 
-    if (Nacht) {
+    if (Night) {
         Fade(100, 100, 100);    // Das muß hier stehen, damit man die Textnachricht in der Nacht lesen kann
     }
 }

@@ -64,10 +64,6 @@ void Application::run()
     sf::Sprite sprite;
     sprite.setPosition(0, 0);
     while (m_window.isOpen()) {
-
-        // TODO: this is probably the worst and least efficient way to render things
-        // I'm almost proud.
-
         if (timer.getElapsedTime() > sf::milliseconds(1000)) {
             while (m_window.isOpen()) {
                 process_events();
@@ -115,7 +111,7 @@ void Application::run()
                     // Hide system cursor
 //                    SetCursor(nullptr);
 
-                    if ((Stunden >= 12) && (Minuten != 0) && (Guy.CurrentAction != Action::DAY_END)) { // Hier ist der Tag zuende
+                    if ((Hours >= 12) && (Minutes != 0) && (Guy.CurrentAction != Action::DAY_END)) { // Hier ist der Tag zuende
                         if (Guy.CurrentAction == Action::LOOKOUT) {
                             Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
                         }
@@ -159,7 +155,13 @@ void Application::run()
 //                sprite.setTexture(texture);
 //                m_window.draw(sprite);
 
+
+                // TODO: this is probably the worst and least efficient way to render things
+                // I'm almost proud.
                 texture.loadFromImage(*lpDDSBack);
+                sprite.setTexture(texture);
+                m_window.draw(sprite);
+                texture.loadFromImage(*darknessOverlay);
                 sprite.setTexture(texture);
                 m_window.draw(sprite);
 

@@ -19,7 +19,7 @@ short RouteLaenge; // Länge
 short RoutePunkt; // Aktueller Index in RouteKoor
 short Bild, LastBild; // Anzahl der Bilder in der Sekunde
 RECT rcRectdes, rcRectsrc; // Ständig benötigte Variable zum Blitten
-short Tag, Stunden, Minuten; // Wieviel Uhr (0-12h)
+short Tag, Hours, Minutes; // Wieviel Uhr (0-12h)
 char StdString[1024]; // Standard string
 char RohString[1024]; // Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
 short PapierText; // Wieviel Papier? (in Pixel) -1 = Kein Text
@@ -27,7 +27,7 @@ short HauptMenue; // Welches Menü?
 short TwoClicks; // Für Aktionen mit zwei Mausklicks
 float Chance; // Wie groß ist die Chance am Tag gerettet zu werden
 bool IsInBoat; // Gerade mit dem Boot unterwegs?
-bool Nacht; // Wird die Tageszusammenfassung angezeigt?
+bool Night; // Wird die Tageszusammenfassung angezeigt?
 short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
 short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
 short AbspannNr = 0; // Zähler für Abspann
@@ -100,6 +100,7 @@ sf::Image *lpDDSButtons = nullptr; // DirectDraw Buttons surface
 sf::Image *lpDDSInventar = nullptr; // DirectDraw Inventar surface
 sf::Image *lpDDSScape = nullptr; // DirectDraw Landschaft surface
 sf::Image *lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
+sf::Image *darknessOverlay = nullptr;
 //LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
 //DDBLTFX ddbltfx; // DirectDraw Effekte
 //DDPIXELFORMAT ddpf;

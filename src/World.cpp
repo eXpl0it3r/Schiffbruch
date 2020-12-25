@@ -90,12 +90,12 @@ void MakeRohString(short x, short y, short Objekt)
 
 void AddTime(short h, short m)
 {
-    Stunden += h;
-    Minuten += m;
+    Hours += h;
+    Minutes += m;
 
-    if (Minuten >= 60) {
-        Minuten -= 60;
-        Stunden++;
+    if (Minutes >= 60) {
+        Minutes -= 60;
+        Hours++;
     }
 
     for (short y = 0; y < MAX_TILESY; y++)

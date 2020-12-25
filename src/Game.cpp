@@ -27,11 +27,11 @@ void SaveGame()
     ofs.write(reinterpret_cast<char *>(&Gitter), sizeof(Gitter));
     ofs.write(reinterpret_cast<char *>(&HauptMenue), sizeof(HauptMenue));
     ofs.write(reinterpret_cast<char *>(&LAnimation), sizeof(LAnimation));
-    ofs.write(reinterpret_cast<char *>(&Minuten), sizeof(Minuten));
+    ofs.write(reinterpret_cast<char *>(&Minutes), sizeof(Minutes));
     ofs.write(reinterpret_cast<char *>(&ScapeGrenze), sizeof(ScapeGrenze));
     ofs.write(reinterpret_cast<char *>(&SchatzPos), sizeof(SchatzPos));
     ofs.write(reinterpret_cast<char *>(&Spielzustand), sizeof(Spielzustand));
-    ofs.write(reinterpret_cast<char *>(&Stunden), sizeof(Stunden));
+    ofs.write(reinterpret_cast<char *>(&Hours), sizeof(Hours));
     ofs.write(reinterpret_cast<char *>(&Tag), sizeof(Tag));
     ofs.write(reinterpret_cast<char *>(TextBereich), sizeof(TextBereich));
     ofs.write(reinterpret_cast<char *>(&SchatzGef), sizeof(SchatzGef));
@@ -59,11 +59,11 @@ bool LoadGame()
     ifs.read(reinterpret_cast<char *>(&Gitter), sizeof(Gitter));
     ifs.read(reinterpret_cast<char *>(&HauptMenue), sizeof(HauptMenue));
     ifs.read(reinterpret_cast<char *>(&LAnimation), sizeof(LAnimation));
-    ifs.read(reinterpret_cast<char *>(&Minuten), sizeof(Minuten));
+    ifs.read(reinterpret_cast<char *>(&Minutes), sizeof(Minutes));
     ifs.read(reinterpret_cast<char *>(&ScapeGrenze), sizeof(ScapeGrenze));
     ifs.read(reinterpret_cast<char *>(&SchatzPos), sizeof(SchatzPos));
     ifs.read(reinterpret_cast<char *>(&Spielzustand), sizeof(Spielzustand));
-    ifs.read(reinterpret_cast<char *>(&Stunden), sizeof(Stunden));
+    ifs.read(reinterpret_cast<char *>(&Hours), sizeof(Hours));
     ifs.read(reinterpret_cast<char *>(&Tag), sizeof(Tag));
     ifs.read(reinterpret_cast<char *>(TextBereich), sizeof(TextBereich));
     ifs.read(reinterpret_cast<char *>(&SchatzGef), sizeof(SchatzGef));
@@ -2236,7 +2236,7 @@ void InitStructs()
     PapierText = -1;
     HauptMenue = 0;
     TwoClicks = -1;
-    Nacht = false;
+    Night = false;
     Frage = -1;
     LastBild = 100;
     Bild = 0;
@@ -2419,8 +2419,8 @@ void NewGame(bool neu)
         }
 
         Tag = 1;
-        Stunden = 0;
-        Minuten = 0;
+        Hours = 0;
+        Minutes = 0;
 
         Spielzustand = State::INTRO;
         Guy.IsActive = false;
