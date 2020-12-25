@@ -22,11 +22,12 @@ double pi = 3.1415926535; // pi, was sonst
 
 void Fade(short RP, short GP, short BP)
 {
-    for (short blackloop = 0; blackloop < 256; blackloop++) {
-        DDGammaRamp.red[blackloop] = DDGammaOld.red[blackloop] * RP / 100;
-        DDGammaRamp.green[blackloop] = DDGammaOld.green[blackloop] * GP / 100;
-        DDGammaRamp.blue[blackloop] = DDGammaOld.blue[blackloop] * BP / 100;
-    }
+    // TODO
+//    for (short blackloop = 0; blackloop < 256; blackloop++) {
+//        DDGammaRamp.red[blackloop] = DDGammaOld.red[blackloop] * RP / 100;
+//        DDGammaRamp.green[blackloop] = DDGammaOld.green[blackloop] * GP / 100;
+//        DDGammaRamp.blue[blackloop] = DDGammaOld.blue[blackloop] * BP / 100;
+//    }
 
 //    lpDDGammaControl->SetGammaRamp(0, &DDGammaRamp);
 }
@@ -50,7 +51,7 @@ void LimitScroll()
     }
 }
 
-Coordinate GetKachel(short PosX, short PosY)
+Coordinate GetTile(short PosX, short PosY)
 {
     Coordinate Erg;
 
@@ -85,56 +86,57 @@ Coordinate GetKachel(short PosX, short PosY)
     return Erg;
 }
 
-DWORD RGB2DWORD(BYTE r, BYTE g, BYTE b)
-{
-    DWORD Erg;
+//DWORD RGB2DWORD(BYTE r, BYTE g, BYTE b)
+//{
+//    DWORD Erg;
 
-    if (ddpf.dwRBitMask == 63488) {
-        Erg = static_cast<DWORD>((r & 0xF8) >> 3);
-        Erg = Erg << 6;
-        Erg = Erg | static_cast<DWORD>((g & 0xFC) >> 2);
-        Erg = Erg << 5;
-        Erg = Erg | static_cast<DWORD>((b & 0xF8) >> 3);
-    } else if (ddpf.dwRBitMask == 31744) {
-        Erg = static_cast<DWORD>((r & 0xF8) >> 3);
-        Erg = Erg << 5;
-        Erg = Erg | static_cast<DWORD>((g & 0xF8) >> 3);
-        Erg = Erg << 5;
-        Erg = Erg | static_cast<DWORD>((b & 0xF8) >> 3);
-    } else if (ddpf.dwRBitMask == 16711680) {
-        Erg = static_cast<DWORD>(r & 0xFF);
-        Erg = Erg << 8;
-        Erg = Erg | static_cast<DWORD>(g & 0xFF);
-        Erg = Erg << 8;
-        Erg = Erg | static_cast<DWORD>(b & 0xFF);
-    } else {
-        Erg = 0;
-//            MessageBeep(MB_OK);
-    }
+//    if (ddpf.dwRBitMask == 63488) {
+//        Erg = static_cast<DWORD>((r & 0xF8) >> 3);
+//        Erg = Erg << 6;
+//        Erg = Erg | static_cast<DWORD>((g & 0xFC) >> 2);
+//        Erg = Erg << 5;
+//        Erg = Erg | static_cast<DWORD>((b & 0xF8) >> 3);
+//    } else if (ddpf.dwRBitMask == 31744) {
+//        Erg = static_cast<DWORD>((r & 0xF8) >> 3);
+//        Erg = Erg << 5;
+//        Erg = Erg | static_cast<DWORD>((g & 0xF8) >> 3);
+//        Erg = Erg << 5;
+//        Erg = Erg | static_cast<DWORD>((b & 0xF8) >> 3);
+//    } else if (ddpf.dwRBitMask == 16711680) {
+//        Erg = static_cast<DWORD>(r & 0xFF);
+//        Erg = Erg << 8;
+//        Erg = Erg | static_cast<DWORD>(g & 0xFF);
+//        Erg = Erg << 8;
+//        Erg = Erg | static_cast<DWORD>(b & 0xFF);
+//    } else {
+//        Erg = 0;
+////            MessageBeep(MB_OK);
+//    }
 
-    return Erg;
-}
+//    return Erg;
+//}
 
-inline void DWORD2RGB(DWORD color)
-{
-    if (ddpf.dwRBitMask == 63488) {
-        rgbStruct.r = static_cast<byte>((color & 0xF800) >> 8);
-        rgbStruct.g = static_cast<byte>((color & 0x07E0) >> 3);
-        rgbStruct.b = static_cast<byte>((color & 0x001F) << 3);
-    } else if (ddpf.dwRBitMask == 31744) {
-        rgbStruct.r = static_cast<byte>((color & 0x7C00) >> 7);
-        rgbStruct.g = static_cast<byte>((color & 0x03E0) >> 2);
-        rgbStruct.b = static_cast<byte>((color & 0x001F) << 3);
-    } else if (ddpf.dwRBitMask == 16711680) {
-        rgbStruct.r = static_cast<byte>((color & 0xFF0000) >> 10);
-        rgbStruct.g = static_cast<byte>((color & 0x00FF00) >> 8);
-        rgbStruct.b = static_cast<byte>((color & 0x0000FF));
-    }
-}
+//inline void DWORD2RGB(DWORD color)
+//{
+//    if (ddpf.dwRBitMask == 63488) {
+//        rgbStruct.r = static_cast<byte>((color & 0xF800) >> 8);
+//        rgbStruct.g = static_cast<byte>((color & 0x07E0) >> 3);
+//        rgbStruct.b = static_cast<byte>((color & 0x001F) << 3);
+//    } else if (ddpf.dwRBitMask == 31744) {
+//        rgbStruct.r = static_cast<byte>((color & 0x7C00) >> 7);
+//        rgbStruct.g = static_cast<byte>((color & 0x03E0) >> 2);
+//        rgbStruct.b = static_cast<byte>((color & 0x001F) << 3);
+//    } else if (ddpf.dwRBitMask == 16711680) {
+//        rgbStruct.r = static_cast<byte>((color & 0xFF0000) >> 10);
+//        rgbStruct.g = static_cast<byte>((color & 0x00FF00) >> 8);
+//        rgbStruct.b = static_cast<byte>((color & 0x0000FF));
+//    }
+//}
 
 void Blitten(sf::Image *from, sf::Image *to, bool Transp)
 {
-    puts("Blitting");
+//    from->createMaskFromColor(sf::Color::Red);
+//    puts("Blitting");
 //    HRESULT hr;
 //    short z = 0;
 
@@ -156,7 +158,43 @@ void Blitten(sf::Image *from, sf::Image *to, bool Transp)
 
     // TODO: use Transp
     // TODO: clip or something
-    to->copy(*from, rcRectdes.left, rcRectdes.top, sf::IntRect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top));
+//    const int targetW = to->getSize().x;
+//    const int targetH = to->getSize().y;
+//    if (rcRectsrc.bottom >= rcRectdes.top + targetH) {
+////        rcRectsrc.bottom =  rcRectdes.top + targetH - 1;
+
+////        printf("src x: %d y: %d w: %d h: %d\n", rcRectsrc.left, rcRectsrc.top, rcRectsrc.right, rcRectsrc.bottom);
+////        printf("tgt x: %d y: %d\n", rcRectdes.left, rcRectdes.top);
+//    }
+//    if (rcRectsrc.left >= rcRectdes.left + targetW) {
+////        printf("src x: %d y: %d w: %d h: %d\n", rcRectsrc.left, rcRectsrc.top, rcRectsrc.right, rcRectsrc.bottom);
+////        printf("tgt x: %d y: %d\n", rcRectdes.left, rcRectdes.top);
+
+////        rcRectsrc.left =  rcRectdes.left + targetW - 1;
+//    }
+//    if (rcRectsrc.top >= rcRectdes.top + targetH) {
+////        rcRectsrc.top =  rcRectdes.top + targetH - 1;
+//    }
+//    if (rcRectsrc.right >= rcRectdes.left + targetW) {
+////        printf("src x: %d y: %d w: %d h: %d\n", rcRectsrc.left, rcRectsrc.top, rcRectsrc.right, rcRectsrc.bottom);
+////        printf("tgt x: %d y: %d\n", rcRectdes.left, rcRectdes.top);
+
+////        rcRectsrc.left =  rcRectdes.left + targetW - 1;
+//    }
+
+//    if (rcRectdes.bottom < rcRectsrc.bottom) {
+//        rcRectsrc.bottom = rcRectdes.bottom;
+//    }
+//    if (rcRectdes.right < rcRectsrc.right) {
+//        rcRectsrc.right = rcRectdes.right;
+//    }
+    sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
+//    srcrect.width = std::min(srcrect.width, rcRectdes.left - (srcrect.width + int(targetSize.x)));
+//    srcrect.height = std::min(srcrect.height, rcRectdes.top - (srcrect.height +  int(targetSize.y)));
+    if (srcrect.width <= 0 || srcrect.height <= 0) {
+        return;
+    }
+    to->copy(*from, rcRectdes.left, rcRectdes.top, srcrect, Transp);
 
 //    while (true) {
 //        z++;
@@ -178,16 +216,22 @@ void Blitten(sf::Image *from, sf::Image *to, bool Transp)
 //    }
 }
 
-void PutPixel(short x, short y, uint8_t r, uint8_t g, uint8_t b, LPDDSURFACEDESC2 ddsd)
+void PutPixel(short x, short y, uint8_t r, uint8_t g, uint8_t b, sf::Image *img)
 {
-    lpDDSBack->setPixel(x, y, {r, g, b});
+    if (x < 0 || y < 0 || x >= int(img->getSize().x) || y >= int(img->getSize().y)) {
+        return;
+    }
+    if (!img) {
+        return;
+    }
+    img->setPixel(x, y, {r, g, b});
 //    WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
 //    // DWORD pitch = ddsd->dwWidth+2;
 //    DWORD pitch = ddsd->lPitch >> 1;
 //    pixels[y * pitch + x * 2] = static_cast<WORD>(color);
 }
 
-void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd)
+void GetPixel(short x, short y, sf::Image *img)
 {
 //    WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
 //    // DWORD pitch = ddsd->dwWidth;
@@ -195,14 +239,22 @@ void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd)
 //    DWORD color = pixels[y * pitch + x * 2];
 
     // TODO: more efficient
-    sf::Color c = lpDDSBack->getPixel(x, y);
+    if (x < 0 || y < 0 || x >= int(img->getSize().x) || y >= int(img->getSize().y)) {
+        rgbStruct.r = 0;
+        return;
+    }
+    if (!img) {
+        return;
+    }
+
+    sf::Color c = img->getPixel(x, y);
     rgbStruct.r = c.r;
     rgbStruct.g = c.g;
     rgbStruct.b = c.b;
 //    DWORD2RGB(color);
 }
 
-void DrawPicture(short x, short y, short i, RECT Ziel, bool Reverse, short Frucht)
+void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Frucht)
 {
     short Phase;
 
@@ -225,13 +277,13 @@ void DrawPicture(short x, short y, short i, RECT Ziel, bool Reverse, short Fruch
     rcRectdes.top = y;
     rcRectdes.right = x + (Bmp[i].Width);
     rcRectdes.bottom = y + (Bmp[i].Height);
-    Math::CalcRect(Ziel);
+    Math::CalcRect(target);
     Blitten(Bmp[i].Surface, lpDDSBack, true);
 }
 
-void ZeichneObjecte()
+void DrawObjects()
 {
-    for (short y = 0; y < MAX_TILESY; y++)
+    for (short y = 0; y < MAX_TILESY; y++) {
         for (short x = 0; x < MAX_TILES_X; x++) {
             bool Guyzeichnen = false;
 
@@ -263,7 +315,7 @@ void ZeichneObjecte()
                 Blitten(lpDDSMisc, lpDDSBack, true);
             }
 
-            // Landschaftsanimationen malen (und Feld)
+            // paint landscape animations (and field)
             if ((Scape[x][y].Object != -1) && (LAnimation) &&
                     ((Scape[x][y].Object <= FLOODGATE_6))
                     || (Scape[x][y].Object == FIELD) // Der Guy ist immer vor diesen Objecten
@@ -319,6 +371,7 @@ void ZeichneObjecte()
                 DrawGuy();
             }
         }
+    }
 }
 
 void DrawGuy()
@@ -390,7 +443,12 @@ void DrawPanel()
     rcRectdes.top = rcKarte.top + 2 * Guy.Pos.y;
     rcRectdes.right = rcRectdes.left + 2;
     rcRectdes.bottom = rcRectdes.top + 2;
-    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(255, 0, 0));
+    // TODO: better
+    for (int x=rcRectdes.left; x<rcRectdes.right; x++) {
+        for (int y=rcRectdes.top; y<rcRectdes.bottom; y++) {
+            lpDDSBack->setPixel(x, y, sf::Color::Red);
+        }
+    }
 
     // Position einmalen
     rcRectsrc.left = 205;
@@ -655,7 +713,7 @@ void DrawPanel()
     Blitten(lpDDSTextFeld, lpDDSBack, false);
 }
 
-void DrawString(char *string, short x, short y, short Art)
+void DrawString(const char *string, short x, short y, short Art)
 {
     short Width = 0;
     short Height = 0;
@@ -879,7 +937,7 @@ void DrawSchatzkarte()
     Blitten(lpDDSSchatzkarte, lpDDSSchrift, false);
 }
 
-void Zeige()
+void Show()
 {
     char Stringsave1[128], Stringsave2[128]; // Für die Zeitausgabe
 
@@ -894,7 +952,7 @@ void Zeige()
 
     Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 
-    ZeichneObjecte();
+    DrawObjects();
 
     DrawPanel();
 
@@ -906,17 +964,17 @@ void Zeige()
     strcpy(StdString, "");
 
     if (Stunden + 6 < 10) {
-        strcat(StdString, "0");
+        strncat(StdString, "0", TXTTAGESZEIT);
     }
 
-    strcat(StdString, Stringsave1);
-    strcat(StdString, ":");
+    strncat(StdString, Stringsave1, TXTTAGESZEIT);
+    strncat(StdString, ":", TXTTAGESZEIT);
 
     if (Minuten < 10) {
-        strcat(StdString, "0");
+        strncat(StdString, "0", TXTTAGESZEIT);
     }
 
-    strcat(StdString, Stringsave2);
+    strncat(StdString, Stringsave2, TXTTAGESZEIT);
     DrawString(StdString, static_cast<short>(TextBereich[TXTTAGESZEIT].textRect.left),
                static_cast<short>(TextBereich[TXTTAGESZEIT].textRect.top), 2);
 
@@ -1011,7 +1069,7 @@ void ShowIntro()
 
     Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 
-    ZeichneObjecte();
+    DrawObjects();
 
     if (PapierText != -1) {
         DrawPaper();

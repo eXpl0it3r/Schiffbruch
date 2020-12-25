@@ -180,7 +180,8 @@ void Generate()
     rcRectdes.top = 0;
     rcRectdes.right = 2 * MAX_TILES_X;
     rcRectdes.bottom = 2 * MAX_TILESY;
-    ddbltfx.dwFillColor = Renderer::RGB2DWORD(247, 222, 191);
+    lpDDSKarte->create(MAX_TILES_X, MAX_TILESY, sf::Color(247, 222, 191));
+//    ddbltfx.dwFillColor = Renderer::RGB2DWORD(247, 222, 191);
 //        lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
     // Die Landschaftshintergrundfarbe
@@ -188,7 +189,8 @@ void Generate()
     rcRectdes.top = 0;
     rcRectdes.right = MAX_SURFACE_X;
     rcRectdes.bottom = MAX_SURFACE_Y;
-    ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
+    lpDDSScape->create(MAX_SURFACE_X, MAX_SURFACE_Y, sf::Color::Black);
+//    ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
 //        lpDDSScape->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
     for (short y = 0; y < MAX_TILESY; y++)
@@ -277,19 +279,22 @@ void Generate()
             rcRectdes.right = rcRectdes.left + 2;
             rcRectdes.bottom = rcRectdes.top + 2;
 
+            sf::Color c;
             if ((Scape[x][y].Terrain == 1) && (Scape[x][y].Type == 0)) { // Meer
-                ddbltfx.dwFillColor = Renderer::RGB2DWORD(228, 207, 182);
+                c = sf::Color(228, 207, 182);
+//                ddbltfx.dwFillColor = Renderer::RGB2DWORD(228, 207, 182);
             } else {
                 if ((Scape[x][y].Type == 0) &&
                         ((Scape[x][y].Terrain == 2) ||
                          (Scape[x][y].Terrain == 3))) { // Strand
-                    ddbltfx.dwFillColor = Renderer::RGB2DWORD(112, 103, 93);
+                    c = sf::Color(112, 103, 93);
                 } else
                     // Land
                 {
-                    ddbltfx.dwFillColor = Renderer::RGB2DWORD(139 + Scape[x][y].Height * 20, 128 + Scape[x][y].Height * 20, 115 + Scape[x][y].Height * 20);
+                    c = sf::Color(139 + Scape[x][y].Height * 20, 128 + Scape[x][y].Height * 20, 115 + Scape[x][y].Height * 20);
                 }
             }
+            lpDDSKarte->create(rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top, c);
 
 //                lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
         }
@@ -372,7 +377,7 @@ bool CheckRohstoff()
 void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl der Landkacheln
 {
     short i, j;
-    bool gefunden;
+    bool hasFound;
 
     short Vierecke[13][4][13] = { //0=Passt nicht 1=1runter 2=gleiche Hoehe 3=1hoch
         //		  0	  1	  2	  3	  4	  5	  6	  7	  8	  9	 10	 11	 12
@@ -487,14 +492,14 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
 
             // Als erstes den oberen Bereich von links nach rechts durchgehen
             for (x = MidX - l; x <= MidX + l; x++) {
-                gefunden = false;
+                hasFound = false;
                 i = 0;
 
-                while (!gefunden) { // Passendes Teil finden und Hoehe festlegen
+                while (!hasFound) { // Passendes Teil finden und Hoehe festlegen
                     i += 1;
 
                     if (i == 1000) {
-                        gefunden = true;
+                        hasFound = true;
                     }
 
                     Scape[x][y].Type = rand() % 13;
@@ -516,24 +521,24 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                                 Scape[x][y].Height = 0;
                             }
 
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y + 1].Type][1][Scape[x][y].Type] == 2) {
                             Scape[x][y].Height = Scape[x][y + 1].Height;
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y + 1].Type][1][Scape[x][y].Type] == 3) {
                             Scape[x][y].Height = Scape[x][y + 1].Height + 1;
-                            gefunden = true;
+                            hasFound = true;
                         }
                     }
 
                     // Verzwickte Fälle ausfiltern
                     if (((Vierecke[Scape[x][y].Type][2][3] == 2) && (Vierecke[Scape[x + 1][y + 1].Type][1][4] == 2)) ||
                             ((Vierecke[Scape[x][y].Type][2][1] == 2) && (Vierecke[Scape[x + 1][y + 1].Type][1][2] == 2))) {
-                        gefunden = false;
+                        hasFound = false;
                     }
 
                     // Nebeninseln vermeiden
@@ -548,14 +553,14 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
             // Teil rechts-oben
             x = MidX + l + 1;
             y = MidY - l - 1;
-            gefunden = false;
+            hasFound = false;
             i = 0;
 
-            while (!gefunden) { // Passendes Teil finden und Hoehe festlegen
+            while (!hasFound) { // Passendes Teil finden und Hoehe festlegen
                 i += 1;
 
                 if (i == 1000) {
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 Scape[x][y].Type = rand() % 13;
@@ -574,23 +579,23 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                         Scape[x][y].Height = 0;
                     }
 
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 if (Vierecke[Scape[x - 1][y].Type][2][Scape[x][y].Type] == 2) {
                     Scape[x][y].Height = Scape[x - 1][y].Height;
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 if (Vierecke[Scape[x - 1][y].Type][2][Scape[x][y].Type] == 3) {
                     Scape[x][y].Height = Scape[x - 1][y].Height + 1;
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 // Verzwickte Fälle ausfiltern
                 if (((Vierecke[Scape[x][y].Type][3][2] == 2) && (Vierecke[Scape[x - 1][y + 1].Type][2][3] == 2)) ||
                         ((Vierecke[Scape[x][y].Type][3][4] == 2) && (Vierecke[Scape[x - 1][y + 1].Type][2][1] == 2))) {
-                    gefunden = false;
+                    hasFound = false;
                 }
 
                 // Nebeninseln vermeiden
@@ -604,14 +609,14 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
             x = MidX + l + 1;
 
             for (y = MidY - l; y <= MidY + l; y++) {
-                gefunden = false;
+                hasFound = false;
                 i = 0;
 
-                while (!gefunden) { // Passendes Teil finden und Hoehe festlegen
+                while (!hasFound) { // Passendes Teil finden und Hoehe festlegen
                     i += 1;
 
                     if (i == 1000) {
-                        gefunden = true;
+                        hasFound = true;
                     }
 
                     Scape[x][y].Type = rand() % 13;
@@ -632,24 +637,24 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                                 Scape[x][y].Height = 0;
                             }
 
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y - 1].Type][3][Scape[x][y].Type] == 2) {
                             Scape[x][y].Height = Scape[x][y - 1].Height;
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y - 1].Type][3][Scape[x][y].Type] == 3) {
                             Scape[x][y].Height = Scape[x][y - 1].Height + 1;
-                            gefunden = true;
+                            hasFound = true;
                         }
                     }
 
                     // Verzwickte Fälle ausfiltern
                     if (((Vierecke[Scape[x][y].Type][3][2] == 2) && (Vierecke[Scape[x - 1][y + 1].Type][2][3] == 2)) ||
                             ((Vierecke[Scape[x][y].Type][3][4] == 2) && (Vierecke[Scape[x - 1][y + 1].Type][2][1] == 2))) {
-                        gefunden = false;
+                        hasFound = false;
                     }
 
                     // Nebeninseln vermeiden
@@ -664,14 +669,14 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
             // Teil rechts-unten
             x = MidX + l + 1;
             y = MidY + l + 1;
-            gefunden = false;
+            hasFound = false;
             i = 0;
 
-            while (!gefunden) { // Passendes Teil finden und Hoehe festlegen
+            while (!hasFound) { // Passendes Teil finden und Hoehe festlegen
                 i += 1;
 
                 if (i == 1000) {
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 Scape[x][y].Type = rand() % 13;
@@ -690,23 +695,23 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                         Scape[x][y].Height = 0;
                     }
 
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 if (Vierecke[Scape[x][y - 1].Type][3][Scape[x][y].Type] == 2) {
                     Scape[x][y].Height = Scape[x][y - 1].Height;
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 if (Vierecke[Scape[x][y - 1].Type][3][Scape[x][y].Type] == 3) {
                     Scape[x][y].Height = Scape[x][y - 1].Height + 1;
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 // Verzwickte Fälle ausfiltern
                 if (((Vierecke[Scape[x][y].Type][0][1] == 2) && (Vierecke[Scape[x - 1][y - 1].Type][3][2] == 2)) ||
                         ((Vierecke[Scape[x][y].Type][0][3] == 2) && (Vierecke[Scape[x - 1][y - 1].Type][3][4] == 2))) {
-                    gefunden = false;
+                    hasFound = false;
                 }
 
                 // Nebeninsel vermeiden
@@ -720,14 +725,14 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
             y = MidY + l + 1;
 
             for (x = MidX + l; x >= MidX - l; x--) {
-                gefunden = false;
+                hasFound = false;
                 i = 0;
 
-                while (!gefunden) { // Passendes Teil finden und Hoehe festlegen
+                while (!hasFound) { // Passendes Teil finden und Hoehe festlegen
                     i += 1;
 
                     if (i == 1000) {
-                        gefunden = true;
+                        hasFound = true;
                     }
 
                     Scape[x][y].Type = rand() % 13;
@@ -748,24 +753,24 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                                 Scape[x][y].Height = 0;
                             }
 
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y - 1].Type][3][Scape[x][y].Type] == 2) {
                             Scape[x][y].Height = Scape[x][y - 1].Height;
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y - 1].Type][3][Scape[x][y].Type] == 3) {
                             Scape[x][y].Height = Scape[x][y - 1].Height + 1;
-                            gefunden = true;
+                            hasFound = true;
                         }
                     }
 
                     // Verzwickte Fälle ausfiltern
                     if (((Vierecke[Scape[x][y].Type][0][1] == 2) && (Vierecke[Scape[x - 1][y - 1].Type][3][2] == 2)) ||
                             ((Vierecke[Scape[x][y].Type][0][3] == 2) && (Vierecke[Scape[x - 1][y - 1].Type][3][4] == 2))) {
-                        gefunden = false;
+                        hasFound = false;
                     }
 
                     // Nebeninseln vermeiden
@@ -780,14 +785,14 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
             //Teil links-unten
             x = MidX - l - 1;
             y = MidY + l + 1;
-            gefunden = false;
+            hasFound = false;
             i = 0;
 
-            while (!gefunden) { // Passendes Teil finden und Hoehe festlegen
+            while (!hasFound) { // Passendes Teil finden und Hoehe festlegen
                 i += 1;
 
                 if (i == 1000) {
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 Scape[x][y].Type = rand() % 13;
@@ -806,23 +811,23 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                         Scape[x][y].Height = 0;
                     }
 
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 if (Vierecke[Scape[x + 1][y].Type][0][Scape[x][y].Type] == 2) {
                     Scape[x][y].Height = Scape[x + 1][y].Height;
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 if (Vierecke[Scape[x + 1][y].Type][0][Scape[x][y].Type] == 3) {
                     Scape[x][y].Height = Scape[x + 1][y].Height + 1;
-                    gefunden = true;
+                    hasFound = true;
                 }
 
                 // Verzwickte Fälle ausfiltern
                 if (((Vierecke[Scape[x][y].Type][1][2] == 2) && (Vierecke[Scape[x + 1][y - 1].Type][0][3] == 2)) ||
                         ((Vierecke[Scape[x][y].Type][1][4] == 2) && (Vierecke[Scape[x + 1][y - 1].Type][0][1] == 2))) {
-                    gefunden = false;
+                    hasFound = false;
                 }
 
                 // Nebeninsel vermeiden
@@ -836,14 +841,14 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
             x = MidX - l - 1;
 
             for (y = MidY + l; y >= MidY - l - 1; y--) {
-                gefunden = false;
+                hasFound = false;
                 i = 0;
 
-                while (!gefunden) { // Passendes Teil finden und Hoehe festlegen
+                while (!hasFound) { // Passendes Teil finden und Hoehe festlegen
                     i += 1;
 
                     if (i == 1000) {
-                        gefunden = true;
+                        hasFound = true;
                     }
 
                     Scape[x][y].Type = rand() % 13;
@@ -864,24 +869,24 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                                 Scape[x][y].Height = 0;
                             }
 
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y + 1].Type][1][Scape[x][y].Type] == 2) {
                             Scape[x][y].Height = Scape[x][y + 1].Height;
-                            gefunden = true;
+                            hasFound = true;
                         }
 
                         if (Vierecke[Scape[x][y + 1].Type][1][Scape[x][y].Type] == 3) {
                             Scape[x][y].Height = Scape[x][y + 1].Height + 1;
-                            gefunden = true;
+                            hasFound = true;
                         }
                     }
 
                     // Verzwickte Fälle ausfiltern
                     if (((Vierecke[Scape[x][y].Type][1][2] == 2) && (Vierecke[Scape[x + 1][y - 1].Type][0][3] == 2)) ||
                             ((Vierecke[Scape[x][y].Type][1][4] == 2) && (Vierecke[Scape[x + 1][y - 1].Type][0][1] == 2))) {
-                        gefunden = false;
+                        hasFound = false;
                     }
 
                     // Nebeninseln vermeiden
@@ -1017,7 +1022,7 @@ void Meer() // Das Meer und den Strand bestimmen
         }
 }
 
-void ChangeBootsFahrt()
+void ToggleIsInBoat()
 {
     IsInBoat = !IsInBoat;
 
@@ -1028,7 +1033,7 @@ void ChangeBootsFahrt()
         }
 }
 
-void CheckRohr(short x, short y)
+void CheckPipe(short x, short y)
 {
     Scape[x][y].AnimationPhase = 1;
 
@@ -1069,23 +1074,23 @@ void CheckRohr(short x, short y)
     }
 
     if ((Scape[x - 1][y].Object == PIPE) && (Scape[x - 1][y].AnimationPhase == 0)) {
-        CheckRohr(x - 1, y);
+        CheckPipe(x - 1, y);
     }
 
     if ((Scape[x][y - 1].Object == PIPE) && (Scape[x][y - 1].AnimationPhase == 0)) {
-        CheckRohr(x, y - 1);
+        CheckPipe(x, y - 1);
     }
 
     if ((Scape[x + 1][y].Object == PIPE) && (Scape[x + 1][y].AnimationPhase == 0)) {
-        CheckRohr(x + 1, y);
+        CheckPipe(x + 1, y);
     }
 
     if ((Scape[x][y + 1].Object == PIPE) && (Scape[x][y + 1].AnimationPhase == 0)) {
-        CheckRohr(x, y + 1);
+        CheckPipe(x, y + 1);
     }
 }
 
-void FillRohr()
+void FillPipe()
 {
     for (short y = 0; y < MAX_TILESY; y++)
         for (short x = 0; x < MAX_TILES_X; x++) {
@@ -1153,36 +1158,36 @@ void FillRohr()
                 Scape[x - 1][y].Object += 14;
                 Scape[x - 1][y].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x - 1][y].Object].targetRect.left);
                 Scape[x - 1][y].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x - 1][y].Object].targetRect.top);
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             } else if ((Scape[x - 1][y].Object >= FLOODGATE_1) && (Scape[x - 1][y].Object <= FLOODGATE_6)) {
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             }
 
             if ((Scape[x][y - 1].Object >= RIVER_5) && (Scape[x][y - 1].Object <= RIVER_10)) {
                 Scape[x][y - 1].Object += 14;
                 Scape[x][y - 1].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x][y - 1].Object].targetRect.left);
                 Scape[x][y - 1].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x][y - 1].Object].targetRect.top);
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             } else if ((Scape[x][y - 1].Object >= FLOODGATE_1) && (Scape[x][y - 1].Object <= FLOODGATE_6)) {
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             }
 
             if ((Scape[x + 1][y].Object >= RIVER_5) && (Scape[x + 1][y].Object <= RIVER_10)) {
                 Scape[x + 1][y].Object += 14;
                 Scape[x + 1][y].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x + 1][y].Object].targetRect.left);
                 Scape[x + 1][y].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x + 1][y].Object].targetRect.top);
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             } else if ((Scape[x + 1][y].Object >= FLOODGATE_1) && (Scape[x + 1][y].Object <= FLOODGATE_6)) {
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             }
 
             if ((Scape[x][y + 1].Object >= RIVER_5) && (Scape[x][y + 1].Object <= RIVER_10)) {
                 Scape[x][y + 1].Object += 14;
                 Scape[x][y + 1].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x][y + 1].Object].targetRect.left);
                 Scape[x][y + 1].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x][y + 1].Object].targetRect.top);
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             } else if ((Scape[x][y + 1].Object >= FLOODGATE_1) && (Scape[x][y + 1].Object <= FLOODGATE_6)) {
-                CheckRohr(x, y);
+                CheckPipe(x, y);
             }
         }
 
@@ -1201,7 +1206,7 @@ void FillRohr()
     Generate();
 }
 
-bool CheckFluss(short x, short y) // Nachprüfen ob auf aktuellem Teil ein Fluss ist (Nur für die Fluss-Routine)
+bool CheckFlow(short x, short y) // Nachprüfen ob auf aktuellem Teil ein Fluss ist (Nur für die Fluss-Routine)
 {
     for (short i = 0; i < NUMBER_OF_RIVERS; i++)
         for (short j = 0; j < MAX_RIVER_LENGTH; j++) {
@@ -1213,7 +1218,7 @@ bool CheckFluss(short x, short y) // Nachprüfen ob auf aktuellem Teil ein Fluss
     return false;
 }
 
-void Fluss() // Anzahl der Flüsse und der minimale Länge
+void Flow() // Anzahl der Flüsse und der minimale Länge
 {
     short i;
     short l = 0;
@@ -1250,7 +1255,7 @@ void Fluss() // Anzahl der Flüsse und der minimale Länge
                 x0 = rand() % MAX_TILES_X; // geeignete Quelle bestimmen
                 y0 = rand() % MAX_TILESY;
 
-                if (CheckFluss(x0, y0)) {
+                if (CheckFlow(x0, y0)) {
                     gefunden = false;
                 }
 
@@ -1292,7 +1297,7 @@ void Fluss() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 2)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 2))) {
-                            gefunden = (!CheckFluss(x2, y2));
+                            gefunden = (!CheckFlow(x2, y2));
 
                             if (gefunden) {
                                 break;
@@ -1306,7 +1311,7 @@ void Fluss() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 1)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 1))) {
-                            gefunden = (!CheckFluss(x2, y2));
+                            gefunden = (!CheckFlow(x2, y2));
 
                             if (gefunden) {
                                 break;
@@ -1320,7 +1325,7 @@ void Fluss() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 4)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 4))) {
-                            gefunden = (!CheckFluss(x2, y2));
+                            gefunden = (!CheckFlow(x2, y2));
 
                             if (gefunden) {
                                 break;
@@ -1334,7 +1339,7 @@ void Fluss() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 3)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 3))) {
-                            gefunden = (!CheckFluss(x2, y2));
+                            gefunden = (!CheckFlow(x2, y2));
 
                             if (gefunden) {
                                 break;
@@ -1586,7 +1591,7 @@ void Fluss() // Anzahl der Flüsse und der minimale Länge
     }
 }
 
-void Baeume(short Prozent)
+void CreateTrees(short Prozent)
 {
     Coordinate Pos; // Da steht der Baum
     bool einGrosserBaum = false; // gibt es bereits einen großen Baum
@@ -1605,7 +1610,7 @@ void Baeume(short Prozent)
             while (true) {
                 Pos.x = rand() % TILE_SIZE_X;
                 Pos.y = rand() % TILE_SIZE_Y;
-                Coordinate Erg = Renderer::GetKachel(Scape[x][y].xScreen + Pos.x, Scape[x][y].yScreen + Pos.y);
+                Coordinate Erg = Renderer::GetTile(Scape[x][y].xScreen + Pos.x, Scape[x][y].yScreen + Pos.y);
 
                 if ((Erg.x == x) && (Erg.y == y)) {
                     break;
@@ -1637,7 +1642,7 @@ void Baeume(short Prozent)
         }
 }
 
-void Piratenwrack()
+void CreatePirateWreck()
 {
     short x = 0;
     short y = 0;
@@ -1707,11 +1712,11 @@ void Treasure()
             for (short i = 0; i < TREASUREMAP_WIDTH; i++)
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     Renderer::GetPixel(static_cast<short>(i + Scape[SchatzPos.x][SchatzPos.y].xScreen - TREASUREMAP_WIDTH / 2 + TILE_SIZE_X / 2),
-                                       static_cast<short>(j + Scape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), &ddsd);
+                                       static_cast<short>(j + Scape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), lpDDSScape);
                     Renderer::PutPixel(i, j,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
-                                       (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100 * 3 / 4, &ddsd2);
+                                       (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100 * 3 / 4, lpDDSSchatzkarte);
                 }
 
 //            lpDDSScape->Unlock(nullptr);
@@ -1730,20 +1735,19 @@ void Treasure()
             for (short i = 0; i < TREASUREMAP_WIDTH; i++)
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     if ((i > 0) && (i < TREASUREMAP_WIDTH - 1) && (j > 0) && (j < TREASUREMAP_HEIGHT - 1)) {
-                        Renderer::GetPixel(i - 1, j, &ddsd2);
+                        Renderer::GetPixel(i - 1, j, lpDDSSchatzkarte);
                         RGBSTRUCT rgbleft = rgbStruct;
-                        Renderer::GetPixel(i, j - 1, &ddsd2);
+                        Renderer::GetPixel(i, j - 1, lpDDSSchatzkarte);
                         RGBSTRUCT rgbtop = rgbStruct;
-                        Renderer::GetPixel(i + 1, j, &ddsd2);
+                        Renderer::GetPixel(i + 1, j, lpDDSSchatzkarte);
                         RGBSTRUCT rgbright = rgbStruct;
-                        Renderer::GetPixel(i, j + 1, &ddsd2);
+                        Renderer::GetPixel(i, j + 1, lpDDSSchatzkarte);
                         RGBSTRUCT rgbbottom = rgbStruct;
-                        Renderer::GetPixel(i, j, &ddsd2);
+                        Renderer::GetPixel(i, j, lpDDSSchatzkarte);
                         Renderer::PutPixel(i, j,
                                                (rgbleft.r + rgbtop.r + rgbright.r + rgbbottom.r + rgbStruct.r) / 5,
                                                (rgbleft.g + rgbtop.g + rgbright.g + rgbbottom.g + rgbStruct.g) / 5,
-                                               (rgbleft.b + rgbtop.b + rgbright.b + rgbbottom.b + rgbStruct.b) / 5,
-                                           &ddsd2);
+                                               (rgbleft.b + rgbtop.b + rgbright.b + rgbbottom.b + rgbStruct.b) / 5, lpDDSSchatzkarte);
                     }
                 }
 

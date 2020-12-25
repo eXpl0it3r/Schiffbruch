@@ -13,33 +13,33 @@
 #include <SFML/Window.hpp>
 
 namespace Direct {
-LPDIRECTDRAW4 lpDD = nullptr; // DirectDraw object
+//LPDIRECTDRAW4 lpDD = nullptr; // DirectDraw object
 bool Button0down; // linke Maustaste gedrückt gehalten
 bool Button1down; // rechte Maustaste gedrückt gehalten
 
 void finiObjects()
 {
-    if (lpDD != nullptr) {
+//    if (lpDD != nullptr) {
         if (lpDDSPrimary != nullptr) {
 //            lpDDSPrimary->Release();
             delete lpDDSPrimary;
             lpDDSPrimary = nullptr;
         }
 
-        if (lpDDPal != nullptr) {
-            lpDDPal->Release();
-            lpDDPal = nullptr;
-        }
+//        if (lpDDPal != nullptr) {
+//            lpDDPal->Release();
+//            lpDDPal = nullptr;
+//        }
 
-        lpDD->Release();
-        lpDD = nullptr;
-    }
+//        lpDD->Release();
+//        lpDD = nullptr;
+//    }
 }
 
 bool InitDDraw(HWND hWnd)
 {
-    DDSCAPS2 ddscaps;
-    LPDIRECTDRAW pDD;
+//    DDSCAPS2 ddscaps;
+//    LPDIRECTDRAW pDD;
 
     lpDDSBack = new sf::Image;
     lpDDSBack->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
@@ -88,15 +88,15 @@ bool InitDDraw(HWND hWnd)
     }
 #endif
 
-    ZeroMemory(&ddsd2, sizeof(ddsd2));
-    ddsd2.dwSize = sizeof(ddsd2);
+//    ZeroMemory(&ddsd2, sizeof(ddsd2));
+//    ddsd2.dwSize = sizeof(ddsd2);
 
-    // Create the primary surface with 1 back buffer
-    ZeroMemory(&ddsd, sizeof(ddsd));
-    ddsd.dwSize = sizeof(ddsd);
-//        ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
-//        ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
-    ddsd.dwBackBufferCount = 1; // Anzahl ??
+//    // Create the primary surface with 1 back buffer
+//    ZeroMemory(&ddsd, sizeof(ddsd));
+//    ddsd.dwSize = sizeof(ddsd);
+////        ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
+////        ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
+//    ddsd.dwBackBufferCount = 1; // Anzahl ??
     lpDDSPrimary = new sf::Image;
 //    ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, nullptr);
 
@@ -116,7 +116,7 @@ bool InitDDraw(HWND hWnd)
 //        goto error;
 //    }
 
-    ddsd.dwSize = sizeof(ddsd); // Tell DirectDraw which members are valid.
+//    ddsd.dwSize = sizeof(ddsd); // Tell DirectDraw which members are valid.
 //        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 //        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
     // In diese Surface sollen die Bausteine geladen werden
@@ -202,22 +202,25 @@ bool InitDDraw(HWND hWnd)
 
     // In diese Surface soll die MiniMap gespeichert werden
     lpDDSKarte = new sf::Image;
-    lpDDSKarte->create(2 * MAX_TILES_X, 2 * MAX_TILESY, sf::Color::Black);
+    lpDDSKarte->create(2 * MAX_TILES_X, 2 * MAX_TILESY, sf::Color::Transparent);
 
-    // In diese Surface soll die Landschaft gespeichert werden
+    // The landscape should be saved in this surface
     lpDDSScape = new sf::Image;
-    lpDDSScape->create(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y, sf::Color::Black);
+    lpDDSScape->create(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y, sf::Color::Transparent);
+    if (lpDDSScape->getSize().x == 0) {
+        puts("Failed to create scape!");
+    }
 
     // In diese Surface soll die Schrift gespeichert werden
     lpDDSSchrift = new sf::Image;
-    lpDDSSchrift->create(2 * MAX_SCREEN_X, 2 * MAX_SCREEN_Y, sf::Color::Black);
+    lpDDSSchrift->create(2 * MAX_SCREEN_X, 2 * MAX_SCREEN_Y, sf::Color::Transparent);
     // TODO
     lpDDSSchrift->createMaskFromColor(sf::Color(255, 0, 255));
 
 
     // In diese Surface soll die Schatzkarte gespeichert werden
     lpDDSSchatzkarte = new sf::Image;
-    lpDDSSchatzkarte->create(2 * TREASUREMAP_WIDTH, 2 * TREASUREMAP_HEIGHT, sf::Color::Black);
+    lpDDSSchatzkarte->create(2 * TREASUREMAP_WIDTH, 2 * TREASUREMAP_HEIGHT, sf::Color::Transparent);
 
 //error:
 
@@ -235,11 +238,11 @@ void Reset()
     Button1down = false;
 }
 
-void CheckMouse()
+void CheckMouse(const sf::Window &win)
 {
     // Mausbewegung
-    short xDiff = MousePosition.x - sf::Mouse::getPosition().x; // Die Differenz zur vorherigen Position ((Für Scrollen)
-    MousePosition.x = sf::Mouse::getPosition().x;
+    short xDiff = MousePosition.x - sf::Mouse::getPosition(win).x; // Die Differenz zur vorherigen Position ((Für Scrollen)
+    MousePosition.x = sf::Mouse::getPosition(win).x;
 
     if (MousePosition.x < 0) {
         MousePosition.x = 0;
@@ -249,8 +252,8 @@ void CheckMouse()
         MousePosition.x = MAX_SCREEN_X - 2;
     }
 
-    short yDiff = MousePosition.y - sf::Mouse::getPosition().y; // Die Differenz zur vorherigen Position ((Für Scrollen)
-    MousePosition.y = sf::Mouse::getPosition().y;
+    short yDiff = MousePosition.y - sf::Mouse::getPosition(win).y; // Die Differenz zur vorherigen Position ((Für Scrollen)
+    MousePosition.y = sf::Mouse::getPosition(win).y;
 
     if (MousePosition.y < 0) {
         MousePosition.y = 0;
@@ -373,7 +376,7 @@ short CheckKey()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Logo Abbrechen
             StopSound(Sound::LOGO);
-            Game::NeuesSpiel(false);
+            Game::NewGame(false);
             return 2;
         }
     } else if (Spielzustand == State::INTRO) {
@@ -410,7 +413,7 @@ short CheckKey()
             Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcSpielflaeche.bottom / 2);
 
             if (IsInBoat) {
-                World::ChangeBootsFahrt();
+                World::ToggleIsInBoat();
             }
 
             Guy.AnimationState = GUY_LEFT;

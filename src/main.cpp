@@ -5,6 +5,6 @@
 int main(int argc, char *argv[])
 {
     HINSTANCE hInstance;
-    Application app("Landscape", hInstance);
+    Application app("schiffbruch", hInstance);
     app.run();
 }

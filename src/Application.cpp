@@ -21,6 +21,8 @@ Application::Application(const std::string &name, HINSTANCE instance_handle)
 , m_name(name)
 , m_time(std::time(nullptr))
 {
+    m_window.setMouseCursorVisible(false);
+
     puts(name.data());
     // Set globals
     g_hInst = instance_handle;
@@ -64,19 +66,13 @@ void Application::run()
     sf::Sprite sprite;
     sprite.setPosition(0, 0);
     while (m_window.isOpen()) {
-        process_events();
 
         // TODO: this is probably the worst and least efficient way to render things
         // I'm almost proud.
 
         if (timer.getElapsedTime() > sf::milliseconds(1000)) {
             while (true) {
-
-                puts("main rendering");
-                texture.loadFromImage(*lpDDSBack);
-                sprite.setTexture(texture);
-                m_window.draw(sprite);
-                m_window.display();
+                process_events();
                 Bild++;
                 std::time_t Zeitsave = std::time(nullptr);
 
@@ -132,7 +128,7 @@ void Application::run()
                     }
 
                     World::CheckSpzButton(); // Die Spezialkn�pfe umschalten
-                    Direct::CheckMouse(); // Den MouseZustand abchecken
+                    Direct::CheckMouse(m_window); // Den MouseZustand abchecken
 
                     if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
                         m_window.close();
@@ -146,7 +142,7 @@ void Application::run()
                         Action::handler(Guy.CurrentAction);
                     }
 
-                    Renderer::Zeige(); // Das Bild zeichnen
+                    Renderer::Show(); // Das Bild zeichnen
                 } else if (Spielzustand == State::OUTRO) {
                     if (Direct::CheckKey() == 0) {
                         m_window.close();
@@ -156,6 +152,29 @@ void Application::run()
                     Math::AbspannCalc();
                     Renderer::ShowCredits();
                 }
+
+//                puts("main rendering");
+
+                m_window.clear(sf::Color::Black);
+
+//                texture.loadFromImage(*lpDDSScape);
+//                sprite.setTexture(texture);
+//                m_window.draw(sprite);
+
+                texture.loadFromImage(*lpDDSBack);
+                sprite.setTexture(texture);
+                m_window.draw(sprite);
+
+                lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color::Transparent);
+
+//                if (lpDDSPrimary->getSize().x > 0) {
+//                    texture.loadFromImage(*lpDDSPrimary);
+//                    sprite.setTexture(texture);
+//                    m_window.draw(sprite);
+//                }
+
+                m_window.display();
+                sf::sleep(sf::milliseconds(16)); // idk, try 60 fps or something
             }
 
             timer.restart();
