@@ -2,11 +2,11 @@
 #ifndef __DX_H__
 #define __DX_H__
 
-extern IDirectDraw *lpDDInterface;
-extern IDirectDrawPalette *lpDDPalette; // idb
-extern BYTE *gpBuffer;
-extern IDirectDrawSurface *lpDDSBackBuf;
-extern IDirectDrawSurface *lpDDSPrimary;
+//extern IDirectDraw *lpDDInterface;
+//extern IDirectDrawPalette *lpDDPalette; // idb
+//extern BYTE *gpBuffer;
+//extern IDirectDrawSurface *lpDDSBackBuf;
+//extern IDirectDrawSurface *lpDDSPrimary;
 extern char gbBackBuf;    // weak
 extern char gbEmulate;    // weak
 extern HMODULE ghDiabMod; // idb

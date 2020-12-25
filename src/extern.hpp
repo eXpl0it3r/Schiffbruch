@@ -4,6 +4,7 @@
 #include "types.hpp"
 
 #include <SFML/Audio.hpp>
+#include <SFML/Graphics/Image.hpp>
 
 #include <vector>
 
@@ -58,27 +59,27 @@ extern CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 extern SCAPE Scape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
-extern LPDIRECTDRAWSURFACE4 lpDDSPrimary; // DirectDraw primary surface
-extern LPDIRECTDRAWSURFACE4 lpDDSBack; // DirectDraw back surface
-extern LPDIRECTDRAWSURFACE4 lpDDSMisc; // DirectDraw Bilder surface
-extern LPDIRECTDRAWSURFACE4 lpDDSPanel; // DirectDraw Panel surface
-extern LPDIRECTDRAWSURFACE4 lpDDSGuyAni; // DirectDraw GuyAni surface
-extern LPDIRECTDRAWSURFACE4 lpDDSAnimation; // DirectDraw Animation surface
-extern LPDIRECTDRAWSURFACE4 lpDDSKarte; // DirectDraw MiniMap surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchrift; // DirectDraw Schrift surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchrift1; // DirectDraw Schrift1 surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchrift2; // DirectDraw Schrift2 surface
-extern LPDIRECTDRAWSURFACE4 lpDDSTextFeld; // DirectDraw TextFeld surface
-extern LPDIRECTDRAWSURFACE4 lpDDSPaper; // DirectDraw Paier surface
-extern LPDIRECTDRAWSURFACE4 lpDDSBaum; // DirectDraw Bäume surface
-extern LPDIRECTDRAWSURFACE4 lpDDSBau; // DirectDraw Bauwerke surface
-extern LPDIRECTDRAWSURFACE4 lpDDSCredits; // DirectDraw Credits surface
-extern LPDIRECTDRAWSURFACE4 lpDDSLogo; // DirectDraw Logo surface
-extern LPDIRECTDRAWSURFACE4 lpDDSCursor; // DirectDraw Cursor surface
-extern LPDIRECTDRAWSURFACE4 lpDDSButtons; // DirectDraw Buttons surface
-extern LPDIRECTDRAWSURFACE4 lpDDSInventar; // DirectDraw Inventar surface
-extern LPDIRECTDRAWSURFACE4 lpDDSScape; // DirectDraw Landschaft surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchatzkarte; // SchatzkartenSurface
+extern sf::Image *lpDDSPrimary; // DirectDraw primary surface
+extern sf::Image *lpDDSBack; // DirectDraw back surface
+extern sf::Image *lpDDSMisc; // DirectDraw Bilder surface
+extern sf::Image *lpDDSPanel; // DirectDraw Panel surface
+extern sf::Image *lpDDSGuyAni; // DirectDraw GuyAni surface
+extern sf::Image *lpDDSAnimation; // DirectDraw Animation surface
+extern sf::Image *lpDDSKarte; // DirectDraw MiniMap surface
+extern sf::Image *lpDDSSchrift; // DirectDraw Schrift surface
+extern sf::Image *lpDDSSchrift1; // DirectDraw Schrift1 surface
+extern sf::Image *lpDDSSchrift2; // DirectDraw Schrift2 surface
+extern sf::Image *lpDDSTextFeld; // DirectDraw TextFeld surface
+extern sf::Image *lpDDSPaper; // DirectDraw Paier surface
+extern sf::Image *lpDDSBaum; // DirectDraw Bäume surface
+extern sf::Image *lpDDSBau; // DirectDraw Bauwerke surface
+extern sf::Image *lpDDSCredits; // DirectDraw Credits surface
+extern sf::Image *lpDDSLogo; // DirectDraw Logo surface
+extern sf::Image *lpDDSCursor; // DirectDraw Cursor surface
+extern sf::Image *lpDDSButtons; // DirectDraw Buttons surface
+extern sf::Image *lpDDSInventar; // DirectDraw Inventar surface
+extern sf::Image *lpDDSScape; // DirectDraw Landschaft surface
+extern sf::Image *lpDDSSchatzkarte; // SchatzkartenSurface
 extern LPDIRECTDRAWPALETTE lpDDPal; // DirectDraw palette
 extern DDBLTFX ddbltfx; // DirectDraw Effekte
 extern DDPIXELFORMAT ddpf;

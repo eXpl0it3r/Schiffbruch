@@ -4,6 +4,8 @@
 #include "miniwin.h"
 #include "dx.h"
 
+#include <SFML/Graphics/Image.hpp>
+
 using namespace dvl;
 
 struct TextArea {
@@ -33,7 +35,7 @@ struct GUY {
 };
 
 struct BMP {
-    LPDIRECTDRAWSURFACE4 Surface; // in welcher Surface gespeichert?
+    sf::Image *Surface; // in welcher Surface gespeichert?
     bool IsAnimationRunning; // Läuft die Animations?
     short AnimationPhaseCount; // Anzahl der Animationsphasen
     short AnimationPhase; // die aktuelle Phase

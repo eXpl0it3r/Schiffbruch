@@ -77,27 +77,27 @@ CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 SCAPE Scape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
-LPDIRECTDRAWSURFACE4 lpDDSPrimary = nullptr; // DirectDraw primary surface
-LPDIRECTDRAWSURFACE4 lpDDSBack = nullptr; // DirectDraw back surface
-LPDIRECTDRAWSURFACE4 lpDDSMisc = nullptr; // DirectDraw Bilder surface
-LPDIRECTDRAWSURFACE4 lpDDSPanel = nullptr; // DirectDraw Panel surface
-LPDIRECTDRAWSURFACE4 lpDDSGuyAni = nullptr; // DirectDraw GuyAni surface
-LPDIRECTDRAWSURFACE4 lpDDSAnimation = nullptr; // DirectDraw Animation surface
-LPDIRECTDRAWSURFACE4 lpDDSKarte = nullptr; // DirectDraw MiniMap surface
-LPDIRECTDRAWSURFACE4 lpDDSSchrift = nullptr; // DirectDraw Schrift surface
-LPDIRECTDRAWSURFACE4 lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
-LPDIRECTDRAWSURFACE4 lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
-LPDIRECTDRAWSURFACE4 lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
-LPDIRECTDRAWSURFACE4 lpDDSPaper = nullptr; // DirectDraw Paier surface
-LPDIRECTDRAWSURFACE4 lpDDSBaum = nullptr; // DirectDraw Bäume surface
-LPDIRECTDRAWSURFACE4 lpDDSBau = nullptr; // DirectDraw Bauwerke surface
-LPDIRECTDRAWSURFACE4 lpDDSCredits = nullptr; // DirectDraw Credits surface
-LPDIRECTDRAWSURFACE4 lpDDSLogo = nullptr; // DirectDraw Logo surface
-LPDIRECTDRAWSURFACE4 lpDDSCursor = nullptr; // DirectDraw Cursor surface
-LPDIRECTDRAWSURFACE4 lpDDSButtons = nullptr; // DirectDraw Buttons surface
-LPDIRECTDRAWSURFACE4 lpDDSInventar = nullptr; // DirectDraw Inventar surface
-LPDIRECTDRAWSURFACE4 lpDDSScape = nullptr; // DirectDraw Landschaft surface
-LPDIRECTDRAWSURFACE4 lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
+sf::Image lpDDSPrimary = nullptr; // DirectDraw primary surface
+sf::Image lpDDSBack = nullptr; // DirectDraw back surface
+sf::Image lpDDSMisc = nullptr; // DirectDraw Bilder surface
+sf::Image lpDDSPanel = nullptr; // DirectDraw Panel surface
+sf::Image lpDDSGuyAni = nullptr; // DirectDraw GuyAni surface
+sf::Image lpDDSAnimation = nullptr; // DirectDraw Animation surface
+sf::Image lpDDSKarte = nullptr; // DirectDraw MiniMap surface
+sf::Image lpDDSSchrift = nullptr; // DirectDraw Schrift surface
+sf::Image lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
+sf::Image lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
+sf::Image lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
+sf::Image lpDDSPaper = nullptr; // DirectDraw Paier surface
+sf::Image lpDDSBaum = nullptr; // DirectDraw Bäume surface
+sf::Image lpDDSBau = nullptr; // DirectDraw Bauwerke surface
+sf::Image lpDDSCredits = nullptr; // DirectDraw Credits surface
+sf::Image lpDDSLogo = nullptr; // DirectDraw Logo surface
+sf::Image lpDDSCursor = nullptr; // DirectDraw Cursor surface
+sf::Image lpDDSButtons = nullptr; // DirectDraw Buttons surface
+sf::Image lpDDSInventar = nullptr; // DirectDraw Inventar surface
+sf::Image lpDDSScape = nullptr; // DirectDraw Landschaft surface
+sf::Image lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
 LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
 DDBLTFX ddbltfx; // DirectDraw Effekte
 DDPIXELFORMAT ddpf;
