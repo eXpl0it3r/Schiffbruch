@@ -1400,7 +1400,7 @@ void Fluss() // Anzahl der Flüsse und der minimale Länge
         }
 
         // Die richtigen Wasserkacheln auswählen
-        x0, y0, x1, y1, x2, y2 = -1;
+        x0 = y0 = x1 = y1 = x2 = y2 = -1;
 
         for (m = 0; m < NUMBER_OF_RIVERS; m++) {
             for (i = 0; i <= Flusslaenge[m]; i++) {
