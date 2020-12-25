@@ -9,6 +9,7 @@
 #include <stdexcept>
 
 #include "devilution.h"
+#include "miniwin.h"
 #include "stubs.h"
 
 namespace dvl {
@@ -145,7 +146,7 @@ WINBOOL CloseHandle(HANDLE hObject)
 		return true;
 	} catch (std::runtime_error e) {
 		// log
-		DialogBoxParam(ghInst, DVL_MAKEINTRESOURCE(IDD_DIALOG7), ghMainWnd, (DLGPROC)FuncDlg, (LPARAM)file->path.c_str());
+//		DialogBoxParam(ghInst, DVL_MAKEINTRESOURCE(IDD_DIALOG7), ghMainWnd, (DLGPROC)FuncDlg, (LPARAM)file->path.c_str());
 		return false;
 	}
 }

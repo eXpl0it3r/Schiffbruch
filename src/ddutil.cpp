@@ -14,8 +14,8 @@
 //-----------------------------------------------------------------------------
 // Include files
 //-----------------------------------------------------------------------------
-#include <windows.h>
-#include <windowsx.h>
+#include "windows.h"
+//#include <windowsx.h>
 #include <ddraw.h>
 #include "ddutil.h"
 

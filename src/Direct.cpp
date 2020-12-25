@@ -43,20 +43,20 @@ namespace Direct
         LPDIRECTDRAW pDD;
 
         // Create the main DirectDraw object
-        HRESULT ddrval = DirectDrawCreate(nullptr, &pDD, nullptr);
+        HRESULT ddrval = dx_DirectDrawCreate(nullptr, &pDD, nullptr);
         if (ddrval != DD_OK)
             goto error;
-        ddrval = pDD->QueryInterface(IID_IDirectDraw4, reinterpret_cast<LPVOID *>(& lpDD));
-        if (ddrval != DD_OK)
-            goto error;
+//        ddrval = pDD->QueryInterface(IID_IDirectDraw, reinterpret_cast<LPVOID *>(& lpDD));
+//        if (ddrval != DD_OK)
+//            goto error;
 
         // Get exclusive mode
-        ddrval = lpDD->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
-        if (ddrval != DD_OK)
-            goto error;
+//        ddrval = lpDD->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
+//        if (ddrval != DD_OK)
+//            goto error;
 
         // Set the video mode to 800x600x16
-        ddrval = lpDD->SetDisplayMode(MAXX, MAXY, 32, 0, 0);
+        ddrval = lpDD->SetDisplayMode(MAXX, MAXY, 32);
         if (ddrval != DD_OK)
         {
             switch (ddrval)
@@ -64,14 +64,14 @@ namespace Direct
             case DDERR_GENERIC:
             case DDERR_INVALIDMODE:
             case DDERR_INVALIDOBJECT:
-            case DDERR_INVALIDPARAMS:
+//            case DDERR_INVALIDPARAMS:
             case DDERR_LOCKEDSURFACES:
             case DDERR_NOEXCLUSIVEMODE:
             case DDERR_SURFACEBUSY:
-            case DDERR_UNSUPPORTED:
-            case DDERR_UNSUPPORTEDMODE:
+//            case DDERR_UNSUPPORTED:
+//            case DDERR_UNSUPPORTEDMODE:
                 {
-                    MessageBeep(MB_OK);
+//                    MessageBeep(MB_OK);
                     break;
                 }
             case DDERR_WASSTILLDRAWING:
@@ -87,27 +87,27 @@ namespace Direct
         // Create the primary surface with 1 back buffer
         ZeroMemory(&ddsd, sizeof(ddsd));
         ddsd.dwSize = sizeof(ddsd);
-        ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
-        ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
+//        ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
+//        ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
         ddsd.dwBackBufferCount = 1; // Anzahl ??
         ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, nullptr);
         if (ddrval != DD_OK)
             goto error;
 
         // für gamma-ablenden
-        lpDDSPrimary->QueryInterface(IID_IDirectDrawGammaControl, reinterpret_cast<void **>(&lpDDGammaControl));
+//        lpDDSPrimary->QueryInterface(IID_IDirectDrawGammaControl, reinterpret_cast<void **>(&lpDDGammaControl));
         lpDDGammaControl->GetGammaRamp(0, &DDGammaOld);
         lpDDGammaControl->GetGammaRamp(0, &DDGammaRamp);
 
-        ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
-        ddrval = lpDDSPrimary->GetAttachedSurface(&ddscaps, &lpDDSBack);
+//        ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
+//        ddrval = lpDDSPrimary->GetAttachedSurface(&ddscaps, &lpDDSBack);
 
         if (ddrval != DD_OK)
             goto error;
 
         ddsd.dwSize = sizeof(ddsd); // Tell DirectDraw which members are valid. 
-        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
-        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
+//        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
+//        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
         // In diese Surface sollen die Bausteine geladen werden
         lpDD->CreateSurface(&ddsd, &lpDDSMisc, nullptr);
         lpDDSMisc = DDLoadBitmap(lpDD, Misc, 0, 0);

@@ -1,4 +1,6 @@
+#pragma once
 //#include "devilution.h"
+#include "miniwin.h"
 #include <SDL.h>
 
 namespace dvl {

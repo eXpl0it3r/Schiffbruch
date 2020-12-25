@@ -1,6 +1,10 @@
 #pragma once
 
 #include "headers.hpp"
+#include "miniwin.h"
+#include "dx.h"
+
+using namespace dvl;
 
 struct TEXTBEREICH
 {
@@ -87,3 +91,5 @@ struct FLUSSLAUF
 {
     short x, y;
 };
+
+using byte = uint8_t;

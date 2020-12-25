@@ -2354,9 +2354,9 @@ namespace Game
             rcRectdes.right = MAXX;
             rcRectdes.bottom = MAXY;
             ddbltfx.dwFillColor = Renderer::RGB2DWORD(70, 70, 100);
-            lpDDSPrimary->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+//            lpDDSPrimary->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
             ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
-            lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+//            lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
             // Landschaft erzeugen
 
@@ -2365,7 +2365,7 @@ namespace Game
             rcRectdes.top = 0;
             rcRectdes.right = MAXX;
             rcRectdes.bottom = MAXY;
-            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
+//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
             World::Compute(200, 600);
 
             Renderer::DrawString("Ueberflute Land...", 5, 35, 2);
@@ -2373,7 +2373,7 @@ namespace Game
             rcRectdes.top = 0;
             rcRectdes.right = MAXX;
             rcRectdes.bottom = MAXY;
-            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
+//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
             World::Meer();
 
             Renderer::DrawString("Lege Fluss fest...", 5, 65, 2);
@@ -2381,7 +2381,7 @@ namespace Game
             rcRectdes.top = 0;
             rcRectdes.right = MAXX;
             rcRectdes.bottom = MAXY;
-            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
+//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
             World::Fluss();
             Math::CalcKoor();
 
@@ -2390,7 +2390,7 @@ namespace Game
             rcRectdes.top = 0;
             rcRectdes.right = MAXX;
             rcRectdes.bottom = MAXY;
-            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
+//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
             World::Baeume(30);
 
             World::Piratenwrack();
@@ -2430,7 +2430,7 @@ namespace Game
         rcRectdes.right = MAXX;
         rcRectdes.bottom = MAXY;
         ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
-        lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+//        lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
         bool Anitmp = LAnimation;
         bool Entdeckttmp[MAXXKACH][MAXYKACH];

@@ -111,7 +111,7 @@ void Application::run()
                 else if (Spielzustand == State::GAME)
                 {
                     // Hide system cursor
-                    SetCursor(nullptr);
+//                    SetCursor(nullptr);
 
                     if ((Stunden >= 12) && (Minuten != 0) && (Guy.Aktion != Action::DAY_END)) // Hier ist der Tag zuende
                     {

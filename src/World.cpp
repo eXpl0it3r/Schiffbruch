@@ -146,7 +146,7 @@ namespace World
         rcRectdes.right = 2 * MAXXKACH;
         rcRectdes.bottom = 2 * MAXYKACH;
         ddbltfx.dwFillColor = Renderer::RGB2DWORD(247, 222, 191);
-        lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+//        lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
         // Die Landschaftshintergrundfarbe
         rcRectdes.left = 0;
@@ -154,7 +154,7 @@ namespace World
         rcRectdes.right = MAXSCAPEX;
         rcRectdes.bottom = MAXSCAPEY;
         ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
-        lpDDSScape->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+//        lpDDSScape->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
         for (short y = 0; y < MAXYKACH; y++)
             for (short x = 0; x < MAXXKACH; x++)
@@ -261,7 +261,7 @@ namespace World
                     // Land
                         ddbltfx.dwFillColor = Renderer::RGB2DWORD(139 + Scape[x][y].Hoehe * 20, 128 + Scape[x][y].Hoehe * 20, 115 + Scape[x][y].Hoehe * 20);
                 }
-                lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+//                lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
             }
     }
 

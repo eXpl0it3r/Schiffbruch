@@ -4,8 +4,6 @@
 #include <SDL.h>
 #include <string>
 
-#include "DiabloUI/diabloui.h"
-
 #ifdef _MSC_VER
 #define strcasecmp _stricmp
 #define strncasecmp _strnicmp
@@ -293,7 +291,7 @@ HWND SetFocus(HWND hWnd)
 	if (SDL_SetWindowInputFocus(window) <= -1) {
 		SDL_Log(SDL_GetError());
 	}
-	MainWndProc(NULL, DVL_WM_ACTIVATEAPP, true, 0); // SDL_WINDOWEVENT_FOCUS_GAINED
+//	MainWndProc(NULL, DVL_WM_ACTIVATEAPP, true, 0); // SDL_WINDOWEVENT_FOCUS_GAINED
 	return NULL;
 }
 
