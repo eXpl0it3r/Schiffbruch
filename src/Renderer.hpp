@@ -21,7 +21,7 @@ namespace Renderer
     void PutPixel(short x, short y, DWORD color, LPDDSURFACEDESC2 ddsd); // Schreibt Pixel in eine Surface (davor lock())
     void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd); // Das Ergebnis wird in rgbStruct gespeichert
     void Fade(short RP, short GP, short BP); // Bild abdunkeln mittels Gamma-Werten (in Prozent pro Farbwert)
-    ZWEID GetKachel(short x, short y); // Welche Kachel ist unter den angegebenen Koordinaten
+    Coordinate GetKachel(short x, short y); // Welche Kachel ist unter den angegebenen Koordinaten
     void Zeige(); // Landschaft anzeigen
     void ZeigeIntro(); // Für das Intro zuständig
     void ZeigeAbspann(); // Für den Abspann

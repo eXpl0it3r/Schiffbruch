@@ -16,8 +16,8 @@ namespace Sound
         if (Soundzustand == -1) // Wenn keine Soundkarte vorhanden raus...
             return;
 
-        if (!sound_buffers[Sound].loadFromFile(Wav[Sound].Dateiname))
-            sf::err() << "Couldn't load sound file '" << Wav[Sound].Dateiname << "'!" << std::endl;
+        if (!sound_buffers[Sound].loadFromFile(Wav[Sound].Filename))
+            sf::err() << "Couldn't load sound file '" << Wav[Sound].Filename << "'!" << std::endl;
 
         sound_players[Sound].setBuffer(sound_buffers[Sound]);
         sound_players[Sound].setVolume(static_cast<float>(Wav[Sound].Volume));

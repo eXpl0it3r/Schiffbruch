@@ -6,13 +6,13 @@
 
 using namespace dvl;
 
-struct TEXTBEREICH
+struct TextArea
 {
-    bool Aktiv; // Steht Text in diesem Bereich?
-    RECT rcText; // Die Position des Ausgabe
+    bool HasText; // Steht Text in diesem Bereich?
+    RECT textRect; // Die Position des Ausgabe
 };
 
-struct ZWEID
+struct Coordinate
 {
     short x;
     short y;
@@ -20,74 +20,74 @@ struct ZWEID
 
 struct RGBSTRUCT
 {
-    BYTE r, g, b;
+    uint8_t r, g, b;
 };
 
 struct GUY
 {
-    bool Aktiv; // Ist er aktiv?
-    short Aktion; // Welche Aktion (Suchen, fischen ...) (Übergeordnet über Zustand)
-    ZWEID Pos; // KachelPosition der Spielfigur 
-    ZWEID PosAlt; // Die ursprünglich Position in der Kachel (für die Aktionsprozeduren)
-    ZWEID PosScreen; // Absolute Position der Spielfigur
-    short Zustand; // Was macht er gerade? (Animation)(linkslaufen,rechtslaufen...,angeln..)
-    short AkNummer; // Bei welcher Aktion (für die Aktionsprozeduren)
-    float Resource[3]; // Wieviel Wasservorrat usw
-    short Inventar[SPRITE_COUNT]; // Welche Rohstoffe usw. besitzt man
+    bool IsActive; // Ist er aktiv?
+    short CurrentAction; // Welche Aktion (Suchen, fischen ...) (Übergeordnet über Zustand)
+    Coordinate CurrentPosition; // KachelPosition der Spielfigur
+    Coordinate OriginalPosition; // Die ursprünglich Position in der Kachel (für die Aktionsprozeduren)
+    Coordinate ScreenPosition; // Absolute Position der Spielfigur
+    short AnimationState; // Was macht er gerade? (Animation)(linkslaufen,rechtslaufen...,angeln..)
+    short ActionNumber; // Bei welcher Aktion (für die Aktionsprozeduren)
+    float ResourceAmount[3]; // Wieviel Wasservorrat usw
+    short Inventory[SPRITE_COUNT]; // Welche Rohstoffe usw. besitzt man
 };
 
 struct BMP
 {
     LPDIRECTDRAWSURFACE4 Surface; // in welcher Surface gespeichert?
-    bool Animation; // Läuft die Animations?
-    short Anzahl; // Anzahl der Animationsphasen
-    short Phase; // die aktuelle Phase
-    RECT rcSrc; // Quelle des 1. Bildes
-    RECT rcDes; // Falls es immer an die gleiche Stelle gezeichnet wird. (Buttons)
-    short Breite; // Die Breite des Bildes
-    short Hoehe; // Die Hoehe des Bildes
-    short Geschwindigkeit; // Wieviel Bilder/sec
+    bool IsAnimationRunning; // Läuft die Animations?
+    short AnimationPhaseCount; // Anzahl der Animationsphasen
+    short AnimationPhase; // die aktuelle Phase
+    RECT sourceRect; // Quelle des 1. Bildes
+    RECT targetRect; // Falls es immer an die gleiche Stelle gezeichnet wird. (Buttons)
+    short Width; // Die Breite des Bildes
+    short Height; // Die Hoehe des Bildes
+    short Speed; // Wieviel Bilder/sec
     short Sound; // Welcher Sound gehört dazu
     //zum bauen
-    short Rohstoff[SPRITE_COUNT]; // Anzahl des i.Rohstoffs, den man zum Bau benötigt
-    short AkAnzahl; // Anzahl der Aktionsfaellen, die zum Bau benötigt werden
+    short RequiredRawMaterials[SPRITE_COUNT]; // Anzahl des i.Rohstoffs, den man zum Bau benötigt
+    short RequiredActionCases; // Anzahl der Aktionsfaellen, die zum Bau benötigt werden
     bool First; // Ist es das erstemal gebaut, dann Hilfetext
 };
 
 struct WAV
 {
-    char* Dateiname; // Dateiname der Wavdatei
+    const char* Filename; // Dateiname der Wavdatei
     bool Loop; // Nur einmal abspielen und ständig
     short Volume; // Die Standardlautstärke in Prozent
 };
 
-struct ABSPANN
+struct CREDITS
 {
-    bool Aktiv; // Bewegt sich gerade
-    short Bild; // welches Bild
+    bool IsRunning; // Bewegt sich gerade
+    short Picture; // welches Bild
 };
 
 struct SCAPE
 {
     short Type; // Flach, Hang usw.
-    short Art; // Sand, Moor ...
+    short Terrain; // Sand, Moor ...
     short Height; // Die Hoehe der Kachel
-    bool Markiert; // Ist diese Kachel markiert?
+    bool Marked; // Ist diese Kachel markiert?
     short xScreen, yScreen; // Die Koordinaten in der Scape-Surface
-    bool Begehbar; // notwendig für Pathfinding
-    bool Entdeckt; // Ist dieses Feld schon aufgedeckt?
-    short LaufZeit; // LaufZeit auf dieser Kachel (1 am schnellsten...)
-    short Objekt; // Welches Objekt steht drauf (z.Bsp. Flüsse)
-    bool Reverse; // Wird die Objektanimation umgekehrt abgespielt (für flüsse)
-    ZWEID ObPos; // Die Koordinaten des Objekts (relativ zu xScreen und yScreen)
-    float Phase; // Welche Animationsphase oder Bildversion
-    short AkNummer; // Welche Aktionsnummer (um Baustellen vortzusetzen)
-    ZWEID GPosAlt; // Damit der Guy an der richtigen Stelle (x,y) weiterbaut
-    short Rohstoff[SPRITE_COUNT]; //Anzahl des i.Rohstoffs, den man noch zum bauen braucht
-    float Timer; //Bis jetzt nur fürs Feuer nötig
+    bool Walkable; // notwendig für Pathfinding
+    bool Discovered; // Ist dieses Feld schon aufgedeckt?
+    short RunningTime; // LaufZeit auf dieser Kachel (1 am schnellsten...)
+    short Object; // Welches Objekt steht drauf (z.Bsp. Flüsse)
+    bool ReverseAnimation; // Wird die Objektanimation umgekehrt abgespielt (für flüsse)
+    Coordinate ObjectPosOffset; // Die Koordinaten des Objekts (relativ zu xScreen und yScreen)
+    float AnimationPhase; // Welche Animationsphase oder Bildversion
+    short ConstructionActionNumber; // Welche Aktionsnummer (um Baustellen vortzusetzen)
+    Coordinate GPosAlt; // Damit der Guy an der richtigen Stelle (x,y) weiterbaut
+    short RequiredRawMaterials[SPRITE_COUNT]; //Anzahl des i.Rohstoffs, den man noch zum bauen braucht
+    float FireTimer; //Bis jetzt nur fürs Feuer nötig
 };
 
-struct FLUSSLAUF
+struct RiverRun
 {
     short x, y;
 };

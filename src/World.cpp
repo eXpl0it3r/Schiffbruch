@@ -11,7 +11,7 @@
 
 namespace World
 {
-    FLUSSLAUF Flusslauf[NUMBER_OF_RIVERS][MAX_RIVER_LENGTH];
+    RiverRun Flusslauf[NUMBER_OF_RIVERS][MAX_RIVER_LENGTH];
 
     void MakeRohString(short x, short y, short Objekt)
     {
@@ -23,14 +23,14 @@ namespace World
         {
             for (short i = 0; i < SPRITE_COUNT; i++)
             {
-                if (Scape[x][y].Rohstoff[i] != 0) keinRohstoff = false;
+                if (Scape[x][y].RequiredRawMaterials[i] != 0) keinRohstoff = false;
             }
         }
         else
         {
             for (short i = 0; i < SPRITE_COUNT; i++)
             {
-                if (Bmp[Objekt].Rohstoff[i] != 0) keinRohstoff = false;
+                if (Bmp[Objekt].RequiredRawMaterials[i] != 0) keinRohstoff = false;
             }
         }
         if (keinRohstoff) return;
@@ -39,12 +39,12 @@ namespace World
         {
             if (Objekt == -1)
             {
-                if (Scape[x][y].Rohstoff[i] == 0)
+                if (Scape[x][y].RequiredRawMaterials[i] == 0)
                     continue;
             }
             else
             {
-                if (Bmp[Objekt].Rohstoff[i] == 0)
+                if (Bmp[Objekt].RequiredRawMaterials[i] == 0)
                     continue;
             }
             strcat(RohString, " ");
@@ -63,8 +63,8 @@ namespace World
             }
             strcat(RohString, TmpString);
             strcat(RohString, "=");
-            if (Objekt == -1) std::sprintf(TmpString, "%d", Scape[x][y].Rohstoff[i]);
-            else std::sprintf(TmpString, "%d", Bmp[Objekt].Rohstoff[i]);
+            if (Objekt == -1) std::sprintf(TmpString, "%d", Scape[x][y].RequiredRawMaterials[i]);
+            else std::sprintf(TmpString, "%d", Bmp[Objekt].RequiredRawMaterials[i]);
             strcat(RohString, TmpString);
         }
     }
@@ -82,30 +82,30 @@ namespace World
             for (short x = 0; x < MAX_TILES_X; x++)
             {
                 // Feuer nach einer bestimmten Zeit ausgehen lassen
-                if (Scape[x][y].Objekt == FIRE)
+                if (Scape[x][y].Object == FIRE)
                 {
-                    Scape[x][y].Timer += float((60 * h + m) * 0.0005);
-                    if (Scape[x][y].Timer >= 1)
+                    Scape[x][y].FireTimer += float((60 * h + m) * 0.0005);
+                    if (Scape[x][y].FireTimer >= 1)
                     {
-                        Scape[x][y].Objekt = -1;
-                        Scape[x][y].Timer = 0;
-                        Scape[x][y].ObPos.x = 0;
-                        Scape[x][y].ObPos.y = 0;
-                        Scape[x][y].Phase = -1;
+                        Scape[x][y].Object = -1;
+                        Scape[x][y].FireTimer = 0;
+                        Scape[x][y].ObjectPosOffset.x = 0;
+                        Scape[x][y].ObjectPosOffset.y = 0;
+                        Scape[x][y].AnimationPhase = -1;
                         Chance -= 2 + 2 * Scape[x][y].Height;
                     }
                 }
-                if ((Scape[x][y].Phase == -1) ||
-                    ((Scape[x][y].Objekt != FIELD) &&
-                        (Scape[x][y].Objekt != BUSH)))
+                if ((Scape[x][y].AnimationPhase == -1) ||
+                    ((Scape[x][y].Object != FIELD) &&
+                        (Scape[x][y].Object != BUSH)))
                     continue; // Wenn kein Fruchtobjekt weiter
-                if (Scape[x][y].Phase >= Bmp[Scape[x][y].Objekt].Anzahl) continue;
-                if (Scape[x][y].Objekt == FIELD) Scape[x][y].Phase += float((60 * h + m) * 0.005);
-                else if (Scape[x][y].Objekt == BUSH) Scape[x][y].Phase += float((60 * h + m) * 0.0005); // pro Minute Reifungsprozess fortführen
-                if (Scape[x][y].Phase > Bmp[Scape[x][y].Objekt].Anzahl - 1)
-                    Scape[x][y].Phase = static_cast<float>(Bmp[Scape[x][y].Objekt].Anzahl) - 1;
+                if (Scape[x][y].AnimationPhase >= Bmp[Scape[x][y].Object].AnimationPhaseCount) continue;
+                if (Scape[x][y].Object == FIELD) Scape[x][y].AnimationPhase += float((60 * h + m) * 0.005);
+                else if (Scape[x][y].Object == BUSH) Scape[x][y].AnimationPhase += float((60 * h + m) * 0.0005); // pro Minute Reifungsprozess fortführen
+                if (Scape[x][y].AnimationPhase > Bmp[Scape[x][y].Object].AnimationPhaseCount - 1)
+                    Scape[x][y].AnimationPhase = static_cast<float>(Bmp[Scape[x][y].Object].AnimationPhaseCount) - 1;
             }
-        AddResource(GESUNDHEIT, (60 * h + m) * (Guy.Resource[WASSER] - 50 + Guy.Resource[NAHRUNG] - 50) / 1000);
+        AddResource(GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[WASSER] - 50 + Guy.ResourceAmount[NAHRUNG] - 50) / 1000);
 
         if ((Spielzustand == State::GAME) && (!BootsFahrt))
         {
@@ -114,9 +114,9 @@ namespace World
                 if (Chance == 0) break;
                 if (rand() % static_cast<int>(1 / (Chance / 72000)) == 1)
                 {
-                    Guy.Aktiv = false;
-                    Guy.AkNummer = 0;
-                    Guy.Aktion = Action::RESCUED;
+                    Guy.IsActive = false;
+                    Guy.ActionNumber = 0;
+                    Guy.CurrentAction = Action::RESCUED;
                     break;
                 }
             }
@@ -125,16 +125,16 @@ namespace World
 
     void AddResource(short Art, float Anzahl) // Fügt wassser usw hinzu
     {
-        Guy.Resource[Art] += Anzahl;
-        if (Guy.Resource[Art] > 100) Guy.Resource[Art] = 100;
-        if (Guy.Resource[Art] < 0) Guy.Resource[Art] = 0;
+        Guy.ResourceAmount[Art] += Anzahl;
+        if (Guy.ResourceAmount[Art] > 100) Guy.ResourceAmount[Art] = 100;
+        if (Guy.ResourceAmount[Art] < 0) Guy.ResourceAmount[Art] = 0;
         // Wann tod
-        if ((Guy.Resource[GESUNDHEIT] <= 0) && (Guy.Aktion != Action::DEATH) &&
-            (Guy.Aktion != Action::DAY_END) && (Spielzustand == State::GAME))
+        if ((Guy.ResourceAmount[GESUNDHEIT] <= 0) && (Guy.CurrentAction != Action::DEATH) &&
+            (Guy.CurrentAction != Action::DAY_END) && (Spielzustand == State::GAME))
         {
-            Guy.Aktiv = false;
-            Guy.AkNummer = 0;
-            Guy.Aktion = Action::DEATH;
+            Guy.IsActive = false;
+            Guy.ActionNumber = 0;
+            Guy.CurrentAction = Action::DEATH;
         }
     }
 
@@ -159,20 +159,20 @@ namespace World
         for (short y = 0; y < MAX_TILESY; y++)
             for (short x = 0; x < MAX_TILES_X; x++)
             {
-                if (!Scape[x][y].Entdeckt) continue; // Nicht entdeckte Felder nicht malen
+                if (!Scape[x][y].Discovered) continue; // Nicht entdeckte Felder nicht malen
 
                 rcRectdes.left = Scape[x][y].xScreen;
                 rcRectdes.top = Scape[x][y].yScreen;
                 rcRectdes.right = rcRectdes.left + TILE_SIZE_X;
                 rcRectdes.bottom = rcRectdes.top + TILE_SIZE_Y;
-                if (Scape[x][y].Art == 4)
+                if (Scape[x][y].Terrain == 4)
                 {
                     rcRectsrc.left = TILE_SIZE_X * Scape[x][y].Type;
                     rcRectsrc.right = TILE_SIZE_X * Scape[x][y].Type + TILE_SIZE_X;
                     rcRectsrc.top = 0;
                     rcRectsrc.bottom = TILE_SIZE_Y;
                 }
-                else if (Scape[x][y].Art == 0) // trockenes Land
+                else if (Scape[x][y].Terrain == 0) // trockenes Land
                 {
                     rcRectsrc.left = TILE_SIZE_X * Scape[x][y].Type;
                     rcRectsrc.right = TILE_SIZE_X * Scape[x][y].Type + TILE_SIZE_X;
@@ -181,21 +181,21 @@ namespace World
                 }
                 else
                 {
-                    if ((Scape[x][y].Type == 0) && (Scape[x][y].Art == 1))
+                    if ((Scape[x][y].Type == 0) && (Scape[x][y].Terrain == 1))
                     {
                         rcRectsrc.left = 0 * TILE_SIZE_X;
                         rcRectsrc.top = 3 * TILE_SIZE_Y;
                         rcRectsrc.right = 1 * TILE_SIZE_X;
                         rcRectsrc.bottom = 4 * TILE_SIZE_Y;
                     }
-                    if ((Scape[x][y].Type == 0) && (Scape[x][y].Art == 2))
+                    if ((Scape[x][y].Type == 0) && (Scape[x][y].Terrain == 2))
                     {
                         rcRectsrc.left = 1 * TILE_SIZE_X;
                         rcRectsrc.top = 3 * TILE_SIZE_Y;
                         rcRectsrc.right = 2 * TILE_SIZE_X;
                         rcRectsrc.bottom = 4 * TILE_SIZE_Y;
                     }
-                    if ((Scape[x][y].Type == 0) && (Scape[x][y].Art == 3))
+                    if ((Scape[x][y].Type == 0) && (Scape[x][y].Terrain == 3))
                     {
                         rcRectsrc.left = 2 * TILE_SIZE_X;
                         rcRectsrc.top = 3 * TILE_SIZE_Y;
@@ -217,27 +217,27 @@ namespace World
                 }
 
                 // Landschaftsobjekte zeichnen (falls Animationen ausgeschaltet sind)
-                if ((!LAnimation) && (Scape[x][y].Objekt != -1))
+                if ((!LAnimation) && (Scape[x][y].Object != -1))
                 {
-                    if ((Scape[x][y].Objekt >= SEA_WAVES) && (Scape[x][y].Objekt <= FLOODGATE_6))
+                    if ((Scape[x][y].Object >= SEA_WAVES) && (Scape[x][y].Object <= FLOODGATE_6))
                     {
-                        rcRectsrc.left = Bmp[Scape[x][y].Objekt].rcSrc.left;
-                        rcRectsrc.right = Bmp[Scape[x][y].Objekt].rcSrc.right;
-                        if (Scape[x][y].Objekt == SEA_WAVES)
+                        rcRectsrc.left = Bmp[Scape[x][y].Object].sourceRect.left;
+                        rcRectsrc.right = Bmp[Scape[x][y].Object].sourceRect.right;
+                        if (Scape[x][y].Object == SEA_WAVES)
                         {
                             short i = rand() % 6;
-                            rcRectsrc.top = Bmp[Scape[x][y].Objekt].rcSrc.top + i * Bmp[Scape[x][y].Objekt].Hoehe;
-                            rcRectsrc.bottom = Bmp[Scape[x][y].Objekt].rcSrc.bottom + i * Bmp[Scape[x][y].Objekt].Hoehe;
+                            rcRectsrc.top = Bmp[Scape[x][y].Object].sourceRect.top + i * Bmp[Scape[x][y].Object].Height;
+                            rcRectsrc.bottom = Bmp[Scape[x][y].Object].sourceRect.bottom + i * Bmp[Scape[x][y].Object].Height;
                         }
                         else
                         {
-                            rcRectsrc.top = Bmp[Scape[x][y].Objekt].rcSrc.top;
-                            rcRectsrc.bottom = Bmp[Scape[x][y].Objekt].rcSrc.bottom;
+                            rcRectsrc.top = Bmp[Scape[x][y].Object].sourceRect.top;
+                            rcRectsrc.bottom = Bmp[Scape[x][y].Object].sourceRect.bottom;
                         }
-                        rcRectdes.left = Scape[x][y].xScreen + Bmp[Scape[x][y].Objekt].rcDes.left;
-                        rcRectdes.right = Scape[x][y].xScreen + Bmp[Scape[x][y].Objekt].rcDes.right;
-                        rcRectdes.top = Scape[x][y].yScreen + Bmp[Scape[x][y].Objekt].rcDes.top;
-                        rcRectdes.bottom = Scape[x][y].yScreen + Bmp[Scape[x][y].Objekt].rcDes.bottom;
+                        rcRectdes.left = Scape[x][y].xScreen + Bmp[Scape[x][y].Object].targetRect.left;
+                        rcRectdes.right = Scape[x][y].xScreen + Bmp[Scape[x][y].Object].targetRect.right;
+                        rcRectdes.top = Scape[x][y].yScreen + Bmp[Scape[x][y].Object].targetRect.top;
+                        rcRectdes.bottom = Scape[x][y].yScreen + Bmp[Scape[x][y].Object].targetRect.bottom;
                         // Landschaftsobjekt zeichnen
                         Renderer::Blitten(lpDDSAnimation, lpDDSScape, true);
                     }
@@ -249,13 +249,13 @@ namespace World
                 rcRectdes.right = rcRectdes.left + 2;
                 rcRectdes.bottom = rcRectdes.top + 2;
 
-                if ((Scape[x][y].Art == 1) && (Scape[x][y].Type == 0)) // Meer
+                if ((Scape[x][y].Terrain == 1) && (Scape[x][y].Type == 0)) // Meer
                     ddbltfx.dwFillColor = Renderer::RGB2DWORD(228, 207, 182);
                 else
                 {
                     if ((Scape[x][y].Type == 0) &&
-                        ((Scape[x][y].Art == 2) ||
-                            (Scape[x][y].Art == 3))) // Strand
+                        ((Scape[x][y].Terrain == 2) ||
+                            (Scape[x][y].Terrain == 3))) // Strand
                         ddbltfx.dwFillColor = Renderer::RGB2DWORD(112, 103, 93);
                     else
                     // Land
@@ -267,35 +267,35 @@ namespace World
 
     void CheckSpzButton()
     {
-        if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FIELD) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BONFIRE) &&
-            (Scape[Guy.Pos.x][Guy.Pos.y].Phase >= Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl) &&
-            (Bmp[BUTTON_STOP].Phase == -1))
+        if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object >= FIELD) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object <= BONFIRE) &&
+            (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase >= Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount) &&
+            (Bmp[BUTTON_STOP].AnimationPhase == -1))
         {
-            if (Bmp[BUTTON_CONTINUE].Phase == -1) Bmp[BUTTON_CONTINUE].Phase = 0;
+            if (Bmp[BUTTON_CONTINUE].AnimationPhase == -1) Bmp[BUTTON_CONTINUE].AnimationPhase = 0;
         }
-        else Bmp[BUTTON_CONTINUE].Phase = -1;
+        else Bmp[BUTTON_CONTINUE].AnimationPhase = -1;
 
-        if ((Bmp[BUTTON_STOP].Phase == -1) && (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BOAT) &&
-                (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl)) ||
+        if ((Bmp[BUTTON_STOP].AnimationPhase == -1) && (((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object == BOAT) &&
+                (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].AnimationPhase < Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].AnimationPhaseCount)) ||
             ((BootsFahrt) &&
-                (((Scape[Guy.Pos.x - 1][Guy.Pos.y].Art != 1) && (Scape[Guy.Pos.x - 1][Guy.Pos.y].Objekt == -1)) ||
-                    ((Scape[Guy.Pos.x][Guy.Pos.y - 1].Art != 1) && (Scape[Guy.Pos.x][Guy.Pos.y - 1].Objekt == -1)) ||
-                    ((Scape[Guy.Pos.x + 1][Guy.Pos.y].Art != 1) && (Scape[Guy.Pos.x + 1][Guy.Pos.y].Objekt == -1)) ||
-                    ((Scape[Guy.Pos.x][Guy.Pos.y + 1].Art != 1) && (Scape[Guy.Pos.x][Guy.Pos.y + 1].Objekt == -1))))))
+                (((Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Terrain != 1) && (Scape[Guy.CurrentPosition.x - 1][Guy.CurrentPosition.y].Object == -1)) ||
+                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Terrain != 1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y - 1].Object == -1)) ||
+                    ((Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Terrain != 1) && (Scape[Guy.CurrentPosition.x + 1][Guy.CurrentPosition.y].Object == -1)) ||
+                    ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Terrain != 1) && (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y + 1].Object == -1))))))
         {
-            if (Bmp[BUTTON_LAY_DOWN].Phase == -1) Bmp[BUTTON_LAY_DOWN].Phase = 0;
+            if (Bmp[BUTTON_LAY_DOWN].AnimationPhase == -1) Bmp[BUTTON_LAY_DOWN].AnimationPhase = 0;
         }
-        else Bmp[BUTTON_LAY_DOWN].Phase = -1;
+        else Bmp[BUTTON_LAY_DOWN].AnimationPhase = -1;
     }
 
     bool CheckRohstoff()
     {
         short Benoetigt = 0; // Anzahl der Gesamtbenötigten Rohstoffe
-        for (short i = 0; i < SPRITE_COUNT; i++) Benoetigt += Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Rohstoff[i];
+        for (short i = 0; i < SPRITE_COUNT; i++) Benoetigt += Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].RequiredRawMaterials[i];
 
-        float GebrauchtTmp = Benoetigt / static_cast<float>(Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].AkAnzahl); // Soviel Rohstoffe werden für diesen Schritt benötigt
-        short Gebraucht = static_cast<short>(GebrauchtTmp * Scape[Guy.Pos.x][Guy.Pos.y].AkNummer -
-            static_cast<short>(GebrauchtTmp * (Scape[Guy.Pos.x][Guy.Pos.y].AkNummer - 1))); // Soviel Rohstoffe werden für diesen Schritt benötigt
+        float GebrauchtTmp = Benoetigt / static_cast<float>(Bmp[Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].Object].RequiredActionCases); // Soviel Rohstoffe werden für diesen Schritt benötigt
+        short Gebraucht = static_cast<short>(GebrauchtTmp * Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber -
+            static_cast<short>(GebrauchtTmp * (Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].ConstructionActionNumber - 1))); // Soviel Rohstoffe werden für diesen Schritt benötigt
 
 
         while (true)
@@ -304,11 +304,11 @@ namespace World
             for (short i = 0; i < SPRITE_COUNT; i++)
             {
                 if (Gebraucht == 0) return true;
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i] > 0) &&
-                    (Guy.Inventar[i] > 0))
+                if ((Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i] > 0) &&
+                    (Guy.Inventory[i] > 0))
                 {
-                    Guy.Inventar[i]--;
-                    Scape[Guy.Pos.x][Guy.Pos.y].Rohstoff[i]--;
+                    Guy.Inventory[i]--;
+                    Scape[Guy.CurrentPosition.x][Guy.CurrentPosition.y].RequiredRawMaterials[i]--;
                     Gebraucht--;
                     if (Gebraucht == 0) return true;
                     Check = true;
@@ -317,9 +317,9 @@ namespace World
             if (Check == false) break;
         }
         PapierText = Renderer::DrawText(ROHSTOFFNICHT, TXTPAPIER, 1);
-        Guy.AkNummer = 0;
-        Guy.Aktion = Action::CANCEL;
-        Bmp[BUTTON_STOP].Phase = -1;
+        Guy.ActionNumber = 0;
+        Guy.CurrentAction = Action::CANCEL;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
         return false;
     }
 
@@ -406,22 +406,22 @@ namespace World
                 for (short x = 0; x < MAX_TILES_X; x++)
                 {
                     Scape[x][y].Type = 0;
-                    Scape[x][y].Art = 0;
+                    Scape[x][y].Terrain = 0;
                     Scape[x][y].Height = 0;
-                    Scape[x][y].Markiert = false;
-                    Scape[x][y].Begehbar = true;
-                    Scape[x][y].Entdeckt = false;
-                    Scape[x][y].LaufZeit = 1;
-                    Scape[x][y].Objekt = -1;
-                    Scape[x][y].Reverse = false;
-                    Scape[x][y].ObPos.x = 0;
-                    Scape[x][y].ObPos.y = 0;
-                    Scape[x][y].Phase = -1;
-                    Scape[x][y].AkNummer = 0;
+                    Scape[x][y].Marked = false;
+                    Scape[x][y].Walkable = true;
+                    Scape[x][y].Discovered = false;
+                    Scape[x][y].RunningTime = 1;
+                    Scape[x][y].Object = -1;
+                    Scape[x][y].ReverseAnimation = false;
+                    Scape[x][y].ObjectPosOffset.x = 0;
+                    Scape[x][y].ObjectPosOffset.y = 0;
+                    Scape[x][y].AnimationPhase = -1;
+                    Scape[x][y].ConstructionActionNumber = 0;
                     Scape[x][y].GPosAlt.x = 0;
                     Scape[x][y].GPosAlt.y = 0;
-                    for (i = 0; i < SPRITE_COUNT; i++) Scape[x][y].Rohstoff[i] = 0;
-                    Scape[x][y].Timer = 0;
+                    for (i = 0; i < SPRITE_COUNT; i++) Scape[x][y].RequiredRawMaterials[i] = 0;
+                    Scape[x][y].FireTimer = 0;
                 }
 
             short x; // Startposition der Berechnung
@@ -839,8 +839,8 @@ namespace World
                 {
                     if (Scape[x][y].Height > 0) Anzahl++;
 
-                    if (Scape[x][y].Type == 0) Scape[x][y].LaufZeit = 1;
-                    else Scape[x][y].LaufZeit = 2;
+                    if (Scape[x][y].Type == 0) Scape[x][y].RunningTime = 1;
+                    else Scape[x][y].RunningTime = 2;
 
                     if ((Scape[x][y].Type != 0) &&
                         ((x <= 2) || (x >= MAX_TILES_X - 2) || (y <= 2) || (y >= MAX_TILESY - 2)))
@@ -862,14 +862,14 @@ namespace World
                 {
                     Scape[x][y].Type = 0;
                     Scape[x][y].Height = 0;
-                    Scape[x][y].Art = 1;
-                    Scape[x][y].Objekt = SEA_WAVES;
-                    Scape[x][y].ObPos.x = static_cast<short>(Bmp[SEA_WAVES].rcDes.left);
-                    Scape[x][y].ObPos.y = static_cast<short>(Bmp[SEA_WAVES].rcDes.top);
-                    if (rand() % 2 == 0) Scape[x][y].Reverse = true;
-                    Scape[x][y].Begehbar = false;
-                    Scape[x][y].Phase = static_cast<float>(Bmp[Scape[x][y].Objekt].Anzahl -
-                        rand() % (Bmp[Scape[x][y].Objekt].Anzahl) - 1);
+                    Scape[x][y].Terrain = 1;
+                    Scape[x][y].Object = SEA_WAVES;
+                    Scape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[SEA_WAVES].targetRect.left);
+                    Scape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[SEA_WAVES].targetRect.top);
+                    if (rand() % 2 == 0) Scape[x][y].ReverseAnimation = true;
+                    Scape[x][y].Walkable = false;
+                    Scape[x][y].AnimationPhase = static_cast<float>(Bmp[Scape[x][y].Object].AnimationPhaseCount -
+                        rand() % (Bmp[Scape[x][y].Object].AnimationPhaseCount) - 1);
                 }
             }
         for (y = 1; y < MAX_TILESY - 1; y++) // Strand rausfinden
@@ -889,30 +889,30 @@ namespace World
 
                     if ((Anzahl >= 1) && (Anzahl < 6))
                     {
-                        Scape[x][y].Art = 2;
-                        Scape[x][y].Objekt = -1;
-                        Scape[x][y].Reverse = false;
-                        Scape[x][y].Begehbar = true;
-                        Scape[x][y].Phase = -1;
+                        Scape[x][y].Terrain = 2;
+                        Scape[x][y].Object = -1;
+                        Scape[x][y].ReverseAnimation = false;
+                        Scape[x][y].Walkable = true;
+                        Scape[x][y].AnimationPhase = -1;
                         continue;
                     }
                     if (Anzahl >= 6)
                     {
-                        Scape[x][y].Art = 3;
-                        Scape[x][y].Objekt = -1;
-                        Scape[x][y].Reverse = false;
-                        Scape[x][y].Begehbar = false;
-                        Scape[x][y].Phase = -1;
+                        Scape[x][y].Terrain = 3;
+                        Scape[x][y].Object = -1;
+                        Scape[x][y].ReverseAnimation = false;
+                        Scape[x][y].Walkable = false;
+                        Scape[x][y].AnimationPhase = -1;
                         continue;
                     }
-                    Scape[x][y].Art = 1; // sonst Meer
-                    Scape[x][y].Objekt = SEA_WAVES;
-                    Scape[x][y].ObPos.x = static_cast<short>(Bmp[SEA_WAVES].rcDes.left);
-                    Scape[x][y].ObPos.y = static_cast<short>(Bmp[SEA_WAVES].rcDes.top);
-                    Scape[x][y].Phase = static_cast<float>(Bmp[Scape[x][y].Objekt].Anzahl -
-                        rand() % (Bmp[Scape[x][y].Objekt].Anzahl) - 1);
-                    if (rand() % 2 == 0) Scape[x][y].Reverse = true;
-                    Scape[x][y].Begehbar = false;
+                    Scape[x][y].Terrain = 1; // sonst Meer
+                    Scape[x][y].Object = SEA_WAVES;
+                    Scape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[SEA_WAVES].targetRect.left);
+                    Scape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[SEA_WAVES].targetRect.top);
+                    Scape[x][y].AnimationPhase = static_cast<float>(Bmp[Scape[x][y].Object].AnimationPhaseCount -
+                        rand() % (Bmp[Scape[x][y].Object].AnimationPhaseCount) - 1);
+                    if (rand() % 2 == 0) Scape[x][y].ReverseAnimation = true;
+                    Scape[x][y].Walkable = false;
                 }
             }
     }
@@ -922,26 +922,26 @@ namespace World
         BootsFahrt = !BootsFahrt;
         // Begehbarkeit umdrehen
         for (short y = 0; y < MAX_TILESY; y++)
-            for (short x = 0; x < MAX_TILES_X; x++) Scape[x][y].Begehbar = !Scape[x][y].Begehbar;
+            for (short x = 0; x < MAX_TILES_X; x++) Scape[x][y].Walkable = !Scape[x][y].Walkable;
     }
 
     void CheckRohr(short x, short y)
     {
-        Scape[x][y].Phase = 1;
-        if (Scape[x][y].Art == 0) Scape[x][y].Art = 4;
-        if (Scape[x - 1][y].Art == 0) Scape[x - 1][y].Art = 4;
-        if (Scape[x - 1][y - 1].Art == 0) Scape[x - 1][y - 1].Art = 4;
-        if (Scape[x][y - 1].Art == 0) Scape[x][y - 1].Art = 4;
-        if (Scape[x + 1][y - 1].Art == 0) Scape[x + 1][y - 1].Art = 4;
-        if (Scape[x + 1][y].Art == 0) Scape[x + 1][y].Art = 4;
-        if (Scape[x + 1][y + 1].Art == 0) Scape[x + 1][y + 1].Art = 4;
-        if (Scape[x][y + 1].Art == 0) Scape[x][y + 1].Art = 4;
-        if (Scape[x - 1][y + 1].Art == 0) Scape[x - 1][y + 1].Art = 4;
+        Scape[x][y].AnimationPhase = 1;
+        if (Scape[x][y].Terrain == 0) Scape[x][y].Terrain = 4;
+        if (Scape[x - 1][y].Terrain == 0) Scape[x - 1][y].Terrain = 4;
+        if (Scape[x - 1][y - 1].Terrain == 0) Scape[x - 1][y - 1].Terrain = 4;
+        if (Scape[x][y - 1].Terrain == 0) Scape[x][y - 1].Terrain = 4;
+        if (Scape[x + 1][y - 1].Terrain == 0) Scape[x + 1][y - 1].Terrain = 4;
+        if (Scape[x + 1][y].Terrain == 0) Scape[x + 1][y].Terrain = 4;
+        if (Scape[x + 1][y + 1].Terrain == 0) Scape[x + 1][y + 1].Terrain = 4;
+        if (Scape[x][y + 1].Terrain == 0) Scape[x][y + 1].Terrain = 4;
+        if (Scape[x - 1][y + 1].Terrain == 0) Scape[x - 1][y + 1].Terrain = 4;
 
-        if ((Scape[x - 1][y].Objekt == PIPE) && (Scape[x - 1][y].Phase == 0)) CheckRohr(x - 1, y);
-        if ((Scape[x][y - 1].Objekt == PIPE) && (Scape[x][y - 1].Phase == 0)) CheckRohr(x, y - 1);
-        if ((Scape[x + 1][y].Objekt == PIPE) && (Scape[x + 1][y].Phase == 0)) CheckRohr(x + 1, y);
-        if ((Scape[x][y + 1].Objekt == PIPE) && (Scape[x][y + 1].Phase == 0)) CheckRohr(x, y + 1);
+        if ((Scape[x - 1][y].Object == PIPE) && (Scape[x - 1][y].AnimationPhase == 0)) CheckRohr(x - 1, y);
+        if ((Scape[x][y - 1].Object == PIPE) && (Scape[x][y - 1].AnimationPhase == 0)) CheckRohr(x, y - 1);
+        if ((Scape[x + 1][y].Object == PIPE) && (Scape[x + 1][y].AnimationPhase == 0)) CheckRohr(x + 1, y);
+        if ((Scape[x][y + 1].Object == PIPE) && (Scape[x][y + 1].AnimationPhase == 0)) CheckRohr(x, y + 1);
     }
 
     void FillRohr()
@@ -949,75 +949,75 @@ namespace World
         for (short y = 0; y < MAX_TILESY; y++)
             for (short x = 0; x < MAX_TILES_X; x++)
             {
-                if ((Scape[x][y].Objekt == PIPE) && (Scape[x][y].Phase < Bmp[PIPE].Anzahl))
-                    Scape[x][y].Phase = 0;
-                if (Scape[x][y].Art == 4) Scape[x][y].Art = 0;
-                if ((Scape[x][y].Objekt >= FLOODGATE_1) && (Scape[x][y].Objekt <= FLOODGATE_6))
+                if ((Scape[x][y].Object == PIPE) && (Scape[x][y].AnimationPhase < Bmp[PIPE].AnimationPhaseCount))
+                    Scape[x][y].AnimationPhase = 0;
+                if (Scape[x][y].Terrain == 4) Scape[x][y].Terrain = 0;
+                if ((Scape[x][y].Object >= FLOODGATE_1) && (Scape[x][y].Object <= FLOODGATE_6))
                 {
-                    Scape[x][y].Objekt -= 14;
-                    Scape[x][y].ObPos.x = static_cast<short>(Bmp[Scape[x][y].Objekt].rcDes.left);
-                    Scape[x][y].ObPos.y = static_cast<short>(Bmp[Scape[x][y].Objekt].rcDes.top);
+                    Scape[x][y].Object -= 14;
+                    Scape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x][y].Object].targetRect.left);
+                    Scape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x][y].Object].targetRect.top);
                 }
             }
         // StartRohr finden
         for (short y = 0; y < MAX_TILESY; y++)
             for (short x = 0; x < MAX_TILES_X; x++)
             {
-                if ((Scape[x][y].Objekt >= RIVER_1) && (Scape[x][y].Objekt <= FLOODGATE_6))
+                if ((Scape[x][y].Object >= RIVER_1) && (Scape[x][y].Object <= FLOODGATE_6))
                 {
-                    if (Scape[x][y].Art == 0) Scape[x][y].Art = 4;
-                    if (Scape[x - 1][y].Art == 0) Scape[x - 1][y].Art = 4;
-                    if (Scape[x - 1][y - 1].Art == 0) Scape[x - 1][y - 1].Art = 4;
-                    if (Scape[x][y - 1].Art == 0) Scape[x][y - 1].Art = 4;
-                    if (Scape[x + 1][y - 1].Art == 0) Scape[x + 1][y - 1].Art = 4;
-                    if (Scape[x + 1][y].Art == 0) Scape[x + 1][y].Art = 4;
-                    if (Scape[x + 1][y + 1].Art == 0) Scape[x + 1][y + 1].Art = 4;
-                    if (Scape[x][y + 1].Art == 0) Scape[x][y + 1].Art = 4;
-                    if (Scape[x - 1][y + 1].Art == 0) Scape[x - 1][y + 1].Art = 4;
+                    if (Scape[x][y].Terrain == 0) Scape[x][y].Terrain = 4;
+                    if (Scape[x - 1][y].Terrain == 0) Scape[x - 1][y].Terrain = 4;
+                    if (Scape[x - 1][y - 1].Terrain == 0) Scape[x - 1][y - 1].Terrain = 4;
+                    if (Scape[x][y - 1].Terrain == 0) Scape[x][y - 1].Terrain = 4;
+                    if (Scape[x + 1][y - 1].Terrain == 0) Scape[x + 1][y - 1].Terrain = 4;
+                    if (Scape[x + 1][y].Terrain == 0) Scape[x + 1][y].Terrain = 4;
+                    if (Scape[x + 1][y + 1].Terrain == 0) Scape[x + 1][y + 1].Terrain = 4;
+                    if (Scape[x][y + 1].Terrain == 0) Scape[x][y + 1].Terrain = 4;
+                    if (Scape[x - 1][y + 1].Terrain == 0) Scape[x - 1][y + 1].Terrain = 4;
                 }
-                if ((Scape[x][y].Objekt != PIPE) || (Scape[x][y].Phase >= Bmp[PIPE].Anzahl))
+                if ((Scape[x][y].Object != PIPE) || (Scape[x][y].AnimationPhase >= Bmp[PIPE].AnimationPhaseCount))
                     continue;
-                if ((Scape[x - 1][y].Objekt >= RIVER_5) && (Scape[x - 1][y].Objekt <= RIVER_10))
+                if ((Scape[x - 1][y].Object >= RIVER_5) && (Scape[x - 1][y].Object <= RIVER_10))
                 {
-                    Scape[x - 1][y].Objekt += 14;
-                    Scape[x - 1][y].ObPos.x = static_cast<short>(Bmp[Scape[x - 1][y].Objekt].rcDes.left);
-                    Scape[x - 1][y].ObPos.y = static_cast<short>(Bmp[Scape[x - 1][y].Objekt].rcDes.top);
+                    Scape[x - 1][y].Object += 14;
+                    Scape[x - 1][y].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x - 1][y].Object].targetRect.left);
+                    Scape[x - 1][y].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x - 1][y].Object].targetRect.top);
                     CheckRohr(x, y);
                 }
-                else if ((Scape[x - 1][y].Objekt >= FLOODGATE_1) && (Scape[x - 1][y].Objekt <= FLOODGATE_6))
-                {
-                    CheckRohr(x, y);
-                }
-                if ((Scape[x][y - 1].Objekt >= RIVER_5) && (Scape[x][y - 1].Objekt <= RIVER_10))
-                {
-                    Scape[x][y - 1].Objekt += 14;
-                    Scape[x][y - 1].ObPos.x = static_cast<short>(Bmp[Scape[x][y - 1].Objekt].rcDes.left);
-                    Scape[x][y - 1].ObPos.y = static_cast<short>(Bmp[Scape[x][y - 1].Objekt].rcDes.top);
-                    CheckRohr(x, y);
-                }
-                else if ((Scape[x][y - 1].Objekt >= FLOODGATE_1) && (Scape[x][y - 1].Objekt <= FLOODGATE_6))
+                else if ((Scape[x - 1][y].Object >= FLOODGATE_1) && (Scape[x - 1][y].Object <= FLOODGATE_6))
                 {
                     CheckRohr(x, y);
                 }
-                if ((Scape[x + 1][y].Objekt >= RIVER_5) && (Scape[x + 1][y].Objekt <= RIVER_10))
+                if ((Scape[x][y - 1].Object >= RIVER_5) && (Scape[x][y - 1].Object <= RIVER_10))
                 {
-                    Scape[x + 1][y].Objekt += 14;
-                    Scape[x + 1][y].ObPos.x = static_cast<short>(Bmp[Scape[x + 1][y].Objekt].rcDes.left);
-                    Scape[x + 1][y].ObPos.y = static_cast<short>(Bmp[Scape[x + 1][y].Objekt].rcDes.top);
+                    Scape[x][y - 1].Object += 14;
+                    Scape[x][y - 1].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x][y - 1].Object].targetRect.left);
+                    Scape[x][y - 1].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x][y - 1].Object].targetRect.top);
                     CheckRohr(x, y);
                 }
-                else if ((Scape[x + 1][y].Objekt >= FLOODGATE_1) && (Scape[x + 1][y].Objekt <= FLOODGATE_6))
+                else if ((Scape[x][y - 1].Object >= FLOODGATE_1) && (Scape[x][y - 1].Object <= FLOODGATE_6))
                 {
                     CheckRohr(x, y);
                 }
-                if ((Scape[x][y + 1].Objekt >= RIVER_5) && (Scape[x][y + 1].Objekt <= RIVER_10))
+                if ((Scape[x + 1][y].Object >= RIVER_5) && (Scape[x + 1][y].Object <= RIVER_10))
                 {
-                    Scape[x][y + 1].Objekt += 14;
-                    Scape[x][y + 1].ObPos.x = static_cast<short>(Bmp[Scape[x][y + 1].Objekt].rcDes.left);
-                    Scape[x][y + 1].ObPos.y = static_cast<short>(Bmp[Scape[x][y + 1].Objekt].rcDes.top);
+                    Scape[x + 1][y].Object += 14;
+                    Scape[x + 1][y].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x + 1][y].Object].targetRect.left);
+                    Scape[x + 1][y].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x + 1][y].Object].targetRect.top);
                     CheckRohr(x, y);
                 }
-                else if ((Scape[x][y + 1].Objekt >= FLOODGATE_1) && (Scape[x][y + 1].Objekt <= FLOODGATE_6))
+                else if ((Scape[x + 1][y].Object >= FLOODGATE_1) && (Scape[x + 1][y].Object <= FLOODGATE_6))
+                {
+                    CheckRohr(x, y);
+                }
+                if ((Scape[x][y + 1].Object >= RIVER_5) && (Scape[x][y + 1].Object <= RIVER_10))
+                {
+                    Scape[x][y + 1].Object += 14;
+                    Scape[x][y + 1].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x][y + 1].Object].targetRect.left);
+                    Scape[x][y + 1].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x][y + 1].Object].targetRect.top);
+                    CheckRohr(x, y);
+                }
+                else if ((Scape[x][y + 1].Object >= FLOODGATE_1) && (Scape[x][y + 1].Object <= FLOODGATE_6))
                 {
                     CheckRohr(x, y);
                 }
@@ -1026,13 +1026,13 @@ namespace World
         for (short y = 0; y < MAX_TILESY; y++)
             for (short x = 0; x < MAX_TILES_X; x++)
             {
-                if ((Scape[x][y].Objekt == FIELD) && (Scape[x][y].Art == 0))
+                if ((Scape[x][y].Object == FIELD) && (Scape[x][y].Terrain == 0))
                 {
-                    Scape[x][y].Objekt = -1;
-                    Scape[x][y].ObPos.x = 0;
-                    Scape[x][y].ObPos.y = 0;
-                    Scape[x][y].Phase = -1;
-                    Scape[x][y].AkNummer = 0;
+                    Scape[x][y].Object = -1;
+                    Scape[x][y].ObjectPosOffset.x = 0;
+                    Scape[x][y].ObjectPosOffset.y = 0;
+                    Scape[x][y].AnimationPhase = -1;
+                    Scape[x][y].ConstructionActionNumber = 0;
                 }
             }
         Generate();
@@ -1060,7 +1060,7 @@ namespace World
         short x2 = 0; // x2,y2 Koordinate des zu prüfenden Teils
         short y2 = 0;
         bool gefunden = false;
-        FLUSSLAUF Flusstmp[MAX_RIVER_LENGTH]; // Zum zwischenspeichern des Versuchs
+        RiverRun Flusstmp[MAX_RIVER_LENGTH]; // Zum zwischenspeichern des Versuchs
         short Flusslaenge[NUMBER_OF_RIVERS];
 
         for (short m = 0; m < NUMBER_OF_RIVERS; m++)
@@ -1163,14 +1163,14 @@ namespace World
                     Flusslauf[m][i].y = y2;
                     Richtung = l;
 
-                    if ((Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Art == 2) && // Auf Strand die Richtung beibehalten
+                    if ((Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Terrain == 2) && // Auf Strand die Richtung beibehalten
                         (Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Type == 0))
                     {
                         if (Strand == true) break; // Nur ein Strandstück überfliessen
                         Strand = true;
                     }
 
-                    if ((Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Art == 1) && // im meer aufhören
+                    if ((Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Terrain == 1) && // im meer aufhören
                         (Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Type == 0))
                     {
                         fertig = true;
@@ -1213,23 +1213,23 @@ namespace World
                 for (i = 0; i <= Flusslaenge[m]; i++)
                 {
                     // Für die Kachel, einen Vorgang davor
-                    Scape[x1][y1].ObPos.x = static_cast<short>(Bmp[Scape[x1][y1].Objekt].rcDes.left);
-                    Scape[x1][y1].ObPos.y = static_cast<short>(Bmp[Scape[x1][y1].Objekt].rcDes.top);
+                    Scape[x1][y1].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x1][y1].Object].targetRect.left);
+                    Scape[x1][y1].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x1][y1].Object].targetRect.top);
 
                     x1 = Flusslauf[m][i].x;
                     y1 = Flusslauf[m][i].y;
 
-                    Scape[x1][y1].Phase = 0;
+                    Scape[x1][y1].AnimationPhase = 0;
 
-                    if (Scape[x1][y1].Art == 0) Scape[x1][y1].Art = 4;
-                    if (Scape[x1 - 1][y1].Art == 0) Scape[x1 - 1][y1].Art = 4;
-                    if (Scape[x1 - 1][y1 - 1].Art == 0) Scape[x1 - 1][y1 - 1].Art = 4;
-                    if (Scape[x1][y1 - 1].Art == 0) Scape[x1][y1 - 1].Art = 4;
-                    if (Scape[x1 + 1][y1 - 1].Art == 0) Scape[x1 + 1][y1 - 1].Art = 4;
-                    if (Scape[x1 + 1][y1].Art == 0) Scape[x1 + 1][y1].Art = 4;
-                    if (Scape[x1 + 1][y1 + 1].Art == 0) Scape[x1 + 1][y1 + 1].Art = 4;
-                    if (Scape[x1][y1 + 1].Art == 0) Scape[x1][y1 + 1].Art = 4;
-                    if (Scape[x1 - 1][y1 + 1].Art == 0) Scape[x1 - 1][y1 + 1].Art = 4;
+                    if (Scape[x1][y1].Terrain == 0) Scape[x1][y1].Terrain = 4;
+                    if (Scape[x1 - 1][y1].Terrain == 0) Scape[x1 - 1][y1].Terrain = 4;
+                    if (Scape[x1 - 1][y1 - 1].Terrain == 0) Scape[x1 - 1][y1 - 1].Terrain = 4;
+                    if (Scape[x1][y1 - 1].Terrain == 0) Scape[x1][y1 - 1].Terrain = 4;
+                    if (Scape[x1 + 1][y1 - 1].Terrain == 0) Scape[x1 + 1][y1 - 1].Terrain = 4;
+                    if (Scape[x1 + 1][y1].Terrain == 0) Scape[x1 + 1][y1].Terrain = 4;
+                    if (Scape[x1 + 1][y1 + 1].Terrain == 0) Scape[x1 + 1][y1 + 1].Terrain = 4;
+                    if (Scape[x1][y1 + 1].Terrain == 0) Scape[x1][y1 + 1].Terrain = 4;
+                    if (Scape[x1 - 1][y1 + 1].Terrain == 0) Scape[x1 - 1][y1 + 1].Terrain = 4;
 
                     if (i < Flusslaenge[m])
                     {
@@ -1247,107 +1247,107 @@ namespace World
                         // Quellen
                         if (x2 > x1)
                         {
-                            Scape[x1][y1].Objekt = RIVER_START_1;
+                            Scape[x1][y1].Object = RIVER_START_1;
                             continue;
                         }
                         if (x2 < x1)
                         {
-                            Scape[x1][y1].Objekt = RIVER_START_4;
+                            Scape[x1][y1].Object = RIVER_START_4;
                             continue;
                         }
                         if (y2 > y1)
                         {
-                            Scape[x1][y1].Objekt = RIVER_START_2;
+                            Scape[x1][y1].Object = RIVER_START_2;
                             continue;
                         }
                         if (y2 < y1)
                         {
-                            Scape[x1][y1].Objekt = RIVER_START_3;
+                            Scape[x1][y1].Object = RIVER_START_3;
                             continue;
                         }
                     }
 
                     // Alle Möglichkeiten durchgehen
 
-                    if (Scape[x1][y1].Type == 1) Scape[x1][y1].Objekt = RIVER_1;
-                    if (Scape[x1][y1].Type == 2) Scape[x1][y1].Objekt = RIVER_2;
-                    if (Scape[x1][y1].Type == 3) Scape[x1][y1].Objekt = RIVER_3;
-                    if (Scape[x1][y1].Type == 4) Scape[x1][y1].Objekt = RIVER_4;
+                    if (Scape[x1][y1].Type == 1) Scape[x1][y1].Object = RIVER_1;
+                    if (Scape[x1][y1].Type == 2) Scape[x1][y1].Object = RIVER_2;
+                    if (Scape[x1][y1].Type == 3) Scape[x1][y1].Object = RIVER_3;
+                    if (Scape[x1][y1].Type == 4) Scape[x1][y1].Object = RIVER_4;
 
                     if (Scape[x1][y1].Type == 0)
                     {
                         if ((x0 < x1) && (y0 == y1))
                         {
-                            if (Scape[x1][y1].Art == 2) Scape[x1][y1].Objekt = RIVER_END_3; // Mündung
+                            if (Scape[x1][y1].Terrain == 2) Scape[x1][y1].Object = RIVER_END_3; // Mündung
                             else
                             {
-                                if ((x1 < x2) && (y1 == y2)) Scape[x1][y1].Objekt = RIVER_5;
-                                if ((x1 == x2) && (y1 < y2)) Scape[x1][y1].Objekt = RIVER_7;
-                                if ((x1 == x2) && (y1 > y2)) Scape[x1][y1].Objekt = RIVER_9;
+                                if ((x1 < x2) && (y1 == y2)) Scape[x1][y1].Object = RIVER_5;
+                                if ((x1 == x2) && (y1 < y2)) Scape[x1][y1].Object = RIVER_7;
+                                if ((x1 == x2) && (y1 > y2)) Scape[x1][y1].Object = RIVER_9;
                             }
                         }
                         if ((x0 == x1) && (y0 < y1))
                         {
-                            if (Scape[x1][y1].Art == 2) Scape[x1][y1].Objekt = RIVER_END_4; // Mündung
+                            if (Scape[x1][y1].Terrain == 2) Scape[x1][y1].Object = RIVER_END_4; // Mündung
                             else
                             {
-                                if ((x1 < x2) && (y1 == y2)) Scape[x1][y1].Objekt = RIVER_8;
-                                if ((x1 == x2) && (y1 < y2)) Scape[x1][y1].Objekt = RIVER_6;
+                                if ((x1 < x2) && (y1 == y2)) Scape[x1][y1].Object = RIVER_8;
+                                if ((x1 == x2) && (y1 < y2)) Scape[x1][y1].Object = RIVER_6;
                                 if ((x1 > x2) && (y1 == y2))
                                 {
-                                    Scape[x1][y1].Objekt = RIVER_9;
-                                    Scape[x1][y1].Reverse = true;
+                                    Scape[x1][y1].Object = RIVER_9;
+                                    Scape[x1][y1].ReverseAnimation = true;
                                 }
                             }
                         }
                         if ((x0 > x1) && (y0 == y1))
                         {
-                            if (Scape[x1][y1].Art == 2) Scape[x1][y1].Objekt = RIVER_END_1; // Mündung
+                            if (Scape[x1][y1].Terrain == 2) Scape[x1][y1].Object = RIVER_END_1; // Mündung
                             else
                             {
-                                if ((x1 > x2) && (y1 == y2)) Scape[x1][y1].Objekt = RIVER_5;
-                                if ((x1 == x2) && (y1 < y2)) Scape[x1][y1].Objekt = RIVER_10;
-                                if ((x1 == x2) && (y1 > y2)) Scape[x1][y1].Objekt = RIVER_8;
-                                Scape[x1][y1].Reverse = true;
+                                if ((x1 > x2) && (y1 == y2)) Scape[x1][y1].Object = RIVER_5;
+                                if ((x1 == x2) && (y1 < y2)) Scape[x1][y1].Object = RIVER_10;
+                                if ((x1 == x2) && (y1 > y2)) Scape[x1][y1].Object = RIVER_8;
+                                Scape[x1][y1].ReverseAnimation = true;
                             }
                         }
                         if ((x0 == x1) && (y0 > y1))
                         {
-                            if (Scape[x1][y1].Art == 2) Scape[x1][y1].Objekt = RIVER_END_2; // Mündung
+                            if (Scape[x1][y1].Terrain == 2) Scape[x1][y1].Object = RIVER_END_2; // Mündung
                             else
                             {
                                 if ((x1 == x2) && (y1 > y2))
-                                    Scape[x1][y1].Objekt = RIVER_6;
+                                    Scape[x1][y1].Object = RIVER_6;
 
                                 if ((x1 > x2) && (y1 == y2))
-                                    Scape[x1][y1].Objekt = RIVER_7;
+                                    Scape[x1][y1].Object = RIVER_7;
 
-                                Scape[x1][y1].Reverse = true;
+                                Scape[x1][y1].ReverseAnimation = true;
                                 if ((x1 < x2) && (y1 == y2))
                                 {
-                                    Scape[x1][y1].Objekt = RIVER_10;
-                                    Scape[x1][y1].Reverse = false;
+                                    Scape[x1][y1].Object = RIVER_10;
+                                    Scape[x1][y1].ReverseAnimation = false;
                                 }
                             }
                         }
                     }
                 }
                 // Für das letzte Flussstück
-                Scape[x1][y1].ObPos.x = static_cast<short>(Bmp[Scape[x1][y1].Objekt].rcDes.left);
-                Scape[x1][y1].ObPos.y = static_cast<short>(Bmp[Scape[x1][y1].Objekt].rcDes.top);
+                Scape[x1][y1].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x1][y1].Object].targetRect.left);
+                Scape[x1][y1].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x1][y1].Object].targetRect.top);
             }
         }
     }
 
     void Baeume(short Prozent)
     {
-        ZWEID Pos; // Da steht der Baum
+        Coordinate Pos; // Da steht der Baum
         bool einGrosserBaum = false; // gibt es bereits einen großen Baum
 
         for (short y = 0; y < MAX_TILESY; y++)//Alle Kacheln durchgehen
             for (short x = 0; x < MAX_TILES_X; x++)
             {
-                if ((Scape[x][y].Objekt != -1) || ((Scape[x][y].Art == 3) && (Scape[x][y].Type == 0)))
+                if ((Scape[x][y].Object != -1) || ((Scape[x][y].Terrain == 3) && (Scape[x][y].Type == 0)))
                     continue;
 
                 // Wenn schon ein Objekt da ist oder Treibsand ist, dann mit nächsten Teil weitermachen
@@ -1358,32 +1358,32 @@ namespace World
                 {
                     Pos.x = rand() % TILE_SIZE_X;
                     Pos.y = rand() % TILE_SIZE_Y;
-                    ZWEID Erg = Renderer::GetKachel(Scape[x][y].xScreen + Pos.x, Scape[x][y].yScreen + Pos.y);
+                    Coordinate Erg = Renderer::GetKachel(Scape[x][y].xScreen + Pos.x, Scape[x][y].yScreen + Pos.y);
                     if ((Erg.x == x) && (Erg.y == y)) break;
                 }
-                if ((Scape[x][y].Art == 2) && (Scape[x][y].Type == 0)) // Bei Strand nur Palmen nehmen
+                if ((Scape[x][y].Terrain == 2) && (Scape[x][y].Type == 0)) // Bei Strand nur Palmen nehmen
                 {
-                    Scape[x][y].Objekt = TREE_2;
+                    Scape[x][y].Object = TREE_2;
                 }
                 else
                 {
                     short r = rand() % 5; // random speicherung
-                    Scape[x][y].Objekt = TREE_1 + r;
+                    Scape[x][y].Object = TREE_1 + r;
                     if ((rand() % 50 == 1) || (!einGrosserBaum))
                     {
-                        Scape[x][y].Objekt = TREE_BIG;
+                        Scape[x][y].Object = TREE_BIG;
                         einGrosserBaum = true;
                     }
                 }
                 // Linke obere Ecke speichern
-                Scape[x][y].ObPos.x = Pos.x - static_cast<short>(Bmp[Scape[x][y].Objekt].Breite) / 2;
-                Scape[x][y].ObPos.y = Pos.y - static_cast<short>(Bmp[Scape[x][y].Objekt].Hoehe);
+                Scape[x][y].ObjectPosOffset.x = Pos.x - static_cast<short>(Bmp[Scape[x][y].Object].Width) / 2;
+                Scape[x][y].ObjectPosOffset.y = Pos.y - static_cast<short>(Bmp[Scape[x][y].Object].Height);
                 // Startphase
-                if (Scape[x][y].Objekt == BUSH)
-                    Scape[x][y].Phase = static_cast<float>(Bmp[Scape[x][y].Objekt].Anzahl) - 1;
+                if (Scape[x][y].Object == BUSH)
+                    Scape[x][y].AnimationPhase = static_cast<float>(Bmp[Scape[x][y].Object].AnimationPhaseCount) - 1;
                 else
-                    Scape[x][y].Phase = static_cast<float>(Bmp[Scape[x][y].Objekt].Anzahl -
-                        rand() % (Bmp[Scape[x][y].Objekt].Anzahl) - 1);
+                    Scape[x][y].AnimationPhase = static_cast<float>(Bmp[Scape[x][y].Object].AnimationPhaseCount -
+                        rand() % (Bmp[Scape[x][y].Object].AnimationPhaseCount) - 1);
             }
     }
 
@@ -1399,7 +1399,7 @@ namespace World
             x = MAX_TILES_X / 2;
             for (short i = 0; i < MAX_TILESY; i++)
             {
-                if (Scape[x][i].Art != 1)
+                if (Scape[x][i].Terrain != 1)
                 {
                     y = i - 1;
                     break;
@@ -1410,7 +1410,7 @@ namespace World
             y = MAX_TILESY / 2;
             for (short i = MAX_TILES_X - 1; i >= 0; i--)
             {
-                if (Scape[i][y].Art != 1)
+                if (Scape[i][y].Terrain != 1)
                 {
                     x = i + 1;
                     break;
@@ -1421,7 +1421,7 @@ namespace World
             x = MAX_TILES_X / 2;
             for (short i = MAX_TILESY - 1; i >= 0; i--)
             {
-                if (Scape[x][i].Art != 1)
+                if (Scape[x][i].Terrain != 1)
                 {
                     y = i + 1;
                     break;
@@ -1429,9 +1429,9 @@ namespace World
             }
             break;
         }
-        Scape[x][y].Objekt = WRECK_2;
-        Scape[x][y].ObPos.x = static_cast<short>(Bmp[WRECK_2].rcDes.left);
-        Scape[x][y].ObPos.y = static_cast<short>(Bmp[WRECK_2].rcDes.top);
+        Scape[x][y].Object = WRECK_2;
+        Scape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_2].targetRect.left);
+        Scape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_2].targetRect.top);
     }
 
     void Schatz()
@@ -1443,7 +1443,7 @@ namespace World
             short y = rand() % (MAX_TILESY - 1);
 
             // nur auf flachen Kacheln ohne Objekt
-            if ((Scape[x][y].Objekt == -1) && (Scape[x][y].Type == 0) && (Scape[x][y].Art != 3))
+            if ((Scape[x][y].Object == -1) && (Scape[x][y].Type == 0) && (Scape[x][y].Terrain != 3))
             {
                 if (SchatzPos.x == -1)
                 {
@@ -1467,11 +1467,11 @@ namespace World
                 lpDDSScape->Unlock(nullptr);
                 lpDDSSchatzkarte->Unlock(nullptr);
 
-                rcRectsrc = Bmp[CROSS].rcSrc;
-                rcRectdes.left = TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Breite / 2;
-                rcRectdes.right = rcRectdes.left + Bmp[CROSS].Breite;
-                rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Hoehe / 2;
-                rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Hoehe;
+                rcRectsrc = Bmp[CROSS].sourceRect;
+                rcRectdes.left = TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2;
+                rcRectdes.right = rcRectdes.left + Bmp[CROSS].Width;
+                rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Height / 2;
+                rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
                 Renderer::Blitten(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
 
                 lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
@@ -1508,23 +1508,23 @@ namespace World
     {
         if (((Objekt == RAW_STONE) && (TwoClicks == RAW_TREE_BRANCH)) || ((Objekt == RAW_TREE_BRANCH) && (TwoClicks == RAW_STONE)))
         {
-            if (Guy.Inventar[RAW_AXE] < 1)
+            if (Guy.Inventory[RAW_AXE] < 1)
             {
-                Guy.Inventar[RAW_STONE]--;
-                Guy.Inventar[RAW_TREE_BRANCH]--;
-                Guy.Inventar[RAW_AXE] = 1;
-                Bmp[BUTTON_CHOP].Phase = 0;
-                Bmp[BUTTON_BOAT].Phase = 0;
-                Bmp[BUTTON_PIPE].Phase = 0;
+                Guy.Inventory[RAW_STONE]--;
+                Guy.Inventory[RAW_TREE_BRANCH]--;
+                Guy.Inventory[RAW_AXE] = 1;
+                Bmp[BUTTON_CHOP].AnimationPhase = 0;
+                Bmp[BUTTON_BOAT].AnimationPhase = 0;
+                Bmp[BUTTON_PIPE].AnimationPhase = 0;
                 PapierText = Renderer::DrawText(BAUEAXT, TXTPAPIER, 1);
                 PlaySound(Sound::INVENTION, 100);
             }
-            else if (Guy.Inventar[RAW_HOE] < 1)
+            else if (Guy.Inventory[RAW_HOE] < 1)
             {
-                Guy.Inventar[RAW_STONE]--;
-                Guy.Inventar[RAW_TREE_BRANCH]--;
-                Guy.Inventar[RAW_HOE] = 1;
-                Bmp[BUTTON_FARM].Phase = 0;
+                Guy.Inventory[RAW_STONE]--;
+                Guy.Inventory[RAW_TREE_BRANCH]--;
+                Guy.Inventory[RAW_HOE] = 1;
+                Bmp[BUTTON_FARM].AnimationPhase = 0;
                 PapierText = Renderer::DrawText(BAUEEGGE, TXTPAPIER, 1);
                 PlaySound(Sound::INVENTION, 100);
             }
@@ -1535,12 +1535,12 @@ namespace World
         }
         else if (((Objekt == RAW_LIANA) && (TwoClicks == RAW_TREE_BRANCH)) || ((Objekt == RAW_TREE_BRANCH) && (TwoClicks == RAW_LIANA)))
         {
-            if (Guy.Inventar[RAW_FISHING_POLE] < 1)
+            if (Guy.Inventory[RAW_FISHING_POLE] < 1)
             {
-                Guy.Inventar[RAW_LIANA]--;
-                Guy.Inventar[RAW_TREE_BRANCH]--;
-                Guy.Inventar[RAW_FISHING_POLE] = 1;
-                Bmp[BUTTON_FISH].Phase = 0;
+                Guy.Inventory[RAW_LIANA]--;
+                Guy.Inventory[RAW_TREE_BRANCH]--;
+                Guy.Inventory[RAW_FISHING_POLE] = 1;
+                Bmp[BUTTON_FISH].AnimationPhase = 0;
                 PapierText = Renderer::DrawText(BAUEANGEL, TXTPAPIER, 1);
                 PlaySound(Sound::INVENTION, 100);
             }
@@ -1551,12 +1551,12 @@ namespace World
         }
         else if (((Objekt == RAW_LIANA) && (TwoClicks == RAW_STONE)) || ((Objekt == RAW_STONE) && (TwoClicks == RAW_LIANA)))
         {
-            if (Guy.Inventar[RAW_SLINGSHOT] < 1)
+            if (Guy.Inventory[RAW_SLINGSHOT] < 1)
             {
-                Guy.Inventar[RAW_LIANA]--;
-                Guy.Inventar[RAW_STONE]--;
-                Guy.Inventar[RAW_SLINGSHOT] = 1;
-                Bmp[BUTTON_SLINGSHOT].Phase = 0;
+                Guy.Inventory[RAW_LIANA]--;
+                Guy.Inventory[RAW_STONE]--;
+                Guy.Inventory[RAW_SLINGSHOT] = 1;
+                Bmp[BUTTON_SLINGSHOT].AnimationPhase = 0;
                 PapierText = Renderer::DrawText(BAUESCHLEUDER, TXTPAPIER, 1);
                 PlaySound(Sound::INVENTION, 100);
             }
@@ -1579,9 +1579,9 @@ namespace World
         for (short i = -1; i <= 1; i++)
             for (short j = -1; j <= 1; j++)
             {
-                if (!Scape[Guy.Pos.x + i][Guy.Pos.y + j].Entdeckt)
+                if (!Scape[Guy.CurrentPosition.x + i][Guy.CurrentPosition.y + j].Discovered)
                 {
-                    Scape[Guy.Pos.x + i][Guy.Pos.y + j].Entdeckt = true;
+                    Scape[Guy.CurrentPosition.x + i][Guy.CurrentPosition.y + j].Discovered = true;
                     Aenderung = true;
                 }
             }
