@@ -1,12 +1,16 @@
 #pragma once
 
 #include "headers.hpp"
-#include "miniwin.h"
+//#include "miniwin.h"
 
 #include <SFML/Graphics/Image.hpp>
 
-using namespace dvl;
-
+struct RECT {
+        int left;
+        int top;
+        int right;
+        int bottom;
+};
 struct TextArea {
     bool HasText; // Steht Text in diesem Bereich?
     RECT textRect; // Die Position des Ausgabe

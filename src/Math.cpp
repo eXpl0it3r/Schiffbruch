@@ -121,7 +121,7 @@ void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
                     RouteStart.y = -1;
                     RouteDestination.x = -1;
                     RouteDestination.y = -1;
-                    MessageBeep(MB_OK);
+//                    MessageBeep(MB_OK);
                 }
             }
         } else {

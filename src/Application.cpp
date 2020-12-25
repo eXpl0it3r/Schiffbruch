@@ -16,7 +16,7 @@
 #include <cstdlib>
 #include <exception>
 
-Application::Application(const std::string &name, HINSTANCE instance_handle)
+Application::Application(const std::string &name)
     : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::Default)
 , m_name(name)
 , m_time(std::time(nullptr))
@@ -24,13 +24,11 @@ Application::Application(const std::string &name, HINSTANCE instance_handle)
     m_window.setMouseCursorVisible(false);
 
     puts(name.data());
-    // Set globals
-    g_hInst = instance_handle;
 
     Sound::Init();
     Soundzustand = 1; // Activate sound
 
-    Direct::InitDDraw(m_window.getSystemHandle());
+    Direct::InitDDraw();
 
     Spielzustand = State::LOGO;
     Game::InitWaves(); // Nur zum Wavinitialisieren

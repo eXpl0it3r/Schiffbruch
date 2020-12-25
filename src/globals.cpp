@@ -108,6 +108,3 @@ sf::Image *lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
 ////LPDIRECTDRAWGAMMACONTROL lpDDGammaControl = nullptr; // Die drei sind für das Gammaablenden
 //DDGAMMARAMP DDGammaRamp;
 //DDGAMMARAMP DDGammaOld;
-
-// Directinput
-HINSTANCE g_hInst = nullptr;
