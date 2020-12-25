@@ -16,7 +16,7 @@ void DrawString(char *string, short x, short y, short Art); // Schreibt einen St
 short DrawText(int TEXT, short Bereich, short Art); // Schreibt einen Text in ein Rechteck
 void DrawSchatzkarte(); // Schatzkarte malen
 void LimitScroll(); // Verhindert das Scrollen aus dem Bild
-void Blitten(LPDIRECTDRAWSURFACE4 lpDDSVon, LPDIRECTDRAWSURFACE4 lpDDSNach, bool Transp);
+void Blitten(sf::Image *from, sf::Image *to, bool Transp);
 void PutPixel(short x, short y, DWORD color, LPDDSURFACEDESC2 ddsd); // Schreibt Pixel in eine Surface (davor lock())
 void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd); // Das Ergebnis wird in rgbStruct gespeichert
 void Fade(short RP, short GP, short BP); // Bild abdunkeln mittels Gamma-Werten (in Prozent pro Farbwert)
