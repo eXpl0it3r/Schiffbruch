@@ -19,7 +19,7 @@ extern short Bild, LastBild; // Anzahl der Bilder in der Sekunde
 extern RECT rcRectdes, rcRectsrc; // Ständig benötigte Variable zum Blitten
 extern short Tag, Stunden, Minuten; // Wieviel Uhr (0-12h)
 extern char StdString[1024]; // Standard string
-extern char RohString[10000]; // Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
+extern char RohString[1024]; // Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
 extern short PapierText; // Wieviel Papier? (in Pixel) -1 = Kein Text
 extern short HauptMenue; // Welches Menü?
 extern short TwoClicks; // Für Aktionen mit zwei Mausklicks

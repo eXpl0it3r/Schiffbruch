@@ -375,7 +375,7 @@ bool CheckRohstoff()
     return false;
 }
 
-void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl der Landkacheln
+void Compute(short MinimumSize, short MaximumSize)// Size of the island in number of land tiles
 {
     short i, j;
     bool hasFound;
@@ -921,7 +921,7 @@ void Compute(short MinGroesse, short MaxGroesse) // Groesse der Insel in Anzahl 
                 }
             }
 
-        if ((Anzahl > MinGroesse) && (Anzahl < MaxGroesse) && (CheckRand)) {
+        if ((Anzahl > MinimumSize) && (Anzahl < MaximumSize) && (CheckRand)) {
             break;
         }
     }
@@ -1028,10 +1028,11 @@ void ToggleIsInBoat()
     IsInBoat = !IsInBoat;
 
     // Begehbarkeit umdrehen
-    for (short y = 0; y < MAX_TILESY; y++)
+    for (short y = 0; y < MAX_TILESY; y++) {
         for (short x = 0; x < MAX_TILES_X; x++) {
             Scape[x][y].Walkable = !Scape[x][y].Walkable;
         }
+    }
 }
 
 void CheckPipe(short x, short y)
@@ -1193,7 +1194,7 @@ void FillPipe()
         }
 
     // Felder auf trockenen Wiesen löschen
-    for (short y = 0; y < MAX_TILESY; y++)
+    for (short y = 0; y < MAX_TILESY; y++) {
         for (short x = 0; x < MAX_TILES_X; x++) {
             if ((Scape[x][y].Object == FIELD) && (Scape[x][y].Terrain == 0)) {
                 Scape[x][y].Object = -1;
@@ -1203,18 +1204,20 @@ void FillPipe()
                 Scape[x][y].ConstructionActionNumber = 0;
             }
         }
+    }
 
     Generate();
 }
 
 bool CheckFlow(short x, short y) // Nachprüfen ob auf aktuellem Teil ein Fluss ist (Nur für die Fluss-Routine)
 {
-    for (short i = 0; i < NUMBER_OF_RIVERS; i++)
+    for (short i = 0; i < NUMBER_OF_RIVERS; i++) {
         for (short j = 0; j < MAX_RIVER_LENGTH; j++) {
             if ((x == Flusslauf[i][j].x) && (y == Flusslauf[i][j].y)) {
                 return true;
             }
         }
+    }
 
     return false;
 }
@@ -1223,16 +1226,16 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
 {
     short i;
     short l = 0;
-    short Richtung = 0; // Aktuelle Fliesrichtung von 0-3
+    short direction = 0; // Aktuelle Fliesrichtung von 0-3
     short x0 = 0;
     short y0 = 0;
     short x1 = 0;
     short y1 = 0;
     short x2 = 0; // x2,y2 Koordinate des zu prüfenden Teils
     short y2 = 0;
-    bool gefunden = false;
-    RiverRun Flusstmp[MAX_RIVER_LENGTH]; // Zum zwischenspeichern des Versuchs
-    short Flusslaenge[NUMBER_OF_RIVERS];
+    bool hasFound = false;
+    RiverRun flowTmp[MAX_RIVER_LENGTH]; // Zum zwischenspeichern des Versuchs
+    short riverLength[NUMBER_OF_RIVERS];
 
     for (short m = 0; m < NUMBER_OF_RIVERS; m++)
         for (short j = 0; j < MAX_RIVER_LENGTH; j++) {
@@ -1241,36 +1244,36 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
         }
 
     for (short m = 0; m < NUMBER_OF_RIVERS; m++) {
-        bool fertig = false;
-        short Laengetmp = 0;
+        bool isComplete = false;
+        short tmpLength = 0;
 
         for (short j = 0; j < MAX_RIVER_LENGTH; j++) {
-            Flusstmp[j].x = -1;
-            Flusstmp[j].y = -1;
+            flowTmp[j].x = -1;
+            flowTmp[j].y = -1;
         }
 
         for (short k = 0; k < 1000; k++) {
             for (short o = 0; o < 10000; o++) {
-                gefunden = true;
+                hasFound = true;
 
                 x0 = rand() % MAX_TILES_X; // geeignete Quelle bestimmen
                 y0 = rand() % MAX_TILESY;
 
                 if (CheckFlow(x0, y0)) {
-                    gefunden = false;
+                    hasFound = false;
                 }
 
                 if ((Scape[x0][y0].Type != 0) ||
                         (Scape[x0][y0].Height < 2)) {
-                    gefunden = false;
+                    hasFound = false;
                 }
 
-                if (gefunden) {
+                if (hasFound) {
                     break;
                 }
             }
 
-            if (!gefunden) {
+            if (!hasFound) {
                 MessageBeep(MB_OK);
                 break;
             } // Wenn keine Quelle mehr gefunden aufhören
@@ -1280,14 +1283,14 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
             bool Strand = false;
 
             for (i = 1; i < MAX_RIVER_LENGTH; i++) {
-                gefunden = false;
+                hasFound = false;
 
                 if (!Strand) {
-                    Richtung = rand() % 4;    // Auf dem Strand geradeausfliessen
+                    direction = rand() % 4;    // Auf dem Strand geradeausfliessen
                 }
 
                 for (short l2 = 0; l2 < 4; l2++) {
-                    l = (Richtung + l2) % 4; // Im Urzeigersinn nachprüfen und bei der vorgegeben Richtung anfangen
+                    l = (direction + l2) % 4; // Im Urzeigersinn nachprüfen und bei der vorgegeben Richtung anfangen
 
                     x1 = Flusslauf[m][i - 1].x;
                     y1 = Flusslauf[m][i - 1].y;
@@ -1298,9 +1301,9 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 2)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 2))) {
-                            gefunden = (!CheckFlow(x2, y2));
+                            hasFound = (!CheckFlow(x2, y2));
 
-                            if (gefunden) {
+                            if (hasFound) {
                                 break;
                             }
                         }
@@ -1312,9 +1315,9 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 1)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 1))) {
-                            gefunden = (!CheckFlow(x2, y2));
+                            hasFound = (!CheckFlow(x2, y2));
 
-                            if (gefunden) {
+                            if (hasFound) {
                                 break;
                             }
                         }
@@ -1326,9 +1329,9 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 4)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 4))) {
-                            gefunden = (!CheckFlow(x2, y2));
+                            hasFound = (!CheckFlow(x2, y2));
 
-                            if (gefunden) {
+                            if (hasFound) {
                                 break;
                             }
                         }
@@ -1340,22 +1343,22 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
 
                         if (((Scape[x1][y1].Type == 0) || (Scape[x1][y1].Type == 3)) &&
                                 ((Scape[x2][y2].Type == 0) || (Scape[x2][y2].Type == 3))) {
-                            gefunden = (!CheckFlow(x2, y2));
+                            hasFound = (!CheckFlow(x2, y2));
 
-                            if (gefunden) {
+                            if (hasFound) {
                                 break;
                             }
                         }
                     }
                 }
 
-                if (!gefunden) {
+                if (!hasFound) {
                     break;
                 }
 
                 Flusslauf[m][i].x = x2;
                 Flusslauf[m][i].y = y2;
-                Richtung = l;
+                direction = l;
 
                 if ((Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Terrain == 2) && // Auf Strand die Richtung beibehalten
                         (Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Type == 0)) {
@@ -1368,23 +1371,23 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
 
                 if ((Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Terrain == 1) && // im meer aufhören
                         (Scape[Flusslauf[m][i].x][Flusslauf[m][i].y].Type == 0)) {
-                    fertig = true;
+                    isComplete = true;
                     break;
                 }
             }
 
-            if (fertig) {
-                if (i > Laengetmp) {
+            if (isComplete) {
+                if (i > tmpLength) {
                     // neue Variante speichern
-                    if (gefunden) {
-                        Laengetmp = i;
+                    if (hasFound) {
+                        tmpLength = i;
                     } else {
-                        Laengetmp = i - 1;
+                        tmpLength = i - 1;
                     }
 
-                    for (short j = 0; j <= Laengetmp; j++) {
-                        Flusstmp[j].x = Flusslauf[m][j].x;
-                        Flusstmp[j].y = Flusslauf[m][j].y;
+                    for (short j = 0; j <= tmpLength; j++) {
+                        flowTmp[j].x = Flusslauf[m][j].x;
+                        flowTmp[j].y = Flusslauf[m][j].y;
                     }
                 }
             }
@@ -1394,22 +1397,22 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
                 Flusslauf[m][i].y = -1;
             }
 
-            fertig = false;
+            isComplete = false;
         }
 
         // Den längsten Fluss nehmen
-        Flusslaenge[m] = Laengetmp;
+        riverLength[m] = tmpLength;
 
-        for (short j = 0; j <= Flusslaenge[m]; j++) {
-            Flusslauf[m][j].x = Flusstmp[j].x;
-            Flusslauf[m][j].y = Flusstmp[j].y;
+        for (short j = 0; j <= riverLength[m]; j++) {
+            Flusslauf[m][j].x = flowTmp[j].x;
+            Flusslauf[m][j].y = flowTmp[j].y;
         }
 
         // Die richtigen Wasserkacheln auswählen
         x0 = y0 = x1 = y1 = x2 = y2 = -1;
 
         for (m = 0; m < NUMBER_OF_RIVERS; m++) {
-            for (i = 0; i <= Flusslaenge[m]; i++) {
+            for (i = 0; i <= riverLength[m]; i++) {
                 // Für die Kachel, einen Vorgang davor
                 Scape[x1][y1].ObjectPosOffset.x = static_cast<short>(Bmp[Scape[x1][y1].Object].targetRect.left);
                 Scape[x1][y1].ObjectPosOffset.y = static_cast<short>(Bmp[Scape[x1][y1].Object].targetRect.top);
@@ -1455,7 +1458,7 @@ void Flow() // Anzahl der Flüsse und der minimale Länge
                     Scape[x1 - 1][y1 + 1].Terrain = 4;
                 }
 
-                if (i < Flusslaenge[m]) {
+                if (i < riverLength[m]) {
                     x2 = Flusslauf[m][i + 1].x;
                     y2 = Flusslauf[m][i + 1].y;
                 }

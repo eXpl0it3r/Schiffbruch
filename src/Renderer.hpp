@@ -9,7 +9,7 @@ namespace Renderer {
 void DrawObjects(); // Alles Landschaftsdetails zeichnen, die nicht im Speicher sind
 void DrawGuy(); // Zeichnet die Spielfigur
 void DrawPanel(); // Zeichnet die Karte
-void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Frucht); // Zeichnet die Bmp-Bilder
+void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fruit); // Zeichnet die Bmp-Bilder
 void DrawPaper(); // Zeichnet das Papier für den Text
 void HideText(short Bereich); // Löscht einen Breich in der Textsurface
 void DrawString(const char *string, short x, short y, short Art); // Schreibt einen String an eine gewünschte Stelle
