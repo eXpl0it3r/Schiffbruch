@@ -37,8 +37,6 @@ add_executable(Schiffbruch WIN32
     src/State.hpp
     src/types.hpp
     src/World.hpp
-
-    src/Schiffbruch.rc
 )
 
 target_link_libraries(Schiffbruch PRIVATE sfml-graphics sfml-audio sfml-main dxguid ddraw)
