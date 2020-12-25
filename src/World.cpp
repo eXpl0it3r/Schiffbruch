@@ -1708,9 +1708,10 @@ void Treasure()
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     Renderer::GetPixel(static_cast<short>(i + Scape[SchatzPos.x][SchatzPos.y].xScreen - TREASUREMAP_WIDTH / 2 + TILE_SIZE_X / 2),
                                        static_cast<short>(j + Scape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), &ddsd);
-                    Renderer::PutPixel(i, j, Renderer::RGB2DWORD((rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
+                    Renderer::PutPixel(i, j,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
-                                       (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100 * 3 / 4), &ddsd2);
+                                       (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
+                                       (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100 * 3 / 4, &ddsd2);
                 }
 
 //            lpDDSScape->Unlock(nullptr);
@@ -1738,10 +1739,10 @@ void Treasure()
                         Renderer::GetPixel(i, j + 1, &ddsd2);
                         RGBSTRUCT rgbbottom = rgbStruct;
                         Renderer::GetPixel(i, j, &ddsd2);
-                        Renderer::PutPixel(i, j, Renderer::RGB2DWORD(
+                        Renderer::PutPixel(i, j,
                                                (rgbleft.r + rgbtop.r + rgbright.r + rgbbottom.r + rgbStruct.r) / 5,
                                                (rgbleft.g + rgbtop.g + rgbright.g + rgbbottom.g + rgbStruct.g) / 5,
-                                               (rgbleft.b + rgbtop.b + rgbright.b + rgbbottom.b + rgbStruct.b) / 5),
+                                               (rgbleft.b + rgbtop.b + rgbright.b + rgbbottom.b + rgbStruct.b) / 5,
                                            &ddsd2);
                     }
                 }

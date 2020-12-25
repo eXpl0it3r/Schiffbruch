@@ -17,10 +17,11 @@
 #include <exception>
 
 Application::Application(const std::string &name, HINSTANCE instance_handle)
-    : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::Fullscreen)
+    : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::Default)
 , m_name(name)
 , m_time(std::time(nullptr))
 {
+    puts(name.data());
     // Set globals
     g_hInst = instance_handle;
 
@@ -39,6 +40,9 @@ void Application::process_events()
 {
     sf::Event event;
 
+    sf::Texture texture;
+    sf::Sprite sprite;
+    sprite.setPosition(0, 0);
     while (m_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             Direct::finiObjects();
@@ -64,13 +68,15 @@ void Application::run()
 
         // TODO: this is probably the worst and least efficient way to render things
         // I'm almost proud.
-        texture.loadFromImage(*lpDDSBack);
-        sprite.setTexture(texture);
-        m_window.draw(sprite);
-        m_window.display();
 
         if (timer.getElapsedTime() > sf::milliseconds(1000)) {
             while (true) {
+
+                puts("main rendering");
+                texture.loadFromImage(*lpDDSBack);
+                sprite.setTexture(texture);
+                m_window.draw(sprite);
+                m_window.display();
                 Bild++;
                 std::time_t Zeitsave = std::time(nullptr);
 
