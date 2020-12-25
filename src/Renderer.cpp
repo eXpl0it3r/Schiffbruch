@@ -53,37 +53,31 @@ void LimitScroll()
 
 Coordinate GetTile(short PosX, short PosY)
 {
-    Coordinate Erg;
-
-    for (short y = 0; y < MAX_TILESY; y++)
+    for (short y = 0; y < MAX_TILESY; y++) {
         for (short x = 0; x < MAX_TILES_X; x++) {
             // Die in Betracht kommenden Kacheln rausfinden
             if ((PosX > Scape[x][y].xScreen) && (PosX < Scape[x][y].xScreen + TILE_SIZE_X) &&
                     (PosY > Scape[x][y].yScreen) && (PosY < Scape[x][y].yScreen + TILE_SIZE_Y)) {
-                if ((Math::InDreieck(PosX, PosY,
-                                     Scape[x][y].xScreen + EckKoor[Scape[x][y].Type][0].x,
-                                     Scape[x][y].yScreen + EckKoor[Scape[x][y].Type][0].y,
-                                     Scape[x][y].xScreen + EckKoor[Scape[x][y].Type][1].x,
-                                     Scape[x][y].yScreen + EckKoor[Scape[x][y].Type][1].y,
-                                     Scape[x][y].xScreen + EckKoor[Scape[x][y].Type][3].x,
-                                     Scape[x][y].yScreen + EckKoor[Scape[x][y].Type][3].y)) ||
-                        (Math::InDreieck(PosX, PosY,
-                                         Scape[x][y].xScreen + EckKoor[Scape[x][y].Type][2].x,
-                                         Scape[x][y].yScreen + EckKoor[Scape[x][y].Type][2].y,
-                                         Scape[x][y].xScreen + EckKoor[Scape[x][y].Type][1].x,
-                                         Scape[x][y].yScreen + EckKoor[Scape[x][y].Type][1].y,
-                                         Scape[x][y].xScreen + EckKoor[Scape[x][y].Type][3].x,
-                                         Scape[x][y].yScreen + EckKoor[Scape[x][y].Type][3].y))) {
-                    Erg.x = x;
-                    Erg.y = y;
-                    return Erg;
+                if ((Math::InTriangle(PosX, PosY,
+                                     Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][0].x,
+                                     Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][0].y,
+                                     Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][1].x,
+                                     Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][1].y,
+                                     Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][3].x,
+                                     Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][3].y)) ||
+                        (Math::InTriangle(PosX, PosY,
+                                         Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][2].x,
+                                         Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][2].y,
+                                         Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][1].x,
+                                         Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][1].y,
+                                         Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][3].x,
+                                         Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][3].y))) {
+                    return {x, y};
                 }
             }
         }
-
-    Erg.x = -1;
-    Erg.y = -1;
-    return Erg;
+    }
+    return {-1, -1};
 }
 
 //DWORD RGB2DWORD(BYTE r, BYTE g, BYTE b)
