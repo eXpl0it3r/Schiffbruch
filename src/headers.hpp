@@ -1,6 +1,6 @@
 #pragma once
 
-#define ROUND(s) ((short) ((short)(s-0.5) == (short) s ? s+1:s)) //Zahlen runden Macro
+#define ROUND(s) ((short) ((short)(s-0.5) == (short) s ? s+1:s)) // Macro for rounding numbers
 #define INITGUID
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

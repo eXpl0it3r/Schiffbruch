@@ -1,7 +1,7 @@
 #include "Application.hpp"
 
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
-    Application app("Landscape", hInstance);
-    app.run();
+    Application app("Schiffbruch", hInstance);
+    app.Run();
 }

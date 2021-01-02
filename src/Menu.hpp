@@ -4,9 +4,9 @@ namespace Menu
 {
     enum Type : short
     {
-        NONE = 0,
-        ACTION = 1,
-        BUILD = 2,
-        INVENTORY = 3,
+        None = 0,
+        Action = 1,
+        Build = 2,
+        Inventory = 3,
     };
 }

@@ -3,33 +3,29 @@
 #include "headers.hpp"
 #include "types.hpp"
 
-#include <SFML/Audio.hpp>
-
-#include <vector>
-
-extern int Spielzustand; // in welchem Zustand ist das Spiel?
-extern bool LAnimation; // Ist die Landschaftanimation angeschaltet?
-extern bool Gitter; // Gitternetz an/aus
-extern RECT ScapeGrenze; // Diese Koordinaten zeigen die Größe der Landschaft an
-extern short CursorTyp; // Welcher Cursortyp?
-extern short RouteLaenge; // Länge
-extern short RoutePunkt; // Aktueller Index in RouteKoor
-extern short Bild, LastBild; // Anzahl der Bilder in der Sekunde
-extern RECT rcRectdes, rcRectsrc; // Ständig benötigte Variable zum Blitten
-extern short Tag, Stunden, Minuten; // Wieviel Uhr (0-12h)
-extern char StdString[1024]; // Standard string
-extern char RohString[1024]; // Darin wird gespeichert, wieviel Rohstoffe noch benötigt werden
-extern short PapierText; // Wieviel Papier? (in Pixel) -1 = Kein Text
-extern short HauptMenue; // Welches Menü?
-extern short TwoClicks; // Für Aktionen mit zwei Mausklicks
-extern float Chance; // Wie groß ist die Chance am Tag gerettet zu werden
-extern bool BootsFahrt; // Gerade mit dem Boot unterwegs?
-extern bool Nacht; // Wird die Tageszusammenfassung angezeigt?
-extern short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
-extern short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
-extern short AbspannNr; // Zähler für Abspann
-extern short AbspannZustand; // Wo im Abspann
-extern bool SchatzGef; // wurde der Schatz gefunden
+extern int Spielzustand;            // In which stat is the game?
+extern bool LAnimation;             // Is the landscape animation enabled?
+extern bool Gitter;                 // Mesh lines on/off
+extern RECT ScapeGrenze;            // These coordinates define the size of the landscape
+extern short CursorTyp;             // Which cursor type?
+extern short RouteLaenge;           // Length
+extern short RoutePunkt;            // Current index in the RouteKoor
+extern short Bild, LastBild;        // Number of frames per second
+extern RECT rcRectdes, rcRectsrc;   // Constantly needed variables for blitting
+extern short Tag, Stunden, Minuten; // What time it is (0-12h)
+extern char StdString[1024];        // Standard string
+extern char RohString[1024];        // It contains how many resources are still required
+extern short PapierText;            // How much paper? (in pixel) -1 = No text
+extern short HauptMenue;            // Which menu?
+extern short TwoClicks;             // For actions with two mouse clicks
+extern float Chance;                // How large is the chance of getting rescued on this day
+extern bool BootsFahrt;             // Currently traveling with the boat?
+extern bool Nacht;                  // Is the daily summary being shown?
+extern short Soundzustand;          // -1 = no sound card; 0 = no sound;                1 = sound on
+extern short Frage;                 // -1 = no question;   0 = question is being asked; 1 = yes;     2 = no
+extern short AbspannNr;             // Counter for the credits
+extern short AbspannZustand;        // Position in the credits
+extern bool SchatzGef;              // Treasure was found
 
 extern short Step, Steps;
 
@@ -43,48 +39,48 @@ extern ZWEID EckKoor[13][4];
 
 extern TEXTBEREICH TextBereich[TEXTANZ];
 
-extern ZWEID Camera, // aktueller Kartenausschnitt
-             MousePosition, //     "    Mauskoordinaten
-             RouteZiel, RouteStart, // Koordinaten des Starts und des Endes der Route
-             Route[MAXXKACH * MAXYKACH], // Liste der Routenpunkte
-             RouteKoor[2 * MAXXKACH * MAXYKACH], // Liste der Routenkoordinaten
-             SchatzPos; // Hier ist der Schatz vergraben
+extern ZWEID Camera,                             // Current map section
+             MousePosition,                      // Current mouse position
+             RouteZiel, RouteStart,              // Coordinates of the start and end of the route
+             Route[MAXXKACH * MAXYKACH],         // List of route points
+             RouteKoor[2 * MAXXKACH * MAXYKACH], // List of route coordinates
+             SchatzPos;                          // Here a treasure is buried
 
-extern RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
+extern RGBSTRUCT rgbStruct; // Here the colors of the pixels are cached
 extern GUY Guy;
-extern BMP Bmp[BILDANZ];
-extern WAV Wav[25]; // Sound::COUNT;
-extern ABSPANN AbspannListe[10][10]; // Namenabfolge im Abspann
+extern BMP Bmp[ImageCount];
+extern WAV Wav[25];
+extern ABSPANN AbspannListe[10][10]; // Name order in the credits
 extern SCAPE Scape[MAXXKACH][MAXYKACH];
 
 // DirectDraw
-extern LPDIRECTDRAWSURFACE4 lpDDSPrimary; // DirectDraw primary surface
-extern LPDIRECTDRAWSURFACE4 lpDDSBack; // DirectDraw back surface
-extern LPDIRECTDRAWSURFACE4 lpDDSMisc; // DirectDraw Bilder surface
-extern LPDIRECTDRAWSURFACE4 lpDDSPanel; // DirectDraw Panel surface
-extern LPDIRECTDRAWSURFACE4 lpDDSGuyAni; // DirectDraw GuyAni surface
-extern LPDIRECTDRAWSURFACE4 lpDDSAnimation; // DirectDraw Animation surface
-extern LPDIRECTDRAWSURFACE4 lpDDSKarte; // DirectDraw MiniMap surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchrift; // DirectDraw Schrift surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchrift1; // DirectDraw Schrift1 surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchrift2; // DirectDraw Schrift2 surface
-extern LPDIRECTDRAWSURFACE4 lpDDSTextFeld; // DirectDraw TextFeld surface
-extern LPDIRECTDRAWSURFACE4 lpDDSPapier; // DirectDraw Paier surface
-extern LPDIRECTDRAWSURFACE4 lpDDSBaum; // DirectDraw Bäume surface
-extern LPDIRECTDRAWSURFACE4 lpDDSBau; // DirectDraw Bauwerke surface
-extern LPDIRECTDRAWSURFACE4 lpDDSCredits; // DirectDraw Credits surface
-extern LPDIRECTDRAWSURFACE4 lpDDSLogo; // DirectDraw Logo surface
-extern LPDIRECTDRAWSURFACE4 lpDDSCursor; // DirectDraw Cursor surface
-extern LPDIRECTDRAWSURFACE4 lpDDSButtons; // DirectDraw Buttons surface
-extern LPDIRECTDRAWSURFACE4 lpDDSInventar; // DirectDraw Inventar surface
-extern LPDIRECTDRAWSURFACE4 lpDDSScape; // DirectDraw Landschaft surface
-extern LPDIRECTDRAWSURFACE4 lpDDSSchatzkarte; // SchatzkartenSurface
-extern LPDIRECTDRAWPALETTE lpDDPal; // DirectDraw palette
-extern DDBLTFX ddbltfx; // DirectDraw Effekte 
+extern LPDIRECTDRAWSURFACE4 lpDDSPrimary;         // DirectDraw primary surface
+extern LPDIRECTDRAWSURFACE4 lpDDSBack;            // DirectDraw back surface
+extern LPDIRECTDRAWSURFACE4 lpDDSMisc;            // DirectDraw image surface
+extern LPDIRECTDRAWSURFACE4 lpDDSPanel;           // DirectDraw Panel surface
+extern LPDIRECTDRAWSURFACE4 lpDDSGuyAni;          // DirectDraw GuyAni surface
+extern LPDIRECTDRAWSURFACE4 lpDDSAnimation;       // DirectDraw Animation surface
+extern LPDIRECTDRAWSURFACE4 lpDDSKarte;           // DirectDraw MiniMap surface
+extern LPDIRECTDRAWSURFACE4 lpDDSSchrift;         // DirectDraw Schrift surface
+extern LPDIRECTDRAWSURFACE4 lpDDSSchrift1;        // DirectDraw Schrift1 surface
+extern LPDIRECTDRAWSURFACE4 lpDDSSchrift2;        // DirectDraw Schrift2 surface
+extern LPDIRECTDRAWSURFACE4 lpDDSTextFeld;        // DirectDraw TextFeld surface
+extern LPDIRECTDRAWSURFACE4 lpDDSPapier;          // DirectDraw Paier surface
+extern LPDIRECTDRAWSURFACE4 lpDDSBaum;            // DirectDraw Bäume surface
+extern LPDIRECTDRAWSURFACE4 lpDDSBau;             // DirectDraw Bauwerke surface
+extern LPDIRECTDRAWSURFACE4 lpDDSCredits;         // DirectDraw Credits surface
+extern LPDIRECTDRAWSURFACE4 lpDDSLogo;            // DirectDraw Logo surface
+extern LPDIRECTDRAWSURFACE4 lpDDSCursor;          // DirectDraw Cursor surface
+extern LPDIRECTDRAWSURFACE4 lpDDSButtons;         // DirectDraw Buttons surface
+extern LPDIRECTDRAWSURFACE4 lpDDSInventar;        // DirectDraw Inventar surface
+extern LPDIRECTDRAWSURFACE4 lpDDSScape;           // DirectDraw Landschaft surface
+extern LPDIRECTDRAWSURFACE4 lpDDSSchatzkarte;     // SchatzkartenSurface
+extern LPDIRECTDRAWPALETTE lpDDPal;               // DirectDraw palette
+extern DDBLTFX ddbltfx;                           // DirectDraw Effekte 
 extern DDPIXELFORMAT ddpf;
-extern DDSURFACEDESC2 ddsd, ddsd2; // Zwischenspeicher der SurfaceEigenschaften
+extern DDSURFACEDESC2 ddsd, ddsd2;                // Cache of the surface properties
 
-extern LPDIRECTDRAWGAMMACONTROL lpDDGammaControl; // Die drei sind für das Gammaablenden
+extern LPDIRECTDRAWGAMMACONTROL lpDDGammaControl; // The three are for gamma control
 extern DDGAMMARAMP DDGammaRamp;
 extern DDGAMMARAMP DDGammaOld;
 

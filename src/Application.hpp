@@ -1,7 +1,6 @@
 #pragma once
 
 #include "headers.hpp"
-#include "extern.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -10,15 +9,14 @@
 class Application
 {
 public:
-    Application(const std::string& name, HINSTANCE instance_handle);
+    Application(const std::string& name, HINSTANCE instanceHandle);
 
-    void run();
-    void update();
-
-private:
-    void process_events();
+    void Run();
+    static void Update();
 
 private:
+    void ProcessEvents();
+
     sf::Window m_window;
 
     std::string m_name;

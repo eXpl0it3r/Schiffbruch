@@ -1,42 +1,61 @@
 #include "Sound.hpp"
 
+#include <vector>
+
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/System/Err.hpp>
+
+#include "extern.hpp"
+
 namespace Sound
 {
-    std::vector<sf::SoundBuffer> sound_buffers; // Sound::COUNT - Wavedateispeicher
-    std::vector<sf::Sound> sound_players; // Sound::COUNT
+    std::vector<sf::SoundBuffer> SoundBuffers; // Wavedateispeicher
+    std::vector<sf::Sound> SoundPlayers;
 
-    void Init()
+    void Initialize()
     {
-        sound_buffers.resize(25);
-        sound_players.resize(25);
+        SoundBuffers.resize(25);
+        SoundPlayers.resize(25);
     }
 
-    void LoadSound(short Sound)
+    void LoadSound(const short sound)
     {
         if (Soundzustand == -1) // Wenn keine Soundkarte vorhanden raus...
+        {
             return;
+        }
 
-        if (!sound_buffers[Sound].loadFromFile(Wav[Sound].Dateiname))
-            sf::err() << "Couldn't load sound file '" << Wav[Sound].Dateiname << "'!" << std::endl;
+        if (!SoundBuffers[sound].loadFromFile(Wav[sound].Dateiname))
+        {
+            sf::err() << "Couldn't load sound file '" << Wav[sound].Dateiname << "'!" << std::endl;
+        }
 
-        sound_players[Sound].setBuffer(sound_buffers[Sound]);
-        sound_players[Sound].setVolume(static_cast<float>(Wav[Sound].Volume));
-        sound_players[Sound].setLoop(Wav[Sound].Loop);
+        SoundPlayers[sound].setBuffer(SoundBuffers[sound]);
+        SoundPlayers[sound].setVolume(static_cast<float>(Wav[sound].Volume));
+        SoundPlayers[sound].setLoop(Wav[sound].Loop);
     }
 
-    void PlaySound(short Sound, short Volume)
+    void PlaySound(const short sound, const short volume)
     {
-        if ((Sound == 0) || (Soundzustand <= 0) || (sound_players[Sound].getStatus() == sf::Sound::Playing))
+        if (sound == 0
+            || Soundzustand <= 0
+            || SoundPlayers[sound].getStatus() == sf::Sound::Playing)
+        {
             return;
+        }
 
-        sound_players[Sound].play();
+        SoundPlayers[sound].play();
+        SoundPlayers[sound].setVolume(static_cast<float>(volume));
     }
 
-    void StopSound(short Sound)
+    void StopSound(const short sound)
     {
-        if ((Sound == 0) || (Soundzustand <= 0))
+        if (sound == 0 || Soundzustand <= 0)
+        {
             return;
+        }
 
-        sound_players[Sound].stop();
+        SoundPlayers[sound].stop();
     }
 } // namespace Sound

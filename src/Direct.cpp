@@ -12,13 +12,15 @@
 
 #include <SFML/Window.hpp>
 
+#include "extern.hpp"
+
 namespace Direct
 {
     LPDIRECTDRAW4 lpDD = nullptr; // DirectDraw object
     bool Button0down; // linke Maustaste gedrückt gehalten
     bool Button1down; // rechte Maustaste gedrückt gehalten
 
-    void finiObjects()
+    void FinalizeObjects()
     {
         if (lpDD != nullptr)
         {
@@ -37,7 +39,7 @@ namespace Direct
         }
     }
 
-    void InitDDraw(HWND hWnd)
+    void InitializeDirectDraw(const HWND windowHandle)
     {
         DDSCAPS2 ddscaps;
         LPDIRECTDRAW pDD;
@@ -45,15 +47,21 @@ namespace Direct
         // Create the main DirectDraw object
         HRESULT ddrval = DirectDrawCreate(nullptr, &pDD, nullptr);
         if (ddrval != DD_OK)
+        {
             goto error;
+        }
         ddrval = pDD->QueryInterface(IID_IDirectDraw4, reinterpret_cast<LPVOID *>(& lpDD));
         if (ddrval != DD_OK)
+        {
             goto error;
+        }
 
         // Get exclusive mode
-        ddrval = lpDD->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
+        ddrval = lpDD->SetCooperativeLevel(windowHandle, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
         if (ddrval != DD_OK)
+        {
             goto error;
+        }
 
         // Set the video mode to 800x600x16
         ddrval = lpDD->SetDisplayMode(MAXX, MAXY, 32, 0, 0);
@@ -92,7 +100,9 @@ namespace Direct
         ddsd.dwBackBufferCount = 1; // Anzahl ??
         ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, nullptr);
         if (ddrval != DD_OK)
+        {
             goto error;
+        }
 
         // für gamma-ablenden
         lpDDSPrimary->QueryInterface(IID_IDirectDrawGammaControl, reinterpret_cast<void **>(&lpDDGammaControl));
@@ -103,7 +113,9 @@ namespace Direct
         ddrval = lpDDSPrimary->GetAttachedSurface(&ddscaps, &lpDDSBack);
 
         if (ddrval != DD_OK)
+        {
             goto error;
+        }
 
         ddsd.dwSize = sizeof(ddsd); // Tell DirectDraw which members are valid. 
         ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
@@ -198,9 +210,9 @@ namespace Direct
     error:
         if (ddrval != DD_OK)
         {
-            finiObjects();
-            MessageBox(hWnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
-            DestroyWindow(hWnd);
+            FinalizeObjects();
+            MessageBox(windowHandle, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
+            DestroyWindow(windowHandle);
         }
     }
 
@@ -216,27 +228,42 @@ namespace Direct
         short xDiff = MousePosition.x - sf::Mouse::getPosition().x; // Die Differenz zur vorherigen Position ((Für Scrollen)
         MousePosition.x = sf::Mouse::getPosition().x;
         if (MousePosition.x < 0)
+        {
             MousePosition.x = 0;
+        }
         if (MousePosition.x > MAXX - 2)
+        {
             MousePosition.x = MAXX - 2;
+        }
+
         short yDiff = MousePosition.y - sf::Mouse::getPosition().y; // Die Differenz zur vorherigen Position ((Für Scrollen)
         MousePosition.y = sf::Mouse::getPosition().y;
         if (MousePosition.y < 0)
+        {
             MousePosition.y = 0;
+        }
         if (MousePosition.y > MAXY - 2)
+        {
             MousePosition.y = MAXY - 2;
+        }
 
         if (TwoClicks == -1)
         {
             if (Guy.Aktiv)
             {
-                if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes) && (Bmp[BUTTSTOP].Phase != -1))
-                    CursorTyp = CUPFEIL;
+                if (Math::PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonStop].rcDes) && Bmp[ButtonStop].Phase != -1)
+                {
+                    CursorTyp = CuPfeil;
+                }
                 else
-                    CursorTyp = CUUHR;
+                {
+                    CursorTyp = CuUhr;
+                }
             }
             else
-                CursorTyp = CUPFEIL;
+            {
+                CursorTyp = CuPfeil;
+            }
         }
 
         short Button = -1; // Welcher Knopf ist gedrückt worden
@@ -246,7 +273,9 @@ namespace Direct
         {
             Button = 0;
             if (Button0down)
+            {
                 Push = 0;
+            }
             else
             {
                 Push = 1;
@@ -267,7 +296,9 @@ namespace Direct
         {
             Button = 1;
             if (Button1down)
+            {
                 Push = 0;
+            }
             else
             {
                 Push = 1;
@@ -289,92 +320,105 @@ namespace Direct
         {
             if (Frage == 0)
             {
-                if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[JA].rcDes))
+                if (Math::PointInRectangle(MousePosition.x, MousePosition.y, Bmp[Yes].rcDes))
                 {
-                    CursorTyp = CUPFEIL;
+                    CursorTyp = CuPfeil;
                     if ((Button == 0) && (Push == 1))
                     {
                         Frage = 1;
-                        Renderer::Textloeschen(TXTPAPIER);
+                        Renderer::DeleteText(TXTPAPIER);
                         PapierText = -1;
                         Guy.Aktiv = false;
-                        PlaySound(Sound::CLICK2, 100);
+                        PlaySound(Sound::Click2, 100);
                     }
                 }
-                else if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[NEIN].rcDes))
+                else if (Math::PointInRectangle(MousePosition.x, MousePosition.y, Bmp[No].rcDes))
                 {
-                    CursorTyp = CUPFEIL;
+                    CursorTyp = CuPfeil;
                     if ((Button == 0) && (Push == 1))
                     {
                         Frage = 2;
-                        Renderer::Textloeschen(TXTPAPIER);
+                        Renderer::DeleteText(TXTPAPIER);
                         PapierText = -1;
                         Guy.Aktiv = false;
-                        PlaySound(Sound::CLICK2, 100);
+                        PlaySound(Sound::Click2, 100);
                     }
                 }
-                else if ((Button == 0) && (Push == 1))
-                    PlaySound(Sound::CLICK, 100);
+                else if (Button == 0 && Push == 1)
+                {
+                    PlaySound(Sound::Click, 100);
+                }
             }
-            else if ((Button != -1) && (Push == 1))
+            else if (Button != -1 && Push == 1)
             {
-                Renderer::Textloeschen(TXTPAPIER);
+                Renderer::DeleteText(TXTPAPIER);
                 PapierText = -1;
                 Guy.Aktiv = false;
             }
+
             return;
         }
 
         // Animationen und Text löschen (werden dann von den MouseIn.. Sachen neu angestellt
-        Renderer::Textloeschen(TXTTEXTFELD);
-        Math::ButtAniAus();
+        Renderer::DeleteText(TXTTEXTFELD);
+        Math::DisableButtonAnimations();
 
         // Wenn der Guy aktiv dann linke Mouse-Buttons ignorieren
-        if ((Guy.Aktiv) && (Button == 0))
+        if (Guy.Aktiv && Button == 0)
         {
-            if (!(Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes)) ||
-                (Bmp[BUTTSTOP].Phase == -1))
+            if (!Math::PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonStop].rcDes) || Bmp[ButtonStop].Phase == -1)
+            {
                 Button = -1;
+            }
         }
 
         // die Maus ist in der Spielflaeche ->
-        if (Math::InRect(MousePosition.x, MousePosition.y, rcSpielflaeche))
-            Math::MouseInSpielflaeche(Button, Push, xDiff, yDiff);
+        if (Math::PointInRectangle(MousePosition.x, MousePosition.y, rcSpielflaeche))
+        {
+            Math::MouseInGame(Button, Push, xDiff, yDiff);
+        }
+
         // die Maus ist im Panel ->
-        if (Math::InRect(MousePosition.x, MousePosition.y, rcPanel))
+        if (Math::PointInRectangle(MousePosition.x, MousePosition.y, rcPanel))
+        {
             Math::MouseInPanel(Button, Push);
+        }
     }
 
     short CheckKey()
     {
-        if (Spielzustand == State::LOGO)
+        if (Spielzustand == State::Logo)
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Logo Abbrechen
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Logo Abbrechen
             {
-                StopSound(Sound::LOGO);
-                Game::NeuesSpiel(false);
+                StopSound(Sound::Logo);
+                Game::NewGame(false);
                 return 2;
             }
         }
-        else if (Spielzustand == State::INTRO)
+        else if (Spielzustand == State::Intro)
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Intro Abbrechen
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) // Intro Abbrechen
             {
-                StopSound(Sound::STORM); // Sound hier sofort stoppen
-                StopSound(Sound::SWIM); // Sound hier sofort stoppen
+                StopSound(Sound::Storm); // Sound hier sofort stoppen
+                StopSound(Sound::Swim); // Sound hier sofort stoppen
                 Guy.Aktiv = false;
-                for (short x = Guy.Pos.x; x < MAXXKACH; x++)
+                for (auto x = Guy.Pos.x; x < MAXXKACH; x++)
                 {
                     Guy.Pos.x = x;
-                    World::Entdecken();
+                    World::Discover();
                     if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1)
+                    {
                         break;
+                    }
                 }
-                Scape[Guy.Pos.x - 2][Guy.Pos.y].Objekt = WRACK;
-                Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[WRACK].rcDes.left);
-                Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[WRACK].rcDes.top);
+                Scape[Guy.Pos.x - 2][Guy.Pos.y].Objekt = Wrack;
+                Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.x = static_cast<short>(Bmp[Wrack].rcDes.left);
+                Scape[Guy.Pos.x - 2][Guy.Pos.y].ObPos.y = static_cast<short>(Bmp[Wrack].rcDes.top);
 
                 Guy.PosScreen.x =
                 (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + EckKoor[Scape[Guy.Pos.x][Guy.Pos.y].Typ][0].x +
@@ -388,45 +432,57 @@ namespace Direct
                 RouteZiel.y = -1;
                 Camera.x = Guy.PosScreen.x - static_cast<short>(rcSpielflaeche.right / 2);
                 Camera.y = Guy.PosScreen.y - static_cast<short>(rcSpielflaeche.bottom / 2);
-                if (BootsFahrt) World::ChangeBootsFahrt();
-                Guy.Zustand = GUYLINKS;
-                Guy.Aktion = Action::NOTHING;
-                Spielzustand = State::GAME;
+                if (BootsFahrt)
+                {
+                    World::ChangeBoatRide();
+                }
+                Guy.Zustand = GuyLinks;
+                Guy.Aktion = static_cast<short>(Action::Actions::Nothing);
+                Spielzustand = State::Game;
                 Guy.PosAlt = Guy.PosScreen;
                 Game::SaveGame();
                 return 1;
             }
         }
-        else if (Spielzustand == State::RESCUED)
+        else if (Spielzustand == State::Rescued)
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             {
-                Spielzustand = State::OUTRO;
+                Spielzustand = State::Outro;
                 return 1;
             }
         }
-        else if (Spielzustand == State::GAME)
+        else if (Spielzustand == State::Game)
         {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            {
                 Camera.x += 10;
+            }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            {
                 Camera.x -= 10;
+            }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            {
                 Camera.y += 10;
+            }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+            {
                 Camera.y -= 10;
+            }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 Guy.AkNummer = 0;
                 Guy.Aktiv = false;
-                Guy.Aktion = Action::QUIT;
+                Guy.Aktion = static_cast<short>(Action::Actions::Quit);
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11))
             {
                 Guy.AkNummer = 0;
                 Guy.Aktiv = false;
-                Guy.Aktion = Action::RESTART;
+                Guy.Aktion = static_cast<short>(Action::Actions::Restart);
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
             {
@@ -488,20 +544,26 @@ namespace Direct
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
             {
                 if (Soundzustand == 0)
+                {
                     Soundzustand = 1;
+                }
                 else if (Soundzustand == 1)
+                {
                     Soundzustand = 0;
+                }
             }
         }
-        else if (Spielzustand == State::OUTRO)
+        else if (Spielzustand == State::Outro)
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
+                || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             {
-                StopSound(Sound::OUTRO);
+                StopSound(Sound::Outro);
                 return 0;
             }
         }
+
         return 1;
     }
 } // namespace Direct

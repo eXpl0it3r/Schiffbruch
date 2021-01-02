@@ -2,17 +2,19 @@
 
 #include "Math.hpp"
 
+#include "extern.hpp"
+
 namespace Routing
 {
     int LenMap[MAXXKACH][MAXYKACH];
     ZWEID SaveRoute[MAXXKACH * MAXYKACH]; // Zum zwischenspeichern der Route
     ZWEID NewPos; // Nur innerhalb des Pathfindings benutzt
 
-    void MarkRoute(bool Mark)
+    void MarkRoute(bool mark)
     {
         for (short i = 0; i < RouteLaenge; i++)
         {
-            Scape[Route[i].x][Route[i].y].Markiert = Mark;
+            Scape[Route[i].x][Route[i].y].Markiert = mark;
         }
     }
 
@@ -64,6 +66,7 @@ namespace Routing
         ZWEID ShortKoor{0, 0};
 
         for (short AI = 0; AI < MAXYKACH; AI++)
+        {
             for (short BI = 0; BI < MAXXKACH; BI++)
             {
                 LenMap[AI][BI] = 65535;
@@ -71,20 +74,21 @@ namespace Routing
                 Plist[AI * BI].x = 0;
                 Plist[AI * BI].y = 0;
             }
+        }
         short ShortEntf = -1;
         RouteLaenge = 0;
 
         short PCnt = 1;
         Plist[0] = RouteStart;
-        short DiffX = (RouteStart.x - RouteZiel.x);
-        short DiffY = (RouteStart.y - RouteZiel.y);
-        Llist[0] = (DiffX * DiffX) + (DiffY * DiffY);
+        short DiffX = RouteStart.x - RouteZiel.x;
+        short DiffY = RouteStart.y - RouteZiel.y;
+        Llist[0] = DiffX * DiffX + DiffY * DiffY;
 
         LenMap[RouteStart.x][RouteStart.y] = 0;
         ZWEID Pos = RouteStart;
         NewPos = Pos;
         bool GoalReached = false;
-        while ((!GoalReached) && (PCnt > 0))
+        while (!GoalReached && PCnt > 0)
         {
             // den mit der kürzesten Entfernung zum Ziel finden (der in der Liste ist)
             short Shortest = 0;
@@ -98,7 +102,7 @@ namespace Routing
             // Mit dem Nächsten weitermachen
             Pos = Plist[Shortest];
             // Den kürzesten merken
-            if ((ShortEntf > Llist[Shortest]) || (ShortEntf == -1))
+            if (ShortEntf > Llist[Shortest] || ShortEntf == -1)
             {
                 ShortEntf = Llist[Shortest];
                 ShortKoor = Plist[Shortest];
@@ -114,21 +118,21 @@ namespace Routing
             for (short BI = 0; BI <= 3; BI++) // In jede Richtung schauen
             {
                 // ist das Feld noch nicht besucht und frei?
-                if ((LenMap[NewPos.x][NewPos.y] == 65535) &&
-                    (Scape[NewPos.x][NewPos.y].Begehbar))
+                if (LenMap[NewPos.x][NewPos.y] == 65535 &&
+                    Scape[NewPos.x][NewPos.y].Begehbar)
                 {
                     // Wieviele Schritte braucht man um zu diesem Feld zu kommen 
                     short StepCnt = LenMap[Pos.x][Pos.y] + 1;
                     LenMap[NewPos.x][NewPos.y] = StepCnt;
                     Plist[PCnt] = NewPos;
                     // Die Entfernung in die Liste aufnehmen
-                    DiffX = (NewPos.x - RouteZiel.x);
-                    DiffY = (NewPos.y - RouteZiel.y);
-                    Llist[PCnt] = (DiffX * DiffX) + (DiffY * DiffY);
+                    DiffX = NewPos.x - RouteZiel.x;
+                    DiffY = NewPos.y - RouteZiel.y;
+                    Llist[PCnt] = DiffX * DiffX + DiffY * DiffY;
                     PCnt++;
                 }
                 // Ziel erreicht?
-                if ((NewPos.x == RouteZiel.x) && (NewPos.y == RouteZiel.y))
+                if (NewPos.x == RouteZiel.x && NewPos.y == RouteZiel.y)
                 {
                     GoalReached = true;
                     BI = 3;
@@ -136,19 +140,18 @@ namespace Routing
                 Dir = RotateRight(Dir);
             }
         }
-        if ((PCnt == 0) || (!Scape[RouteZiel.x][RouteZiel.y].Begehbar))
+        if (PCnt == 0 || !Scape[RouteZiel.x][RouteZiel.y].Begehbar)
         {
             RouteZiel.x = ShortKoor.x;
             RouteZiel.y = ShortKoor.y;
 
-            if (FindTheWay()) return true;
-            return false;
+            return FindTheWay();
         }
         if (GoalReached) // Punkt rückwärts durchgehen und Abkürzungen finden
         {
             Pos = RouteZiel;
             ZWEID LineStartPos = Pos;
-            while ((Pos.x != RouteStart.x) || (Pos.y != RouteStart.y))
+            while (Pos.x != RouteStart.x || Pos.y != RouteStart.y)
             {
                 NewPos = Pos;
                 int ShStep = 65535;
@@ -171,7 +174,7 @@ namespace Routing
                     BestLine = Pos;
                 }
 
-                if ((Pos.x == RouteStart.x) && (Pos.y == RouteStart.y))
+                if (Pos.x == RouteStart.x && Pos.y == RouteStart.y)
                 {
                     Pos = BestLine;
                     Math::LineIntersect(LineStartPos, Pos, true);
@@ -195,14 +198,20 @@ namespace Routing
         {
             for (i = 0; i < RouteLaenge; i++)
             {
-                if ((x == Route[i].x) && (y == Route[i].y)) return true;
+                if (x == Route[i].x && y == Route[i].y)
+                {
+                    return true;
+                }
             }
         }
         else
         {
             for (i = 0; i <= Laenge; i++)
             {
-                if ((x == SaveRoute[i].x) && (y == SaveRoute[i].y)) return true;
+                if (x == SaveRoute[i].x && y == SaveRoute[i].y)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -221,52 +230,52 @@ namespace Routing
 
             RouteKoor[2 * i].x =
             (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
-                Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
+             Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
             RouteKoor[2 * i].y =
             (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
-                Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
+             Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
 
             NewPos.x = Pos.x;
             NewPos.y = Pos.y - 1; // oben mit nachschauen anfangen
             short Dir = 2;
             for (short j = 0; j <= 3; j++)
             {
-                if ((CheckRoute(NewPos.x, NewPos.y, false, RouteLaenge)) &&
-                    (!CheckRoute(NewPos.x, NewPos.y, true, i)))
+                if (CheckRoute(NewPos.x, NewPos.y, false, RouteLaenge) &&
+                    !CheckRoute(NewPos.x, NewPos.y, true, i))
                 {
                     switch (j)
                     {
                     case 0:
                         RouteKoor[2 * i + 1].x =
                         (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
+                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x) / 2;
                         RouteKoor[2 * i + 1].y =
                         (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y) / 2;
+                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y) / 2;
                         break;
                     case 1:
                         RouteKoor[2 * i + 1].x =
                         (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x) / 2;
+                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x) / 2;
                         RouteKoor[2 * i + 1].y =
                         (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][2].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
+                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y) / 2;
                         break;
                     case 2:
                         RouteKoor[2 * i + 1].x =
                         (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x) / 2;
+                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x) / 2;
                         RouteKoor[2 * i + 1].y =
                         (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][3].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y) / 2;
+                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y) / 2;
                         break;
                     case 3:
                         RouteKoor[2 * i + 1].x =
                         (Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].x +
-                            Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x) / 2;
+                         Scape[Pos.x][Pos.y].xScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].x) / 2;
                         RouteKoor[2 * i + 1].y =
                         (Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][0].y +
-                            Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y) / 2;
+                         Scape[Pos.x][Pos.y].yScreen + EckKoor[Scape[Pos.x][Pos.y].Typ][1].y) / 2;
                         break;
                     }
                     break;
@@ -284,7 +293,7 @@ namespace Routing
         }
     }
 
-    void ShortRoute(short Zielx, short Ziely)
+    void ShortRoute(short zielX, short zielY)
     {
         RouteLaenge = 1;
         Route[0].x = Guy.Pos.x;
@@ -293,13 +302,19 @@ namespace Routing
         RouteKoor[0].y = Guy.PosScreen.y;
         Route[1].x = Guy.Pos.x;
         Route[1].y = Guy.Pos.y;
-        RouteKoor[1].x = Zielx;
-        RouteKoor[1].y = Ziely;
+        RouteKoor[1].x = zielX;
+        RouteKoor[1].y = zielY;
 
         // Die Animation gleich anschließend starten
         Guy.Aktiv = true;
-        if ((BootsFahrt) && (Guy.Zustand != GUYSCHWIMMEN)) Guy.Zustand = GUYBOOTLINKS;
-        else if (Guy.Zustand != GUYSCHWIMMEN) Guy.Zustand = GUYLINKS;
+        if (BootsFahrt && Guy.Zustand != GuySchwimmen)
+        {
+            Guy.Zustand = GuyBootLinks;
+        }
+        else if (Guy.Zustand != GuySchwimmen)
+        {
+            Guy.Zustand = GuyLinks;
+        }
         RoutePunkt = -1;
         Steps = 0;
         Step = 0;

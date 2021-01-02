@@ -1,15 +1,12 @@
 #pragma once
 
 #include "headers.hpp"
-#include "extern.hpp"
 
 namespace Direct
 {
-    // finished with all objects we use; release them
-    void finiObjects();
-
-    void InitDDraw(HWND hWnd); // DirectDraw initialisieren
+    void InitializeDirectDraw(HWND windowHandle);
+    void FinalizeObjects();
     void Reset();
-    void CheckMouse(); // Maus abfragen
-    short CheckKey(); // Tastatur abfragen
+    void CheckMouse();
+    short CheckKey();
 }

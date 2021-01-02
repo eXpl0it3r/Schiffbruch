@@ -1,8 +1,12 @@
 #include "Math.hpp"
 
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+
+#include "extern.hpp"
+
 #include "Action.hpp"
-#include "Direct.hpp"
-#include "Game.hpp"
 #include "Menu.hpp"
 #include "Renderer.hpp"
 #include "Routing.hpp"
@@ -10,105 +14,131 @@
 #include "State.hpp"
 #include "World.hpp"
 
-#include <cstdio>
-#include <cstring>
-
 namespace Math
 {
     float Schrittx, Schritty; // Zum Figur laufen lassen
     ZWEID GuyPosScreenStart; // Absolute StartPosition bei einem Schritt (Für CalcGuyKoor)
 
-    void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
+    void MouseInGame(short button, short push, short xDiff, short yDiff)
     {
-        char Text[1024], TextTmp[1024]; // Text für Infoleiste
+        char text[1024], textTemp[1024]; // Text für Infoleiste
 
         // Info anzeigen
-        ZWEID Erg = Renderer::GetKachel((MousePosition.x + Camera.x), (MousePosition.y + Camera.y)); // Die angeklickte Kachel
+        ZWEID Erg = Renderer::GetTile(MousePosition.x + Camera.x, MousePosition.y + Camera.y); // Die angeklickte Kachel
         if (Scape[Erg.x][Erg.y].Entdeckt)
         {
-            LoadString(g_hInst, 45 + Scape[Erg.x][Erg.y].Art, Text, 1024);
-            if ((Scape[Erg.x][Erg.y].Objekt != -1) && (Scape[Erg.x][Erg.y].Objekt != MEERWELLEN))
+            LoadString(g_hInst, 45 + Scape[Erg.x][Erg.y].Art, text, 1024);
+            if (Scape[Erg.x][Erg.y].Objekt != -1 && Scape[Erg.x][Erg.y].Objekt != Meerwellen)
             {
-                LoadString(g_hInst, MIT, TextTmp, 1024);
-                strcat(Text, " ");
-                strcat(Text, TextTmp);
-                strcat(Text, " ");
+                LoadString(g_hInst, MIT, textTemp, 1024);
+                strcat(text, " ");
+                strcat(text, textTemp);
+                strcat(text, " ");
 
-                if ((Scape[Erg.x][Erg.y].Objekt >= BAUM1) && (Scape[Erg.x][Erg.y].Objekt <= BAUM4))
-                LoadString(g_hInst, BAUMTEXT, TextTmp, 1024);
-                else if ((Scape[Erg.x][Erg.y].Objekt >= FLUSS1) && (Scape[Erg.x][Erg.y].Objekt <= SCHLEUSE6))
-                LoadString(g_hInst, FLUSSTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == BUSCH)
-                LoadString(g_hInst, BUSCHTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == ZELT)
-                LoadString(g_hInst, ZELTTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == FELD)
-                LoadString(g_hInst, FELDTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == BOOT)
-                LoadString(g_hInst, BOOTTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == ROHR)
-                LoadString(g_hInst, ROHRTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == SOS)
-                LoadString(g_hInst, SOSTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == HAUS1)
-                LoadString(g_hInst, HAUS1TEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == HAUS2)
-                LoadString(g_hInst, HAUS2TEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == HAUS3)
-                LoadString(g_hInst, HAUS3TEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == BAUMGROSS)
-                LoadString(g_hInst, BAUMGROSSTEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == FEUERSTELLE)
-                LoadString(g_hInst, FEUERSTELLETEXT, TextTmp, 1024);
-                else if (Scape[Erg.x][Erg.y].Objekt == FEUER)
-                LoadString(g_hInst, FEUERTEXT, TextTmp, 1024);
-                else if ((Scape[Erg.x][Erg.y].Objekt == WRACK) || (Scape[Erg.x][Erg.y].Objekt == WRACK2))
-                LoadString(g_hInst, WRACKTEXT, TextTmp, 1024);
-                strcat(Text, TextTmp);
+                if (Scape[Erg.x][Erg.y].Objekt >= Baum1 && Scape[Erg.x][Erg.y].Objekt <= Baum4)
+                {
+                    LoadString(g_hInst, BAUMTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt >= Fluss1 && Scape[Erg.x][Erg.y].Objekt <= Schleuse6)
+                {
+                    LoadString(g_hInst, FLUSSTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Busch)
+                {
+                    LoadString(g_hInst, BUSCHTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Zelt)
+                {
+                    LoadString(g_hInst, ZELTTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Feld)
+                {
+                    LoadString(g_hInst, FELDTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Boot)
+                {
+                    LoadString(g_hInst, BOOTTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Rohr)
+                {
+                    LoadString(g_hInst, ROHRTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Sos)
+                {
+                    LoadString(g_hInst, SOSTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Haus1)
+                {
+                    LoadString(g_hInst, HAUS1TEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Haus2)
+                {
+                    LoadString(g_hInst, HAUS2TEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Haus3)
+                {
+                    LoadString(g_hInst, HAUS3TEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == BaumGross)
+                {
+                    LoadString(g_hInst, BAUMGROSSTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Feuerstelle)
+                {
+                    LoadString(g_hInst, FEUERSTELLETEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Feuer)
+                {
+                    LoadString(g_hInst, FEUERTEXT, textTemp, 1024);
+                }
+                else if (Scape[Erg.x][Erg.y].Objekt == Wrack || Scape[Erg.x][Erg.y].Objekt == Wrack2)
+                {
+                    LoadString(g_hInst, WRACKTEXT, textTemp, 1024);
+                }
+                strcat(text, textTemp);
 
-                if ((Scape[Erg.x][Erg.y].Objekt >= FELD) &&
-                    (Scape[Erg.x][Erg.y].Objekt <= FEUERSTELLE))
+                if (Scape[Erg.x][Erg.y].Objekt >= Feld && Scape[Erg.x][Erg.y].Objekt <= Feuerstelle)
                 {
                     // Baufortschrittanzeigen
-                    strcat(Text, " ");
-                    strcat(Text, "(");
-                    std::sprintf(TextTmp, "%d", (Scape[Erg.x][Erg.y].AkNummer * 100) / Bmp[Scape[Erg.x][Erg.y].Objekt].AkAnzahl);
-                    strcat(Text, TextTmp);
-                    strcat(Text, "%");
-                    strcat(Text, ")");
+                    strcat(text, " ");
+                    strcat(text, "(");
+                    std::sprintf(textTemp, "%d", Scape[Erg.x][Erg.y].AkNummer * 100 / Bmp[Scape[Erg.x][Erg.y].Objekt].AkAnzahl);
+                    strcat(text, textTemp);
+                    strcat(text, "%");
+                    strcat(text, ")");
                     // benötigte Rohstoffe anzeigen
-                    World::MakeRohString(Erg.x, Erg.y, -1);
-                    strcat(Text, RohString);
+                    World::MakeResourceString(Erg.x, Erg.y, -1);
+                    strcat(text, RohString);
                 }
             }
             TextBereich[TXTTEXTFELD].Aktiv = true;
-            Renderer::DrawString(Text, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
+            Renderer::DrawString(text, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
         }
 
         // rechte Maustastescrollen
-        if ((Button == 1) && (Push == 0))
+        if (button == 1 && push == 0)
         {
             Camera.x += xDiff;
             Camera.y += yDiff;
-            CursorTyp = CURICHTUNG;
+            CursorTyp = CuRichtung;
         }
 
         // Wenn Maustaste gedrückt wird
-        if ((Button == 0) && (Push == 1))
+        if (button == 0 && push == 1)
         {
-            if ((Erg.x != -1) && (Erg.y != -1) &&
-                (Scape[Erg.x][Erg.y].Entdeckt) && (!Guy.Aktiv) &&
-                ((Erg.x != Guy.Pos.x) || (Erg.y != Guy.Pos.y)) &&
-                (Erg.x > 0) && (Erg.x < MAXXKACH - 1) &&
-                (Erg.y > 0) && (Erg.y < MAXYKACH - 1))
+            if (Erg.x != -1 && Erg.y != -1 &&
+                Scape[Erg.x][Erg.y].Entdeckt && !Guy.Aktiv &&
+                (Erg.x != Guy.Pos.x || Erg.y != Guy.Pos.y) &&
+                Erg.x > 0 && Erg.x < MAXXKACH - 1 &&
+                Erg.y > 0 && Erg.y < MAXYKACH - 1)
             {
                 // Klicksound abspielen
-                PlaySound(Sound::CLICK2, 100);
-                if ((Erg.x == RouteZiel.x) && (Erg.y == RouteZiel.y))
+                PlaySound(Sound::Click2, 100);
+                if (Erg.x == RouteZiel.x && Erg.y == RouteZiel.y)
                 {
                     Routing::MarkRoute(false);
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.Aktiv = true;
                     RoutePunkt = -1;
                     Steps = 0;
@@ -121,7 +151,10 @@ namespace Math
                     RouteStart.y = Guy.Pos.y;
                     RouteZiel.x = Erg.x;
                     RouteZiel.y = Erg.y;
-                    if (Routing::FindTheWay()) Routing::MarkRoute(true);
+                    if (Routing::FindTheWay())
+                    {
+                        Routing::MarkRoute(true);
+                    }
                     else // Wenn keine Route gefunden
                     {
                         RouteStart.x = -1;
@@ -132,151 +165,217 @@ namespace Math
                     }
                 }
             }
-            else PlaySound(Sound::CLICK, 100);
+            else
+            {
+                PlaySound(Sound::Click, 100);
+            }
         }
     }
 
-    void MouseInPanel(short Button, short Push)
+    void MouseInPanel(short button, short push)
     {
         // wenn die Maus in der Minimap ist ->
-        if ((InRect(MousePosition.x, MousePosition.y, rcKarte)) && (Button == 0) && (Push != -1))
+        if (PointInRectangle(MousePosition.x, MousePosition.y, rcKarte) && button == 0 && push != -1)
         {
             // Mauskoordinaten in Minimap
             short mx = MousePosition.x - static_cast<short>(rcKarte.left);
             short my = MousePosition.y - static_cast<short>(rcKarte.top);
-            Camera.x = ((KXPIXEL / 4) * (mx - my) + MAXXKACH * KXPIXEL / 2)
+            Camera.x = KXPIXEL / 4 * (mx - my) + MAXXKACH * KXPIXEL / 2
                 - static_cast<short>((rcSpielflaeche.right - rcSpielflaeche.left) / 2);
-            Camera.y = ((KXPIXEL / 7) * (my + mx))
+            Camera.y = KXPIXEL / 7 * (my + mx)
                 - static_cast<short>((rcSpielflaeche.bottom - rcSpielflaeche.top) / 2);
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTGITTER].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonGitter].rcDes))
         {
-            if (Gitter) Renderer::DrawText(GITTERAUS, TXTTEXTFELD, 2);
-            else Renderer::DrawText(GITTERAN, TXTTEXTFELD, 2);
-
-            if ((Button == 0) && (Push == 1))
+            if (Gitter)
             {
-                PlaySound(Sound::CLICK2, 100);
+                Renderer::DrawText(GITTERAUS, TXTTEXTFELD, 2);
+            }
+            else
+            {
+                Renderer::DrawText(GITTERAN, TXTTEXTFELD, 2);
+            }
+
+            if (button == 0 && push == 1)
+            {
+                PlaySound(Sound::Click2, 100);
                 Gitter = !Gitter;
                 World::Generate();
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTANIMATION].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonAnimation].rcDes))
         {
-            if (LAnimation) Renderer::DrawText(ANIMATIONAUS, TXTTEXTFELD, 2);
-            else Renderer::DrawText(ANIMATIONAN, TXTTEXTFELD, 2);
-
-            if ((Button == 0) && (Push == 1))
+            if (LAnimation)
             {
-                PlaySound(Sound::CLICK2, 100);
+                Renderer::DrawText(ANIMATIONAUS, TXTTEXTFELD, 2);
+            }
+            else
+            {
+                Renderer::DrawText(ANIMATIONAN, TXTTEXTFELD, 2);
+            }
+
+            if (button == 0 && push == 1)
+            {
+                PlaySound(Sound::Click2, 100);
                 LAnimation = !LAnimation;
                 World::Generate();
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSOUND].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonSound].rcDes))
         {
-            if (Soundzustand == 1) Renderer::DrawText(SOUNDAUS, TXTTEXTFELD, 2);
-            else if (Soundzustand == 0) Renderer::DrawText(SOUNDAN, TXTTEXTFELD, 2);
-            else Renderer::DrawText(KEINSOUND, TXTTEXTFELD, 2);
+            if (Soundzustand == 1)
+            {
+                Renderer::DrawText(SOUNDAUS, TXTTEXTFELD, 2);
+            }
+            else if (Soundzustand == 0)
+            {
+                Renderer::DrawText(SOUNDAN, TXTTEXTFELD, 2);
+            }
+            else
+            {
+                Renderer::DrawText(KEINSOUND, TXTTEXTFELD, 2);
+            }
 
-            if ((Button == 0) && (Push == 1))
+            if (button == 0 && push == 1)
             {
                 if (Soundzustand == 1)
                 {
-                    for (short i = 1; i < Sound::COUNT; i++) Sound::StopSound(i);
+                    for (short i = 1; i < Sound::Count; i++)
+                    {
+                        Sound::StopSound(i);
+                    }
                     Soundzustand = 0;
                 }
                 else if (Soundzustand == 0)
                 {
                     Soundzustand = 1;
-                    PlaySound(Sound::CLICK2, 100);
+                    PlaySound(Sound::Click2, 100);
                 }
-                else PlaySound(Sound::CLICK, 100);
+                else
+                {
+                    PlaySound(Sound::Click, 100);
+                }
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTBEENDEN].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonBeenden].rcDes))
         {
             Renderer::DrawText(BEENDEN, TXTTEXTFELD, 2);
-            Bmp[BUTTBEENDEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonBeenden].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
                 Guy.Aktiv = false;
-                Guy.Aktion = Action::QUIT;
+                Guy.Aktion = static_cast<short>(Action::Actions::Quit);
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTNEU].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonNew].rcDes))
         {
             Renderer::DrawText(NEU, TXTTEXTFELD, 2);
-            Bmp[BUTTNEU].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonNew].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
                 Guy.Aktiv = false;
-                Guy.Aktion = Action::RESTART;
+                Guy.Aktion = static_cast<short>(Action::Actions::Restart);
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTTAGNEU].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonTagNeu].rcDes))
         {
             Renderer::DrawText(TAGNEU2, TXTTEXTFELD, 2);
-            Bmp[BUTTTAGNEU].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonTagNeu].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
                 Guy.Aktiv = false;
-                Guy.Aktion = Action::DAY_RESTART;
+                Guy.Aktion = static_cast<short>(Action::Actions::DayRestart);
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTAKTION].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonAction].rcDes))
         {
-            if (HauptMenue == Menu::ACTION) Renderer::DrawText(MEAKTIONZU, TXTTEXTFELD, 2);
-            else Renderer::DrawText(MEAKTIONAUF, TXTTEXTFELD, 2);
-            Bmp[BUTTAKTION].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            if (HauptMenue == Menu::Action)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if (HauptMenue == Menu::ACTION) HauptMenue = Menu::NONE;
-                else HauptMenue = Menu::ACTION;
+                Renderer::DrawText(MEAKTIONZU, TXTTEXTFELD, 2);
+            }
+            else
+            {
+                Renderer::DrawText(MEAKTIONAUF, TXTTEXTFELD, 2);
+            }
+            Bmp[ButtonAction].Animation = true;
+            if (button == 0 && push == 1)
+            {
+                PlaySound(Sound::Click2, 100);
+                if (HauptMenue == Menu::Action)
+                {
+                    HauptMenue = Menu::None;
+                }
+                else
+                {
+                    HauptMenue = Menu::Action;
+                }
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTBAUEN].rcDes) &&
-            (Bmp[BUTTBAUEN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonBauen].rcDes) && Bmp[ButtonBauen].Phase != -1)
         {
-            if (HauptMenue == Menu::BUILD) Renderer::DrawText(MEBAUENZU, TXTTEXTFELD, 2);
-            else Renderer::DrawText(MEBAUENAUF, TXTTEXTFELD, 2);
-            Bmp[BUTTBAUEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            if (HauptMenue == Menu::Build)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if (HauptMenue == Menu::BUILD) HauptMenue = Menu::NONE;
-                else HauptMenue = Menu::BUILD;
+                Renderer::DrawText(MEBAUENZU, TXTTEXTFELD, 2);
+            }
+            else
+            {
+                Renderer::DrawText(MEBAUENAUF, TXTTEXTFELD, 2);
+            }
+            Bmp[ButtonBauen].Animation = true;
+            if (button == 0 && push == 1)
+            {
+                PlaySound(Sound::Click2, 100);
+                if (HauptMenue == Menu::Build)
+                {
+                    HauptMenue = Menu::None;
+                }
+                else
+                {
+                    HauptMenue = Menu::Build;
+                }
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTINVENTAR].rcDes))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonInventory].rcDes))
         {
-            if (HauptMenue == Menu::INVENTORY) Renderer::DrawText(MEINVENTARZU, TXTTEXTFELD, 2);
-            else Renderer::DrawText(MEINVENTARAUF, TXTTEXTFELD, 2);
-            Bmp[BUTTINVENTAR].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            if (HauptMenue == Menu::Inventory)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if (HauptMenue == Menu::INVENTORY) HauptMenue = Menu::NONE;
-                else HauptMenue = Menu::INVENTORY;
+                Renderer::DrawText(MEINVENTARZU, TXTTEXTFELD, 2);
+            }
+            else
+            {
+                Renderer::DrawText(MEINVENTARAUF, TXTTEXTFELD, 2);
+            }
+
+            Bmp[ButtonInventory].Animation = true;
+
+            if (button == 0 && push == 1)
+            {
+                PlaySound(Sound::Click2, 100);
+                if (HauptMenue == Menu::Inventory)
+                {
+                    HauptMenue = Menu::None;
+                }
+                else
+                {
+                    HauptMenue = Menu::Inventory;
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTWEITER].rcDes)) &&
-            (Bmp[BUTTWEITER].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonWeiter].rcDes) && Bmp[ButtonWeiter].Phase != -1)
         {
             Renderer::DrawText(WEITER, TXTTEXTFELD, 2);
 
-            Bmp[BUTTWEITER].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonWeiter].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                Bmp[BUTTSTOP].Phase = 0;
+                PlaySound(Sound::Click2, 100);
+                Bmp[ButtonStop].Phase = 0;
                 Routing::MarkRoute(false);
                 RouteZiel.x = -1;
                 RouteZiel.y = -1;
@@ -285,603 +384,696 @@ namespace Math
                                     Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
                 switch (Scape[Guy.Pos.x][Guy.Pos.y].Objekt)
                 {
-                case ZELT: Guy.Aktion = Action::TENT;
+                case Zelt:
+                    Guy.Aktion = static_cast<short>(Action::Actions::Tent);
                     break;
-                case FELD: Guy.Aktion = Action::FIELD;
+                case Feld:
+                    Guy.Aktion = static_cast<short>(Action::Actions::Field);
                     break;
-                case BOOT: Guy.Aktion = Action::BOAT;
+                case Boot:
+                    Guy.Aktion = static_cast<short>(Action::Actions::Boat);
                     break;
-                case ROHR: Guy.Aktion = Action::PIPE;
+                case Rohr:
+                    Guy.Aktion = static_cast<short>(Action::Actions::Pipe);
                     break;
-                case SOS: Guy.Aktion = Action::SOS_SIGN;
+                case Sos:
+                    Guy.Aktion = static_cast<short>(Action::Actions::SosSign);
                     break;
-                case HAUS1: Guy.Aktion = Action::HOUSE1;
+                case Haus1:
+                    Guy.Aktion = static_cast<short>(Action::Actions::House1);
                     break;
-                case HAUS2: Guy.Aktion = Action::HOUSE2;
+                case Haus2:
+                    Guy.Aktion = static_cast<short>(Action::Actions::House2);
                     break;
-                case HAUS3: Guy.Aktion = Action::HOUSE3;
+                case Haus3:
+                    Guy.Aktion = static_cast<short>(Action::Actions::House3);
                     break;
-                case FEUERSTELLE: Guy.Aktion = Action::FIREPLACE;
+                case Feuerstelle:
+                    Guy.Aktion = static_cast<short>(Action::Actions::Fireplace);
+                    break;
+                default:
                     break;
                 }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSTOP].rcDes)) &&
-            (Bmp[BUTTSTOP].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonStop].rcDes) && Bmp[ButtonStop].Phase != -1)
         {
             Renderer::DrawText(STOP, TXTTEXTFELD, 2);
 
-            Bmp[BUTTSTOP].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonStop].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                Guy.Aktion = Action::CANCEL;
-                Bmp[BUTTSTOP].Phase = -1;
+                Guy.Aktion = static_cast<short>(Action::Actions::Cancel);
+                Bmp[ButtonStop].Phase = -1;
             }
         }
 
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTABLEGEN].rcDes)) &&
-            (Bmp[BUTTABLEGEN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonAblegen].rcDes) && Bmp[ButtonAblegen].Phase != -1)
         {
             Renderer::DrawText(BEGINNABLEGEN, TXTTEXTFELD, 2);
-            Bmp[BUTTABLEGEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonAblegen].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1) Guy.Aktion = Action::UNDOCK;
-                else Guy.Aktion = Action::DOCK;
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1)
+                {
+                    Guy.Aktion = static_cast<short>(Action::Actions::Undock);
+                }
+                else
+                {
+                    Guy.Aktion = static_cast<short>(Action::Actions::Dock);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSUCHEN].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTSUCHEN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonSearch].rcDes) && HauptMenue == Menu::Action && Bmp[ButtonSearch].Phase != -1)
         {
             Renderer::DrawText(BEGINNSUCHEN, TXTTEXTFELD, 2);
-            Bmp[BUTTSUCHEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonSearch].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                Guy.Aktion = Action::SEARCH;
+                Guy.Aktion = static_cast<short>(Action::Actions::Search);
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTESSEN].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTESSEN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonFood].rcDes) && HauptMenue == Menu::Action && Bmp[ButtonFood].Phase != -1)
         {
             Renderer::DrawText(BEGINNESSEN, TXTTEXTFELD, 2);
-            Bmp[BUTTESSEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonFood].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BUSCH) ||
-                        (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == FELD)) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Phase == Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl - 1))
-                    Guy.Aktion = Action::EAT;
-                else if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FLUSS1) &&
-                        (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= SCHLEUSE6)) ||
-                    ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ROHR) &&
-                        (Scape[Guy.Pos.x][Guy.Pos.y].Phase == 1)))
-                    Guy.Aktion = Action::DRINK;
-                else PapierText = Renderer::DrawText(KEINESSENTRINKEN, TXTPAPIER, 1);
+                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Busch || Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Feld) &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Phase == Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl - 1)
+                {
+                    Guy.Aktion = static_cast<short>(Action::Actions::Eat);
+                }
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Fluss1 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Schleuse6 ||
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Rohr &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Phase == 1)
+                {
+                    Guy.Aktion = static_cast<short>(Action::Actions::Drink);
+                }
+                else
+                {
+                    PapierText = Renderer::DrawText(KEINESSENTRINKEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHLAFEN].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHLAFEN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonSleep].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonSleep].Phase != -1)
         {
             Renderer::DrawText(BEGINNSCHLAFEN, TXTTEXTFELD, 2);
-            Bmp[BUTTSCHLAFEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonSleep].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1)
                 {
                     Guy.AkNummer = 0;
-                    Guy.Aktion = Action::SLEEP;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Sleep);
                 }
-                else PapierText = Renderer::DrawText(NICHTAUFWASSERSCHLAFEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(NICHTAUFWASSERSCHLAFEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTFAELLEN].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTFAELLEN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonTimber].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonTimber].Phase != -1)
         {
             Renderer::DrawText(BEGINNFAELLEN, TXTTEXTFELD, 2);
-            Bmp[BUTTFAELLEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonTimber].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                if (Guy.Inventar[ROHSTAMM] <= 10)
+                if (Guy.Inventar[ResourceTrunk] <= 10)
                 {
-                    if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
-                        (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
+                    if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Baum1 &&
+                        Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Baum4)
                     {
-                        Guy.Aktion = Action::LOG;
+                        Guy.Aktion = static_cast<short>(Action::Actions::Log);
                     }
-                    else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BAUMGROSS) ||
-                        ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= HAUS1) &&
-                            (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= HAUS3)))
+                    else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BaumGross ||
+                        Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Haus1 &&
+                        Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Haus3)
+                    {
                         PapierText = Renderer::DrawText(BAUMZUGROSS, TXTPAPIER, 1);
-                    else PapierText = Renderer::DrawText(KEINBAUM, TXTPAPIER, 1);
+                    }
+                    else
+                    {
+                        PapierText = Renderer::DrawText(KEINBAUM, TXTPAPIER, 1);
+                    }
                 }
-                else PapierText = Renderer::DrawText(ROHSTAMMZUVIEL, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(ROHSTAMMZUVIEL, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTANGELN].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTANGELN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonFish].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonFish].Phase != -1)
         {
             Renderer::DrawText(BEGINNANGELN, TXTTEXTFELD, 2);
-            Bmp[BUTTANGELN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonFish].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                if (((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FLUSS1) &&
-                        (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= SCHLEUSE6)) ||
-                    (BootsFahrt))
-                    Guy.Aktion = Action::FISH;
-                else PapierText = Renderer::DrawText(KEINWASSER, TXTPAPIER, 1);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Fluss1 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Schleuse6 ||
+                    BootsFahrt)
+                {
+                    Guy.Aktion = static_cast<short>(Action::Actions::Fish);
+                }
+                else
+                {
+                    PapierText = Renderer::DrawText(KEINWASSER, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTANZUENDEN].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTANZUENDEN].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonLight].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonLight].Phase != -1)
         {
             Renderer::DrawText(BEGINNANZUENDEN, TXTTEXTFELD, 2);
-            Bmp[BUTTANZUENDEN].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonLight].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == FEUERSTELLE) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl))
-                    Guy.Aktion = Action::LIGHT;
-                else PapierText = Renderer::DrawText(KEINEFEUERST, TXTPAPIER, 1);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Feuerstelle &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Phase < Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Objekt].Anzahl)
+                {
+                    Guy.Aktion = static_cast<short>(Action::Actions::Light);
+                }
+                else
+                {
+                    PapierText = Renderer::DrawText(KEINEFEUERST, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTAUSSCHAU].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTAUSSCHAU].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonLook].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonLook].Phase != -1)
         {
             Renderer::DrawText(BEGINNAUSSCHAU, TXTTEXTFELD, 2);
-            Bmp[BUTTAUSSCHAU].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonLook].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
                 if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1)
                 {
                     Guy.AkNummer = 0;
-                    Guy.Aktion = Action::LOOKOUT;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Lookout);
                 }
-                else PapierText = Renderer::DrawText(WELLENZUHOCH, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(WELLENZUHOCH, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHATZ].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHATZ].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonTreasure].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonTreasure].Phase != -1)
         {
             Renderer::DrawText(BEGINNSCHATZ, TXTTEXTFELD, 2);
-            Bmp[BUTTSCHATZ].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonTreasure].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Art != 1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1))
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Art != 1 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1)
                 {
                     Guy.AkNummer = 0;
-                    Guy.Aktion = Action::TREASURE;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Treasure);
                 }
-                else PapierText = Renderer::DrawText(GRABENBEDINGUNGEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(GRABENBEDINGUNGEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHLEUDER].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHLEUDER].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonSlingshot].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonSlingshot].Phase != -1)
         {
             Renderer::DrawText(BEGINNSCHLEUDER, TXTTEXTFELD, 2);
-            Bmp[BUTTSCHLEUDER].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonSlingshot].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
+                PlaySound(Sound::Click2, 100);
                 Guy.AkNummer = 0;
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Baum1 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Baum4)
                 {
                     Guy.AkNummer = 0;
-                    Guy.Aktion = Action::SLINGSHOT;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Slingshot);
                 }
-                else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BAUMGROSS) ||
-                    ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= HAUS1) &&
-                        (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= HAUS3)))
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BaumGross ||
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Haus1 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Haus3)
+                {
                     PapierText = Renderer::DrawText(BAUMZUGROSS, TXTPAPIER, 1);
-                else PapierText = Renderer::DrawText(KEINVOGEL, TXTPAPIER, 1);
+                }
+                else
+                {
+                    PapierText = Renderer::DrawText(KEINVOGEL, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSCHATZKARTE].rcDes)) &&
-            (HauptMenue == Menu::ACTION) && (Bmp[BUTTSCHATZKARTE].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonTreasureMap].rcDes) &&
+            HauptMenue == Menu::Action && Bmp[ButtonTreasureMap].Phase != -1)
         {
             Renderer::DrawText(BEGINNSCHATZKARTE, TXTTEXTFELD, 2);
-            Bmp[BUTTSCHATZKARTE].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonTreasureMap].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                Renderer::DrawSchatzkarte();
+                PlaySound(Sound::Click2, 100);
+                Renderer::DrawTreasureMap();
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTFELD].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTFELD].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonField].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonField].Phase != -1)
         {
             LoadString(g_hInst, BEGINNFELD, StdString, 1024);
-            World::MakeRohString(-1, -1, FELD);
+            World::MakeResourceString(-1, -1, Feld);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTFELD].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonField].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Art == 4))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0 &&
+                    Scape[Guy.Pos.x][Guy.Pos.y].Art == 4)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::FIELD;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Field);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) && (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == FELD))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Feld)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::FIELD;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Field);
                 }
-                else PapierText = Renderer::DrawText(FELDBEDINGUNGEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(FELDBEDINGUNGEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTZELT].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTZELT].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonTent].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonTent].Phase != -1)
         {
             LoadString(g_hInst, BEGINNZELT, StdString, 1024);
-            World::MakeRohString(-1, -1, ZELT);
+            World::MakeResourceString(-1, -1, Zelt);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTZELT].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonTent].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Art != -1))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1
+                    && Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0
+                    && Scape[Guy.Pos.x][Guy.Pos.y].Art != -1)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::TENT;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Tent);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ZELT))
+                else if (Bmp[ButtonWeiter].Phase != -1
+                    && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Zelt)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::TENT;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Tent);
                 }
-                else PapierText = Renderer::DrawText(ZELTBEDINGUNGEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(ZELTBEDINGUNGEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTBOOT].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTBOOT].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonBoat].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonBoat].Phase != -1)
         {
             LoadString(g_hInst, BEGINNBOOT, StdString, 1024);
-            World::MakeRohString(-1, -1, BOOT);
+            World::MakeResourceString(-1, -1, Boot);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTBOOT].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonBoat].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Art == 2) &&
-                    ((Scape[Guy.Pos.x - 1][Guy.Pos.y].Art == 1) ||
-                        (Scape[Guy.Pos.x][Guy.Pos.y - 1].Art == 1) ||
-                        (Scape[Guy.Pos.x + 1][Guy.Pos.y].Art == 1) ||
-                        (Scape[Guy.Pos.x][Guy.Pos.y + 1].Art == 1)))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1 && Scape[Guy.Pos.x][Guy.Pos.y].Art == 2
+                    && (Scape[Guy.Pos.x - 1][Guy.Pos.y].Art == 1 || Scape[Guy.Pos.x][Guy.Pos.y - 1].Art == 1
+                        || Scape[Guy.Pos.x + 1][Guy.Pos.y].Art == 1 || Scape[Guy.Pos.x][Guy.Pos.y + 1].Art == 1))
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::BOAT;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Boat);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BOOT))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Boot)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::BOAT;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Boat);
                 }
-                else PapierText = Renderer::DrawText(BOOTBEDINGUNGEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(BOOTBEDINGUNGEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTROHR].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTROHR].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonPipe].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonPipe].Phase != -1)
         {
             LoadString(g_hInst, BEGINNROHR, StdString, 1024);
-            World::MakeRohString(-1, -1, ROHR);
+            World::MakeResourceString(-1, -1, Rohr);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTROHR].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonPipe].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1 && Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::PIPE;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Pipe);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == ROHR))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Rohr)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::PIPE;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Pipe);
                 }
-                else PapierText = Renderer::DrawText(ROHRBEDINGUNGEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(ROHRBEDINGUNGEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTSOS].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTSOS].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonSos].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonSos].Phase != -1)
         {
             LoadString(g_hInst, BEGINNSOS, StdString, 1024);
-            World::MakeRohString(-1, -1, SOS);
+            World::MakeResourceString(-1, -1, Sos);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTSOS].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonSos].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1 && Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::SOS_SIGN;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::SosSign);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == SOS))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Sos)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::SOS_SIGN;
+                    Guy.Aktion = static_cast<short>(Action::Actions::SosSign);
                 }
-                else PapierText = Renderer::DrawText(SOSBEDINGUNGEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(SOSBEDINGUNGEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTHAUS1].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTHAUS1].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonHouse1].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonHouse1].Phase != -1)
         {
             LoadString(g_hInst, BEGINNHAUS1, StdString, 1024);
-            World::MakeRohString(-1, -1, HAUS1);
+            World::MakeResourceString(-1, -1, Haus1);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTHAUS1].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonHouse1].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Baum1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Baum4)
+                {
                     PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BAUMGROSS)
+                }
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BaumGross)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::HOUSE1;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::House1);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS1))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Haus1)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::HOUSE1;
+                    Guy.Aktion = static_cast<short>(Action::Actions::House1);
                 }
-                else PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTHAUS2].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTHAUS2].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonHouse2].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonHouse2].Phase != -1)
         {
             LoadString(g_hInst, BEGINNHAUS2, StdString, 1024);
-            World::MakeRohString(-1, -1, HAUS2);
+            World::MakeResourceString(-1, -1, Haus2);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTHAUS2].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonHouse2].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Baum1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Baum4)
+                {
                     PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BAUMGROSS)
+                }
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BaumGross)
+                {
                     PapierText = Renderer::DrawText(NICHTOHNELEITER, TXTPAPIER, 1);
-                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS1)
+                }
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Haus1)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::HOUSE2;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::House2);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS2))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Haus2)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::HOUSE2;
+                    Guy.Aktion = static_cast<short>(Action::Actions::House2);
                 }
-                else PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTHAUS3].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTHAUS3].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonHouse3].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonHouse3].Phase != -1)
         {
             LoadString(g_hInst, BEGINNHAUS3, StdString, 1024);
-            World::MakeRohString(-1, -1, HAUS3);
+            World::MakeResourceString(-1, -1, Haus3);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTHAUS3].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonHouse3].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= BAUM1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= BAUM4))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Baum1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Baum4)
+                {
                     PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-                else if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BAUMGROSS) ||
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS1))
+                }
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == BaumGross || Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Haus1)
+                {
                     PapierText = Renderer::DrawText(NICHTOHNEPLATTFORM, TXTPAPIER, 1);
-                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS2)
+                }
+                else if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Haus2)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::HOUSE3;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::House3);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == HAUS3))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Haus3)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::HOUSE3;
+                    Guy.Aktion = static_cast<short>(Action::Actions::House3);
                 }
-                else PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(GEGENDNICHT, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTFEUERST].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTFEUERST].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonFireplace].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonFireplace].Phase != -1)
         {
             LoadString(g_hInst, BEGINNFEUERSTELLE, StdString, 1024);
-            World::MakeRohString(-1, -1, FEUERSTELLE);
+            World::MakeResourceString(-1, -1, Feuerstelle);
             strcat(StdString, RohString);
             TextBereich[TXTTEXTFELD].Aktiv = true;
             Renderer::DrawString(StdString, static_cast<short>(TextBereich[TXTTEXTFELD].rcText.left),
                                  static_cast<short>(TextBereich[TXTTEXTFELD].rcText.top), 2);
 
-            Bmp[BUTTFEUERST].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonFireplace].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == -1 && Scape[Guy.Pos.x][Guy.Pos.y].Typ == 0)
                 {
                     Scape[Guy.Pos.x][Guy.Pos.y].AkNummer = 0;
-                    Bmp[BUTTSTOP].Phase = 0;
-                    Guy.Aktion = Action::FIREPLACE;
+                    Bmp[ButtonStop].Phase = 0;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Fireplace);
                 }
-                else if ((Bmp[BUTTWEITER].Phase != -1) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt == FEUERSTELLE))
+                else if (Bmp[ButtonWeiter].Phase != -1 && Scape[Guy.Pos.x][Guy.Pos.y].Objekt == Feuerstelle)
                 {
-                    Bmp[BUTTSTOP].Phase = 0;
+                    Bmp[ButtonStop].Phase = 0;
                     Guy.PosAlt = Guy.PosScreen;
                     Routing::ShortRoute(Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
                                         Scape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
-                    Guy.Aktion = Action::FIREPLACE;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Fireplace);
                 }
-                else PapierText = Renderer::DrawText(FEUERSTELLENBEDINGUNGEN, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(FEUERSTELLENBEDINGUNGEN, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTDESTROY].rcDes)) &&
-            (HauptMenue == Menu::BUILD) && (Bmp[BUTTDESTROY].Phase != -1))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[ButtonDestroy].rcDes) &&
+            HauptMenue == Menu::Build && Bmp[ButtonDestroy].Phase != -1)
         {
             Renderer::DrawText(BEGINNDESTROY, TXTTEXTFELD, 2);
-            Bmp[BUTTDESTROY].Animation = true;
-            if ((Button == 0) && (Push == 1))
+            Bmp[ButtonDestroy].Animation = true;
+            if (button == 0 && push == 1)
             {
-                PlaySound(Sound::CLICK2, 100);
-                if ((Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= FELD) &&
-                    (Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= FEUERSTELLE))
+                PlaySound(Sound::Click2, 100);
+                if (Scape[Guy.Pos.x][Guy.Pos.y].Objekt >= Feld
+                    && Scape[Guy.Pos.x][Guy.Pos.y].Objekt <= Feuerstelle)
                 {
                     Guy.AkNummer = 0;
-                    Guy.Aktion = Action::DESTROY;
+                    Guy.Aktion = static_cast<short>(Action::Actions::Destroy);
                 }
-                else PapierText = Renderer::DrawText(KEINBAUWERK, TXTPAPIER, 1);
+                else
+                {
+                    PapierText = Renderer::DrawText(KEINBAUWERK, TXTPAPIER, 1);
+                }
             }
         }
-        else if ((InRect(MousePosition.x, MousePosition.y, Bmp[INVPAPIER].rcDes)) && (HauptMenue == Menu::INVENTORY))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[InventoryPaper].rcDes) && HauptMenue == Menu::Inventory)
         {
-            for (short i = ROHAST; i <= ROHSCHLEUDER; i++)
+            for (short i = ResourceBranch; i <= ResourceSlingshot; i++)
             {
-                if (InRect(MousePosition.x, MousePosition.y, Bmp[i].rcDes) && (Guy.Inventar[i] > 0))
+                if (PointInRectangle(MousePosition.x, MousePosition.y, Bmp[i].rcDes) && Guy.Inventar[i] > 0)
                 {
-                    if ((Button == 0) && (Push == 1))
+                    if (button == 0 && push == 1)
                     {
                         if (TwoClicks == -1)
                         {
                             CursorTyp = i;
                             TwoClicks = i;
                         }
-                        else World::CheckBenutze(i);
+                        else
+                        {
+                            World::CheckUsage(i);
+                        }
                     }
                     switch (i)
                     {
-                    case ROHAST: Renderer::DrawText(AST, TXTTEXTFELD, 2);
+                    case ResourceBranch:
+                        Renderer::DrawText(AST, TXTTEXTFELD, 2);
                         break;
-                    case ROHSTEIN: Renderer::DrawText(STEIN, TXTTEXTFELD, 2);
+                    case ResourceStone:
+                        Renderer::DrawText(STEIN, TXTTEXTFELD, 2);
                         break;
-                    case ROHAXT: Renderer::DrawText(AXT, TXTTEXTFELD, 2);
+                    case ResourceAxe:
+                        Renderer::DrawText(AXT, TXTTEXTFELD, 2);
                         break;
-                    case ROHBLATT: Renderer::DrawText(BLATT, TXTTEXTFELD, 2);
+                    case ResourceLeaf:
+                        Renderer::DrawText(BLATT, TXTTEXTFELD, 2);
                         break;
-                    case ROHSTAMM: Renderer::DrawText(STAMM, TXTTEXTFELD, 2);
+                    case ResourceTrunk:
+                        Renderer::DrawText(STAMM, TXTTEXTFELD, 2);
                         break;
-                    case ROHEGGE: Renderer::DrawText(EGGE, TXTTEXTFELD, 2);
+                    case ResourceHarrow:
+                        Renderer::DrawText(EGGE, TXTTEXTFELD, 2);
                         break;
-                    case ROHLIANE: Renderer::DrawText(LIANE, TXTTEXTFELD, 2);
+                    case ResourceVine:
+                        Renderer::DrawText(LIANE, TXTTEXTFELD, 2);
                         break;
-                    case ROHANGEL: Renderer::DrawText(ANGEL, TXTTEXTFELD, 2);
+                    case ResourceFishingRod:
+                        Renderer::DrawText(ANGEL, TXTTEXTFELD, 2);
                         break;
-                    case ROHHAMMER: Renderer::DrawText(HAMMERTEXT, TXTTEXTFELD, 2);
+                    case ResourceHammer:
+                        Renderer::DrawText(HAMMERTEXT, TXTTEXTFELD, 2);
                         break;
-                    case ROHFERNROHR: Renderer::DrawText(FERNROHR, TXTTEXTFELD, 2);
+                    case ResourceTelescope:
+                        Renderer::DrawText(FERNROHR, TXTTEXTFELD, 2);
                         break;
-                    case ROHSTREICHHOLZ: Renderer::DrawText(STREICHHOLZ, TXTTEXTFELD, 2);
+                    case ResourceMatchstick:
+                        Renderer::DrawText(STREICHHOLZ, TXTTEXTFELD, 2);
                         break;
-                    case ROHSCHAUFEL: Renderer::DrawText(SCHAUFEL, TXTTEXTFELD, 2);
+                    case ResourceShovel:
+                        Renderer::DrawText(SCHAUFEL, TXTTEXTFELD, 2);
                         break;
-                    case ROHKARTE: Renderer::DrawText(KARTE, TXTTEXTFELD, 2);
+                    case ResourceMap:
+                        Renderer::DrawText(KARTE, TXTTEXTFELD, 2);
                         break;
-                    case ROHSCHLEUDER: Renderer::DrawText(SCHLEUDER, TXTTEXTFELD, 2);
+                    case ResourceSlingshot:
+                        Renderer::DrawText(SCHLEUDER, TXTTEXTFELD, 2);
+                        break;
+                    default:
                         break;
                     }
 
@@ -889,57 +1081,78 @@ namespace Math
                 }
             }
         }
-        else if (InRect(MousePosition.x, MousePosition.y, TextBereich[TXTTAGESZEIT].rcText))
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, TextBereich[TXTTAGESZEIT].rcText))
+        {
             Renderer::DrawText(SOSPAET, TXTTEXTFELD, 2);
-        else if (InRect(MousePosition.x, MousePosition.y, TextBereich[TXTCHANCE].rcText))
+        }
+        else if (PointInRectangle(MousePosition.x, MousePosition.y, TextBereich[TXTCHANCE].rcText))
+        {
             Renderer::DrawText(CHANCETEXT, TXTTEXTFELD, 2);
+        }
         else // TwoClicks löschen
         {
-            if ((Button == 0) && (Push == 1)) PlaySound(Sound::CLICK, 100);
+            if (button == 0 && push == 1)
+            {
+                PlaySound(Sound::Click, 100);
+            }
             TwoClicks = -1;
         }
     }
 
-    bool InDreieck(short X, short Y, short X0, short Y0, short X1, short Y1, short X3, short Y3)
+    bool PointInTriangle(short X, short Y, short X0, short Y0, short X1, short Y1, short X3, short Y3)
     {
-        float x = static_cast<float>(X);
-        float y = static_cast<float>(Y);
-        float x0 = static_cast<float>(X0);
-        float y0 = static_cast<float>(Y0);
-        float x1 = static_cast<float>(X1);
-        float y1 = static_cast<float>(Y1);
-        float x3 = static_cast<float>(X3);
-        float y3 = static_cast<float>(Y3);
+        auto x = static_cast<float>(X);
+        auto y = static_cast<float>(Y);
+        auto x0 = static_cast<float>(X0);
+        auto y0 = static_cast<float>(Y0);
+        auto x1 = static_cast<float>(X1);
+        auto y1 = static_cast<float>(Y1);
+        auto x3 = static_cast<float>(X3);
+        auto y3 = static_cast<float>(Y3);
 
         float c = (x - x1) / (x0 - x1);
-        if (c < 0) return false;
+        if (c < 0)
+        {
+            return false;
+        }
         float d = ((y - y3) * (x0 - x1) - (x - x1) * (y0 - y3)) / ((y1 - y3) * (x0 - x1));
-        if (d < 0) return false;
+        if (d < 0)
+        {
+            return false;
+        }
         float b = ((y - y0) * (x1 - x0) - (x - x0) * (y1 - y0)) / ((x1 - x0) * (y3 - y1));
-        if (b < 0) return false;
+        if (b < 0)
+        {
+            return false;
+        }
         float a = (x - x0) / (x1 - x0) - b;
-        if (a < 0) return false;
+        if (a < 0)
+        {
+            return false;
+        }
+
         return true;
     }
 
-    bool InRect(short x, short y, RECT rcRect)
+    bool PointInRectangle(short x, short y, RECT rectangle)
     {
-        if ((x <= rcRect.right) && (x >= rcRect.left) &&
-            (y <= rcRect.bottom) && (y >= rcRect.top))
-            return true;
-        return false;
+        return x <= rectangle.right && x >= rectangle.left &&
+            y <= rectangle.bottom && y >= rectangle.top;
     }
 
-    void CalcGuyKoor()
+    void CalculateGuyCoordinates()
     {
         if (Step >= Steps)
         {
             RoutePunkt++;
 
-            if ((RoutePunkt >= (RouteLaenge > 1 ? 2 * (RouteLaenge - 1) : 1) ||
-                ((Guy.Aktion == Action::CANCEL) && (RouteLaenge > 1))))
+            if (RoutePunkt >= (RouteLaenge > 1 ? 2 * (RouteLaenge - 1) : 1)
+                || Guy.Aktion == static_cast<int>(Action::Actions::Cancel) && RouteLaenge > 1)
             {
-                if (RouteLaenge > 1) Bmp[BUTTSTOP].Phase = -1;
+                if (RouteLaenge > 1)
+                {
+                    Bmp[ButtonStop].Phase = -1;
+                }
                 Bmp[Guy.Zustand].Phase = 0;
                 Guy.Aktiv = false;
                 RouteZiel.x = -1;
@@ -948,64 +1161,125 @@ namespace Math
             }
             Guy.Pos.x = Route[(RoutePunkt + 1) / 2].x;
             Guy.Pos.y = Route[(RoutePunkt + 1) / 2].y;
-            World::Entdecken();
+            World::Discover();
 
             if (BootsFahrt)
-                World::AddTime(0, Scape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].LaufZeit * 3);
-            else World::AddTime(0, Scape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].LaufZeit * 5);
-            World::AddResource(NAHRUNG, -1);
-            World::AddResource(WASSER, -1);
-
-            if ((Guy.Zustand == GUYSCHIFF) || (Guy.Zustand == GUYSCHWIMMEN)) Guy.Zustand -= 2; // nichts machen
-            else if (BootsFahrt) Guy.Zustand = GUYBOOTLINKS;
-            else Guy.Zustand = GUYLINKS;
-
-            if (RouteLaenge > 1) // Bei normaler Routenabarbeitung die Richung Kachelmäßig rausfinden
             {
-                if (Route[RoutePunkt / 2].x > Route[RoutePunkt / 2 + 1].x) Guy.Zustand += 0;
-                else if (Route[RoutePunkt / 2].x < Route[RoutePunkt / 2 + 1].x) Guy.Zustand += 2;
-                else if (Route[RoutePunkt / 2].y < Route[RoutePunkt / 2 + 1].y) Guy.Zustand += 3;
-                else if (Route[RoutePunkt / 2].y > Route[RoutePunkt / 2 + 1].y) Guy.Zustand += 1;
+                World::AddTime(0, Scape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].LaufZeit * 3);
             }
             else
             {
-                if ((RouteKoor[RoutePunkt].x > RouteKoor[RoutePunkt + 1].x) &&
-                    (RouteKoor[RoutePunkt].y >= RouteKoor[RoutePunkt + 1].y))
+                World::AddTime(0, Scape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].LaufZeit * 5);
+            }
+            World::AddResource(NAHRUNG, -1);
+            World::AddResource(WASSER, -1);
+
+            if (Guy.Zustand == GuySchiff || Guy.Zustand == GuySchwimmen)
+            {
+                Guy.Zustand -= 2; // nichts machen
+            }
+            else if (BootsFahrt)
+            {
+                Guy.Zustand = GuyBootLinks;
+            }
+            else
+            {
+                Guy.Zustand = GuyLinks;
+            }
+
+            if (RouteLaenge > 1) // Bei normaler Routenabarbeitung die Richung Kachelmäßig rausfinden
+            {
+                if (Route[RoutePunkt / 2].x > Route[RoutePunkt / 2 + 1].x)
+                {
                     Guy.Zustand += 0;
-                else if ((RouteKoor[RoutePunkt].x <= RouteKoor[RoutePunkt + 1].x) &&
-                    (RouteKoor[RoutePunkt].y > RouteKoor[RoutePunkt + 1].y))
-                    Guy.Zustand += 1;
-                else if ((RouteKoor[RoutePunkt].x < RouteKoor[RoutePunkt + 1].x) &&
-                    (RouteKoor[RoutePunkt].y <= RouteKoor[RoutePunkt + 1].y))
+                }
+                else if (Route[RoutePunkt / 2].x < Route[RoutePunkt / 2 + 1].x)
+                {
                     Guy.Zustand += 2;
-                else if ((RouteKoor[RoutePunkt].x >= RouteKoor[RoutePunkt + 1].x) &&
-                    (RouteKoor[RoutePunkt].y < RouteKoor[RoutePunkt + 1].y))
+                }
+                else if (Route[RoutePunkt / 2].y < Route[RoutePunkt / 2 + 1].y)
+                {
                     Guy.Zustand += 3;
+                }
+                else
+                {
+                    if (Route[RoutePunkt / 2].y > Route[RoutePunkt / 2 + 1].y)
+                    {
+                        Guy.Zustand += 1;
+                    }
+                }
+            }
+            else
+            {
+                if (RouteKoor[RoutePunkt].x > RouteKoor[RoutePunkt + 1].x
+                    && RouteKoor[RoutePunkt].y >= RouteKoor[RoutePunkt + 1].y)
+                {
+                    Guy.Zustand += 0;
+                }
+                else if (RouteKoor[RoutePunkt].x <= RouteKoor[RoutePunkt + 1].x
+                    && RouteKoor[RoutePunkt].y > RouteKoor[RoutePunkt + 1].y)
+                {
+                    Guy.Zustand += 1;
+                }
+                else if (RouteKoor[RoutePunkt].x < RouteKoor[RoutePunkt + 1].x
+                    && RouteKoor[RoutePunkt].y <= RouteKoor[RoutePunkt + 1].y)
+                {
+                    Guy.Zustand += 2;
+                }
+                else if (RouteKoor[RoutePunkt].x >= RouteKoor[RoutePunkt + 1].x
+                    && RouteKoor[RoutePunkt].y < RouteKoor[RoutePunkt + 1].y)
+                {
+                    Guy.Zustand += 3;
+                }
             }
 
             // Differenz zwischen Ziel und Start
-            short Dx = RouteKoor[RoutePunkt + 1].x - RouteKoor[RoutePunkt].x;
-            short Dy = RouteKoor[RoutePunkt + 1].y - RouteKoor[RoutePunkt].y;
+            const short dX = RouteKoor[RoutePunkt + 1].x - RouteKoor[RoutePunkt].x;
+            const short dY = RouteKoor[RoutePunkt + 1].y - RouteKoor[RoutePunkt].y;
 
             GuyPosScreenStart.x = RouteKoor[RoutePunkt].x;
             GuyPosScreenStart.y = RouteKoor[RoutePunkt].y;
             Step = 0;
 
-            if (abs(Dx) > abs(Dy))
+            if (std::abs(dX) > std::abs(dY))
             {
-                if (Dx > 0) Schrittx = 1;
-                else Schrittx = -1;
-                if (Dx == 0) Schritty = 0;
-                else Schritty = static_cast<float>(Dy) / static_cast<float>(Dx * Schrittx);
-                Steps = abs(Dx);
+                if (dX > 0)
+                {
+                    Schrittx = 1;
+                }
+                else
+                {
+                    Schrittx = -1;
+                }
+                if (dX == 0)
+                {
+                    Schritty = 0;
+                }
+                else
+                {
+                    Schritty = static_cast<float>(dY) / static_cast<float>(dX * Schrittx);
+                }
+                Steps = std::abs(dX);
             }
             else
             {
-                if (Dy > 0) Schritty = 1;
-                else Schritty = -1;
-                if (Dy == 0) Schrittx = 0;
-                else Schrittx = static_cast<float>(Dx) / static_cast<float>(Dy * Schritty);
-                Steps = abs(Dy);
+                if (dY > 0)
+                {
+                    Schritty = 1;
+                }
+                else
+                {
+                    Schritty = -1;
+                }
+                if (dY == 0)
+                {
+                    Schrittx = 0;
+                }
+                else
+                {
+                    Schrittx = static_cast<float>(dX) / static_cast<float>(dY * Schritty);
+                }
+                Steps = std::abs(dY);
             }
         }
 
@@ -1013,16 +1287,25 @@ namespace Math
         {
             Step++;
             short i;
-            if (BootsFahrt) i = 4;
-            else i = 2;
+            if (BootsFahrt)
+            {
+                i = 4;
+            }
+            else
+            {
+                i = 2;
+            }
             if (Step % i == 0)
             {
                 Bmp[Guy.Zustand].Phase++;
-                if (Bmp[Guy.Zustand].Phase >= Bmp[Guy.Zustand].Anzahl) Bmp[Guy.Zustand].Phase = 0;
+                if (Bmp[Guy.Zustand].Phase >= Bmp[Guy.Zustand].Anzahl)
+                {
+                    Bmp[Guy.Zustand].Phase = 0;
+                }
             }
             Guy.PosScreen.x = GuyPosScreenStart.x + ROUND(Step*Schrittx);
             Guy.PosScreen.y = GuyPosScreenStart.y + ROUND(Step*Schritty);
-            if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED)) // Beim Intro fährt die Kamera mit
+            if (Spielzustand == State::Intro || Spielzustand == State::Rescued) // Beim Intro fährt die Kamera mit
             {
                 Camera.x = Guy.PosScreen.x - static_cast<short>(rcGesamt.right / 2);
                 Camera.y = Guy.PosScreen.y - static_cast<short>(rcGesamt.bottom / 2);
@@ -1030,88 +1313,125 @@ namespace Math
         }
     }
 
-    void CalcKoor()
+    void CalculateTileCoordinates()
     {
         // Bildschirmkoordinaten berechnen und speichern
         for (short y = 0; y < MAXYKACH; y++)
+        {
             for (short x = 0; x < MAXXKACH; x++)
             {
                 Scape[x][y].xScreen = KXPIXEL / 2 * MAXXKACH + 32 +
                     x * KXPIXEL / 2 - y * KYPIXEL / 2 +
-                    (-6 * y) + x; // seltsame Korrekturen
+                    -6 * y + x; // seltsame Korrekturen
                 Scape[x][y].yScreen =
                     x * KXPIXEL / 2 + y * KYPIXEL / 2 - 16 * Scape[x][y].Hoehe +
-                    (-13 * x) + (-8 * y); // seltsame Korrekturen
+                    -13 * x + -8 * y; // seltsame Korrekturen
 
-                if ((x == 0) && (y == 0))
+                if (x == 0 && y == 0)
+                {
                     ScapeGrenze.top = Scape[x][y].yScreen;
-                if ((x == 0) && (y == MAXYKACH - 1))
+                }
+                if (x == 0 && y == MAXYKACH - 1)
+                {
                     ScapeGrenze.left = Scape[x][y].xScreen;
-                if ((x == MAXXKACH - 1) && (y == MAXYKACH - 1))
+                }
+                if (x == MAXXKACH - 1 && y == MAXYKACH - 1)
+                {
                     ScapeGrenze.bottom = Scape[x][y].yScreen + KYPIXEL;
-                if ((x == MAXXKACH - 1) && (y == 0))
+                }
+                if (x == MAXXKACH - 1 && y == 0)
+                {
                     ScapeGrenze.right = Scape[x][y].xScreen + KXPIXEL;
+                }
             }
+        }
     }
 
-    bool LineIntersect(ZWEID LineStartPos, ZWEID Pos, bool store)
+    bool LineIntersect(ZWEID startPosition, ZWEID position, bool store)
     {
-        float Sx, Sy;
-        bool erg = false;
+        float sX, sY;
+        auto erg = false;
 
         Steps = 0;
 
-        short Dx = LineStartPos.x - Pos.x;
-        short Dy = LineStartPos.y - Pos.y;
-        float x = LineStartPos.x;
-        float y = LineStartPos.y;
+        short dX = startPosition.x - position.x;
+        short dY = startPosition.y - position.y;
+        float x = startPosition.x;
+        float y = startPosition.y;
 
-        if (abs(Dx) > abs(Dy))
+        if (std::abs(dX) > std::abs(dY))
         {
-            if (Dx > 0) Sx = -1;
-            else Sx = 1;
-            if (Dx == 0) Sy = 0;
-            else Sy = static_cast<float>(Dy) / static_cast<float>(Dx * Sx);
-            Steps = abs(Dx);
+            if (dX > 0)
+            {
+                sX = -1;
+            }
+            else
+            {
+                sX = 1;
+            }
+            if (dX == 0)
+            {
+                sY = 0;
+            }
+            else
+            {
+                sY = static_cast<float>(dY) / static_cast<float>(dX * sX);
+            }
+            Steps = std::abs(dX);
         }
         else
         {
-            if (Dy > 0) Sy = -1;
-            else Sy = 1;
-            if (Dy == 0) Sx = 0;
-            else Sx = static_cast<float>(Dx) / static_cast<float>(Dy * Sy);
-            Steps = abs(Dy);
+            if (dY > 0)
+            {
+                sY = -1;
+            }
+            else
+            {
+                sY = 1;
+            }
+            if (dY == 0)
+            {
+                sX = 0;
+            }
+            else
+            {
+                sX = static_cast<float>(dX) / static_cast<float>(dY * sY);
+            }
+            Steps = std::abs(dY);
         }
 
         for (short i = 0; i < Steps; i++)
         {
-            if (!Scape[ROUND(x)][ROUND(y)].Begehbar) erg = true;
-            if ((store))
+            if (!Scape[ROUND(x)][ROUND(y)].Begehbar)
+            {
+                erg = true;
+            }
+            if (store)
             {
                 Route[RouteLaenge].x = ROUND(x);
                 Route[RouteLaenge].y = ROUND(y);
                 RouteLaenge++;
             }
-            float Nextx = x + Sx;
-            float Nexty = y + Sy;
-            if ((ROUND(y) != ROUND(Nexty)) && (ROUND(x) != ROUND(Nextx)))
+            auto nextX = x + sX;
+            auto nextY = y + sY;
+            if (ROUND(y) != ROUND(nextY) && ROUND(x) != ROUND(nextX))
             {
-                if (Scape[ROUND(x)][ROUND(Nexty)].Begehbar)
+                if (Scape[ROUND(x)][ROUND(nextY)].Begehbar)
                 {
-                    if ((store))
+                    if (store)
                     {
                         Route[RouteLaenge].x = ROUND(x);
-                        Route[RouteLaenge].y = ROUND(Nexty);
+                        Route[RouteLaenge].y = ROUND(nextY);
                         RouteLaenge++;
                     }
                 }
                 else
                 {
-                    if (Scape[ROUND(Nextx)][ROUND(y)].Begehbar)
+                    if (Scape[ROUND(nextX)][ROUND(y)].Begehbar)
                     {
-                        if ((store))
+                        if (store)
                         {
-                            Route[RouteLaenge].x = ROUND(Nextx);
+                            Route[RouteLaenge].x = ROUND(nextX);
                             Route[RouteLaenge].y = ROUND(y);
                             RouteLaenge++;
                         }
@@ -1122,46 +1442,46 @@ namespace Math
                     }
                 }
             }
-            y = Nexty;
-            x = Nextx;
+            y = nextY;
+            x = nextX;
         }
         // MessageBeep(MB_OK);
         return erg;
     }
 
-    void CalcRect(RECT rcBereich)
+    void CalculateRectangle(RECT area)
     {
-        if (rcRectdes.left < rcBereich.left)
+        if (rcRectdes.left < area.left)
         {
-            rcRectsrc.left = rcRectsrc.left + rcBereich.left - rcRectdes.left;
-            rcRectdes.left = rcBereich.left;
+            rcRectsrc.left = rcRectsrc.left + area.left - rcRectdes.left;
+            rcRectdes.left = area.left;
         }
-        if (rcRectdes.top < rcBereich.top)
+        if (rcRectdes.top < area.top)
         {
-            rcRectsrc.top = rcRectsrc.top + rcBereich.top - rcRectdes.top;
-            rcRectdes.top = rcBereich.top;
+            rcRectsrc.top = rcRectsrc.top + area.top - rcRectdes.top;
+            rcRectdes.top = area.top;
         }
-        if (rcRectdes.right > rcBereich.right)
+        if (rcRectdes.right > area.right)
         {
-            rcRectsrc.right = rcRectsrc.right + rcBereich.right - rcRectdes.right;
-            rcRectdes.right = rcBereich.right;
+            rcRectsrc.right = rcRectsrc.right + area.right - rcRectdes.right;
+            rcRectdes.right = area.right;
         }
-        if (rcRectdes.bottom > rcBereich.bottom)
+        if (rcRectdes.bottom > area.bottom)
         {
-            rcRectsrc.bottom = rcRectsrc.bottom + rcBereich.bottom - rcRectdes.bottom;
-            rcRectdes.bottom = rcBereich.bottom;
+            rcRectsrc.bottom = rcRectsrc.bottom + area.bottom - rcRectdes.bottom;
+            rcRectdes.bottom = area.bottom;
         }
     }
 
-    void ButtAniAus()
+    void DisableButtonAnimations()
     {
-        for (short i = BUTTGITTER; i <= BUTTDESTROY; i++)
+        for (short i = ButtonGitter; i <= ButtonDestroy; i++)
         {
             Bmp[i].Animation = false;
         }
     }
 
-    void AbspannCalc()
+    void CalculateCreditCoordinates()
     {
         short i;
 
@@ -1169,16 +1489,23 @@ namespace Math
         {
             for (short k = 1; k < 10; k++)
             {
-                if (AbspannListe[AbspannNr][k].Bild == -1) break;
-                if (!AbspannListe[AbspannNr][k].Aktiv) continue;
+                if (AbspannListe[AbspannNr][k].Bild == -1)
+                {
+                    break;
+                }
+                if (!AbspannListe[AbspannNr][k].Aktiv)
+                {
+                    continue;
+                }
                 i = 150 / LastBild;
                 Bmp[AbspannListe[AbspannNr][k].Bild].rcDes.top -= i;
 
                 if (Bmp[AbspannListe[AbspannNr][k].Bild].rcDes.top < MAXY - 400)
                 {
-                    if ((!AbspannListe[AbspannNr][k + 1].Aktiv) &&
-                        (AbspannListe[AbspannNr][k + 1].Bild != -1))
+                    if (!AbspannListe[AbspannNr][k + 1].Aktiv && AbspannListe[AbspannNr][k + 1].Bild != -1)
+                    {
                         AbspannListe[AbspannNr][k + 1].Aktiv = true;
+                    }
                 }
                 if (Bmp[AbspannListe[AbspannNr][k].Bild].rcDes.top < 0)
                 {
@@ -1193,7 +1520,7 @@ namespace Math
                         }
                         else
                         {
-                            AbspannNr = GUYLINKS;
+                            AbspannNr = GuyLinks;
                             AbspannZustand = 1;
                         }
                     }
@@ -1203,7 +1530,10 @@ namespace Math
         else if (AbspannZustand == 1)
         {
             i = LastBild / Bmp[AbspannNr].Geschwindigkeit;
-            if (i < 1) i = 1;
+            if (i < 1)
+            {
+                i = 1;
+            }
             if (Bild % i == 0)
             {
                 Bmp[AbspannNr].Phase++;
@@ -1211,74 +1541,121 @@ namespace Math
                 {
                     Bmp[AbspannNr].Phase = 0;
                     AbspannNr++;
-                    if (AbspannNr > GUYSCHLEUDER) AbspannNr = GUYLINKS;
+                    if (AbspannNr > GuySchleuder)
+                    {
+                        AbspannNr = GuyLinks;
+                    }
                 }
             }
         }
     }
 
-    void Animationen()
+    void Animations()
     {
         short i, j, loop; // Zwischenspeicher
 
-
         for (short y = 0; y < MAXYKACH; y++)
+        {
             for (short x = 0; x < MAXXKACH; x++)
             {
                 j = Scape[x][y].Objekt;
-                if ((j == -1) || (!Bmp[j].Animation)) continue;
+                if (j == -1 || !Bmp[j].Animation)
+                {
+                    continue;
+                }
                 i = LastBild / Bmp[j].Geschwindigkeit;
-                if (i < 1) i = 1;
+                if (i < 1)
+                {
+                    i = 1;
+                }
                 if (Bild % i == 0)
                 {
-                    if ((j < BAUM1DOWN) || (j > BAUM4DOWN) || // Die Baumfällenanimation nur ein mal abspielen
-                        (Scape[x][y].Phase != Bmp[j].Anzahl - 1))
+                    // Die Baumfällenanimation nur ein mal abspielen
+                    if (j < Baum1Down || j > Baum4Down || Scape[x][y].Phase != Bmp[j].Anzahl - 1)
+                    {
                         Scape[x][y].Phase++;
+                    }
                     if (Scape[x][y].Phase >= Bmp[j].Anzahl)
+                    {
                         Scape[x][y].Phase = 0;
+                    }
                 }
             }
+        }
 
-        for (j = BUTTGITTER; j <= BUTTDESTROY; j++)
+        for (j = ButtonGitter; j <= ButtonDestroy; j++)
         {
-            if (!Bmp[j].Animation) continue;
+            if (!Bmp[j].Animation)
+            {
+                continue;
+            }
             i = LastBild / Bmp[j].Geschwindigkeit;
-            if (i < 1) i = 1;
+            if (i < 1)
+            {
+                i = 1;
+            }
             if (Bild % i == 0)
             {
                 Bmp[j].Phase++;
-                if (Bmp[j].Phase >= Bmp[j].Anzahl) Bmp[j].Phase = 0;
+                if (Bmp[j].Phase >= Bmp[j].Anzahl)
+                {
+                    Bmp[j].Phase = 0;
+                }
             }
         }
 
         // Spielfigur
 
         // laufen
-        if (((Guy.Zustand >= GUYLINKS) && (Guy.Zustand <= GUYUNTEN)) ||
-            ((Guy.Zustand >= GUYBOOTLINKS) && (Guy.Zustand <= GUYBOOTUNTEN)) ||
-            (Guy.Zustand == GUYSCHIFF) || (Guy.Zustand == GUYSCHWIMMEN))
+        if (Guy.Zustand >= GuyLinks && Guy.Zustand <= GuyUnten
+            || Guy.Zustand >= GuyBootLinks && Guy.Zustand <= GuyBootUnten
+            || Guy.Zustand == GuySchiff || Guy.Zustand == GuySchwimmen)
         {
             i = LastBild / Bmp[Guy.Zustand].Geschwindigkeit;
-            if (i < 1) i = 1;
-            if (LastBild - Bmp[Guy.Zustand].Geschwindigkeit < 0) loop = 2;
-            else loop = 1;
-            if (BootsFahrt) loop = loop * 2;
-            for (short k = 0; k < loop; k++) if ((Bild % i == 0) && (Guy.Aktiv)) CalcGuyKoor();
+            if (i < 1)
+            {
+                i = 1;
+            }
+            if (LastBild - Bmp[Guy.Zustand].Geschwindigkeit < 0)
+            {
+                loop = 2;
+            }
+            else
+            {
+                loop = 1;
+            }
+            if (BootsFahrt)
+            {
+                loop *= 2;
+            }
+            for (short k = 0; k < loop; k++)
+            {
+                if (Bild % i == 0 && Guy.Aktiv)
+                {
+                    CalculateGuyCoordinates();
+                }
+            }
             return;
         }
         // sonstige Aktionen
-        if ((Guy.Zustand >= GUYSUCHEN) && (Guy.Zustand <= GUYSCHLEUDER) &&
-            (Bmp[Guy.Zustand].Phase != Bmp[Guy.Zustand].Anzahl))
+        if (Guy.Zustand >= GuySuchen && Guy.Zustand <= GuySchleuder
+            && Bmp[Guy.Zustand].Phase != Bmp[Guy.Zustand].Anzahl)
         {
             i = LastBild / Bmp[Guy.Zustand].Geschwindigkeit;
-            if (i < 1) i = 1;
+            if (i < 1)
+            {
+                i = 1;
+            }
             if (Bild % i == 0)
             {
                 Bmp[Guy.Zustand].Phase++;
                 if (Bmp[Guy.Zustand].Phase >= Bmp[Guy.Zustand].Anzahl)
                 {
                     Bmp[Guy.Zustand].Phase = 0;
-                    if (PapierText == -1) Guy.Aktiv = false;
+                    if (PapierText == -1)
+                    {
+                        Guy.Aktiv = false;
+                    }
                 }
             }
         }

@@ -4,11 +4,11 @@ namespace State
 {
     enum Type : short
     {
-        NOTHING = 0,
-        INTRO = 1,
-        GAME = 2,
-        OUTRO = 3,
-        RESCUED = 4,
-        LOGO = 5,
+        Nothing = 0,
+        Intro = 1,
+        Game = 2,
+        Outro = 3,
+        Rescued = 4,
+        Logo = 5,
     };
 }

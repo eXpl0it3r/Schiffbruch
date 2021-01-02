@@ -1,42 +1,39 @@
 #pragma once
 
-#include "headers.hpp"
-#include "extern.hpp"
-
 namespace Sound
 {
-    void Init();
-    void LoadSound(short Sound); // Lädt einen Sound in den Speicher		
-    void PlaySound(short Sound, short Volume); // Spiel eine Wavedatei mit Prozentualer Lautstärke
-    void StopSound(short Sound); // Stoppt ein Sound
+    void Initialize();
+    void LoadSound(short sound);               // Lädt einen Sound in den Speicher		
+    void PlaySound(short sound, short volume); // Spiel eine Wavedatei mit Prozentualer Lautstärke
+    void StopSound(short sound);               // Stoppt ein Sound
 
     enum Type
     {
-        NOTHING = 0,
-        STORM = 1,
-        SWIM = STORM + 1,
-        SPLAT = STORM + 2,
-        LOG = STORM + 3,
-        HIT = STORM + 4,
-        SLINGSHOT = STORM + 5,
-        DIG = STORM + 6,
-        HAMMER = STORM + 7,
-        CRASH = STORM + 8,
-        SNORE = STORM + 9,
-        DRINK = STORM + 10,
-        CRACKLE = STORM + 11,
-        FISH = STORM + 12,
-        FOREST = 14,
-        FIRE = FOREST + 1,
-        SURF = FOREST + 2,
-        TIMBER = FOREST + 3,
-        RIVER = FOREST + 4,
-        CLICK = 19,
-        CLICK2 = CLICK + 1,
-        LOGO = CLICK + 2,
-        OUTRO = CLICK + 3,
-        WOLF = CLICK + 4,
-        INVENTION = CLICK + 5,
-        COUNT = INVENTION + 1, // Number of sounds
+        Nothing = 0,
+        Storm = 1,
+        Swim = Storm + 1,
+        Splat = Storm + 2,
+        Log = Storm + 3,
+        Hit = Storm + 4,
+        Slingshot = Storm + 5,
+        Dig = Storm + 6,
+        Hammer = Storm + 7,
+        Crash = Storm + 8,
+        Snore = Storm + 9,
+        Drink = Storm + 10,
+        Crackle = Storm + 11,
+        Fish = Storm + 12,
+        Forest = 14,
+        Fire = Forest + 1,
+        Surf = Forest + 2,
+        Timber = Forest + 3,
+        River = Forest + 4,
+        Click = 19,
+        Click2 = Click + 1,
+        Logo = Click + 2,
+        Outro = Click + 3,
+        Wolf = Click + 4,
+        Invention = Click + 5,
+        Count = Invention + 1, // Number of sounds
     };
 } // namespace Sound
