@@ -17,7 +17,7 @@ extern RECT ScapeGrenze; // Diese Koordinaten zeigen die Größe der Landschaft 
 extern short CursorTyp; // Welcher Cursortyp?
 extern short RouteLaenge; // Länge
 extern short RoutePunkt; // Aktueller Index in RouteKoor
-extern short Bild, LastBild; // Anzahl der Bilder in der Sekunde
+extern short CurrentFrame, FPS; // Anzahl der Bilder in der Sekunde
 extern RECT rcRectdes, rcRectsrc; // Ständig benötigte Variable zum Blitten
 extern short Tag, Hours, Minutes; // Wieviel Uhr (0-12h)
 extern char StdString[1024]; // Standard string
@@ -81,7 +81,7 @@ extern sf::Texture *lpDDSButtons; // DirectDraw Buttons surface
 extern sf::Texture *lpDDSInventar; // DirectDraw Inventar surface
 
 extern sf::Texture *lpDDSSchatzkarte; // SchatzkartenSurface
-extern sf::Sprite *s_treasureMapSprite;
+//extern sf::Sprite *s_treasureMapSprite;
 
 extern sf::Sprite *s_creditsSprite;
 
@@ -96,4 +96,4 @@ extern int s_previousCreditsOverlay;
 
 extern int s_previousCreditsOverlay;
 
-const char *GetLanguageString(const int index);
+const char *GetLanguageString(const unsigned index);

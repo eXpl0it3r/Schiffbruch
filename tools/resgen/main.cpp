@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     }
 
     const std::string cFilename = inFilename + ".c";
-    std::ofstream cStream(cFilename);
+    std::ofstream cStream(cFilename, std::ios::binary|std::ios::out);
     if (!cStream.is_open()) {
         std::cerr << "Failed to open " << cFilename << " for writing" << std::endl;
         return 1;
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     hStream << "#endif//__cplusplus" << std::endl;
     hStream << "const unsigned char " << resname << "_data[];" << std::endl << std::endl;
 
-    hStream << "static const unsigned long long " << resname << "_size = " << std::filesystem::file_size(inFilepath) << ";" << std::endl;
+    hStream << "static const unsigned long long " << resname << "_size = " << std::filesystem::file_size(inFilepath) << "ull;" << std::endl;
 
     // Generate .c
     cStream << "// Automatically generated from " << inFilename << std::endl << std::endl;

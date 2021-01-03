@@ -9,9 +9,36 @@ FetchContent_MakeAvailable(SFML)
 
 include_directories(${PROJECT_BINARY_DIR})
 
+option(ENABLE_IPO "Enable link-time optimization, improves speed and memory usage (https://en.wikipedia.org/wiki/Interprocedural_optimization)")
+if (ENABLE_IPO)
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT IPO_AVAILABLE OUTPUT IPO_ERROR)
+    if (IPO_AVAILABLE)
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION True)
+
+        if (CMAKE_COMPILER_IS_GNUCXX)
+            message(STATUS "Enabling all link time optimizations")
+            add_definitions(-fuse-linker-plugin)
+        else()
+            message(STATUS "Disabling linker plugin for link time optimization")
+        endif()
+    else()
+        message(STATUS "IPO/LTO not supported: <${IPO_ERROR}>")
+    endif()
+else()
+    message(STATUS "Not enabling IPO/LTO")
+endif()
+
+option(ENABLE_SANITIZERS "Enable runtime sanitizing (for development)")
+if (ENABLE_SANITIZERS)
+    message("Enabling asan and ubsan")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+endif()
+
 add_subdirectory(tools/resgen)
 add_resource(MISC_BMP "bin/images/Misc.BMP")
-add_resource(PANEL_BMP "bin/images/Panel.bmp")
+add_resource(PANEL_PNG "bin/images/Panel.png")
 add_resource(GUYANI_BMP "bin/images/GuyAni.bmp")
 add_resource(ANIMATION_BMP "bin/images/Animation.BMP")
 add_resource(BAUM_BMP "bin/images/Baum.bmp")
@@ -25,6 +52,7 @@ add_resource(INVENTAR_BMP "bin/images/Inventar.bmp")
 add_resource(BAU_BMP "bin/images/Bau.bmp")
 add_resource(CREDITS_BMP "bin/images/Credits.bmp")
 add_resource(LOGO_BMP "bin/images/Logo.bmp")
+add_resource(LOGO_PNG "bin/images/Logo.png")
 
 add_resource(ABSPANN_WAV "bin/sounds/abspann.wav")
 add_resource(ANGEL_WAV "bin/sounds/angel.wav")
@@ -81,7 +109,7 @@ add_executable(Schiffbruch
     src/World.hpp
 
     ${MISC_BMP}
-    ${PANEL_BMP}
+    ${PANEL_PNG}
     ${GUYANI_BMP}
     ${ANIMATION_BMP}
     ${BAUM_BMP}
@@ -95,6 +123,7 @@ add_executable(Schiffbruch
     ${BAU_BMP}
     ${CREDITS_BMP}
     ${LOGO_BMP}
+    ${LOGO_PNG}
 
     ${ABSPANN_WAV}
     ${ANGEL_WAV}

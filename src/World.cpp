@@ -64,11 +64,11 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
             break;
 
         case RAW_LEAF:
-            name = GetLanguageString(BLATT);
+            name = GetLanguageString(STRING_LEAF);
             break;
 
         case RAW_LIANA:
-            name = GetLanguageString(LIANE);
+            name = GetLanguageString(STRING_LIANA);
             break;
 
         case RAW_TREE_TRUNK:
@@ -494,8 +494,8 @@ void Compute(short MinimumSize, short maximumSize)// Size of the island in numbe
                 Landscape[x][y].FireTimer = 0;
             }
 
-        short x; // Startposition der Berechnung
-        short y;
+        int x; // Startposition der Berechnung
+        int y;
         Landscape[MidX][MidY].Type = 0; // Gipfel festlegen (Flach)
         Landscape[MidX][MidY].Height = MOUNTAIN_HEIGHT; // und mit der Hoehe
 
@@ -900,13 +900,13 @@ void Compute(short MinimumSize, short maximumSize)// Size of the island in numbe
                         }
                     }
 
-                    // Verzwickte Fälle ausfiltern
-                    if (((Vierecke[Landscape[x][y].Type][1][2] == 2) && (Vierecke[Landscape[x + 1][y - 1].Type][0][3] == 2)) ||
-                            ((Vierecke[Landscape[x][y].Type][1][4] == 2) && (Vierecke[Landscape[x + 1][y - 1].Type][0][1] == 2))) {
+                    // Filter out tricky cases
+                    if (((Vierecke[Landscape[x][y].Type][1][2] == 2) && (y > 0 && Vierecke[Landscape[x + 1][y - 1].Type][0][3] == 2)) ||
+                            ((Vierecke[Landscape[x][y].Type][1][4] == 2) && (y > 0 && Vierecke[Landscape[x + 1][y - 1].Type][0][1] == 2))) {
                         hasFound = false;
                     }
 
-                    // Nebeninseln vermeiden
+                    // Avoid secondary islands
                     if (((Landscape[x + 1][y].Type == 0) && (Landscape[x + 1][y].Height == 0)) &&
                             ((Landscape[x][y + 1].Type == 0) && (Landscape[x][y + 1].Height == 0))) {
                         Landscape[x][y].Type = 0;
@@ -1429,9 +1429,11 @@ void CreateRiver() // Number of rivers and the minimum length
 
         for (m = 0; m < NUMBER_OF_RIVERS; m++) {
             for (i = 0; i <= riverLength[m]; i++) {
-                // Für die Kachel, einen Vorgang davor
-                Landscape[x1][y1].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.left);
-                Landscape[x1][y1].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.top);
+                // For the tile, one process before
+                if (x1 != -1 && y1 != -1) {
+                    Landscape[x1][y1].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.left);
+                    Landscape[x1][y1].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.top);
+                }
 
                 x1 = Rivers[m][i].x;
                 y1 = Rivers[m][i].y;
@@ -1714,7 +1716,9 @@ void CreatePirateWreck()
 
 void Treasure()
 {
+    puts("Rendering treasure map");
     sf::Image treasureMap;
+    treasureMap.create(TREASUREMAP_WIDTH, TREASUREMAP_HEIGHT, sf::Color::Red);
     sf::Image landscape = Renderer::landscapeImage();
     while (true) {
 
@@ -1736,6 +1740,7 @@ void Treasure()
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     Renderer::GetPixel(static_cast<short>(i + Landscape[SchatzPos.x][SchatzPos.y].xScreen - TREASUREMAP_WIDTH / 2 + TILE_SIZE_X / 2),
                                        static_cast<short>(j + Landscape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), &landscape);
+//                    printf("r %d g %d b %d\n", rgbStruct.r, rgbStruct.g, rgbStruct.b);
                     Renderer::PutPixel(i, j,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
@@ -1751,8 +1756,8 @@ void Treasure()
 //            rcRectdes.right = rcRectdes.left + Bmp[CROSS].Width;
 //            rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Height / 2;
 //            rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
-            lpDDSSchatzkarte->loadFromImage(treasureMap);
-            s_treasureMapSprite->setPosition(TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2, rcRectdes.left + Bmp[CROSS].Width);
+//            lpDDSSchatzkarte->loadFromImage(treasureMap);
+//            s_treasureMapSprite->setPosition(TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2, rcRectdes.left + Bmp[CROSS].Width);
 //            Renderer::Blit(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
 
 //            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
@@ -1777,13 +1782,13 @@ void Treasure()
                     }
                 }
             }
-            lpDDSSchatzkarte->loadFromImage(treasureMap);
-            Renderer::BlitToScreen(lpDDSSchatzkarte);
+//            Renderer::BlitToScreen(lpDDSSchatzkarte);
 
 //            lpDDSSchatzkarte->Unlock(nullptr);
             break;
         }
     }
+    lpDDSSchatzkarte->loadFromImage(treasureMap);
 }
 
 void OnRawMaterialsUsed(short Objekt)
@@ -1796,7 +1801,7 @@ void OnRawMaterialsUsed(short Objekt)
             Bmp[BUTTON_CHOP].AnimationPhase = 0;
             Bmp[BUTTON_BOAT].AnimationPhase = 0;
             Bmp[BUTTON_PIPE].AnimationPhase = 0;
-            PapierText = Renderer::DrawText(BAUEAXT, TXTPAPIER, 1);
+            PapierText = Renderer::DrawText(STRING_BUILD_AXE, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
         } else if (Guy.Inventory[RAW_HOE] < 1) {
             Guy.Inventory[RAW_STONE]--;
@@ -1806,7 +1811,7 @@ void OnRawMaterialsUsed(short Objekt)
             PapierText = Renderer::DrawText(BAUEEGGE, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
         } else {
-            PapierText = Renderer::DrawText(STEINPLUSASTNICHTS, TXTPAPIER, 1);
+            PapierText = Renderer::DrawText(STRING_STONE_BRANCH_NOTHING_ELSE, TXTPAPIER, 1);
         }
     } else if (((Objekt == RAW_LIANA) && (TwoClicks == RAW_TREE_BRANCH)) || ((Objekt == RAW_TREE_BRANCH) && (TwoClicks == RAW_LIANA))) {
         if (Guy.Inventory[RAW_FISHING_POLE] < 1) {
@@ -1831,7 +1836,7 @@ void OnRawMaterialsUsed(short Objekt)
             PapierText = Renderer::DrawText(STEINPLUSLIANENICHTS, TXTPAPIER, 1);
         }
     } else {
-        PapierText = Renderer::DrawText(NICHTBASTELN, TXTPAPIER, 1);
+        PapierText = Renderer::DrawText(STRING_CANT_BUILD, TXTPAPIER, 1);
     }
 
     TwoClicks = -1;

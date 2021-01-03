@@ -1,8 +1,4 @@
-const char *GetLanguageString(const int index)
-{
-    static const char *strings[] = {
-        "Since this file is used 1-indexed, this line is not used.",
-        "Dies ist ein Test. /a Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. /z /z Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test.",
+const char *GetLanguageString(const unsigned index) { static const char *strings[] = { "Since this file is used 1-indexed, this line is not used.", "Dies ist ein Test. /a Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. /z /z Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test.",
         "Turn grid on",
         "Turn grid off",
         "This feature has not been included yet, unfortunately. Please wait for a future version of Landscape. The full range of features will be available at that time.",
@@ -14,7 +10,7 @@ const char *GetLanguageString(const int index)
         "Eat and drink",
         "Opens the Inventory",
         "Closes the Inventory",
-        //".",
+        ".",
         "Branch",
         "Stone",
         "After searching forever in the blazing sun, I found a branch-- exactly what I've been looking for. The search was worth it.",
@@ -25,10 +21,10 @@ const char *GetLanguageString(const int index)
         "Ax",
         "There is neither anything to eat nor to drink here.",
         "With great skill, I combined a stone with a branch and made an ax. With this, I'm now in a situation where I can prepare wood, for example:  chop down trees.",
-        "I bet I could build something else from a branch and a stone.",
-        "Unfortunately, there's nothing else that I can build with a stone and a branch.",
+        "I bet I could build something else from a branch and a stone. Unfortunately, there's nothing else that I can build with a stone and a branch.",
         "I can't build anything sensible from these two things.  Maybe I could try a couple of other things?",
-        "Hmmmm, that's a big leaf! I could use that, I bet:  I'd better take it along just to be safe.  Who knows whether I'll ever come across something this unusual again?gYet another very rare leaf.  They show up quite frequently.  Therefore, I won't bother taking it along.",
+        "Hmmmm, that's a big leaf! I could use that, I bet:  I'd better take it along just to be safe.  Who knows whether I'll ever come across something this unusual again?",
+        "Yet another very rare leaf.  They show up quite frequently.  Therefore, I won't bother taking it along.",
         "Leaf",
         "I don't need any more tree trunks right now. ",
         "Opens the Build Menu",
@@ -118,7 +114,6 @@ const char *GetLanguageString(const int index)
         "Hunt for birds",
         "It's too dangerous to go to sleep in this small boat.",
         "The waves are too high to see anything.",
-        //"5",
         "I can only dig for treasure on an open and flat area.",
         "I can only lay out fields on flat, damp, and open meadows.",
         "I can build tents only on flat and open areas.",
@@ -145,7 +140,7 @@ const char *GetLanguageString(const int index)
         "Turn off sound",
         "Sorry. No sound"
     };
-    if (index < 0 || index >= sizeof strings) {
+    if (index >= sizeof strings) {
         return "????";
     }
     return strings[index];

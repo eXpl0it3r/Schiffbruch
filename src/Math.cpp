@@ -28,24 +28,24 @@ void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
     // Info anzeigen
     Coordinate Erg = Renderer::GetTile((MousePosition.x + Camera.x), (MousePosition.y + Camera.y)); // Die angeklickte Kachel
 
-    if (Landscape[Erg.x][Erg.y].Discovered) {
+    if (Erg.x >= 0 && Erg.y >= 0 && Landscape[Erg.x][Erg.y].Discovered) {
         Text = GetLanguageString(45 + Landscape[Erg.x][Erg.y].Terrain);
 
         if ((Landscape[Erg.x][Erg.y].Object != -1) && (Landscape[Erg.x][Erg.y].Object != SEA_WAVES)) {
             Text += " ";
-            Text += GetLanguageString(MIT);
+            Text += GetLanguageString(STRING_WITH);
             Text += " ";
 
             if ((Landscape[Erg.x][Erg.y].Object >= TREE_1) && (Landscape[Erg.x][Erg.y].Object <= TREE_4)) {
-                Text += GetLanguageString(BAUMTEXT);
+                Text += GetLanguageString(STRING_TREE);
             } else if ((Landscape[Erg.x][Erg.y].Object >= RIVER_1) && (Landscape[Erg.x][Erg.y].Object <= FLOODGATE_6)) {
                 Text += GetLanguageString(FLUSSTEXT);
             } else if (Landscape[Erg.x][Erg.y].Object == BUSH) {
-                Text += GetLanguageString(BUSCHTEXT);
+                Text += GetLanguageString(STRING_BUSH);
             } else if (Landscape[Erg.x][Erg.y].Object == TENT) {
-                Text += GetLanguageString(ZELTTEXT);
+                Text += GetLanguageString(STRING_TENT);
             } else if (Landscape[Erg.x][Erg.y].Object == FIELD) {
-                Text += GetLanguageString(FELDTEXT);
+                Text += GetLanguageString(STRING_FIELD);
             } else if (Landscape[Erg.x][Erg.y].Object == BOAT) {
                 Text += GetLanguageString(BOOTTEXT);
             } else if (Landscape[Erg.x][Erg.y].Object == PIPE) {
@@ -360,7 +360,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_SEARCH].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[BUTTON_SEARCH].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNSUCHEN, TXTTEXTFELD, 2);
+        Renderer::DrawText(STRING_BEGIN_SEARCH, TXTTEXTFELD, 2);
         Bmp[BUTTON_SEARCH].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
@@ -387,12 +387,12 @@ void MouseInPanel(short Button, short Push)
                         (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase == 1))) {
                 Guy.CurrentAction = Action::DRINK;
             } else {
-                PapierText = Renderer::DrawText(KEINESSENTRINKEN, TXTPAPIER, 1);
+                PapierText = Renderer::DrawText(STRING_NOTHING_EAT_DRINK, TXTPAPIER, 1);
             }
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_SLEEP].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[BUTTON_SLEEP].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNSCHLAFEN, TXTTEXTFELD, 2);
+        Renderer::DrawText(STRING_BEGIN_SLEEP, TXTTEXTFELD, 2);
         Bmp[BUTTON_SLEEP].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
@@ -431,7 +431,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_FISH].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[BUTTON_FISH].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNANGELN, TXTTEXTFELD, 2);
+        Renderer::DrawText(STRING_BEGIN_FISHING, TXTTEXTFELD, 2);
         Bmp[BUTTON_FISH].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
@@ -443,7 +443,7 @@ void MouseInPanel(short Button, short Push)
                     (IsInBoat)) {
                 Guy.CurrentAction = Action::FISH;
             } else {
-                PapierText = Renderer::DrawText(KEINWASSER, TXTPAPIER, 1);
+                PapierText = Renderer::DrawText(STRING_NO_FISHINGWATER, TXTPAPIER, 1);
             }
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_IGNITE].targetRect)) &&
@@ -464,7 +464,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_LOOK_OUT].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[BUTTON_LOOK_OUT].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNAUSSCHAU, TXTTEXTFELD, 2);
+        Renderer::DrawText(STRING_BEGIN_LOOK_OUT, TXTTEXTFELD, 2);
         Bmp[BUTTON_LOOK_OUT].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
@@ -480,7 +480,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_TREASURE].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[BUTTON_TREASURE].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNSCHATZ, TXTTEXTFELD, 2);
+        Renderer::DrawText(STRING_BEGIN_TREASUREDIG, TXTTEXTFELD, 2);
         Bmp[BUTTON_TREASURE].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
@@ -519,7 +519,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_TREASUREMAP].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[BUTTON_TREASUREMAP].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNSCHATZKARTE, TXTTEXTFELD, 2);
+        Renderer::DrawText(STRING_BEGIN_TREASUREMAP, TXTTEXTFELD, 2);
         Bmp[BUTTON_TREASUREMAP].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
@@ -653,7 +653,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_SOS].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_SOS].AnimationPhase != -1)) {
-        std::string text = GetLanguageString(BEGINNSOS);
+        std::string text = GetLanguageString(STRINGBEGIN_WRITE_SOS);
         World::RawMaterialsDescriptionString(-1, -1, SOS);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
@@ -749,7 +749,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_HOUSE_3].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_HOUSE_3].AnimationPhase != -1)) {
-        std::string text = GetLanguageString(BEGINNHAUS3);
+        std::string text = GetLanguageString(STRING_BEGIN_HOUSE_3);
         World::RawMaterialsDescriptionString(-1, -1, HOUSE_3);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
@@ -784,7 +784,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_FIRE].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_FIRE].AnimationPhase != -1)) {
-        std::string text = GetLanguageString(BEGINNFEUERSTELLE);
+        std::string text = GetLanguageString(STRING_BEGIN_BONFIRE);
         World::RawMaterialsDescriptionString(-1, -1, BONFIRE);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
@@ -814,7 +814,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_DESTROY].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[BUTTON_DESTROY].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNDESTROY, TXTTEXTFELD, 2);
+        Renderer::DrawText(STRING_BEGIN_DESTROY, TXTTEXTFELD, 2);
         Bmp[BUTTON_DESTROY].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
@@ -825,7 +825,7 @@ void MouseInPanel(short Button, short Push)
                 Guy.ActionNumber = 0;
                 Guy.CurrentAction = Action::DESTROY;
             } else {
-                PapierText = Renderer::DrawText(KEINBAUWERK, TXTPAPIER, 1);
+                PapierText = Renderer::DrawText(STRING_NOTHING_TO_DESTROY, TXTPAPIER, 1);
             }
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[INVENTORY_PAPER].targetRect)) && (HauptMenue == Menu::INVENTORY)) {
@@ -850,11 +850,11 @@ void MouseInPanel(short Button, short Push)
                     break;
 
                 case RAW_AXE:
-                    Renderer::DrawText(AXT, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_AXE, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_LEAF:
-                    Renderer::DrawText(BLATT, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_LEAF, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_TREE_TRUNK:
@@ -866,7 +866,7 @@ void MouseInPanel(short Button, short Push)
                     break;
 
                 case RAW_LIANA:
-                    Renderer::DrawText(LIANE, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_LIANA, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_FISHING_POLE:
@@ -878,23 +878,23 @@ void MouseInPanel(short Button, short Push)
                     break;
 
                 case RAW_TELESCOPE:
-                    Renderer::DrawText(FERNROHR, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_TELESCOPE, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_MATCH:
-                    Renderer::DrawText(STREICHHOLZ, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_MATCHES, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_SHOVEL:
-                    Renderer::DrawText(SCHAUFEL, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_SHOVEL, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_MAP:
-                    Renderer::DrawText(KARTE, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_MAP, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_SLINGSHOT:
-                    Renderer::DrawText(SCHLEUDER, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_SLINGSHOT, TXTTEXTFELD, 2);
                     break;
                 }
 
@@ -1042,7 +1042,7 @@ void CalcGuyKoor()
         }
     }
 
-    if (Bild % Landscape[Guy.Pos.x][Guy.Pos.y].RunningTime == 0) {
+    if (CurrentFrame % Landscape[Guy.Pos.x][Guy.Pos.y].RunningTime == 0) {
         Step++;
         short i;
 
@@ -1228,7 +1228,7 @@ void AbspannCalc()
                 continue;
             }
 
-            i = 150 / LastBild;
+            i = 150 / FPS;
             Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top -= i;
 
             if (Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top < MAX_SCREEN_Y - 400) {
@@ -1254,13 +1254,13 @@ void AbspannCalc()
             }
         }
     } else if (CreditsState == 1) {
-        i = LastBild / Bmp[CreditsNum].Speed;
+        i = FPS / Bmp[CreditsNum].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (Bild % i == 0) {
+        if (CurrentFrame % i == 0) {
             Bmp[CreditsNum].AnimationPhase++;
 
             if (Bmp[CreditsNum].AnimationPhase >= Bmp[CreditsNum].AnimationPhaseCount) {
@@ -1288,13 +1288,13 @@ void Animationen()
                 continue;
             }
 
-            i = LastBild / Bmp[j].Speed;
+            i = FPS / Bmp[j].Speed;
 
             if (i < 1) {
                 i = 1;
             }
 
-            if (Bild % i == 0) {
+            if (CurrentFrame % i == 0) {
                 if ((j < TREE_DOWN_1) || (j > TREE_DOWN_4) || // Die Baumfällenanimation nur ein mal abspielen
                         (Landscape[x][y].AnimationPhase != Bmp[j].AnimationPhaseCount - 1)) {
                     Landscape[x][y].AnimationPhase++;
@@ -1311,13 +1311,13 @@ void Animationen()
             continue;
         }
 
-        i = LastBild / Bmp[j].Speed;
+        i = FPS / Bmp[j].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (Bild % i == 0) {
+        if (CurrentFrame % i == 0) {
             Bmp[j].AnimationPhase++;
 
             if (Bmp[j].AnimationPhase >= Bmp[j].AnimationPhaseCount) {
@@ -1332,13 +1332,13 @@ void Animationen()
     if (((Guy.AnimationState >= GUY_LEFT) && (Guy.AnimationState <= GUY_BELOW)) ||
             ((Guy.AnimationState >= GUY_BOAT_LEFT) && (Guy.AnimationState <= GUY_BOAT_BELOW)) ||
             (Guy.AnimationState == GUY_SHIP) || (Guy.AnimationState == GUY_SWIM)) {
-        i = LastBild / Bmp[Guy.AnimationState].Speed;
+        i = FPS / Bmp[Guy.AnimationState].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (LastBild - Bmp[Guy.AnimationState].Speed < 0) {
+        if (FPS - Bmp[Guy.AnimationState].Speed < 0) {
             loop = 2;
         } else {
             loop = 1;
@@ -1348,7 +1348,7 @@ void Animationen()
             loop = loop * 2;
         }
 
-        for (short k = 0; k < loop; k++) if ((Bild % i == 0) && (Guy.IsActive)) {
+        for (short k = 0; k < loop; k++) if ((CurrentFrame % i == 0) && (Guy.IsActive)) {
                 CalcGuyKoor();
             }
 
@@ -1358,13 +1358,13 @@ void Animationen()
     // sonstige Aktionen
     if ((Guy.AnimationState >= GUY_SEARCH) && (Guy.AnimationState <= GUY_SLINGSHOT) &&
             (Bmp[Guy.AnimationState].AnimationPhase != Bmp[Guy.AnimationState].AnimationPhaseCount)) {
-        i = LastBild / Bmp[Guy.AnimationState].Speed;
+        i = FPS / Bmp[Guy.AnimationState].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (Bild % i == 0) {
+        if (CurrentFrame % i == 0) {
             Bmp[Guy.AnimationState].AnimationPhase++;
 
             if (Bmp[Guy.AnimationState].AnimationPhase >= Bmp[Guy.AnimationState].AnimationPhaseCount) {

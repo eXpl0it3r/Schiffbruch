@@ -18,9 +18,9 @@
 #include "bin/images/Cursor.BMP.hpp"
 #include "bin/images/GuyAni.bmp.hpp"
 #include "bin/images/Inventar.bmp.hpp"
-#include "bin/images/Logo.bmp.hpp"
+#include "bin/images/Logo.png.hpp"
 #include "bin/images/Misc.BMP.hpp"
-#include "bin/images/Panel.bmp.hpp"
+#include "bin/images/Panel.png.hpp"
 #include "bin/images/Papier.bmp.hpp"
 #include "bin/images/Schrift1.BMP.hpp"
 #include "bin/images/Schrift2.bmp.hpp"
@@ -45,7 +45,6 @@ void finiObjects()
         delete minimapPlayerSprite;
 
         delete s_creditsSprite;
-        delete s_treasureMapSprite;
 
 //        if (lpDDPal != nullptr) {
 //            lpDDPal->Release();
@@ -153,21 +152,24 @@ bool InitDDraw()
         return false;
     }
 
-    // In diese Surface sollen das Panel geladen werden
-    lpDDSPanel = Renderer::loadTexture(resource_Panel_bmp_data, resource_Panel_bmp_size);
-    if (!lpDDSPanel) {
-        return false;
-    }
-
     // In diese Surface sollen die Animation der Figur gespeichert werden
     lpDDSGuyAni = Renderer::loadTexture(resource_GuyAni_bmp_data, resource_GuyAni_bmp_size);
     if (!lpDDSGuyAni) {
+        puts("failed to load guyani.bmp");
+        return false;
+    }
+
+    // In diese Surface sollen das Panel geladen werden
+    lpDDSPanel = Renderer::loadTexture(resource_Panel_png_data, resource_Panel_png_size);
+    if (!lpDDSPanel) {
+        puts("failed to load panel.png");
         return false;
     }
 
     // In diese Surface sollen die Landschaftsanimationen gespeichert werden
     lpDDSAnimation = Renderer::loadTexture(resource_Animation_BMP_data, resource_Animation_BMP_size);
     if (!lpDDSAnimation) {
+        puts("failed to load animation.bmp");
         return false;
     }
 
@@ -188,54 +190,63 @@ bool InitDDraw()
     // In diese Surface soll das Papier gespeichert werden
     lpDDSPaper = Renderer::loadTexture(resource_Papier_bmp_data, resource_Papier_bmp_size);
     if (!lpDDSPaper) {
+        puts("failed to load papier.bmp");
         return false;
     }
 
     // In diese Surface solln die Bäume gespeichert werden
     lpDDSBaum = Renderer::loadTexture(resource_Baum_bmp_data, resource_Baum_bmp_size);
     if (!lpDDSBaum) {
+        puts("failed to load baum.bmp");
         return false;
     }
 
     // In diese Surface solln die Cursor gespeichert werden
     lpDDSCursor = Renderer::loadTexture(resource_Cursor_BMP_data, resource_Cursor_BMP_size);
     if (!lpDDSCursor) {
+        puts("failed to load texture.bmp");
         return false;
     }
 
     // In diese Surface solln die Buttons gespeichert werden
     lpDDSButtons = Renderer::loadTexture(resource_Buttons_bmp_data, resource_Buttons_bmp_size);
     if (!lpDDSButtons) {
+        puts("failed to load buttons.bmp");
         return false;
     }
 
     // In diese Surface solln das TextFeld gespeichert werden
     lpDDSTextFeld = Renderer::loadTexture(resource_Textfeld_bmp_data, resource_Textfeld_bmp_size);
     if (!lpDDSTextFeld) {
+        puts("failed to load textfeld.bmp");
         return false;
     }
 
     // In diese Surface solln das Inventar gespeichert werden
     lpDDSInventar = Renderer::loadTexture(resource_Inventar_bmp_data, resource_Inventar_bmp_size);
     if (!lpDDSInventar) {
+        puts("failed to load inventar.bmp");
         return false;
     }
 
     // In diese Surface solln die Bauwerke gespeichert werden
     lpDDSBau = Renderer::loadTexture(resource_Bau_bmp_data, resource_Bau_bmp_size);
     if (!lpDDSBau) {
+        puts("failed to load bau.bmp");
         return false;
     }
 
     // In diese Surface solln die Credits gespeichert werden
     lpDDSCredits = Renderer::loadTexture(resource_Credits_bmp_data, resource_Credits_bmp_size);
     if (!lpDDSCredits) {
+        puts("failed to load credits.bmp");
         return false;
     }
 
     // In diese Surface solln das Logo gespeichert werden
-    lpDDSLogo = Renderer::loadTexture(resource_Logo_bmp_data, resource_Logo_bmp_size);
+    lpDDSLogo = Renderer::loadTexture(resource_Logo_png_data, resource_Logo_png_size);
     if (!lpDDSLogo) {
+        puts("failed to load logo.png");
         return false;
     }
 
@@ -250,8 +261,8 @@ bool InitDDraw()
 
     // In diese Surface soll die Schatzkarte gespeichert werden
     lpDDSSchatzkarte = Renderer::createEmptyTexture(2 * TREASUREMAP_WIDTH, 2 * TREASUREMAP_HEIGHT, sf::Color::Transparent);
-    s_treasureMapSprite = new sf::Sprite;
-    s_treasureMapSprite->setTexture(*lpDDSSchatzkarte);
+//    s_treasureMapSprite = new sf::Sprite;
+//    s_treasureMapSprite->setTexture(*lpDDSSchatzkarte);
 
     return true;
 }
@@ -492,51 +503,52 @@ short CheckKey()
             World::Generate();
         }
 
-        // Development
-        /*
+        // Development cheats
+#ifndef NDEBUG
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
         {
             short x,y;
-            for (y=0;y<MAXYKACH;y++)
-            for (x=0;x<MAXXKACH;x++)
-            Scape[x][y].Entdeckt = true;
+            for (y=0;y<MAX_TILESY;y++)
+            for (x=0;x<MAX_TILES_X;x++)
+            Landscape[x][y].Discovered = true;
             World::Generate();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
         {
-            Guy.Inventar[ROHAST] = 10;
-            Guy.Inventar[ROHSTEIN] = 10;
-            Guy.Inventar[ROHBLATT] = 10;
-            Guy.Inventar[ROHLIANE] = 10;
-            Guy.Inventar[ROHSTAMM] = 9;
+            Guy.Inventory[RAW_TREE_BRANCH] = 10;
+            Guy.Inventory[RAW_STONE] = 10;
+            Guy.Inventory[RAW_LEAF] = 10;
+            Guy.Inventory[RAW_LIANA] = 10;
+            Guy.Inventory[RAW_TREE_TRUNK] = 9;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            Guy.Inventar[ROHAXT]   = 1;
-            Guy.Inventar[ROHEGGE]  = 1;
-            Guy.Inventar[ROHANGEL]  = 1;
-            Guy.Inventar[ROHHAMMER]   = 1;
-            Guy.Inventar[ROHFERNROHR] = 1;
-            Guy.Inventar[ROHSTREICHHOLZ] = 1;
-            Guy.Inventar[ROHSCHAUFEL] = 1;
-            Guy.Inventar[ROHKARTE] = 1;
-            Guy.Inventar[ROHSCHLEUDER] = 1;
+            Guy.Inventory[RAW_AXE]   = 1;
+            Guy.Inventory[RAW_HOE]  = 1;
+            Guy.Inventory[RAW_FISHING_POLE]  = 1;
+            Guy.Inventory[RAW_HAMMER]   = 1;
+            Guy.Inventory[RAW_TELESCOPE] = 1;
+            Guy.Inventory[RAW_MATCH] = 1;
+            Guy.Inventory[RAW_SHOVEL] = 1;
+            Guy.Inventory[RAW_MAP] = 1;
+            Guy.Inventory[RAW_SLINGSHOT] = 1;
 
-            Bmp[BUTTFAELLEN].Phase  = 0;
-            Bmp[BUTTANGELN].Phase  = 0;
-            Bmp[BUTTANZUENDEN].Phase  = 0;
-            Bmp[BUTTAUSSCHAU].Phase = 0;
-            Bmp[BUTTSCHATZKARTE].Phase = 0;
-            Bmp[BUTTSCHATZ].Phase = 0;
-            Bmp[BUTTSCHLEUDER].Phase = 0;
-            Bmp[BUTTFELD].Phase  = 0;
-            Bmp[BUTTBOOT].Phase  = 0;
-            Bmp[BUTTROHR].Phase  = 0;
-            Bmp[BUTTHAUS1].Phase = 0;
-            Bmp[BUTTHAUS2].Phase = 0;
-            Bmp[BUTTHAUS3].Phase = 0;
-        }*/
+            Bmp[BUTTON_CHOP].AnimationPhase  = 0;
+            Bmp[BUTTON_FISH].AnimationPhase  = 0;
+            Bmp[BUTTON_IGNITE].AnimationPhase  = 0;
+            Bmp[BUTTON_LOOK_OUT].AnimationPhase = 0;
+            Bmp[BUTTON_TREASUREMAP].AnimationPhase = 0;
+            Bmp[BUTTON_TREASURE].AnimationPhase = 0;
+            Bmp[BUTTON_SLINGSHOT].AnimationPhase = 0;
+            Bmp[BUTTON_FARM].AnimationPhase  = 0;
+            Bmp[BUTTON_BOAT].AnimationPhase  = 0;
+            Bmp[BUTTON_PIPE].AnimationPhase  = 0;
+            Bmp[BUTTON_HOUSE_1].AnimationPhase = 0;
+            Bmp[BUTTON_HOUSE_2].AnimationPhase = 0;
+            Bmp[BUTTON_HOUSE_3].AnimationPhase = 0;
+        }//
+#endif
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             if (s_SoundState == 0) {

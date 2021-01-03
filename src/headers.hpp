@@ -1,5 +1,5 @@
 #pragma once
 
-#include "resource.h"
+#include "strings.h"
 
 #include "constants.hpp"

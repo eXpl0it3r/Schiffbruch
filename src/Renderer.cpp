@@ -40,8 +40,9 @@ sf::Texture *createEmptyTexture(const size_t width, const size_t height, const s
 
 }
 
-sf::Texture *loadTexture(const unsigned char data[], const size_t size)
+sf::Texture *loadTexture(const void *data, const size_t size)
 {
+    printf("Loading %lu bytes from %p...\n", size, data);
     sf::Image image;
     if (!image.loadFromMemory(data, size) || ! image.getSize().x) {
         fprintf(stderr, "Failed to load bmp\n");
@@ -155,9 +156,10 @@ void BlitToScreen(sf::Texture *from)
         srcrect.width = std::min(dstWidth, srcrect.width);
         srcrect.height = std::min(dstHeight, srcrect.height);
     }
-    assert(srcrect.width > 0 && srcrect.height > 0);
 
     if (srcrect.width <= 0 || srcrect.height <= 0) {
+//        puts("!!!!!!!! empty source rect !!!!!!!!");
+//        puts("!!!!!!!! probably the panel !!!!!!!!");
         return;
     }
     sf::Sprite sprite;
@@ -291,7 +293,7 @@ void DrawObjects()
                         ((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1))) {
                     if ((x == Guy.Pos.x) && (y == Guy.Pos.y)) {
                         Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 100);
-                    } else if (Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
+                    } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1 || Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
                         Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 90);
                     }
                 }
@@ -311,7 +313,7 @@ void DrawObjects()
                             ((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1))) {
                         if ((x == Guy.Pos.x) && (y == Guy.Pos.y)) {
                             Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 100);
-                        } else if (Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
+                        } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1 || Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
                             Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 90);
                         }
                     }
@@ -372,16 +374,17 @@ void DrawPaper()
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
     BlitToScreen(lpDDSPaper);
+
     rcRectdes.left = rcRectdes.left + 34;
     rcRectdes.top = rcRectdes.top + 77;
     rcRectdes.right = rcRectdes.right + 0;
     rcRectdes.bottom = TextBereich[TXTPAPIER].textRect.top + PapierText;
 
     // TODO: check that this works
-//    sf::RectangleShape rect(sf::Vector2f(lpDDSBack->getSize().x, lpDDSBack->getSize().y));
-//    rect.setFillColor(sf::Color(236, 215, 179));
-//    rect.setPosition(0, 0);
-//    Application::drawToScreen(rect);
+    sf::RectangleShape rect(sf::Vector2f(rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top));
+    rect.setFillColor(sf::Color(236, 215, 179));
+    rect.setPosition(rcRectdes.left, rcRectdes.top);
+    Application::drawToScreen(rect);
 
     rcRectsrc.left = 0;
     rcRectsrc.top = 77;
@@ -753,7 +756,7 @@ void DrawString(const char *string, short x, short y, short Art)
     }
 }
 
-short DrawText(int TEXT, short Bereich, short Art)
+short DrawText(const int TEXT, short Bereich, short Art)
 {
     short BWidth = 0;
     short BHeight = 0;
@@ -872,17 +875,12 @@ short DrawText(int TEXT, short Bereich, short Art)
 
 void HideText(short Area)
 {
-    // TODO
     TextBereich[Area].HasText = false;
-    // Another worst possible way to do it award please
-//    for (int x=TextBereich[Area].textRect.left; x<TextBereich[Area].textRect.right; x++) {
-//        for (int y=TextBereich[Area].textRect.top; y<TextBereich[Area].textRect.bottom; y++) {
-//            sf::Color c = lpDDSSchrift->getPixel(x, y);
-//            c.a = 0;
-//            lpDDSSchrift->setPixel(x, y, c);
-//        }
-//    }
-//    lpDDSSchrift->Blt(&TextBereich[Area].textRect, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+    Application::clearText(TextBereich[Area].textRect.left,
+                           TextBereich[Area].textRect.top,
+                           TextBereich[Area].textRect.right - TextBereich[Area].textRect.left,
+                           TextBereich[Area].textRect.bottom - TextBereich[Area].textRect.top
+                           );
 }
 
 void DrawSchatzkarte()
@@ -895,7 +893,7 @@ void DrawSchatzkarte()
     rcRectsrc.right = TREASUREMAP_WIDTH;
     rcRectsrc.top = 0;
     rcRectsrc.bottom = TREASUREMAP_HEIGHT;
-    rcRectdes.left = TextBereich[TXTPAPIER].textRect.left;
+    rcRectdes.left =  TextBereich[TXTPAPIER].textRect.left;
     rcRectdes.top = TextBereich[TXTPAPIER].textRect.top;
     rcRectdes.right = rcRectdes.left + TREASUREMAP_WIDTH;
     rcRectdes.bottom = rcRectdes.top + TREASUREMAP_HEIGHT;
@@ -916,8 +914,6 @@ void Show()
     rcRectdes.right = rcPlayingSurface.right;
     rcRectdes.bottom = rcPlayingSurface.bottom;
     Application::setLandscapeOffset(rcRectsrc.left, rcRectsrc.top);
-
-//    BlitToScreen(lpDDSScape); // Landschaft zeichnen
 
     DrawObjects();
 
@@ -1014,7 +1010,6 @@ void ShowIntro()
 
     // TODO: more efficient way of filling with black
     Application::clearScreenContent();
-//    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
 
     rcRectsrc.left = Camera.x + rcPlayingSurface.left;
     rcRectsrc.top = Camera.y + rcPlayingSurface.top;
@@ -1024,8 +1019,7 @@ void ShowIntro()
     rcRectdes.top = rcPlayingSurface.top;
     rcRectdes.right = rcPlayingSurface.right;
     rcRectdes.bottom = rcPlayingSurface.bottom;
-
-//    BlitToScreen(lpDDSScape); // Landschaft zeichnen
+    Application::setLandscapeOffset(rcRectsrc.left, rcRectsrc.top);
 
     DrawObjects();
 
