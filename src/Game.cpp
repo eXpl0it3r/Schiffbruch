@@ -2350,7 +2350,7 @@ void NewGame(bool neu)
     }
 
     if ((!LoadOK) || (neu)) {
-        // Für die Statusanzeige
+        // For the status display
         rcRectdes.left = 0;
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
@@ -2361,7 +2361,7 @@ void NewGame(bool neu)
 
         // Landschaft erzeugen
 
-        Renderer::DrawString("Erschaffe Landschaft...", 5, 5, 2);
+        Renderer::DrawString("Create landscape...", 5, 5, 2);
         rcRectdes.left = 0;
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
@@ -2369,7 +2369,7 @@ void NewGame(bool neu)
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::Compute(200, 600);
 
-        Renderer::DrawString("Ueberflute Land...", 5, 35, 2);
+        Renderer::DrawString("Create sea...", 5, 35, 2);
         rcRectdes.left = 0;
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
@@ -2377,7 +2377,7 @@ void NewGame(bool neu)
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::CreateSea();
 
-        Renderer::DrawString("Lege Fluss fest...", 5, 65, 2);
+        Renderer::DrawString("Establish river flow...", 5, 65, 2);
         rcRectdes.left = 0;
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
@@ -2386,14 +2386,14 @@ void NewGame(bool neu)
         World::CreateRiver();
         Math::CalcKoor();
 
-        Renderer::DrawString("Pflanze Baeume...", 5, 95, 2);
+        Renderer::DrawString("Plant trees...", 5, 95, 2);
         rcRectdes.left = 0;
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::CreateTrees(30);
-        Renderer::Blitten(lpDDSSchrift, lpDDSPrimary, false);
+        Renderer::Blit(lpDDSSchrift, lpDDSPrimary, false);
 
         World::CreatePirateWreck();
 
@@ -2429,7 +2429,7 @@ void NewGame(bool neu)
         Guy.CurrentAction = Action::INTRO;
     }
 
-    // SchriftSurface löschen
+    // Delete font surface
     rcRectdes.left = 0;
     rcRectdes.top = 0;
     rcRectdes.right = MAX_SCREEN_X;

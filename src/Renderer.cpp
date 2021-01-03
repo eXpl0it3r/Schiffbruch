@@ -130,87 +130,22 @@ Coordinate GetTile(short PosX, short PosY)
 //    }
 //}
 
-void Blitten(sf::Image *from, sf::Image *to, bool Transp)
+void Blit(sf::Image *from, sf::Image *to, bool Transp)
 {
-//    from->createMaskFromColor(sf::Color::Red);
-//    puts("Blitting");
-//    HRESULT hr;
-//    short z = 0;
-
-//    while (true) {
-//        z++;
-//        hr = to->GetBltStatus(/*DDGBS_ISBLTDONE |*/ DDGBS_CANBLT);
-
-//        if (hr == DD_OK) {
-//            break;
-//        }
-
-//        Sleep(1);
-
-//        if (z == 1000) {
-//            MessageBeep(MB_OK);
-//            break;
-//        }
-//    }
-
-    // TODO: use Transp
-    // TODO: clip or something
-//    const int targetW = to->getSize().x;
-//    const int targetH = to->getSize().y;
-//    if (rcRectsrc.bottom >= rcRectdes.top + targetH) {
-////        rcRectsrc.bottom =  rcRectdes.top + targetH - 1;
-
-////        printf("src x: %d y: %d w: %d h: %d\n", rcRectsrc.left, rcRectsrc.top, rcRectsrc.right, rcRectsrc.bottom);
-////        printf("tgt x: %d y: %d\n", rcRectdes.left, rcRectdes.top);
-//    }
-//    if (rcRectsrc.left >= rcRectdes.left + targetW) {
-////        printf("src x: %d y: %d w: %d h: %d\n", rcRectsrc.left, rcRectsrc.top, rcRectsrc.right, rcRectsrc.bottom);
-////        printf("tgt x: %d y: %d\n", rcRectdes.left, rcRectdes.top);
-
-////        rcRectsrc.left =  rcRectdes.left + targetW - 1;
-//    }
-//    if (rcRectsrc.top >= rcRectdes.top + targetH) {
-////        rcRectsrc.top =  rcRectdes.top + targetH - 1;
-//    }
-//    if (rcRectsrc.right >= rcRectdes.left + targetW) {
-////        printf("src x: %d y: %d w: %d h: %d\n", rcRectsrc.left, rcRectsrc.top, rcRectsrc.right, rcRectsrc.bottom);
-////        printf("tgt x: %d y: %d\n", rcRectdes.left, rcRectdes.top);
-
-////        rcRectsrc.left =  rcRectdes.left + targetW - 1;
-//    }
-
-//    if (rcRectdes.bottom < rcRectsrc.bottom) {
-//        rcRectsrc.bottom = rcRectdes.bottom;
-//    }
-//    if (rcRectdes.right < rcRectsrc.right) {
-//        rcRectsrc.right = rcRectdes.right;
-//    }
     sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
-//    srcrect.width = std::min(srcrect.width, rcRectdes.left - (srcrect.width + int(targetSize.x)));
-//    srcrect.height = std::min(srcrect.height, rcRectdes.top - (srcrect.height +  int(targetSize.y)));
     if (srcrect.width <= 0 || srcrect.height <= 0) {
         return;
     }
     to->copy(*from, rcRectdes.left, rcRectdes.top, srcrect, Transp);
+}
 
-//    while (true) {
-//        z++;
-
-//        if (Transp) {
-//            hr = to->Blt(&rcRectdes, from, &rcRectsrc, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
-//        } else {
-//            hr = to->Blt(&rcRectdes, from, &rcRectsrc, DDBLT_WAIT, nullptr);
-//        }
-
-//        if (hr != DDERR_WASSTILLDRAWING) {
-//            break;
-//        }
-
-//        if (z == 1000) {
-//            MessageBeep(MB_OK);
-//            break;
-//        }
-//    }
+void BlitToScreen(sf::Image *from, bool Transp)
+{
+    sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
+    if (srcrect.width <= 0 || srcrect.height <= 0) {
+        return;
+    }
+//    to->copy(*from, rcRectdes.left, rcRectdes.top, srcrect, Transp);
 }
 
 void PutPixel(short x, short y, uint8_t r, uint8_t g, uint8_t b, sf::Image *img)
@@ -275,7 +210,7 @@ void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fru
     rcRectdes.right = x + (Bmp[i].Width);
     rcRectdes.bottom = y + (Bmp[i].Height);
     Math::CalcRect(target);
-    Blitten(Bmp[i].Surface, lpDDSBack, true);
+    Blit(Bmp[i].Surface, lpDDSBack, true);
 }
 
 void DrawObjects()
@@ -309,7 +244,7 @@ void DrawObjects()
                 rcRectdes.top = Landscape[x][y].yScreen - Camera.y;
                 rcRectdes.bottom = rcRectdes.top + TILE_SIZE_Y;
                 Math::CalcRect(rcPlayingSurface);
-                Blitten(lpDDSMisc, lpDDSBack, true);
+                Blit(lpDDSMisc, lpDDSBack, true);
             }
 
             // paint landscape animations (and field)
@@ -404,7 +339,7 @@ void DrawPaper()
     rcRectdes.top = TextBereich[TXTPAPIER].textRect.top - 30;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    Blitten(lpDDSPaper, lpDDSBack, true);
+    Blit(lpDDSPaper, lpDDSBack, true);
     rcRectdes.left = rcRectdes.left + 34;
     rcRectdes.top = rcRectdes.top + 77;
     rcRectdes.right = rcRectdes.right;
@@ -419,7 +354,7 @@ void DrawPaper()
     rcRectdes.top = rcRectdes.bottom - 47;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    Blitten(lpDDSPaper, lpDDSBack, true);
+    Blit(lpDDSPaper, lpDDSBack, true);
 }
 
 void DrawPanel()
@@ -433,7 +368,7 @@ void DrawPanel()
     rcRectdes.top = rcKarte.top;
     rcRectdes.right = rcKarte.right;
     rcRectdes.bottom = rcKarte.bottom;
-    Blitten(lpDDSKarte, lpDDSBack, false);
+    Blit(lpDDSKarte, lpDDSBack, false);
 
     // Spielfigur
     rcRectdes.left = rcKarte.left + 2 * Guy.Pos.x;
@@ -457,7 +392,7 @@ void DrawPanel()
     rcRectdes.right = rcRectdes.left + 65;
     rcRectdes.bottom = rcRectdes.top + 65;
     Math::CalcRect(rcKarte);
-    Blitten(lpDDSPanel, lpDDSBack, true);
+    Blit(lpDDSPanel, lpDDSBack, true);
 
     // Panel malen
     rcRectsrc.left = 0;
@@ -468,7 +403,7 @@ void DrawPanel()
     rcRectdes.top = rcPanel.top;
     rcRectdes.right = rcPanel.right;
     rcRectdes.bottom = rcPanel.bottom;
-    Blitten(lpDDSPanel, lpDDSBack, true);
+    Blit(lpDDSPanel, lpDDSBack, true);
 
     // Gitternetzknopf
     if (Gitter) {
@@ -648,7 +583,7 @@ void DrawPanel()
     rcRectsrc.top += i;
     rcRectdes = Bmp[COLUMN_1].targetRect;
     rcRectdes.top += i;
-    Blitten(Bmp[COLUMN_1].Surface, lpDDSBack, true);
+    Blit(Bmp[COLUMN_1].Surface, lpDDSBack, true);
 
     // Säule2
     i = Bmp[COLUMN_2].Height - static_cast<short>(Guy.ResourceAmount[NAHRUNG]) * Bmp[COLUMN_2].Height / 100;
@@ -656,7 +591,7 @@ void DrawPanel()
     rcRectsrc.top += i;
     rcRectdes = Bmp[COLUMN_2].targetRect;
     rcRectdes.top += i;
-    Blitten(Bmp[COLUMN_2].Surface, lpDDSBack, true);
+    Blit(Bmp[COLUMN_2].Surface, lpDDSBack, true);
 
     // Säule3
     i = Bmp[COLUMN_3].Height - static_cast<short>(Guy.ResourceAmount[GESUNDHEIT]) * Bmp[COLUMN_3].Height / 100;
@@ -664,7 +599,7 @@ void DrawPanel()
     rcRectsrc.top += i;
     rcRectdes = Bmp[COLUMN_3].targetRect;
     rcRectdes.top += i;
-    Blitten(Bmp[COLUMN_3].Surface, lpDDSBack, true);
+    Blit(Bmp[COLUMN_3].Surface, lpDDSBack, true);
 
     // Sonnenanzeige
     short diffx = (static_cast<short>(Bmp[SUN].targetRect.right) - static_cast<short>(Bmp[SUN].targetRect.left) - Bmp[SUN].Width) / 2;
@@ -707,7 +642,7 @@ void DrawPanel()
     rcRectsrc.right = 605;
     rcRectsrc.bottom = 20;
     rcRectdes = {0, MAX_SCREEN_Y - 20, MAX_SCREEN_X - 195, MAX_SCREEN_Y};
-    Blitten(lpDDSTextFeld, lpDDSBack, false);
+    Blit(lpDDSTextFeld, lpDDSBack, false);
 }
 
 void DrawString(const char *string, short x, short y, short Art)
@@ -772,13 +707,13 @@ void DrawString(const char *string, short x, short y, short Art)
 
         // Zeichen zeichnen
         if (Art == 1) {
-            Blitten(lpDDSSchrift1, lpDDSSchrift, true);
+            Blit(lpDDSSchrift1, lpDDSSchrift, true);
             // x Position weiterschieben
             x += FONT1_LETTER_SPACING;
         }
 
         if (Art == 2) {
-            Blitten(lpDDSSchrift2, lpDDSSchrift, true);
+            Blit(lpDDSSchrift2, lpDDSSchrift, true);
             // x Position weiterschieben
             x += FONT2_LETTER_SPACING;
         }
@@ -850,7 +785,7 @@ short DrawText(int TEXT, short Bereich, short Art)
                 rcRectdes.right = rcRectdes.left + Bmp[YES].Width;
                 rcRectdes.bottom = rcRectdes.top + Bmp[YES].Height;
                 Bmp[YES].targetRect = rcRectdes;
-                Blitten(Bmp[YES].Surface, lpDDSSchrift, false);
+                Blit(Bmp[YES].Surface, lpDDSSchrift, false);
 
                 rcRectsrc = Bmp[NO].sourceRect;
                 rcRectdes.left = static_cast<short>(TextBereich[Bereich].textRect.left) + 220;
@@ -858,7 +793,7 @@ short DrawText(int TEXT, short Bereich, short Art)
                 rcRectdes.right = rcRectdes.left + Bmp[NO].Width;
                 rcRectdes.bottom = rcRectdes.top + Bmp[NO].Height;
                 Bmp[NO].targetRect = rcRectdes;
-                Blitten(Bmp[NO].Surface, lpDDSSchrift, false);
+                Blit(Bmp[NO].Surface, lpDDSSchrift, false);
                 Posy += 115;
                 break;
 
@@ -931,7 +866,7 @@ void DrawSchatzkarte()
     rcRectdes.right = rcRectdes.left + TREASUREMAP_WIDTH;
     rcRectdes.bottom = rcRectdes.top + TREASUREMAP_HEIGHT;
 
-    Blitten(lpDDSSchatzkarte, lpDDSSchrift, false);
+    Blit(lpDDSSchatzkarte, lpDDSSchrift, false);
 }
 
 void Show()
@@ -947,7 +882,7 @@ void Show()
     rcRectdes.right = rcPlayingSurface.right;
     rcRectdes.bottom = rcPlayingSurface.bottom;
 
-    Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
+    Blit(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 
     DrawObjects();
 
@@ -987,7 +922,7 @@ void Show()
 
         rcRectsrc = TextBereich[i].textRect;
         rcRectdes = TextBereich[i].textRect;
-        Blitten(lpDDSSchrift, lpDDSBack, true);
+        Blit(lpDDSSchrift, lpDDSBack, true);
     }
 
     // Alles schwarz übermalen und nur das Papier mit Text anzeigen
@@ -1002,7 +937,7 @@ void Show()
             DrawPaper();
             rcRectsrc = TextBereich[TXTPAPIER].textRect;
             rcRectdes = TextBereich[TXTPAPIER].textRect;
-            Blitten(lpDDSSchrift, lpDDSBack, true);
+            Blit(lpDDSSchrift, lpDDSBack, true);
         }
 
         Fade(100, 100, 100);
@@ -1064,7 +999,7 @@ void ShowIntro()
     rcRectdes.right = rcPlayingSurface.right;
     rcRectdes.bottom = rcPlayingSurface.bottom;
 
-    Blitten(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
+    Blit(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
 
     DrawObjects();
 
@@ -1080,7 +1015,7 @@ void ShowIntro()
 
         rcRectsrc = TextBereich[i].textRect;
         rcRectdes = TextBereich[i].textRect;
-        Blitten(lpDDSSchrift, lpDDSBack, true);
+        Blit(lpDDSSchrift, lpDDSBack, true);
     }
 
     // Flippen
@@ -1138,7 +1073,7 @@ void ShowCredits()
         rcRectdes.right = Bmp[AbspannNr].Width + 2;
         rcRectdes.bottom = Bmp[AbspannNr].Height + 2;
 
-        Blitten(Bmp[AbspannNr].Surface, lpDDSBack, true);
+        Blit(Bmp[AbspannNr].Surface, lpDDSBack, true);
 
         rcRectsrc.left = 0;
         rcRectsrc.top = 0;
@@ -1150,7 +1085,7 @@ void ShowCredits()
         rcRectdes.right = rcRectdes.left + rcRectsrc.right * 10;
         rcRectdes.bottom = rcRectdes.top + rcRectsrc.bottom * 10;
 
-        Blitten(lpDDSBack, lpDDSBack, false);
+        Blit(lpDDSBack, lpDDSBack, false);
 
         rcRectsrc.left = 100;
         rcRectsrc.top = 2;
@@ -1162,7 +1097,7 @@ void ShowCredits()
         rcRectdes.right = Bmp[AbspannNr].Width + 2;
         rcRectdes.bottom = Bmp[AbspannNr].Height + 2;
 
-        Blitten(lpDDSBack, lpDDSBack, false);
+        Blit(lpDDSBack, lpDDSBack, false);
     }
 
     // Flippen
@@ -1208,7 +1143,7 @@ void ShowLogo()
     rcRectdes.bottom = MAX_SCREEN_Y / 2 + 250;
 
 
-    Blitten(lpDDSLogo, lpDDSBack, false);
+    Blit(lpDDSLogo, lpDDSBack, false);
 
     PlaySound(Sound::LOGO, 100);
 

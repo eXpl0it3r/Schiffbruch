@@ -239,7 +239,7 @@ void Generate()
             }
 
             // Landschaftskacheln zeichnen
-            Renderer::Blitten(lpDDSMisc, lpDDSScape, true);
+            Renderer::Blit(lpDDSMisc, lpDDSScape, true);
 
             // Gitter drüberlegen
             if (Gitter) {
@@ -247,7 +247,7 @@ void Generate()
                 rcRectsrc.right = TILE_SIZE_X * Landscape[x][y].Type + TILE_SIZE_X;
                 rcRectsrc.top = 1 * TILE_SIZE_Y;
                 rcRectsrc.bottom = 1 * TILE_SIZE_Y + TILE_SIZE_Y;
-                Renderer::Blitten(lpDDSMisc, lpDDSScape, true);
+                Renderer::Blit(lpDDSMisc, lpDDSScape, true);
             }
 
             // Landschaftsobjekte zeichnen (falls Animationen ausgeschaltet sind)
@@ -270,7 +270,7 @@ void Generate()
                     rcRectdes.top = Landscape[x][y].yScreen + Bmp[Landscape[x][y].Object].targetRect.top;
                     rcRectdes.bottom = Landscape[x][y].yScreen + Bmp[Landscape[x][y].Object].targetRect.bottom;
                     // Landschaftsobjekt zeichnen
-                    Renderer::Blitten(lpDDSAnimation, lpDDSScape, true);
+                    Renderer::Blit(lpDDSAnimation, lpDDSScape, true);
                 }
             }
 
@@ -1732,7 +1732,7 @@ void Treasure()
             rcRectdes.right = rcRectdes.left + Bmp[CROSS].Width;
             rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Height / 2;
             rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
-            Renderer::Blitten(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
+            Renderer::Blit(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
 
 //            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
