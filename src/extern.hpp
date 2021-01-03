@@ -88,8 +88,6 @@ extern sf::Sprite *s_creditsSprite;
 extern sf::Sprite *minimapPlayerSprite;
 extern sf::Texture *minimapPlayerTexture;
 
-extern bool s_textOverlayVisible;
-
 extern sf::Color s_darknessColor;
 
 extern sf::Sprite *s_creditsSprite;

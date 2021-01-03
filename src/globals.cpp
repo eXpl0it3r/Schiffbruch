@@ -109,7 +109,6 @@ int s_previousCreditsOverlay;
 
 sf::Sprite *minimapPlayerSprite;
 sf::Texture *minimapPlayerTexture;
-bool s_textOverlayVisible;
 
 //LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
 //DDBLTFX ddbltfx; // DirectDraw Effekte

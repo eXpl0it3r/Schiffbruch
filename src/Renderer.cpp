@@ -368,23 +368,17 @@ void DrawPaper()
     rcRectdes.top = TextBereich[TXTPAPIER].textRect.top - 30;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    puts("blit paper");
     BlitToText(lpDDSPaper);
-    puts("blitted paper");
-//    Blit(lpDDSPaper, lpDDSBack, true);
     rcRectdes.left = rcRectdes.left + 34;
     rcRectdes.top = rcRectdes.top + 77;
     rcRectdes.right = rcRectdes.right + 0;
     rcRectdes.bottom = TextBereich[TXTPAPIER].textRect.top + PapierText;
 
-    // TODO
+    // TODO: check that this works
     sf::RectangleShape rect(sf::Vector2f(lpDDSBack->getSize().x, lpDDSBack->getSize().y));
     rect.setFillColor(sf::Color(236, 215, 179));
     rect.setPosition(0, 0);
     Application::drawToScreen(rect);
-
-//    delete lpDDSBack;
-//    lpDDSBack = createEmptyTexture(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(236, 215, 179));
 
     rcRectsrc.left = 0;
     rcRectsrc.top = 77;
@@ -394,9 +388,7 @@ void DrawPaper()
     rcRectdes.top = rcRectdes.bottom - 47;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    puts("blit paper 2");
     BlitToText(lpDDSPaper);
-    puts("blitted paper 2");
 }
 
 void DrawPanel()
@@ -418,19 +410,6 @@ void DrawPanel()
     rect.setFillColor(sf::Color::Red);
     rect.setPosition(rcKarte.left + 2 * Guy.Pos.x, rcKarte.top + 2 * Guy.Pos.y);
     Application::drawToScreen(rect);
-//    minimapPlayerSprite->setPosition(rcKarte.left + 2 * Guy.Pos.x, rcKarte.top + 2 * Guy.Pos.y);
-//    draw
-//    rcRectdes.left = rcKarte.left + 2 * Guy.Pos.x;
-//    rcRectdes.top = rcKarte.top + 2 * Guy.Pos.y;
-//    rcRectdes.right = rcRectdes.left + 2;
-//    rcRectdes.bottom = rcRectdes.top + 2;
-//    // TODO: better
-//    for (int x=rcRectdes.left; x<rcRectdes.right; x++) {
-//        for (int y=rcRectdes.top; y<rcRectdes.bottom; y++) {
-////            PutPixel(
-//////            lpDDSBack->setPixel(x, y, sf::Color::Red);
-//        }
-//    }
 
     // Position einmalen
     rcRectsrc.left = 205;
@@ -890,8 +869,8 @@ short DrawText(int TEXT, short Bereich, short Art)
 
 void HideText(short Area)
 {
+    // TODO
     TextBereich[Area].HasText = false;
-    s_textOverlayVisible = false;
     // Another worst possible way to do it award please
 //    for (int x=TextBereich[Area].textRect.left; x<TextBereich[Area].textRect.right; x++) {
 //        for (int y=TextBereich[Area].textRect.top; y<TextBereich[Area].textRect.bottom; y++) {
@@ -980,7 +959,6 @@ void Show()
             DrawPaper();
             rcRectsrc = TextBereich[TXTPAPIER].textRect;
             rcRectdes = TextBereich[TXTPAPIER].textRect;
-            s_textOverlayVisible = true;
 //            Blit(lpDDSSchrift, lpDDSBack, true);
         }
 
@@ -1062,10 +1040,7 @@ void ShowCredits()
     rcRectdes.right = MAX_SCREEN_X;
     rcRectdes.bottom = MAX_SCREEN_Y;
 
-    // TODO: more efficient way of filling with black
-//    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
     Application::clearScreenContent();
-//    s_gameScreenVisible = false;
 
     if (AbspannZustand == 0) {
         DrawPicture(static_cast<short>(MAX_SCREEN_X) / 2 - Bmp[CreditsList[AbspannNr][0].Picture].Width / 2, 100,
