@@ -150,8 +150,11 @@ void BlitToScreen(sf::Texture *from)
 
     int dstWidth = rcRectdes.right - rcRectdes.left;
     int dstHeight = rcRectdes.bottom - rcRectdes.top;
-    srcrect.width = std::min(dstWidth, srcrect.width);
-    srcrect.height = std::min(dstHeight, srcrect.height);
+
+    if (dstWidth > 0 && dstHeight > 0) {
+        srcrect.width = std::min(dstWidth, srcrect.width);
+        srcrect.height = std::min(dstHeight, srcrect.height);
+    }
     assert(srcrect.width > 0 && srcrect.height > 0);
 
     if (srcrect.width <= 0 || srcrect.height <= 0) {
@@ -1042,32 +1045,33 @@ void ShowCredits()
 
     Application::clearScreenContent();
 
-    if (AbspannZustand == 0) {
-        DrawPicture(static_cast<short>(MAX_SCREEN_X) / 2 - Bmp[CreditsList[AbspannNr][0].Picture].Width / 2, 100,
-                      CreditsList[AbspannNr][0].Picture, rcGesamt, false, -1);
+    if (CreditsState == 0) {
+        printf("drawing picture %d\n", CreditsNum);;
+        DrawPicture(MAX_SCREEN_X / 2 - Bmp[CreditsList[CreditsNum][0].Picture].Width / 2, 100,
+                      CreditsList[CreditsNum][0].Picture, rcGesamt, false, -1);
 
         for (int z = 1; z < 10; z++) {
-            if (CreditsList[AbspannNr][z].IsRunning)
-                CreditsBlt(CreditsList[AbspannNr][z].Picture,
-                           static_cast<short>(100 * sin(pi / MAX_SCREEN_Y * (Bmp[CreditsList[AbspannNr][z].Picture].targetRect.top +
-                                                        Bmp[CreditsList[AbspannNr][z].IsRunning].Height / 2))));
+            if (CreditsList[CreditsNum][z].IsRunning)
+                CreditsBlt(CreditsList[CreditsNum][z].Picture,
+                           static_cast<short>(100 * sin(pi / MAX_SCREEN_Y * (Bmp[CreditsList[CreditsNum][z].Picture].targetRect.top +
+                                                        Bmp[CreditsList[CreditsNum][z].IsRunning].Height / 2))));
         }
-    } else if (AbspannZustand == 1) {
-        rcRectsrc = Bmp[AbspannNr].sourceRect;
-        rcRectsrc.top += Bmp[AbspannNr].AnimationPhase * Bmp[AbspannNr].Height;
-        rcRectsrc.bottom = rcRectsrc.top + Bmp[AbspannNr].Height;
+    } else if (CreditsState == 1) {
+        rcRectsrc = Bmp[CreditsNum].sourceRect;
+        rcRectsrc.top += Bmp[CreditsNum].AnimationPhase * Bmp[CreditsNum].Height;
+        rcRectsrc.bottom = rcRectsrc.top + Bmp[CreditsNum].Height;
 
         rcRectdes.left = 2;
         rcRectdes.top = 2;
-        rcRectdes.right = Bmp[AbspannNr].Width + 2;
-        rcRectdes.bottom = Bmp[AbspannNr].Height + 2;
+        rcRectdes.right = Bmp[CreditsNum].Width + 2;
+        rcRectdes.bottom = Bmp[CreditsNum].Height + 2;
 
-        BlitToScreen(Bmp[AbspannNr].Surface);
+        BlitToScreen(Bmp[CreditsNum].Surface);
 
         rcRectsrc.left = 0;
         rcRectsrc.top = 0;
-        rcRectsrc.right = Bmp[AbspannNr].Width + 4;
-        rcRectsrc.bottom = Bmp[AbspannNr].Height + 4;
+        rcRectsrc.right = Bmp[CreditsNum].Width + 4;
+        rcRectsrc.bottom = Bmp[CreditsNum].Height + 4;
 
         rcRectdes.left = static_cast<short>(MAX_SCREEN_X) / 2 - rcRectsrc.right * 10 / 2;
         rcRectdes.top = static_cast<short>(MAX_SCREEN_Y) / 2 - rcRectsrc.bottom * 10 / 2;
@@ -1078,13 +1082,13 @@ void ShowCredits()
 
         rcRectsrc.left = 100;
         rcRectsrc.top = 2;
-        rcRectsrc.right = 100 + Bmp[AbspannNr].Width + 2;
-        rcRectsrc.bottom = Bmp[AbspannNr].Height + 2;
+        rcRectsrc.right = 100 + Bmp[CreditsNum].Width + 2;
+        rcRectsrc.bottom = Bmp[CreditsNum].Height + 2;
 
         rcRectdes.left = 2;
         rcRectdes.top = 2;
-        rcRectdes.right = Bmp[AbspannNr].Width + 2;
-        rcRectdes.bottom = Bmp[AbspannNr].Height + 2;
+        rcRectdes.right = Bmp[CreditsNum].Width + 2;
+        rcRectdes.bottom = Bmp[CreditsNum].Height + 2;
 
         BlitToScreen(lpDDSBack);
     }
@@ -1145,13 +1149,13 @@ void CreditsBlt(short Bild, short Prozent)
 //    lpDDSBack->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
 //    s_creditsVisible = true;
-    if (Bild != s_previousCreditsOverlay) {
-        // TODO: more efficient, two credits?
-        lpDDSBack->loadFromImage(Bmp[s_previousCreditsOverlay].Surface->copyToImage());
-    }
-    sf::Sprite sprite;
-    sprite.setTexture(*lpDDSBack);
-    Application::drawSprite(sprite);
+//    if (Bild != s_previousCreditsOverlay) {
+//        // TODO: more efficient, two credits?
+//        lpDDSBack->loadFromImage(Bmp[s_previousCreditsOverlay].Surface->copyToImage());
+//    }
+//    sf::Sprite sprite;
+//    sprite.setTexture(*lpDDSBack);
+//    Application::drawSprite(sprite);
 
     s_creditsSprite->setTexture(*Bmp[Bild].Surface);
     s_creditsSprite->setPosition(sf::Vector2f(Bmp[Bild].targetRect.left, Bmp[Bild].targetRect.top));

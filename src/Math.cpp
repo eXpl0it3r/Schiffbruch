@@ -1218,57 +1218,57 @@ void AbspannCalc()
 {
     short i;
 
-    if (AbspannZustand == 0) {
+    if (CreditsState == 0) {
         for (short k = 1; k < 10; k++) {
-            if (CreditsList[AbspannNr][k].Picture == -1) {
+            if (CreditsList[CreditsNum][k].Picture == -1) {
                 break;
             }
 
-            if (!CreditsList[AbspannNr][k].IsRunning) {
+            if (!CreditsList[CreditsNum][k].IsRunning) {
                 continue;
             }
 
             i = 150 / LastBild;
-            Bmp[CreditsList[AbspannNr][k].Picture].targetRect.top -= i;
+            Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top -= i;
 
-            if (Bmp[CreditsList[AbspannNr][k].Picture].targetRect.top < MAX_SCREEN_Y - 400) {
-                if ((!CreditsList[AbspannNr][k + 1].IsRunning) &&
-                        (CreditsList[AbspannNr][k + 1].Picture != -1)) {
-                    CreditsList[AbspannNr][k + 1].IsRunning = true;
+            if (Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top < MAX_SCREEN_Y - 400) {
+                if ((!CreditsList[CreditsNum][k + 1].IsRunning) &&
+                        (CreditsList[CreditsNum][k + 1].Picture != -1)) {
+                    CreditsList[CreditsNum][k + 1].IsRunning = true;
                 }
             }
 
-            if (Bmp[CreditsList[AbspannNr][k].Picture].targetRect.top < 0) {
-                CreditsList[AbspannNr][k].IsRunning = false;
-                Bmp[CreditsList[AbspannNr][k].Picture].targetRect.top = MAX_SCREEN_Y - Bmp[CreditsList[AbspannNr][k].Picture].Height / 2;
+            if (Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top < 0) {
+                CreditsList[CreditsNum][k].IsRunning = false;
+                Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top = MAX_SCREEN_Y - Bmp[CreditsList[CreditsNum][k].Picture].Height / 2;
 
-                if (!CreditsList[AbspannNr][k + 1].IsRunning) {
-                    if (CreditsList[AbspannNr + 1][0].Picture != -1) {
-                        AbspannNr++;
-                        CreditsList[AbspannNr][1].IsRunning = true;
+                if (!CreditsList[CreditsNum][k + 1].IsRunning) {
+                    if (CreditsList[CreditsNum + 1][0].Picture != -1) {
+                        CreditsNum++;
+                        CreditsList[CreditsNum][1].IsRunning = true;
                     } else {
-                        AbspannNr = GUY_LEFT;
-                        AbspannZustand = 1;
+                        CreditsNum = GUY_LEFT;
+                        CreditsState = 1;
                     }
                 }
             }
         }
-    } else if (AbspannZustand == 1) {
-        i = LastBild / Bmp[AbspannNr].Speed;
+    } else if (CreditsState == 1) {
+        i = LastBild / Bmp[CreditsNum].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
         if (Bild % i == 0) {
-            Bmp[AbspannNr].AnimationPhase++;
+            Bmp[CreditsNum].AnimationPhase++;
 
-            if (Bmp[AbspannNr].AnimationPhase >= Bmp[AbspannNr].AnimationPhaseCount) {
-                Bmp[AbspannNr].AnimationPhase = 0;
-                AbspannNr++;
+            if (Bmp[CreditsNum].AnimationPhase >= Bmp[CreditsNum].AnimationPhaseCount) {
+                Bmp[CreditsNum].AnimationPhase = 0;
+                CreditsNum++;
 
-                if (AbspannNr > GUY_SLINGSHOT) {
-                    AbspannNr = GUY_LEFT;
+                if (CreditsNum > GUY_SLINGSHOT) {
+                    CreditsNum = GUY_LEFT;
                 }
             }
         }

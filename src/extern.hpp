@@ -30,8 +30,8 @@ extern bool IsInBoat; // Gerade mit dem Boot unterwegs?
 extern bool Night; // Wird die Tageszusammenfassung angezeigt?
 extern short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
 extern short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
-extern short AbspannNr; // Zähler für Abspann
-extern short AbspannZustand; // Wo im Abspann
+extern short CreditsNum; // End credits counter
+extern short CreditsState; // Wo im Abspann
 extern bool SchatzGef; // wurde der Schatz gefunden
 
 extern short Step, Steps;
