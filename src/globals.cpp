@@ -65,6 +65,7 @@ Coordinate CornerCoord[13][4] = {
 
 TextArea TextBereich[TEXTANZ];
 
+
 Coordinate Camera, // aktueller Kartenausschnitt
            MousePosition, //     "    Mauskoordinaten
            RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
@@ -86,7 +87,6 @@ sf::Texture *lpDDSPanel = nullptr; // DirectDraw Panel surface
 sf::Texture *lpDDSGuyAni = nullptr; // DirectDraw GuyAni surface
 sf::Texture *lpDDSAnimation = nullptr; // DirectDraw Animation surface
 sf::Texture *lpDDSKarte = nullptr; // DirectDraw MiniMap surface
-sf::Texture *lpDDSSchrift = nullptr; // DirectDraw Schrift surface
 sf::Texture *lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
 sf::Texture *lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
 sf::Texture *lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
@@ -98,20 +98,18 @@ sf::Texture *lpDDSLogo = nullptr; // DirectDraw Logo surface
 sf::Texture *lpDDSCursor = nullptr; // DirectDraw Cursor surface
 sf::Texture *lpDDSButtons = nullptr; // DirectDraw Buttons surface
 sf::Texture *lpDDSInventar = nullptr; // DirectDraw Inventar surface
-sf::Texture *lpDDSScape = nullptr; // DirectDraw Landschaft surface
-sf::Texture *darknessOverlay = nullptr;
 
 sf::Texture *lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
 sf::Sprite *s_treasureMapSprite;
 
+sf::Color s_darknessColor;
+
 sf::Sprite *s_creditsSprite;
 int s_previousCreditsOverlay;
-bool s_creditsVisible;
 
 sf::Sprite *minimapPlayerSprite;
 sf::Texture *minimapPlayerTexture;
 bool s_textOverlayVisible;
-bool s_gameScreenVisible;
 
 //LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
 //DDBLTFX ddbltfx; // DirectDraw Effekte

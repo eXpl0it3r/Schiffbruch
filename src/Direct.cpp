@@ -51,7 +51,8 @@ bool InitDDraw()
 
     s_creditsSprite = new sf::Sprite;
 
-    darknessOverlay = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0, 0));
+    s_darknessColor = sf::Color::White;
+
     lpDDSBack = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
 #if 0
     // Create the main DirectDraw object

@@ -68,7 +68,6 @@ extern sf::Texture *lpDDSPanel; // DirectDraw Panel surface
 extern sf::Texture *lpDDSGuyAni; // DirectDraw GuyAni surface
 extern sf::Texture *lpDDSAnimation; // DirectDraw Animation surface
 extern sf::Texture *lpDDSKarte; // DirectDraw MiniMap surface
-extern sf::Texture *lpDDSSchrift; // DirectDraw Schrift surface
 extern sf::Texture *lpDDSSchrift1; // DirectDraw Schrift1 surface
 extern sf::Texture *lpDDSSchrift2; // DirectDraw Schrift2 surface
 extern sf::Texture *lpDDSTextFeld; // DirectDraw TextFeld surface
@@ -80,7 +79,6 @@ extern sf::Texture *lpDDSLogo; // DirectDraw Logo surface
 extern sf::Texture *lpDDSCursor; // DirectDraw Cursor surface
 extern sf::Texture *lpDDSButtons; // DirectDraw Buttons surface
 extern sf::Texture *lpDDSInventar; // DirectDraw Inventar surface
-extern sf::Texture *darknessOverlay;
 
 extern sf::Texture *lpDDSSchatzkarte; // SchatzkartenSurface
 extern sf::Sprite *s_treasureMapSprite;
@@ -91,6 +89,8 @@ extern sf::Sprite *minimapPlayerSprite;
 extern sf::Texture *minimapPlayerTexture;
 
 extern bool s_textOverlayVisible;
+
+extern sf::Color s_darknessColor;
 
 extern sf::Sprite *s_creditsSprite;
 extern int s_previousCreditsOverlay;

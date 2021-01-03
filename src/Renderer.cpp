@@ -63,18 +63,9 @@ sf::Texture *loadTexture(const char *file)
 
 void Fade(short RP, short GP, short BP)
 {
-    // TODO: different colors
-    delete darknessOverlay;
-    darknessOverlay = createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0, 255 - 255 * RP / 100));
-
-    // TODO
-//    for (short blackloop = 0; blackloop < 256; blackloop++) {
-//        DDGammaRamp.red[blackloop] = DDGammaOld.red[blackloop] * RP / 100;
-//        DDGammaRamp.green[blackloop] = DDGammaOld.green[blackloop] * GP / 100;
-//        DDGammaRamp.blue[blackloop] = DDGammaOld.blue[blackloop] * BP / 100;
-//    }
-
-//    lpDDGammaControl->SetGammaRamp(0, &DDGammaRamp);
+    s_darknessColor.r = 255 * RP / 100;
+    s_darknessColor.g = 255 * GP / 100;
+    s_darknessColor.b = 255 * BP / 100;
 }
 
 void LimitScroll()
@@ -124,80 +115,6 @@ Coordinate GetTile(short PosX, short PosY)
     }
     return {-1, -1};
 }
-
-//DWORD RGB2DWORD(BYTE r, BYTE g, BYTE b)
-//{
-//    DWORD Erg;
-
-//    if (ddpf.dwRBitMask == 63488) {
-//        Erg = static_cast<DWORD>((r & 0xF8) >> 3);
-//        Erg = Erg << 6;
-//        Erg = Erg | static_cast<DWORD>((g & 0xFC) >> 2);
-//        Erg = Erg << 5;
-//        Erg = Erg | static_cast<DWORD>((b & 0xF8) >> 3);
-//    } else if (ddpf.dwRBitMask == 31744) {
-//        Erg = static_cast<DWORD>((r & 0xF8) >> 3);
-//        Erg = Erg << 5;
-//        Erg = Erg | static_cast<DWORD>((g & 0xF8) >> 3);
-//        Erg = Erg << 5;
-//        Erg = Erg | static_cast<DWORD>((b & 0xF8) >> 3);
-//    } else if (ddpf.dwRBitMask == 16711680) {
-//        Erg = static_cast<DWORD>(r & 0xFF);
-//        Erg = Erg << 8;
-//        Erg = Erg | static_cast<DWORD>(g & 0xFF);
-//        Erg = Erg << 8;
-//        Erg = Erg | static_cast<DWORD>(b & 0xFF);
-//    } else {
-//        Erg = 0;
-////            MessageBeep(MB_OK);
-//    }
-
-//    return Erg;
-//}
-
-//inline void DWORD2RGB(DWORD color)
-//{
-//    if (ddpf.dwRBitMask == 63488) {
-//        rgbStruct.r = static_cast<byte>((color & 0xF800) >> 8);
-//        rgbStruct.g = static_cast<byte>((color & 0x07E0) >> 3);
-//        rgbStruct.b = static_cast<byte>((color & 0x001F) << 3);
-//    } else if (ddpf.dwRBitMask == 31744) {
-//        rgbStruct.r = static_cast<byte>((color & 0x7C00) >> 7);
-//        rgbStruct.g = static_cast<byte>((color & 0x03E0) >> 2);
-//        rgbStruct.b = static_cast<byte>((color & 0x001F) << 3);
-//    } else if (ddpf.dwRBitMask == 16711680) {
-//        rgbStruct.r = static_cast<byte>((color & 0xFF0000) >> 10);
-//        rgbStruct.g = static_cast<byte>((color & 0x00FF00) >> 8);
-//        rgbStruct.b = static_cast<byte>((color & 0x0000FF));
-//    }
-//}
-
-//void Blit(sf::Image *from, sf::Texture *to, bool Transp)
-//{
-//    sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
-//    if (srcrect.width <= 0 || srcrect.height <= 0) {
-//        return;
-//    }
-//    // TODO
-//    sf::Image source;
-//    sf::Image target = to->copyToImage();
-//    target.copy(*from, rcRectdes.left, rcRectdes.top, srcrect, Transp);
-//    to->loadFromImage(source);
-//}
-
-//void Blit(sf::Texture *from, sf::Texture *to, bool Transp)
-//{
-//    sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
-//    if (srcrect.width <= 0 || srcrect.height <= 0) {
-//        return;
-//    }
-
-//    // TODO
-//    sf::Image target = to->copyToImage();
-//    target.copy(from->copyToImage(), rcRectdes.left, rcRectdes.top, srcrect, Transp);
-//    to->loadFromImage(target);
-////    to->loadFromImage(source);
-//}
 
 void BlitToText(sf::Texture *from)
 {
@@ -296,7 +213,6 @@ void GetPixel(short x, short y, sf::Image *img)
     rgbStruct.r = c.r;
     rgbStruct.g = c.g;
     rgbStruct.b = c.b;
-//    DWORD2RGB(color);
 }
 
 void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fruit)
@@ -324,7 +240,6 @@ void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fru
     rcRectdes.bottom = y + (Bmp[i].Height);
     Math::CalcRect(target);
     BlitToScreen(Bmp[i].Surface);
-//    Blit(Bmp[i].Surface, lpDDSBack, true);
 }
 
 void DrawObjects()
@@ -454,12 +369,12 @@ void DrawPaper()
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
     puts("blit paper");
-    BlitToScreen(lpDDSPaper);
+    BlitToText(lpDDSPaper);
     puts("blitted paper");
 //    Blit(lpDDSPaper, lpDDSBack, true);
     rcRectdes.left = rcRectdes.left + 34;
     rcRectdes.top = rcRectdes.top + 77;
-    rcRectdes.right = rcRectdes.right;
+    rcRectdes.right = rcRectdes.right + 0;
     rcRectdes.bottom = TextBereich[TXTPAPIER].textRect.top + PapierText;
 
     // TODO
@@ -480,7 +395,7 @@ void DrawPaper()
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
     puts("blit paper 2");
-    BlitToScreen(lpDDSPaper);
+    BlitToText(lpDDSPaper);
     puts("blitted paper 2");
 }
 
@@ -1052,17 +967,6 @@ void Show()
         DrawPaper();
     }
 
-    // Die Textsurface blitten
-    for (short i = 0; i < TEXTANZ; i++) {
-        if (!TextBereich[i].HasText) {
-            continue;    // Die nicht aktiven Felder auslassen
-        }
-
-        rcRectsrc = TextBereich[i].textRect;
-        rcRectdes = TextBereich[i].textRect;
-        BlitToScreen(lpDDSSchrift);
-    }
-
     // Paint over everything black and only show the paper with text
     if (Night) {
         rcRectdes.left = 0;
@@ -1147,39 +1051,6 @@ void ShowIntro()
     if (PapierText != -1) {
         DrawPaper();
     }
-
-    // Die Textsurface blitten
-    for (short i = 0; i < TEXTANZ; i++) {
-        if (!TextBereich[i].HasText) {
-            continue;    // Die nicht aktiven Felder auslassen
-        }
-
-        rcRectsrc = TextBereich[i].textRect;
-        rcRectdes = TextBereich[i].textRect;
-        BlitToScreen(lpDDSSchrift);
-    }
-
-    // Flippen
-    // TODO: look up the crappy directdraw api
-//    while (true) {
-//        HRESULT ddrval = lpDDSPrimary->Flip(nullptr, 0);
-
-//        if (ddrval == DD_OK) {
-//            break;
-//        }
-
-//        if (ddrval == DDERR_SURFACELOST) {
-//            ddrval = lpDDSPrimary->Restore();
-
-//            if (ddrval != DD_OK) {
-//                break;
-//            }
-//        }
-
-//        if (ddrval != DDERR_WASSTILLDRAWING) {
-//            break;
-//        }
-//    }
 }
 
 void ShowCredits()
@@ -1291,28 +1162,6 @@ void ShowLogo()
     BlitToScreen(lpDDSLogo);
 
     PlaySound(Sound::LOGO, 100);
-
-    // Flippen
-    // TODO: look up the crappy directdraw API
-//    while (true) {
-//        HRESULT ddrval = lpDDSPrimary->Flip(nullptr, 0);
-
-//        if (ddrval == DD_OK) {
-//            break;
-//        }
-
-//        if (ddrval == DDERR_SURFACELOST) {
-//            ddrval = lpDDSPrimary->Restore();
-
-//            if (ddrval != DD_OK) {
-//                break;
-//            }
-//        }
-
-//        if (ddrval != DDERR_WASSTILLDRAWING) {
-//            break;
-//        }
-//    }
 }
 
 void CreditsBlt(short Bild, short Prozent)

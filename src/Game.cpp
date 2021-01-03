@@ -2358,8 +2358,6 @@ void NewGame(bool neu)
 
         screenTexture = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(70, 70, 100));
 
-        lpDDSSchrift = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(255, 0, 255));
-
         // Landschaft erzeugen
 
         Renderer::DrawString("Create landscape...", 5, 5, 2);
@@ -2367,7 +2365,6 @@ void NewGame(bool neu)
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
-//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::Compute(200, 600);
 
         Renderer::DrawString("Create sea...", 5, 35, 2);
@@ -2375,7 +2372,6 @@ void NewGame(bool neu)
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
-//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::CreateSea();
 
         Renderer::DrawString("Establish river flow...", 5, 65, 2);
@@ -2383,7 +2379,6 @@ void NewGame(bool neu)
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
-//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::CreateRiver();
         Math::CalcKoor();
 
@@ -2392,9 +2387,7 @@ void NewGame(bool neu)
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
-//            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::CreateTrees(30);
-        Renderer::BlitToScreen(lpDDSSchrift);
 
         World::CreatePirateWreck();
 
@@ -2435,10 +2428,6 @@ void NewGame(bool neu)
     rcRectdes.top = 0;
     rcRectdes.right = MAX_SCREEN_X;
     rcRectdes.bottom = MAX_SCREEN_Y;
-
-    lpDDSSchrift = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color::Transparent);
-//    ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
-//        lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
     bool Anitmp = LAnimation;
     bool Entdeckttmp[MAX_TILES_X][MAX_TILESY];
