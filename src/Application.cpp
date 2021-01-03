@@ -26,6 +26,13 @@ Application::Application(const std::string &name)
 {
     s_instance = this;
 
+    m_screenContent.create(MAX_SCREEN_X, MAX_SCREEN_Y);
+    m_screenContent.clear(sf::Color::Transparent);
+    m_textOverlay.create(MAX_SCREEN_X, MAX_SCREEN_Y);
+    m_textOverlay.clear(sf::Color::Transparent);
+    m_landscape.create(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y);
+    m_landscape.clear(sf::Color::Transparent);
+
     m_window.setMouseCursorVisible(false);
 
     puts(name.data());
@@ -38,13 +45,6 @@ Application::Application(const std::string &name)
     s_GameState = State::LOGO;
     Game::InitWaves(); // Nur zum Wavinitialisieren
     Game::InitStructs();
-
-    m_screenContent.create(MAX_SCREEN_X, MAX_SCREEN_Y);
-    m_screenContent.clear(sf::Color::Transparent);
-    m_textOverlay.create(MAX_SCREEN_X, MAX_SCREEN_Y);
-    m_textOverlay.clear(sf::Color::Transparent);
-    m_landscape.create(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y);
-    m_landscape.clear(sf::Color::Transparent);
 
     srand(static_cast<unsigned>(std::time(nullptr))); // Random initialisieren
 }

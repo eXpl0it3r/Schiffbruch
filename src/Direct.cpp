@@ -492,51 +492,52 @@ short CheckKey()
             World::Generate();
         }
 
-        // Development
-        /*
+        // Development cheats
+#ifndef NDEBUG
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
         {
             short x,y;
-            for (y=0;y<MAXYKACH;y++)
-            for (x=0;x<MAXXKACH;x++)
-            Scape[x][y].Entdeckt = true;
+            for (y=0;y<MAX_TILESY;y++)
+            for (x=0;x<MAX_TILES_X;x++)
+            Landscape[x][y].Discovered = true;
             World::Generate();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
         {
-            Guy.Inventar[ROHAST] = 10;
-            Guy.Inventar[ROHSTEIN] = 10;
-            Guy.Inventar[ROHBLATT] = 10;
-            Guy.Inventar[ROHLIANE] = 10;
-            Guy.Inventar[ROHSTAMM] = 9;
+            Guy.Inventory[RAW_TREE_BRANCH] = 10;
+            Guy.Inventory[RAW_STONE] = 10;
+            Guy.Inventory[RAW_LEAF] = 10;
+            Guy.Inventory[RAW_LIANA] = 10;
+            Guy.Inventory[RAW_TREE_TRUNK] = 9;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            Guy.Inventar[ROHAXT]   = 1;
-            Guy.Inventar[ROHEGGE]  = 1;
-            Guy.Inventar[ROHANGEL]  = 1;
-            Guy.Inventar[ROHHAMMER]   = 1;
-            Guy.Inventar[ROHFERNROHR] = 1;
-            Guy.Inventar[ROHSTREICHHOLZ] = 1;
-            Guy.Inventar[ROHSCHAUFEL] = 1;
-            Guy.Inventar[ROHKARTE] = 1;
-            Guy.Inventar[ROHSCHLEUDER] = 1;
+            Guy.Inventory[RAW_AXE]   = 1;
+            Guy.Inventory[RAW_HOE]  = 1;
+            Guy.Inventory[RAW_FISHING_POLE]  = 1;
+            Guy.Inventory[RAW_HAMMER]   = 1;
+            Guy.Inventory[RAW_TELESCOPE] = 1;
+            Guy.Inventory[RAW_MATCH] = 1;
+            Guy.Inventory[RAW_SHOVEL] = 1;
+            Guy.Inventory[RAW_MAP] = 1;
+            Guy.Inventory[RAW_SLINGSHOT] = 1;
 
-            Bmp[BUTTFAELLEN].Phase  = 0;
-            Bmp[BUTTANGELN].Phase  = 0;
-            Bmp[BUTTANZUENDEN].Phase  = 0;
-            Bmp[BUTTAUSSCHAU].Phase = 0;
-            Bmp[BUTTSCHATZKARTE].Phase = 0;
-            Bmp[BUTTSCHATZ].Phase = 0;
-            Bmp[BUTTSCHLEUDER].Phase = 0;
-            Bmp[BUTTFELD].Phase  = 0;
-            Bmp[BUTTBOOT].Phase  = 0;
-            Bmp[BUTTROHR].Phase  = 0;
-            Bmp[BUTTHAUS1].Phase = 0;
-            Bmp[BUTTHAUS2].Phase = 0;
-            Bmp[BUTTHAUS3].Phase = 0;
-        }*/
+            Bmp[BUTTON_CHOP].AnimationPhase  = 0;
+            Bmp[BUTTON_FISH].AnimationPhase  = 0;
+            Bmp[BUTTON_IGNITE].AnimationPhase  = 0;
+            Bmp[BUTTON_LOOK_OUT].AnimationPhase = 0;
+            Bmp[BUTTON_TREASUREMAP].AnimationPhase = 0;
+            Bmp[BUTTON_TREASURE].AnimationPhase = 0;
+            Bmp[BUTTON_SLINGSHOT].AnimationPhase = 0;
+            Bmp[BUTTON_FARM].AnimationPhase  = 0;
+            Bmp[BUTTON_BOAT].AnimationPhase  = 0;
+            Bmp[BUTTON_PIPE].AnimationPhase  = 0;
+            Bmp[BUTTON_HOUSE_1].AnimationPhase = 0;
+            Bmp[BUTTON_HOUSE_2].AnimationPhase = 0;
+            Bmp[BUTTON_HOUSE_3].AnimationPhase = 0;
+        }//
+#endif
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             if (s_SoundState == 0) {

@@ -1,8 +1,4 @@
-const char *GetLanguageString(const int index)
-{
-    static const char *strings[] = {
-        "Since this file is used 1-indexed, this line is not used.",
-        "Dies ist ein Test. /a Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. /z /z Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test.",
+const char *GetLanguageString(const int index) { static const char *strings[] = { "Since this file is used 1-indexed, this line is not used.", "Dies ist ein Test. /a Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. /z /z Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test.",
         "Turn grid on",
         "Turn grid off",
         "This feature has not been included yet, unfortunately. Please wait for a future version of Landscape. The full range of features will be available at that time.",
@@ -14,7 +10,7 @@ const char *GetLanguageString(const int index)
         "Eat and drink",
         "Opens the Inventory",
         "Closes the Inventory",
-        //".",
+        ".",
         "Branch",
         "Stone",
         "After searching forever in the blazing sun, I found a branch-- exactly what I've been looking for. The search was worth it.",
@@ -118,7 +114,6 @@ const char *GetLanguageString(const int index)
         "Hunt for birds",
         "It's too dangerous to go to sleep in this small boat.",
         "The waves are too high to see anything.",
-        //"5",
         "I can only dig for treasure on an open and flat area.",
         "I can only lay out fields on flat, damp, and open meadows.",
         "I can build tents only on flat and open areas.",
