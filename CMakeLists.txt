@@ -7,7 +7,51 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(Schiffbruch WIN32
+include_directories(${PROJECT_BINARY_DIR})
+
+add_subdirectory(tools/resgen)
+add_resource(MISC_BMP "bin/images/Misc.BMP")
+add_resource(PANEL_BMP "bin/images/Panel.bmp")
+add_resource(GUYANI_BMP "bin/images/GuyAni.bmp")
+add_resource(ANIMATION_BMP "bin/images/Animation.BMP")
+add_resource(BAUM_BMP "bin/images/Baum.bmp")
+add_resource(CURSOR_BMP "bin/images/Cursor.BMP")
+add_resource(BUTTONS_BMP "bin/images/Buttons.bmp")
+add_resource(SCHRIFT2_BMP "bin/images/Schrift2.bmp")
+add_resource(SCHRIFT1_BMP "bin/images/Schrift1.BMP")
+add_resource(TEXTFELD_BMP "bin/images/Textfeld.bmp")
+add_resource(PAPIER_BMP "bin/images/Papier.bmp")
+add_resource(INVENTAR_BMP "bin/images/Inventar.bmp")
+add_resource(BAU_BMP "bin/images/Bau.bmp")
+add_resource(CREDITS_BMP "bin/images/Credits.bmp")
+add_resource(LOGO_BMP "bin/images/Logo.bmp")
+
+add_resource(ABSPANN_WAV "bin/sounds/abspann.wav")
+add_resource(ANGEL_WAV "bin/sounds/angel.wav")
+add_resource(BAUMFAELLT_WAV "bin/sounds/baumfaellt.wav")
+add_resource(BRANDUNG_WAV "bin/sounds/brandung.wav")
+add_resource(CRASH_WAV "bin/sounds/crash.wav")
+add_resource(ERFINDUNG_WAV "bin/sounds/erfindung.wav")
+add_resource(FAELLEN_WAV "bin/sounds/faellen.wav")
+add_resource(FEUER_WAV "bin/sounds/feuer.wav")
+add_resource(FLUSS_WAV "bin/sounds/fluss.wav")
+add_resource(HAMMER_WAV "bin/sounds/hammer.wav")
+add_resource(KLICK2_WAV "bin/sounds/klick2.wav")
+add_resource(KLICK_WAV "bin/sounds/klick.wav")
+add_resource(KNISTERN_WAV "bin/sounds/knistern.wav")
+add_resource(LOGO_WAV "bin/sounds/logo.wav")
+add_resource(PLATSCH_WAV "bin/sounds/platsch.wav")
+add_resource(SCHAUFELN_WAV "bin/sounds/schaufeln.wav")
+add_resource(SCHLAGEN_WAV "bin/sounds/schlagen.wav")
+add_resource(SCHLEUDER_WAV "bin/sounds/schleuder.wav")
+add_resource(SCHNARCHEN_WAV "bin/sounds/schnarchen.wav")
+add_resource(SCHWIMMEN_WAV "bin/sounds/schwimmen.wav")
+add_resource(STURM_WAV "bin/sounds/sturm.wav")
+add_resource(TRINKEN_WAV "bin/sounds/trinken.wav")
+add_resource(WALD_WAV "bin/sounds/wald.wav")
+add_resource(WOLF_WAV "bin/sounds/wolf.wav")
+
+add_executable(Schiffbruch
     src/Action.cpp
     src/Application.cpp
     src/Direct.cpp
@@ -23,7 +67,6 @@ add_executable(Schiffbruch WIN32
     src/Action.hpp
     src/Application.hpp
     src/constants.hpp
-    src/ddutil.h
     src/Direct.hpp
     src/extern.hpp
     src/Game.hpp
@@ -36,6 +79,47 @@ add_executable(Schiffbruch WIN32
     src/State.hpp
     src/types.hpp
     src/World.hpp
+
+    ${MISC_BMP}
+    ${PANEL_BMP}
+    ${GUYANI_BMP}
+    ${ANIMATION_BMP}
+    ${BAUM_BMP}
+    ${CURSOR_BMP}
+    ${BUTTONS_BMP}
+    ${SCHRIFT2_BMP}
+    ${SCHRIFT1_BMP}
+    ${TEXTFELD_BMP}
+    ${PAPIER_BMP}
+    ${INVENTAR_BMP}
+    ${BAU_BMP}
+    ${CREDITS_BMP}
+    ${LOGO_BMP}
+
+    ${ABSPANN_WAV}
+    ${ANGEL_WAV}
+    ${BAUMFAELLT_WAV}
+    ${BRANDUNG_WAV}
+    ${CRASH_WAV}
+    ${ERFINDUNG_WAV}
+    ${FAELLEN_WAV}
+    ${FEUER_WAV}
+    ${FLUSS_WAV}
+    ${HAMMER_WAV}
+    ${KLICK2_WAV}
+    ${KLICK_WAV}
+    ${KNISTERN_WAV}
+    ${LOGO_WAV}
+    ${PLATSCH_WAV}
+    ${SCHAUFELN_WAV}
+    ${SCHLAGEN_WAV}
+    ${SCHLEUDER_WAV}
+    ${SCHNARCHEN_WAV}
+    ${SCHWIMMEN_WAV}
+    ${STURM_WAV}
+    ${TRINKEN_WAV}
+    ${WALD_WAV}
+    ${WOLF_WAV}
 )
 
 target_link_libraries(Schiffbruch PRIVATE sfml-graphics sfml-audio sfml-main dxguid ddraw)

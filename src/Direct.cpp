@@ -10,6 +10,22 @@
 #include "State.hpp"
 #include "World.hpp"
 
+#include "bin/images/Animation.BMP.hpp"
+#include "bin/images/Bau.bmp.hpp"
+#include "bin/images/Baum.bmp.hpp"
+#include "bin/images/Buttons.bmp.hpp"
+#include "bin/images/Credits.bmp.hpp"
+#include "bin/images/Cursor.BMP.hpp"
+#include "bin/images/GuyAni.bmp.hpp"
+#include "bin/images/Inventar.bmp.hpp"
+#include "bin/images/Logo.bmp.hpp"
+#include "bin/images/Misc.BMP.hpp"
+#include "bin/images/Panel.bmp.hpp"
+#include "bin/images/Papier.bmp.hpp"
+#include "bin/images/Schrift1.BMP.hpp"
+#include "bin/images/Schrift2.bmp.hpp"
+#include "bin/images/Textfeld.bmp.hpp"
+
 #include <SFML/Window.hpp>
 
 namespace Direct {
@@ -131,94 +147,94 @@ bool InitDDraw()
 //        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 //        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
     // In diese Surface sollen die Bausteine geladen werden
-    lpDDSMisc = Renderer::loadTexture("images/Misc.BMP");
+    lpDDSMisc = Renderer::loadTexture(resource_Misc_BMP_data, resource_Misc_BMP_size);
     if (!lpDDSMisc) {
         puts("Failed to load misc");
         return false;
     }
 
     // In diese Surface sollen das Panel geladen werden
-    lpDDSPanel = Renderer::loadTexture("images/Panel.bmp");
+    lpDDSPanel = Renderer::loadTexture(resource_Panel_bmp_data, resource_Panel_bmp_size);
     if (!lpDDSPanel) {
         return false;
     }
 
     // In diese Surface sollen die Animation der Figur gespeichert werden
-    lpDDSGuyAni = Renderer::loadTexture("images/GuyAni.bmp");
+    lpDDSGuyAni = Renderer::loadTexture(resource_GuyAni_bmp_data, resource_GuyAni_bmp_size);
     if (!lpDDSGuyAni) {
         return false;
     }
 
     // In diese Surface sollen die Landschaftsanimationen gespeichert werden
-    lpDDSAnimation = Renderer::loadTexture("images/Animation.BMP");
+    lpDDSAnimation = Renderer::loadTexture(resource_Animation_BMP_data, resource_Animation_BMP_size);
     if (!lpDDSAnimation) {
         return false;
     }
 
     // In diese Surface soll die Schrift1 gespeichert werden
-    lpDDSSchrift1 = Renderer::loadTexture("images/Schrift1.BMP");
+    lpDDSSchrift1 = Renderer::loadTexture(resource_Schrift1_BMP_data, resource_Schrift1_BMP_size);
     if (!lpDDSSchrift1) {
         puts("failed to load schrift1");
         return false;
     }
 
     // In diese Surface soll die Schrift2 gespeichert werden
-    lpDDSSchrift2 = Renderer::loadTexture("images/Schrift2.bmp");
+    lpDDSSchrift2 = Renderer::loadTexture(resource_Schrift2_bmp_data, resource_Schrift2_bmp_size);
     if (!lpDDSSchrift2) {
         puts("failed to load schrift2");
         return false;
     }
 
     // In diese Surface soll das Papier gespeichert werden
-    lpDDSPaper = Renderer::loadTexture("images/Papier.bmp");
+    lpDDSPaper = Renderer::loadTexture(resource_Papier_bmp_data, resource_Papier_bmp_size);
     if (!lpDDSPaper) {
         return false;
     }
 
     // In diese Surface solln die Bäume gespeichert werden
-    lpDDSBaum = Renderer::loadTexture("images/Baum.bmp");
+    lpDDSBaum = Renderer::loadTexture(resource_Baum_bmp_data, resource_Baum_bmp_size);
     if (!lpDDSBaum) {
         return false;
     }
 
     // In diese Surface solln die Cursor gespeichert werden
-    lpDDSCursor = Renderer::loadTexture("images/Cursor.BMP");
+    lpDDSCursor = Renderer::loadTexture(resource_Cursor_BMP_data, resource_Cursor_BMP_size);
     if (!lpDDSCursor) {
         return false;
     }
 
     // In diese Surface solln die Buttons gespeichert werden
-    lpDDSButtons = Renderer::loadTexture("images/Buttons.bmp");
+    lpDDSButtons = Renderer::loadTexture(resource_Buttons_bmp_data, resource_Buttons_bmp_size);
     if (!lpDDSButtons) {
         return false;
     }
 
     // In diese Surface solln das TextFeld gespeichert werden
-    lpDDSTextFeld = Renderer::loadTexture("images/Textfeld.bmp");
+    lpDDSTextFeld = Renderer::loadTexture(resource_Textfeld_bmp_data, resource_Textfeld_bmp_size);
     if (!lpDDSTextFeld) {
         return false;
     }
 
     // In diese Surface solln das Inventar gespeichert werden
-    lpDDSInventar = Renderer::loadTexture("images/Inventar.bmp");
+    lpDDSInventar = Renderer::loadTexture(resource_Inventar_bmp_data, resource_Inventar_bmp_size);
     if (!lpDDSInventar) {
         return false;
     }
 
     // In diese Surface solln die Bauwerke gespeichert werden
-    lpDDSBau = Renderer::loadTexture("images/Bau.bmp");
+    lpDDSBau = Renderer::loadTexture(resource_Bau_bmp_data, resource_Bau_bmp_size);
     if (!lpDDSBau) {
         return false;
     }
 
     // In diese Surface solln die Credits gespeichert werden
-    lpDDSCredits = Renderer::loadTexture("images/Credits.bmp");
+    lpDDSCredits = Renderer::loadTexture(resource_Credits_bmp_data, resource_Credits_bmp_size);
     if (!lpDDSCredits) {
         return false;
     }
 
     // In diese Surface solln das Logo gespeichert werden
-    lpDDSLogo = Renderer::loadTexture("images/Logo.bmp");
+    lpDDSLogo = Renderer::loadTexture(resource_Logo_bmp_data, resource_Logo_bmp_size);
     if (!lpDDSLogo) {
         return false;
     }
