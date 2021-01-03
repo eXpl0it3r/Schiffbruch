@@ -22,6 +22,31 @@ add_resource(BAU_BMP "bin/images/Bau.bmp")
 add_resource(CREDITS_BMP "bin/images/Credits.bmp")
 add_resource(LOGO_BMP "bin/images/Logo.bmp")
 
+add_resource(ABSPANN_WAV "bin/sounds/abspann.wav")
+add_resource(ANGEL_WAV "bin/sounds/angel.wav")
+add_resource(BAUMFAELLT_WAV "bin/sounds/baumfaellt.wav")
+add_resource(BRANDUNG_WAV "bin/sounds/brandung.wav")
+add_resource(CRASH_WAV "bin/sounds/crash.wav")
+add_resource(ERFINDUNG_WAV "bin/sounds/erfindung.wav")
+add_resource(FAELLEN_WAV "bin/sounds/faellen.wav")
+add_resource(FEUER_WAV "bin/sounds/feuer.wav")
+add_resource(FLUSS_WAV "bin/sounds/fluss.wav")
+add_resource(HAMMER_WAV "bin/sounds/hammer.wav")
+add_resource(KLICK2_WAV "bin/sounds/klick2.wav")
+add_resource(KLICK_WAV "bin/sounds/klick.wav")
+add_resource(KNISTERN_WAV "bin/sounds/knistern.wav")
+add_resource(LOGO_WAV "bin/sounds/logo.wav")
+add_resource(PLATSCH_WAV "bin/sounds/platsch.wav")
+add_resource(SCHAUFELN_WAV "bin/sounds/schaufeln.wav")
+add_resource(SCHLAGEN_WAV "bin/sounds/schlagen.wav")
+add_resource(SCHLEUDER_WAV "bin/sounds/schleuder.wav")
+add_resource(SCHNARCHEN_WAV "bin/sounds/schnarchen.wav")
+add_resource(SCHWIMMEN_WAV "bin/sounds/schwimmen.wav")
+add_resource(STURM_WAV "bin/sounds/sturm.wav")
+add_resource(TRINKEN_WAV "bin/sounds/trinken.wav")
+add_resource(WALD_WAV "bin/sounds/wald.wav")
+add_resource(WOLF_WAV "bin/sounds/wolf.wav")
+
 add_executable(schiffbruch
     src/Action.cpp
     src/Application.cpp
@@ -67,6 +92,31 @@ add_executable(schiffbruch
     ${BAU_BMP}
     ${CREDITS_BMP}
     ${LOGO_BMP}
+
+    ${ABSPANN_WAV}
+    ${ANGEL_WAV}
+    ${BAUMFAELLT_WAV}
+    ${BRANDUNG_WAV}
+    ${CRASH_WAV}
+    ${ERFINDUNG_WAV}
+    ${FAELLEN_WAV}
+    ${FEUER_WAV}
+    ${FLUSS_WAV}
+    ${HAMMER_WAV}
+    ${KLICK2_WAV}
+    ${KLICK_WAV}
+    ${KNISTERN_WAV}
+    ${LOGO_WAV}
+    ${PLATSCH_WAV}
+    ${SCHAUFELN_WAV}
+    ${SCHLAGEN_WAV}
+    ${SCHLEUDER_WAV}
+    ${SCHNARCHEN_WAV}
+    ${SCHWIMMEN_WAV}
+    ${STURM_WAV}
+    ${TRINKEN_WAV}
+    ${WALD_WAV}
+    ${WOLF_WAV}
 )
 
 add_definitions(-Wno-writable-strings)
