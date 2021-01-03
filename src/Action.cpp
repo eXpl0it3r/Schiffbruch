@@ -204,7 +204,7 @@ void intro()
 
     case 5:
         Guy.OriginalPosition = Guy.ScreenPosition;
-        Spielzustand = State::GAME;
+        s_GameState = State::GAME;
         Guy.CurrentAction = NOTHING;
         PapierText = Renderer::DrawText(INTROTEXT, TXTPAPIER, 1);
         Game::SaveGame();
@@ -362,7 +362,7 @@ void quit()
                 Game::SaveGame();
             }
 
-            Spielzustand = State::OUTRO;
+            s_GameState = State::OUTRO;
         }
 
         Frage = -1;
@@ -427,7 +427,7 @@ void death()
         Guy.CurrentAction = NOTHING;
 
         if (Frage == 2) {
-            Spielzustand = State::OUTRO;
+            s_GameState = State::OUTRO;
         } else {
             Game::NewGame(false);
         }
@@ -1743,7 +1743,7 @@ void rescued()
             break;
         }
 
-        Spielzustand = State::RESCUED;
+        s_GameState = State::RESCUED;
         Frage = -1;
         break;
 
@@ -1823,7 +1823,7 @@ void rescued()
     case 9:
         Guy.CurrentAction = NOTHING;
         Guy.AnimationState = GUY_LEFT;
-        Spielzustand = State::OUTRO;
+        s_GameState = State::OUTRO;
         break;
     }
 }

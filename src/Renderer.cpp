@@ -449,7 +449,7 @@ void DrawPanel()
                   BUTTON_GRID, rcPanel, false, -1);
 
     // SOUNDknopf
-    if ((Soundzustand == 0) || (Soundzustand == -1)) {
+    if ((s_SoundState == 0) || (s_SoundState == -1)) {
         Bmp[BUTTON_SOUND].AnimationPhase = 1;
     } else {
         Bmp[BUTTON_SOUND].AnimationPhase = 0;

@@ -168,23 +168,23 @@ void MouseInPanel(short Button, short Push)
             World::Generate();
         }
     } else if (InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_SOUND].targetRect)) {
-        if (Soundzustand == 1) {
+        if (s_SoundState == 1) {
             Renderer::DrawText(SOUNDAUS, TXTTEXTFELD, 2);
-        } else if (Soundzustand == 0) {
+        } else if (s_SoundState == 0) {
             Renderer::DrawText(SOUNDAN, TXTTEXTFELD, 2);
         } else {
             Renderer::DrawText(KEINSOUND, TXTTEXTFELD, 2);
         }
 
         if ((Button == 0) && (Push == 1)) {
-            if (Soundzustand == 1) {
+            if (s_SoundState == 1) {
                 for (short i = 1; i < Sound::COUNT; i++) {
                     Sound::StopSound(i);
                 }
 
-                Soundzustand = 0;
-            } else if (Soundzustand == 0) {
-                Soundzustand = 1;
+                s_SoundState = 0;
+            } else if (s_SoundState == 0) {
+                s_SoundState = 1;
                 PlaySound(Sound::CLICK2, 100);
             } else {
                 PlaySound(Sound::CLICK, 100);
@@ -1063,7 +1063,7 @@ void CalcGuyKoor()
         Guy.ScreenPosition.x = GuyPosScreenStart.x + ROUND(Step * Schrittx);
         Guy.ScreenPosition.y = GuyPosScreenStart.y + ROUND(Step * Schritty);
 
-        if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED)) { // Beim Intro fährt die Kamera mit
+        if ((s_GameState == State::INTRO) || (s_GameState == State::RESCUED)) { // Beim Intro fährt die Kamera mit
             Camera.x = Guy.ScreenPosition.x - static_cast<short>(rcGesamt.right / 2);
             Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcGesamt.bottom / 2);
         }

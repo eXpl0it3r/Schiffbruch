@@ -10,7 +10,7 @@
 
 #include <vector>
 
-int Spielzustand = 0; // in welchem Zustand ist das Spiel?
+int s_GameState = 0; // in welchem Zustand ist das Spiel?
 bool LAnimation = true; // Ist die Landschaftanimation angeschaltet?
 bool Gitter; // Gitternetz an/aus
 RECT ScapeGrenze; // Diese Koordinaten zeigen die Größe der Landschaft an
@@ -28,7 +28,7 @@ short TwoClicks; // Für Aktionen mit zwei Mausklicks
 float Chance; // Wie groß ist die Chance am Tag gerettet zu werden
 bool IsInBoat; // Gerade mit dem Boot unterwegs?
 bool Night; // Wird die Tageszusammenfassung angezeigt?
-short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
+short s_SoundState; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
 short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
 short CreditsNum = 0; // Zähler für Abspann
 short CreditsState = 0; // Wo im Abspann

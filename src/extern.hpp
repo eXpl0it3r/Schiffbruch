@@ -10,7 +10,7 @@
 
 #include <vector>
 
-extern int Spielzustand; // in welchem Zustand ist das Spiel?
+extern int s_GameState; // in welchem Zustand ist das Spiel?
 extern bool LAnimation; // Ist die Landschaftanimation angeschaltet?
 extern bool Gitter; // Gitternetz an/aus
 extern RECT ScapeGrenze; // Diese Koordinaten zeigen die Größe der Landschaft an
@@ -28,7 +28,7 @@ extern short TwoClicks; // Für Aktionen mit zwei Mausklicks
 extern float Chance; // Wie groß ist die Chance am Tag gerettet zu werden
 extern bool IsInBoat; // Gerade mit dem Boot unterwegs?
 extern bool Night; // Wird die Tageszusammenfassung angezeigt?
-extern short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
+extern short s_SoundState; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
 extern short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
 extern short CreditsNum; // End credits counter
 extern short CreditsState; // Wo im Abspann
