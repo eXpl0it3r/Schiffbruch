@@ -181,7 +181,7 @@ void Generate()
     rcRectdes.top = 0;
     rcRectdes.right = 2 * MAX_TILES_X;
     rcRectdes.bottom = 2 * MAX_TILESY;
-    lpDDSKarte->create(MAX_TILES_X, MAX_TILESY, sf::Color(247, 222, 191));
+    lpDDSKarte = Renderer::createEmptyTexture(MAX_TILES_X, MAX_TILESY, sf::Color(247, 222, 191));
 //    ddbltfx.dwFillColor = Renderer::RGB2DWORD(247, 222, 191);
 //        lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
@@ -190,7 +190,8 @@ void Generate()
     rcRectdes.top = 0;
     rcRectdes.right = MAX_SURFACE_X;
     rcRectdes.bottom = MAX_SURFACE_Y;
-    lpDDSScape->create(MAX_SURFACE_X, MAX_SURFACE_Y, sf::Color::Black);
+
+//    lpDDSScape = Renderer::createEmptyTexture(MAX_SURFACE_X, MAX_SURFACE_Y, sf::Color::Black);
 //    ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
 //        lpDDSScape->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
@@ -239,7 +240,7 @@ void Generate()
             }
 
             // Landschaftskacheln zeichnen
-            Renderer::Blit(lpDDSMisc, lpDDSScape, true);
+            Renderer::BlitToLandscape(lpDDSMisc);
 
             // Gitter drüberlegen
             if (Gitter) {
@@ -247,7 +248,7 @@ void Generate()
                 rcRectsrc.right = TILE_SIZE_X * Landscape[x][y].Type + TILE_SIZE_X;
                 rcRectsrc.top = 1 * TILE_SIZE_Y;
                 rcRectsrc.bottom = 1 * TILE_SIZE_Y + TILE_SIZE_Y;
-                Renderer::Blit(lpDDSMisc, lpDDSScape, true);
+                Renderer::BlitToLandscape(lpDDSMisc);
             }
 
             // Landschaftsobjekte zeichnen (falls Animationen ausgeschaltet sind)
@@ -270,7 +271,7 @@ void Generate()
                     rcRectdes.top = Landscape[x][y].yScreen + Bmp[Landscape[x][y].Object].targetRect.top;
                     rcRectdes.bottom = Landscape[x][y].yScreen + Bmp[Landscape[x][y].Object].targetRect.bottom;
                     // Landschaftsobjekt zeichnen
-                    Renderer::Blit(lpDDSAnimation, lpDDSScape, true);
+                    Renderer::BlitToLandscape(lpDDSMisc);
                 }
             }
 
@@ -295,7 +296,7 @@ void Generate()
                     c = sf::Color(139 + Landscape[x][y].Height * 20, 128 + Landscape[x][y].Height * 20, 115 + Landscape[x][y].Height * 20);
                 }
             }
-            lpDDSKarte->create(rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top, c);
+            lpDDSKarte = Renderer::createEmptyTexture(rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top, c);
 
 //                lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
         }
@@ -1699,12 +1700,15 @@ void CreatePirateWreck()
 
 void Treasure()
 {
+    sf::Image treasureMap;
+    sf::Image landscape = Renderer::landscapeImage();
     while (true) {
-        // Diese Kachel wird angeschaut
+
+        // This tile is viewed
         short x = rand() % (MAX_TILES_X - 1);
         short y = rand() % (MAX_TILESY - 1);
 
-        // nur auf flachen Kacheln ohne Objekt
+        // only on flat tiles without an object
         if ((Landscape[x][y].Object == -1) && (Landscape[x][y].Type == 0) && (Landscape[x][y].Terrain != 3)) {
             if (SchatzPos.x == -1) {
                 SchatzPos.x = x;
@@ -1714,47 +1718,53 @@ void Treasure()
 //            lpDDSScape->Lock(nullptr, &ddsd, DDLOCK_WAIT, nullptr);
 //            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
-            for (short i = 0; i < TREASUREMAP_WIDTH; i++)
+            for (short i = 0; i < TREASUREMAP_WIDTH; i++) {
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     Renderer::GetPixel(static_cast<short>(i + Landscape[SchatzPos.x][SchatzPos.y].xScreen - TREASUREMAP_WIDTH / 2 + TILE_SIZE_X / 2),
-                                       static_cast<short>(j + Landscape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), lpDDSScape);
+                                       static_cast<short>(j + Landscape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), &landscape);
                     Renderer::PutPixel(i, j,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
-                                       (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100 * 3 / 4, lpDDSSchatzkarte);
+                                       (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100 * 3 / 4, &treasureMap);
                 }
+            }
 
 //            lpDDSScape->Unlock(nullptr);
 //            lpDDSSchatzkarte->Unlock(nullptr);
 
-            rcRectsrc = Bmp[CROSS].sourceRect;
-            rcRectdes.left = TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2;
-            rcRectdes.right = rcRectdes.left + Bmp[CROSS].Width;
-            rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Height / 2;
-            rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
-            Renderer::Blit(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
+//            rcRectsrc = Bmp[CROSS].sourceRect;
+//            rcRectdes.left = TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2;
+//            rcRectdes.right = rcRectdes.left + Bmp[CROSS].Width;
+//            rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Height / 2;
+//            rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
+            lpDDSSchatzkarte->loadFromImage(treasureMap);
+            s_treasureMapSprite->setPosition(TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2, rcRectdes.left + Bmp[CROSS].Width);
+//            Renderer::Blit(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
 
 //            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
-            // Weichzeichnen
-            for (short i = 0; i < TREASUREMAP_WIDTH; i++)
+            // Blur
+            for (short i = 0; i < TREASUREMAP_WIDTH; i++) {
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     if ((i > 0) && (i < TREASUREMAP_WIDTH - 1) && (j > 0) && (j < TREASUREMAP_HEIGHT - 1)) {
-                        Renderer::GetPixel(i - 1, j, lpDDSSchatzkarte);
+                        Renderer::GetPixel(i - 1, j, &treasureMap);
                         RGBSTRUCT rgbleft = rgbStruct;
-                        Renderer::GetPixel(i, j - 1, lpDDSSchatzkarte);
+                        Renderer::GetPixel(i, j - 1, &treasureMap);
                         RGBSTRUCT rgbtop = rgbStruct;
-                        Renderer::GetPixel(i + 1, j, lpDDSSchatzkarte);
+                        Renderer::GetPixel(i + 1, j, &treasureMap);
                         RGBSTRUCT rgbright = rgbStruct;
-                        Renderer::GetPixel(i, j + 1, lpDDSSchatzkarte);
+                        Renderer::GetPixel(i, j + 1, &treasureMap);
                         RGBSTRUCT rgbbottom = rgbStruct;
-                        Renderer::GetPixel(i, j, lpDDSSchatzkarte);
+                        Renderer::GetPixel(i, j, &treasureMap);
                         Renderer::PutPixel(i, j,
                                                (rgbleft.r + rgbtop.r + rgbright.r + rgbbottom.r + rgbStruct.r) / 5,
                                                (rgbleft.g + rgbtop.g + rgbright.g + rgbbottom.g + rgbStruct.g) / 5,
-                                               (rgbleft.b + rgbtop.b + rgbright.b + rgbbottom.b + rgbStruct.b) / 5, lpDDSSchatzkarte);
+                                               (rgbleft.b + rgbtop.b + rgbright.b + rgbbottom.b + rgbStruct.b) / 5, &treasureMap);
                     }
                 }
+            }
+            lpDDSSchatzkarte->loadFromImage(treasureMap);
+            Renderer::BlitToScreen(lpDDSSchatzkarte);
 
 //            lpDDSSchatzkarte->Unlock(nullptr);
             break;

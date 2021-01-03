@@ -79,28 +79,40 @@ CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 SCAPE Landscape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
-sf::Image *lpDDSPrimary = nullptr; // DirectDraw primary surface
-sf::Image *lpDDSBack = nullptr; // DirectDraw back surface
-sf::Image *lpDDSMisc = nullptr; // DirectDraw Bilder surface
-sf::Image *lpDDSPanel = nullptr; // DirectDraw Panel surface
-sf::Image *lpDDSGuyAni = nullptr; // DirectDraw GuyAni surface
-sf::Image *lpDDSAnimation = nullptr; // DirectDraw Animation surface
-sf::Image *lpDDSKarte = nullptr; // DirectDraw MiniMap surface
-sf::Image *lpDDSSchrift = nullptr; // DirectDraw Schrift surface
-sf::Image *lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
-sf::Image *lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
-sf::Image *lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
-sf::Image *lpDDSPaper = nullptr; // DirectDraw Paier surface
-sf::Image *lpDDSBaum = nullptr; // DirectDraw Bäume surface
-sf::Image *lpDDSBau = nullptr; // DirectDraw Bauwerke surface
-sf::Image *lpDDSCredits = nullptr; // DirectDraw Credits surface
-sf::Image *lpDDSLogo = nullptr; // DirectDraw Logo surface
-sf::Image *lpDDSCursor = nullptr; // DirectDraw Cursor surface
-sf::Image *lpDDSButtons = nullptr; // DirectDraw Buttons surface
-sf::Image *lpDDSInventar = nullptr; // DirectDraw Inventar surface
-sf::Image *lpDDSScape = nullptr; // DirectDraw Landschaft surface
-sf::Image *lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
-sf::Image *darknessOverlay = nullptr;
+sf::Texture *screenTexture = nullptr; // DirectDraw primary surface
+sf::Texture *lpDDSBack = nullptr; // DirectDraw back surface
+sf::Texture *lpDDSMisc = nullptr; // DirectDraw Bilder surface
+sf::Texture *lpDDSPanel = nullptr; // DirectDraw Panel surface
+sf::Texture *lpDDSGuyAni = nullptr; // DirectDraw GuyAni surface
+sf::Texture *lpDDSAnimation = nullptr; // DirectDraw Animation surface
+sf::Texture *lpDDSKarte = nullptr; // DirectDraw MiniMap surface
+sf::Texture *lpDDSSchrift = nullptr; // DirectDraw Schrift surface
+sf::Texture *lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
+sf::Texture *lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
+sf::Texture *lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
+sf::Texture *lpDDSPaper = nullptr; // DirectDraw Paier surface
+sf::Texture *lpDDSBaum = nullptr; // DirectDraw Bäume surface
+sf::Texture *lpDDSBau = nullptr; // DirectDraw Bauwerke surface
+sf::Texture *lpDDSCredits = nullptr; // DirectDraw Credits surface
+sf::Texture *lpDDSLogo = nullptr; // DirectDraw Logo surface
+sf::Texture *lpDDSCursor = nullptr; // DirectDraw Cursor surface
+sf::Texture *lpDDSButtons = nullptr; // DirectDraw Buttons surface
+sf::Texture *lpDDSInventar = nullptr; // DirectDraw Inventar surface
+sf::Texture *lpDDSScape = nullptr; // DirectDraw Landschaft surface
+sf::Texture *darknessOverlay = nullptr;
+
+sf::Texture *lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
+sf::Sprite *s_treasureMapSprite;
+
+sf::Sprite *s_creditsSprite;
+int s_previousCreditsOverlay;
+bool s_creditsVisible;
+
+sf::Sprite *minimapPlayerSprite;
+sf::Texture *minimapPlayerTexture;
+bool s_textOverlayVisible;
+bool s_gameScreenVisible;
+
 //LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
 //DDBLTFX ddbltfx; // DirectDraw Effekte
 //DDPIXELFORMAT ddpf;

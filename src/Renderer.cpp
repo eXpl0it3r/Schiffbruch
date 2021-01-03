@@ -8,10 +8,12 @@
 #include "Sound.hpp"
 #include "Routing.hpp"
 #include "World.hpp"
+#include "Application.hpp"
 
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <cassert>
 
 #include <SFML/Window.hpp>
 
@@ -20,10 +22,47 @@
 namespace Renderer {
 double pi = 3.1415926535; // pi, was sonst
 
+sf::Texture *createEmptyTexture(const size_t width, const size_t height, const sf::Color &color)
+{
+    assert(width > 0 && height > 0);
+
+    sf::Image image;
+    image.create(width, height, color);
+
+    sf::Texture *texture = new sf::Texture;
+    if (!texture->loadFromImage(image)) {
+        fprintf(stderr, "Failed to load texture from empty image width size %dx%d\n", image.getSize().x, image.getSize().y);
+        assert(false);
+    }
+    return texture;
+
+}
+
+sf::Texture *loadTexture(const char *file)
+{
+    sf::Image image;
+    if (!image.loadFromFile(file) || ! image.getSize().x) {
+        fprintf(stderr, "Failed to load %s\n", file);
+        return nullptr;
+    }
+
+    image.createMaskFromColor(sf::Color(255, 0, 255));
+
+    sf::Texture *texture = new sf::Texture;
+    texture->loadFromImage(image);
+    if (!texture->loadFromImage(image)) {
+        fprintf(stderr, "Failed to load texture from image width size %dx%d\n", image.getSize().x, image.getSize().y);
+        assert(false);
+    }
+    assert(texture->getSize().x > 0 && texture->getSize().y > 0);
+    return texture;
+}
+
 void Fade(short RP, short GP, short BP)
 {
     // TODO: different colors
-    darknessOverlay->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0, 255 - 255 * RP / 100));
+    delete darknessOverlay;
+    darknessOverlay = createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0, 255 - 255 * RP / 100));
 
     // TODO
 //    for (short blackloop = 0; blackloop < 256; blackloop++) {
@@ -130,22 +169,70 @@ Coordinate GetTile(short PosX, short PosY)
 //    }
 //}
 
-void Blit(sf::Image *from, sf::Image *to, bool Transp)
+//void Blit(sf::Image *from, sf::Texture *to, bool Transp)
+//{
+//    sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
+//    if (srcrect.width <= 0 || srcrect.height <= 0) {
+//        return;
+//    }
+//    // TODO
+//    sf::Image source;
+//    sf::Image target = to->copyToImage();
+//    target.copy(*from, rcRectdes.left, rcRectdes.top, srcrect, Transp);
+//    to->loadFromImage(source);
+//}
+
+//void Blit(sf::Texture *from, sf::Texture *to, bool Transp)
+//{
+//    sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
+//    if (srcrect.width <= 0 || srcrect.height <= 0) {
+//        return;
+//    }
+
+//    // TODO
+//    sf::Image target = to->copyToImage();
+//    target.copy(from->copyToImage(), rcRectdes.left, rcRectdes.top, srcrect, Transp);
+//    to->loadFromImage(target);
+////    to->loadFromImage(source);
+//}
+
+void BlitToText(sf::Texture *from)
 {
     sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
     if (srcrect.width <= 0 || srcrect.height <= 0) {
         return;
     }
-    to->copy(*from, rcRectdes.left, rcRectdes.top, srcrect, Transp);
+    sf::Sprite sprite;
+    sprite.setTexture(*from);
+    sprite.setPosition(rcRectdes.left, rcRectdes.top);
+    sprite.setTextureRect(srcrect);
+    Application::drawToText(sprite);
 }
 
-void BlitToScreen(sf::Image *from, bool Transp)
+void BlitToScreen(sf::Texture *from)
 {
     sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
     if (srcrect.width <= 0 || srcrect.height <= 0) {
         return;
     }
-//    to->copy(*from, rcRectdes.left, rcRectdes.top, srcrect, Transp);
+    sf::Sprite sprite;
+    sprite.setTexture(*from);
+    sprite.setPosition(rcRectdes.left, rcRectdes.top);
+    sprite.setTextureRect(srcrect);
+    Application::drawSprite(sprite);
+}
+
+void BlitToLandscape(sf::Texture *from)
+{
+    sf::IntRect srcrect(rcRectsrc.left, rcRectsrc.top, rcRectsrc.right - rcRectsrc.left, rcRectsrc.bottom - rcRectsrc.top);
+    if (srcrect.width <= 0 || srcrect.height <= 0) {
+        return;
+    }
+    sf::Sprite sprite;
+    sprite.setTexture(*from);
+    sprite.setPosition(rcRectdes.left, rcRectdes.top);
+    sprite.setTextureRect(srcrect);
+    Application::drawSprite(sprite);
 }
 
 void PutPixel(short x, short y, uint8_t r, uint8_t g, uint8_t b, sf::Image *img)
@@ -210,7 +297,8 @@ void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fru
     rcRectdes.right = x + (Bmp[i].Width);
     rcRectdes.bottom = y + (Bmp[i].Height);
     Math::CalcRect(target);
-    Blit(Bmp[i].Surface, lpDDSBack, true);
+    BlitToScreen(Bmp[i].Surface);
+//    Blit(Bmp[i].Surface, lpDDSBack, true);
 }
 
 void DrawObjects()
@@ -223,7 +311,7 @@ void DrawObjects()
                 drawGuy = true;
             }
 
-            // Die nichtsichbaren Kacheln (oder nicht betroffenen) ausfiltern
+            // Filter out the invisible tiles (or unaffected)
 
             if (!((Landscape[x][y].xScreen > Camera.x + rcPlayingSurface.left - TILE_SIZE_X) &&
                     (Landscape[x][y].xScreen < Camera.x + rcPlayingSurface.right + TILE_SIZE_X) &&
@@ -234,7 +322,7 @@ void DrawObjects()
                 continue;
             }
 
-            if (Landscape[x][y].Marked) { // Die Rahmen um die markierten Kacheln malen
+            if (Landscape[x][y].Marked) { // Paint the frames around the marked tiles
                 rcRectsrc.left = TILE_SIZE_X * Landscape[x][y].Type;
                 rcRectsrc.right = TILE_SIZE_X * Landscape[x][y].Type + TILE_SIZE_X;
                 rcRectsrc.top = 2 * TILE_SIZE_Y;
@@ -244,7 +332,7 @@ void DrawObjects()
                 rcRectdes.top = Landscape[x][y].yScreen - Camera.y;
                 rcRectdes.bottom = rcRectdes.top + TILE_SIZE_Y;
                 Math::CalcRect(rcPlayingSurface);
-                Blit(lpDDSMisc, lpDDSBack, true);
+                BlitToScreen(lpDDSMisc);
             }
 
             // paint landscape animations (and field)
@@ -339,12 +427,16 @@ void DrawPaper()
     rcRectdes.top = TextBereich[TXTPAPIER].textRect.top - 30;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    Blit(lpDDSPaper, lpDDSBack, true);
+    BlitToScreen(lpDDSPaper);
+//    Blit(lpDDSPaper, lpDDSBack, true);
     rcRectdes.left = rcRectdes.left + 34;
     rcRectdes.top = rcRectdes.top + 77;
     rcRectdes.right = rcRectdes.right;
     rcRectdes.bottom = TextBereich[TXTPAPIER].textRect.top + PapierText;
-    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(236, 215, 179));
+
+    // TODO
+    delete lpDDSBack;
+    lpDDSBack = createEmptyTexture(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(236, 215, 179));
 
     rcRectsrc.left = 0;
     rcRectsrc.top = 77;
@@ -354,7 +446,7 @@ void DrawPaper()
     rcRectdes.top = rcRectdes.bottom - 47;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    Blit(lpDDSPaper, lpDDSBack, true);
+    BlitToScreen(lpDDSPaper);
 }
 
 void DrawPanel()
@@ -368,19 +460,22 @@ void DrawPanel()
     rcRectdes.top = rcKarte.top;
     rcRectdes.right = rcKarte.right;
     rcRectdes.bottom = rcKarte.bottom;
-    Blit(lpDDSKarte, lpDDSBack, false);
+//    BlitToScreen(lpDDSKarte);
+//    Blit(lpDDSKarte, lpDDSBack, false);
 
     // Spielfigur
-    rcRectdes.left = rcKarte.left + 2 * Guy.Pos.x;
-    rcRectdes.top = rcKarte.top + 2 * Guy.Pos.y;
-    rcRectdes.right = rcRectdes.left + 2;
-    rcRectdes.bottom = rcRectdes.top + 2;
-    // TODO: better
-    for (int x=rcRectdes.left; x<rcRectdes.right; x++) {
-        for (int y=rcRectdes.top; y<rcRectdes.bottom; y++) {
-            lpDDSBack->setPixel(x, y, sf::Color::Red);
-        }
-    }
+    minimapPlayerSprite->setPosition(rcKarte.left + 2 * Guy.Pos.x, rcKarte.top + 2 * Guy.Pos.y);
+//    rcRectdes.left = rcKarte.left + 2 * Guy.Pos.x;
+//    rcRectdes.top = rcKarte.top + 2 * Guy.Pos.y;
+//    rcRectdes.right = rcRectdes.left + 2;
+//    rcRectdes.bottom = rcRectdes.top + 2;
+//    // TODO: better
+//    for (int x=rcRectdes.left; x<rcRectdes.right; x++) {
+//        for (int y=rcRectdes.top; y<rcRectdes.bottom; y++) {
+////            PutPixel(
+//////            lpDDSBack->setPixel(x, y, sf::Color::Red);
+//        }
+//    }
 
     // Position einmalen
     rcRectsrc.left = 205;
@@ -392,7 +487,7 @@ void DrawPanel()
     rcRectdes.right = rcRectdes.left + 65;
     rcRectdes.bottom = rcRectdes.top + 65;
     Math::CalcRect(rcKarte);
-    Blit(lpDDSPanel, lpDDSBack, true);
+    BlitToScreen(lpDDSPanel);
 
     // Panel malen
     rcRectsrc.left = 0;
@@ -403,7 +498,7 @@ void DrawPanel()
     rcRectdes.top = rcPanel.top;
     rcRectdes.right = rcPanel.right;
     rcRectdes.bottom = rcPanel.bottom;
-    Blit(lpDDSPanel, lpDDSBack, true);
+    BlitToScreen(lpDDSPanel);
 
     // Gitternetzknopf
     if (Gitter) {
@@ -583,7 +678,7 @@ void DrawPanel()
     rcRectsrc.top += i;
     rcRectdes = Bmp[COLUMN_1].targetRect;
     rcRectdes.top += i;
-    Blit(Bmp[COLUMN_1].Surface, lpDDSBack, true);
+    BlitToScreen(Bmp[COLUMN_1].Surface);
 
     // Säule2
     i = Bmp[COLUMN_2].Height - static_cast<short>(Guy.ResourceAmount[NAHRUNG]) * Bmp[COLUMN_2].Height / 100;
@@ -591,7 +686,7 @@ void DrawPanel()
     rcRectsrc.top += i;
     rcRectdes = Bmp[COLUMN_2].targetRect;
     rcRectdes.top += i;
-    Blit(Bmp[COLUMN_2].Surface, lpDDSBack, true);
+    BlitToScreen(Bmp[COLUMN_2].Surface);
 
     // Säule3
     i = Bmp[COLUMN_3].Height - static_cast<short>(Guy.ResourceAmount[GESUNDHEIT]) * Bmp[COLUMN_3].Height / 100;
@@ -599,7 +694,7 @@ void DrawPanel()
     rcRectsrc.top += i;
     rcRectdes = Bmp[COLUMN_3].targetRect;
     rcRectdes.top += i;
-    Blit(Bmp[COLUMN_3].Surface, lpDDSBack, true);
+    BlitToScreen(Bmp[COLUMN_3].Surface);
 
     // Sonnenanzeige
     short diffx = (static_cast<short>(Bmp[SUN].targetRect.right) - static_cast<short>(Bmp[SUN].targetRect.left) - Bmp[SUN].Width) / 2;
@@ -642,7 +737,7 @@ void DrawPanel()
     rcRectsrc.right = 605;
     rcRectsrc.bottom = 20;
     rcRectdes = {0, MAX_SCREEN_Y - 20, MAX_SCREEN_X - 195, MAX_SCREEN_Y};
-    Blit(lpDDSTextFeld, lpDDSBack, false);
+    BlitToScreen(lpDDSTextFeld);
 }
 
 void DrawString(const char *string, short x, short y, short Art)
@@ -707,13 +802,14 @@ void DrawString(const char *string, short x, short y, short Art)
 
         // Zeichen zeichnen
         if (Art == 1) {
-            Blit(lpDDSSchrift1, lpDDSSchrift, true);
+            BlitToText(lpDDSSchrift1);
+//            Blit(lpDDSSchrift1, lpDDSSchrift, true);
             // x Position weiterschieben
             x += FONT1_LETTER_SPACING;
         }
 
         if (Art == 2) {
-            Blit(lpDDSSchrift2, lpDDSSchrift, true);
+            BlitToText(lpDDSSchrift2);
             // x Position weiterschieben
             x += FONT2_LETTER_SPACING;
         }
@@ -785,7 +881,7 @@ short DrawText(int TEXT, short Bereich, short Art)
                 rcRectdes.right = rcRectdes.left + Bmp[YES].Width;
                 rcRectdes.bottom = rcRectdes.top + Bmp[YES].Height;
                 Bmp[YES].targetRect = rcRectdes;
-                Blit(Bmp[YES].Surface, lpDDSSchrift, false);
+                BlitToText(Bmp[YES].Surface);
 
                 rcRectsrc = Bmp[NO].sourceRect;
                 rcRectdes.left = static_cast<short>(TextBereich[Bereich].textRect.left) + 220;
@@ -793,7 +889,7 @@ short DrawText(int TEXT, short Bereich, short Art)
                 rcRectdes.right = rcRectdes.left + Bmp[NO].Width;
                 rcRectdes.bottom = rcRectdes.top + Bmp[NO].Height;
                 Bmp[NO].targetRect = rcRectdes;
-                Blit(Bmp[NO].Surface, lpDDSSchrift, false);
+                BlitToText(Bmp[NO].Surface);
                 Posy += 115;
                 break;
 
@@ -840,14 +936,15 @@ short DrawText(int TEXT, short Bereich, short Art)
 void HideText(short Area)
 {
     TextBereich[Area].HasText = false;
+    s_textOverlayVisible = false;
     // Another worst possible way to do it award please
-    for (int x=TextBereich[Area].textRect.left; x<TextBereich[Area].textRect.right; x++) {
-        for (int y=TextBereich[Area].textRect.top; y<TextBereich[Area].textRect.bottom; y++) {
-            sf::Color c = lpDDSSchrift->getPixel(x, y);
-            c.a = 0;
-            lpDDSSchrift->setPixel(x, y, c);
-        }
-    }
+//    for (int x=TextBereich[Area].textRect.left; x<TextBereich[Area].textRect.right; x++) {
+//        for (int y=TextBereich[Area].textRect.top; y<TextBereich[Area].textRect.bottom; y++) {
+//            sf::Color c = lpDDSSchrift->getPixel(x, y);
+//            c.a = 0;
+//            lpDDSSchrift->setPixel(x, y, c);
+//        }
+//    }
 //    lpDDSSchrift->Blt(&TextBereich[Area].textRect, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 }
 
@@ -866,7 +963,7 @@ void DrawSchatzkarte()
     rcRectdes.right = rcRectdes.left + TREASUREMAP_WIDTH;
     rcRectdes.bottom = rcRectdes.top + TREASUREMAP_HEIGHT;
 
-    Blit(lpDDSSchatzkarte, lpDDSSchrift, false);
+    BlitToText(lpDDSSchatzkarte);
 }
 
 void Show()
@@ -881,8 +978,9 @@ void Show()
     rcRectdes.top = rcPlayingSurface.top;
     rcRectdes.right = rcPlayingSurface.right;
     rcRectdes.bottom = rcPlayingSurface.bottom;
+    Application::setLandscapeOffset(rcRectsrc.left, rcRectsrc.top);
 
-    Blit(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
+//    BlitToScreen(lpDDSScape); // Landschaft zeichnen
 
     DrawObjects();
 
@@ -922,22 +1020,24 @@ void Show()
 
         rcRectsrc = TextBereich[i].textRect;
         rcRectdes = TextBereich[i].textRect;
-        Blit(lpDDSSchrift, lpDDSBack, true);
+        BlitToScreen(lpDDSSchrift);
     }
 
-    // Alles schwarz übermalen und nur das Papier mit Text anzeigen
+    // Paint over everything black and only show the paper with text
     if (Night) {
         rcRectdes.left = 0;
         rcRectdes.top = 0;
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
-        lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
+        s_gameScreenVisible = false;
+//        lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
 
         if (PapierText != -1) {
             DrawPaper();
             rcRectsrc = TextBereich[TXTPAPIER].textRect;
             rcRectdes = TextBereich[TXTPAPIER].textRect;
-            Blit(lpDDSSchrift, lpDDSBack, true);
+            s_textOverlayVisible = true;
+//            Blit(lpDDSSchrift, lpDDSBack, true);
         }
 
         Fade(100, 100, 100);
@@ -988,7 +1088,8 @@ void ShowIntro()
     rcRectdes.bottom = MAX_SCREEN_Y;
 
     // TODO: more efficient way of filling with black
-    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
+    s_gameScreenVisible = false;
+//    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
 
     rcRectsrc.left = Camera.x + rcPlayingSurface.left;
     rcRectsrc.top = Camera.y + rcPlayingSurface.top;
@@ -999,7 +1100,7 @@ void ShowIntro()
     rcRectdes.right = rcPlayingSurface.right;
     rcRectdes.bottom = rcPlayingSurface.bottom;
 
-    Blit(lpDDSScape, lpDDSBack, false); // Landschaft zeichnen
+//    BlitToScreen(lpDDSScape); // Landschaft zeichnen
 
     DrawObjects();
 
@@ -1015,7 +1116,7 @@ void ShowIntro()
 
         rcRectsrc = TextBereich[i].textRect;
         rcRectdes = TextBereich[i].textRect;
-        Blit(lpDDSSchrift, lpDDSBack, true);
+        BlitToScreen(lpDDSSchrift);
     }
 
     // Flippen
@@ -1051,7 +1152,8 @@ void ShowCredits()
     rcRectdes.bottom = MAX_SCREEN_Y;
 
     // TODO: more efficient way of filling with black
-    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
+//    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
+    s_gameScreenVisible = false;
 
     if (AbspannZustand == 0) {
         DrawPicture(static_cast<short>(MAX_SCREEN_X) / 2 - Bmp[CreditsList[AbspannNr][0].Picture].Width / 2, 100,
@@ -1073,7 +1175,7 @@ void ShowCredits()
         rcRectdes.right = Bmp[AbspannNr].Width + 2;
         rcRectdes.bottom = Bmp[AbspannNr].Height + 2;
 
-        Blit(Bmp[AbspannNr].Surface, lpDDSBack, true);
+        BlitToScreen(Bmp[AbspannNr].Surface);
 
         rcRectsrc.left = 0;
         rcRectsrc.top = 0;
@@ -1085,7 +1187,7 @@ void ShowCredits()
         rcRectdes.right = rcRectdes.left + rcRectsrc.right * 10;
         rcRectdes.bottom = rcRectdes.top + rcRectsrc.bottom * 10;
 
-        Blit(lpDDSBack, lpDDSBack, false);
+        BlitToScreen(lpDDSBack);
 
         rcRectsrc.left = 100;
         rcRectsrc.top = 2;
@@ -1097,7 +1199,7 @@ void ShowCredits()
         rcRectdes.right = Bmp[AbspannNr].Width + 2;
         rcRectdes.bottom = Bmp[AbspannNr].Height + 2;
 
-        Blit(lpDDSBack, lpDDSBack, false);
+        BlitToScreen(lpDDSBack);
     }
 
     // Flippen
@@ -1131,7 +1233,8 @@ void ShowLogo()
     rcRectdes.bottom = MAX_SCREEN_Y;
 
     // TODO: more efficient way of filling with black
-    lpDDSBack->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
+//    lpDDSBack->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
+    s_gameScreenVisible = false;
 
     rcRectsrc.left = 0;
     rcRectsrc.right = 500;
@@ -1143,7 +1246,7 @@ void ShowLogo()
     rcRectdes.bottom = MAX_SCREEN_Y / 2 + 250;
 
 
-    Blit(lpDDSLogo, lpDDSBack, false);
+    BlitToScreen(lpDDSLogo);
 
     PlaySound(Sound::LOGO, 100);
 
@@ -1175,44 +1278,65 @@ void CreditsBlt(short Bild, short Prozent)
 //    Bmp[Bild].Surface->Lock(nullptr, &ddsd, DDLOCK_WAIT, nullptr);
 //    lpDDSBack->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
-    for (short x = 0; x < Bmp[Bild].Width; x++)
-        for (short y = 0; y < Bmp[Bild].Height; y++) {
-            if ((x + Bmp[Bild].targetRect.left >= MAX_SCREEN_X) || (x + Bmp[Bild].targetRect.left <= 0) ||
-                    (y + Bmp[Bild].targetRect.top >= MAX_SCREEN_Y) || (y + Bmp[Bild].targetRect.top <= 0)) {
-                continue;
-            }
+//    s_creditsVisible = true;
+    if (Bild != s_previousCreditsOverlay) {
+        // TODO: more efficient, two credits?
+        lpDDSBack->loadFromImage(Bmp[s_previousCreditsOverlay].Surface->copyToImage());
+    }
+    sf::Sprite sprite;
+    sprite.setTexture(*lpDDSBack);
+    Application::drawSprite(sprite);
+
+    s_creditsSprite->setTexture(*Bmp[Bild].Surface);
+    s_creditsSprite->setPosition(sf::Vector2f(Bmp[Bild].targetRect.left, Bmp[Bild].targetRect.top));
+    s_creditsSprite->setColor(sf::Color(255, 255, 255, 255 * Prozent/100));
+    Application::drawSprite(*s_creditsSprite);
+
+//    for (short x = 0; x < Bmp[Bild].Width; x++)
+//        for (short y = 0; y < Bmp[Bild].Height; y++) {
+//            if ((x + Bmp[Bild].targetRect.left >= MAX_SCREEN_X) || (x + Bmp[Bild].targetRect.left <= 0) ||
+//                    (y + Bmp[Bild].targetRect.top >= MAX_SCREEN_Y) || (y + Bmp[Bild].targetRect.top <= 0)) {
+//                continue;
+//            }
 
 //            Renderer::GetPixel(static_cast<short>(x + Bmp[Bild].targetRect.left),
-//                               static_cast<short>(y + Bmp[Bild].targetRect.top), &ddsd2);
-//            RGBSTRUCT rgbalt = rgbStruct;
-//            Renderer::GetPixel(static_cast<short>(x + Bmp[Bild].sourceRect.left),
-//                               static_cast<short>(y + Bmp[Bild].sourceRect.top), &ddsd);
+////                               static_cast<short>(y + Bmp[Bild].targetRect.top), &ddsd2);
+////            RGBSTRUCT rgbalt = rgbStruct;
+////            Renderer::GetPixel(static_cast<short>(x + Bmp[Bild].sourceRect.left),
+////                               static_cast<short>(y + Bmp[Bild].sourceRect.top), &ddsd);
 
-            sf::Color rgbStruct = Bmp[Bild].Surface->getPixel(x, y);
-            if ((rgbStruct.r == 0) && (rgbStruct.g == 0) && (rgbStruct.b == 0)) {
-                 // idk lol
-                continue;
-            }
+//            sf::Color rgbStruct = Bmp[Bild].Surface->getPixel(x, y);
+//            if ((rgbStruct.r == 0) && (rgbStruct.g == 0) && (rgbStruct.b == 0)) {
+//                 // idk lol
+//                continue;
+//            }
 
-            // I think this is right
-            sf::Color rgbalt = lpDDSBack->getPixel(x, y);
-            lpDDSBack->setPixel(x, y, sf::Color(
-                         rgbalt.r + (rgbStruct.r - rgbalt.r) * Prozent / 100,
-                               rgbalt.g + (rgbStruct.g - rgbalt.g) * Prozent / 100,
-                               rgbalt.b + (rgbStruct.b - rgbalt.b) * Prozent / 100
-                                ));
-
-//            PutPixel(static_cast<short>(x + Bmp[Bild].targetRect.left),
-//                     static_cast<short>(y + Bmp[Bild].targetRect.top),
-//                     RGB2DWORD(
+//            // I think this is right
+//            sf::Color rgbalt = lpDDSBack->getPixel(x, y);
+//            lpDDSBack->setPixel(x, y, sf::Color(
 //                         rgbalt.r + (rgbStruct.r - rgbalt.r) * Prozent / 100,
 //                               rgbalt.g + (rgbStruct.g - rgbalt.g) * Prozent / 100,
 //                               rgbalt.b + (rgbStruct.b - rgbalt.b) * Prozent / 100
-//                         ),
-//                     &ddsd2);
-        }
+//                                ));
+
+////            PutPixel(static_cast<short>(x + Bmp[Bild].targetRect.left),
+////                     static_cast<short>(y + Bmp[Bild].targetRect.top),
+////                     RGB2DWORD(
+////                         rgbalt.r + (rgbStruct.r - rgbalt.r) * Prozent / 100,
+////                               rgbalt.g + (rgbStruct.g - rgbalt.g) * Prozent / 100,
+////                               rgbalt.b + (rgbStruct.b - rgbalt.b) * Prozent / 100
+////                         ),
+////                     &ddsd2);
+//        }
 
 //    Bmp[Bild].Surface->Unlock(nullptr);
-//    lpDDSBack->Unlock(nullptr);
+    //    lpDDSBack->Unlock(nullptr);
 }
+
+sf::Image landscapeImage()
+{
+    // TODO: get rid of
+    return Application::landscapeImage();
+}
+
 } // namespace Renderer

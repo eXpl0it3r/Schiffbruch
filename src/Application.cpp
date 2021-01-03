@@ -15,12 +15,17 @@
 #include <ctime>
 #include <cstdlib>
 #include <exception>
+#include <cassert>
+
+Application *Application::s_instance;
 
 Application::Application(const std::string &name)
     : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::Default)
 , m_name(name)
 , m_time(std::time(nullptr))
 {
+    s_instance = this;
+
     m_window.setMouseCursorVisible(false);
 
     puts(name.data());
@@ -33,6 +38,10 @@ Application::Application(const std::string &name)
     Spielzustand = State::LOGO;
     Game::InitWaves(); // Nur zum Wavinitialisieren
 
+    m_screenContent.create(MAX_SCREEN_X, MAX_SCREEN_Y);
+    m_textOverlay.create(MAX_SCREEN_X, MAX_SCREEN_Y);
+    m_landscape.create(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y);
+
     srand(static_cast<unsigned>(std::time(nullptr))); // Random initialisieren
 }
 
@@ -40,9 +49,6 @@ void Application::process_events()
 {
     sf::Event event;
 
-    sf::Texture texture;
-    sf::Sprite sprite;
-    sprite.setPosition(0, 0);
     while (m_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             Direct::finiObjects();
@@ -62,10 +68,17 @@ void Application::run()
 
     sf::Texture texture;
     sf::Sprite sprite;
-    sprite.setPosition(0, 0);
+    sprite.setTexture(m_screenContent.getTexture());
+
+    sf::Sprite landscape;
+    landscape.setTexture(m_landscape.getTexture());
+    sf::Sprite text;
+    text.setTexture(m_textOverlay.getTexture());
+
     while (m_window.isOpen()) {
         if (timer.getElapsedTime() > sf::milliseconds(1000)) {
             while (m_window.isOpen()) {
+                m_window.clear(sf::Color::Black);
                 process_events();
                 Bild++;
                 std::time_t Zeitsave = std::time(nullptr);
@@ -92,8 +105,8 @@ void Application::run()
                     if (Direct::CheckKey() == 2) { // Das Keyboard abfragen
                         break;
                     }
-
                     Renderer::ShowLogo(); // Bild auffrischen
+
                 } else if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED)) {
                     if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
                         m_window.close();
@@ -147,9 +160,8 @@ void Application::run()
                     Renderer::ShowCredits();
                 }
 
-//                puts("main rendering");
+                puts("main rendering");
 
-                m_window.clear(sf::Color::Black);
 
 //                texture.loadFromImage(*lpDDSScape);
 //                sprite.setTexture(texture);
@@ -158,20 +170,29 @@ void Application::run()
 
                 // TODO: this is probably the worst and least efficient way to render things
                 // I'm almost proud.
-                texture.loadFromImage(*lpDDSBack);
-                sprite.setTexture(texture);
-                m_window.draw(sprite);
-                texture.loadFromImage(*darknessOverlay);
-                sprite.setTexture(texture);
-                m_window.draw(sprite);
-
-                lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color::Transparent);
-
-//                if (lpDDSPrimary->getSize().x > 0) {
-//                    texture.loadFromImage(*lpDDSPrimary);
-//                    sprite.setTexture(texture);
+//                texture.loadFromImage(*lpDDSBack);
+//                sprite.setTexture(*lpDDSBack);
+//                m_window.draw(sprite);
+//                if (darknessOverlay) {
+//                    assert(darknessOverlay->getSize().x > 0 && darknessOverlay->getSize().y > 0);
+//                    sprite.setTexture(*darknessOverlay);
 //                    m_window.draw(sprite);
 //                }
+
+                m_landscape.display();
+                landscape.setPosition(m_landscapeOffset);
+                m_landscape.clear(sf::Color::Transparent);
+//                m_window.draw(landscape);
+
+                m_screenContent.display();
+                m_window.draw(sprite);
+//                m_screenContent.clear(sf::Color::Transparent);
+
+                m_textOverlay.display();
+                m_window.draw(text);
+                m_textOverlay.clear(sf::Color::Transparent);
+
+////                m_landscapeOverlay.clear();
 
                 m_window.display();
                 sf::sleep(sf::milliseconds(16)); // idk, try 60 fps or something
@@ -184,4 +205,35 @@ void Application::run()
 
 void Application::update()
 {
+}
+
+void Application::drawSprite(const sf::Sprite &sprite)
+{
+    s_instance->m_screenContent.draw(sprite);
+}
+
+void Application::drawToText(const sf::Sprite &sprite)
+{
+    s_instance->m_textOverlay.draw(sprite);
+}
+
+void Application::drawToLandscape(const sf::Sprite &sprite)
+{
+    sf::Sprite todrawsprite = sprite;
+    todrawsprite.setPosition(s_instance->m_landscapeOffset);
+    s_instance->m_landscape.draw(todrawsprite);
+//    s_instance->m_screenContent.draw(todrawsprite);
+}
+
+void Application::setLandscapeOffset(const int x, const int y)
+{
+    printf("landscape x: %d, y: %d\n", x, y);
+    s_instance->m_landscapeOffset.x = -x;
+    s_instance->m_landscapeOffset.y = -y;
+}
+
+sf::Image Application::landscapeImage()
+{
+    s_instance->m_landscape.display();
+    return s_instance->m_landscape.getTexture().copyToImage();
 }

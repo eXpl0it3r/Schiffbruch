@@ -3,7 +3,7 @@
 #include "headers.hpp"
 //#include "miniwin.h"
 
-#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 struct RECT {
         int left;
@@ -38,7 +38,7 @@ struct GUY {
 };
 
 struct BMP {
-    sf::Image *Surface; // in welcher Surface gespeichert?
+    sf::Texture *Surface; // in welcher Surface gespeichert?
     bool IsAnimationRunning; // Läuft die Animations?
     short AnimationPhaseCount; // Anzahl der Animationsphasen
     short AnimationPhase; // die aktuelle Phase

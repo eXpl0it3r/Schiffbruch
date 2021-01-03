@@ -2356,8 +2356,9 @@ void NewGame(bool neu)
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
 
-        lpDDSPrimary->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(70, 70, 100));
-        lpDDSSchrift->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(255, 0, 255));
+        screenTexture = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(70, 70, 100));
+
+        lpDDSSchrift = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(255, 0, 255));
 
         // Landschaft erzeugen
 
@@ -2393,7 +2394,7 @@ void NewGame(bool neu)
         rcRectdes.bottom = MAX_SCREEN_Y;
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
         World::CreateTrees(30);
-        Renderer::Blit(lpDDSSchrift, lpDDSPrimary, false);
+        Renderer::BlitToScreen(lpDDSSchrift);
 
         World::CreatePirateWreck();
 
@@ -2434,7 +2435,8 @@ void NewGame(bool neu)
     rcRectdes.top = 0;
     rcRectdes.right = MAX_SCREEN_X;
     rcRectdes.bottom = MAX_SCREEN_Y;
-    lpDDSSchrift->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color::Transparent);
+
+    lpDDSSchrift = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color::Transparent);
 //    ddbltfx.dwFillColor = Renderer::RGB2DWORD(255, 0, 255);
 //        lpDDSSchrift->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
