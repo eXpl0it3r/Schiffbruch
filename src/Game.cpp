@@ -113,7 +113,7 @@ void InitStructs()
     for (i = GUY_LEFT; i <= GUY_BELOW; i++) {
         Bmp[i].IsAnimationRunning = false;
         Bmp[i].AnimationPhaseCount = 4;
-        Bmp[i].Speed = 20;
+        Bmp[i].Speed = 30;
         Bmp[i].AnimationPhase = 0;
         Bmp[i].Surface = lpDDSGuyAni;
         Bmp[i].sourceRect.left = 7 * (i - GUY_LEFT);
