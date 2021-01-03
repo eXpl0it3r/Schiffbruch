@@ -40,8 +40,11 @@ Application::Application(const std::string &name)
     Game::InitStructs();
 
     m_screenContent.create(MAX_SCREEN_X, MAX_SCREEN_Y);
+    m_screenContent.clear(sf::Color::Transparent);
     m_textOverlay.create(MAX_SCREEN_X, MAX_SCREEN_Y);
+    m_textOverlay.clear(sf::Color::Transparent);
     m_landscape.create(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y);
+    m_landscape.clear(sf::Color::Transparent);
 
     srand(static_cast<unsigned>(std::time(nullptr))); // Random initialisieren
 }
@@ -233,7 +236,7 @@ void Application::setLandscapeOffset(const int x, const int y)
 
 void Application::clearScreenContent()
 {
-    s_instance->m_screenContent.clear();
+    s_instance->m_screenContent.clear(sf::Color::Transparent);
 }
 
 sf::Image Application::landscapeImage()
