@@ -155,9 +155,10 @@ void BlitToScreen(sf::Texture *from)
         srcrect.width = std::min(dstWidth, srcrect.width);
         srcrect.height = std::min(dstHeight, srcrect.height);
     }
-    assert(srcrect.width > 0 && srcrect.height > 0);
 
     if (srcrect.width <= 0 || srcrect.height <= 0) {
+        puts("!!!!!!!! empty source rect !!!!!!!!");
+        puts("!!!!!!!! probably the panel !!!!!!!!");
         return;
     }
     sf::Sprite sprite;
@@ -372,16 +373,17 @@ void DrawPaper()
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
     BlitToScreen(lpDDSPaper);
+
     rcRectdes.left = rcRectdes.left + 34;
     rcRectdes.top = rcRectdes.top + 77;
     rcRectdes.right = rcRectdes.right + 0;
     rcRectdes.bottom = TextBereich[TXTPAPIER].textRect.top + PapierText;
 
     // TODO: check that this works
-//    sf::RectangleShape rect(sf::Vector2f(lpDDSBack->getSize().x, lpDDSBack->getSize().y));
-//    rect.setFillColor(sf::Color(236, 215, 179));
-//    rect.setPosition(0, 0);
-//    Application::drawToScreen(rect);
+    sf::RectangleShape rect(sf::Vector2f(rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top));
+    rect.setFillColor(sf::Color(236, 215, 179));
+    rect.setPosition(rcRectdes.left, rcRectdes.top);
+    Application::drawToScreen(rect);
 
     rcRectsrc.left = 0;
     rcRectsrc.top = 77;
