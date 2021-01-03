@@ -30,8 +30,8 @@ bool IsInBoat; // Gerade mit dem Boot unterwegs?
 bool Night; // Wird die Tageszusammenfassung angezeigt?
 short Soundzustand; // -1 = keine Soundkarte;0=kein Sound;1=Sound an
 short Frage; // -1=KeineFrage;0=Frage wird gestellt;1=Ja;2=Nein
-short AbspannNr = 0; // Zähler für Abspann
-short AbspannZustand = 0; // Wo im Abspann
+short CreditsNum = 0; // Zähler für Abspann
+short CreditsState = 0; // Wo im Abspann
 bool SchatzGef = false; // wurde der Schatz gefunden
 
 // Pathfinding
