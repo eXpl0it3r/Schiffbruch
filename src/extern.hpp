@@ -81,13 +81,5 @@ extern sf::Image *lpDDSInventar; // DirectDraw Inventar surface
 extern sf::Image *lpDDSScape; // DirectDraw Landschaft surface
 extern sf::Image *lpDDSSchatzkarte; // SchatzkartenSurface
 extern sf::Image *darknessOverlay;
-//extern LPDIRECTDRAWPALETTE lpDDPal; // DirectDraw palette
-//extern DDBLTFX ddbltfx; // DirectDraw Effekte
-//extern DDPIXELFORMAT ddpf;
-//extern DDSURFACEDESC2 ddsd, ddsd2; // Zwischenspeicher der SurfaceEigenschaften
-
-////extern LPDIRECTDRAWGAMMACONTROL lpDDGammaControl; // Die drei sind für das Gammaablenden
-//extern DDGAMMARAMP DDGammaRamp;
-//extern DDGAMMARAMP DDGammaOld;
 
 const char *GetLanguageString(const int index);
