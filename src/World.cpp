@@ -138,7 +138,7 @@ void AddTime(short h, short m)
 
     AddResource(GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[WASSER] - 50 + Guy.ResourceAmount[NAHRUNG] - 50) / 1000);
 
-    if ((Spielzustand == State::GAME) && (!IsInBoat)) {
+    if ((s_GameState == State::GAME) && (!IsInBoat)) {
         for (short i = 0; i <= (60 * h + m); i++) {
             if (Chance == 0) {
                 break;
@@ -168,7 +168,7 @@ void AddResource(short Art, float Anzahl) // Fügt wassser usw hinzu
 
     // Wann tod
     if ((Guy.ResourceAmount[GESUNDHEIT] <= 0) && (Guy.CurrentAction != Action::DEATH) &&
-            (Guy.CurrentAction != Action::DAY_END) && (Spielzustand == State::GAME)) {
+            (Guy.CurrentAction != Action::DAY_END) && (s_GameState == State::GAME)) {
         Guy.IsActive = false;
         Guy.ActionNumber = 0;
         Guy.CurrentAction = Action::DEATH;

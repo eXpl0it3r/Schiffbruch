@@ -380,14 +380,14 @@ void CheckMouse(const sf::Window &win)
 
 short CheckKey()
 {
-    if (Spielzustand == State::LOGO) {
+    if (s_GameState == State::LOGO) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Logo Abbrechen
             StopSound(Sound::LOGO);
             Game::NewGame(false);
             return 2;
         }
-    } else if (Spielzustand == State::INTRO) {
+    } else if (s_GameState == State::INTRO) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Intro Abbrechen
             StopSound(Sound::STORM); // Sound hier sofort stoppen
@@ -426,18 +426,18 @@ short CheckKey()
 
             Guy.AnimationState = GUY_LEFT;
             Guy.CurrentAction = Action::NOTHING;
-            Spielzustand = State::GAME;
+            s_GameState = State::GAME;
             Guy.OriginalPosition = Guy.ScreenPosition;
             Game::SaveGame();
             return 1;
         }
-    } else if (Spielzustand == State::RESCUED) {
+    } else if (s_GameState == State::RESCUED) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            Spielzustand = State::OUTRO;
+            s_GameState = State::OUTRO;
             return 1;
         }
-    } else if (Spielzustand == State::GAME) {
+    } else if (s_GameState == State::GAME) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             Camera.x += 10;
         }
@@ -523,13 +523,13 @@ short CheckKey()
         }*/
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            if (Soundzustand == 0) {
-                Soundzustand = 1;
-            } else if (Soundzustand == 1) {
-                Soundzustand = 0;
+            if (s_SoundState == 0) {
+                s_SoundState = 1;
+            } else if (s_SoundState == 1) {
+                s_SoundState = 0;
             }
         }
-    } else if (Spielzustand == State::OUTRO) {
+    } else if (s_GameState == State::OUTRO) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Return) ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             StopSound(Sound::OUTRO);

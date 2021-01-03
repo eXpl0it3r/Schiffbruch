@@ -31,11 +31,11 @@ Application::Application(const std::string &name)
     puts(name.data());
 
     Sound::Init();
-    Soundzustand = 1; // Activate sound
+    s_SoundState = 1; // Activate sound
 
     Direct::InitDDraw();
 
-    Spielzustand = State::LOGO;
+    s_GameState = State::LOGO;
     Game::InitWaves(); // Nur zum Wavinitialisieren
     Game::InitStructs();
 
@@ -102,12 +102,12 @@ void Application::run()
                     */
                 }
 
-                if (Spielzustand == State::LOGO) {
+                if (s_GameState == State::LOGO) {
                     if (Direct::CheckKey() == 2) { // Das Keyboard abfragen
                         break;
                     }
                     Renderer::ShowLogo(); // Bild auffrischen
-                } else if ((Spielzustand == State::INTRO) || (Spielzustand == State::RESCUED)) {
+                } else if ((s_GameState == State::INTRO) || (s_GameState == State::RESCUED)) {
                     if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
                         m_window.close();
                         break;
@@ -120,7 +120,7 @@ void Application::run()
                     }
 
                     Renderer::ShowIntro(); // Bild auffrischen
-                } else if (Spielzustand == State::GAME) {
+                } else if (s_GameState == State::GAME) {
                     // Hide system cursor
 //                    SetCursor(nullptr);
 
@@ -150,7 +150,7 @@ void Application::run()
                     }
 
                     Renderer::Show(); // Das Bild zeichnen
-                } else if (Spielzustand == State::OUTRO) {
+                } else if (s_GameState == State::OUTRO) {
                     if (Direct::CheckKey() == 0) {
                         m_window.close();
                         break;

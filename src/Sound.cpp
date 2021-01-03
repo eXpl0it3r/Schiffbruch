@@ -12,7 +12,7 @@ void Init()
 
 void LoadSound(short Sound)
 {
-    if (Soundzustand == -1) { // Wenn keine Soundkarte vorhanden raus...
+    if (s_SoundState == -1) { // Wenn keine Soundkarte vorhanden raus...
         return;
     }
 
@@ -27,7 +27,7 @@ void LoadSound(short Sound)
 
 void PlaySound(short Sound, short Volume)
 {
-    if ((Sound == 0) || (Soundzustand <= 0) || (sound_players[Sound].getStatus() == sf::Sound::Playing)) {
+    if ((Sound == 0) || (s_SoundState <= 0) || (sound_players[Sound].getStatus() == sf::Sound::Playing)) {
         return;
     }
 
@@ -36,7 +36,7 @@ void PlaySound(short Sound, short Volume)
 
 void StopSound(short Sound)
 {
-    if ((Sound == 0) || (Soundzustand <= 0)) {
+    if ((Sound == 0) || (s_SoundState <= 0)) {
         return;
     }
 

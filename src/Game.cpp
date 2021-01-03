@@ -30,7 +30,7 @@ void SaveGame()
     ofs.write(reinterpret_cast<char *>(&Minutes), sizeof(Minutes));
     ofs.write(reinterpret_cast<char *>(&ScapeGrenze), sizeof(ScapeGrenze));
     ofs.write(reinterpret_cast<char *>(&SchatzPos), sizeof(SchatzPos));
-    ofs.write(reinterpret_cast<char *>(&Spielzustand), sizeof(Spielzustand));
+    ofs.write(reinterpret_cast<char *>(&s_GameState), sizeof(s_GameState));
     ofs.write(reinterpret_cast<char *>(&Hours), sizeof(Hours));
     ofs.write(reinterpret_cast<char *>(&Tag), sizeof(Tag));
     ofs.write(reinterpret_cast<char *>(TextBereich), sizeof(TextBereich));
@@ -62,7 +62,7 @@ bool LoadGame()
     ifs.read(reinterpret_cast<char *>(&Minutes), sizeof(Minutes));
     ifs.read(reinterpret_cast<char *>(&ScapeGrenze), sizeof(ScapeGrenze));
     ifs.read(reinterpret_cast<char *>(&SchatzPos), sizeof(SchatzPos));
-    ifs.read(reinterpret_cast<char *>(&Spielzustand), sizeof(Spielzustand));
+    ifs.read(reinterpret_cast<char *>(&s_GameState), sizeof(s_GameState));
     ifs.read(reinterpret_cast<char *>(&Hours), sizeof(Hours));
     ifs.read(reinterpret_cast<char *>(&Tag), sizeof(Tag));
     ifs.read(reinterpret_cast<char *>(TextBereich), sizeof(TextBereich));
@@ -2413,7 +2413,7 @@ void NewGame(bool neu)
         Hours = 0;
         Minutes = 0;
 
-        Spielzustand = State::INTRO;
+        s_GameState = State::INTRO;
         Guy.IsActive = false;
         Guy.AnimationState = GUY_SHIP;
         Guy.ActionNumber = 0;
