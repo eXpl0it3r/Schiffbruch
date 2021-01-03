@@ -76,7 +76,7 @@ GUY Guy;
 BMP Bmp[SPRITE_COUNT];
 WAV Wav[25]; // Sound::COUNT
 CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
-SCAPE Scape[MAX_TILES_X][MAX_TILESY];
+SCAPE Landscape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
 sf::Image *lpDDSPrimary = nullptr; // DirectDraw primary surface

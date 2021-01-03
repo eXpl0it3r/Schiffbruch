@@ -113,7 +113,7 @@ void Application::run()
 
                     if ((Hours >= 12) && (Minutes != 0) && (Guy.CurrentAction != Action::DAY_END)) { // Hier ist der Tag zuende
                         if (Guy.CurrentAction == Action::LOOKOUT) {
-                            Chance -= 1 + Scape[Guy.Pos.x][Guy.Pos.y].Height;
+                            Chance -= 1 + Landscape[Guy.Pos.x][Guy.Pos.y].Height;
                         }
 
                         Guy.IsActive = false;
@@ -121,7 +121,7 @@ void Application::run()
                         Guy.CurrentAction = Action::DAY_END;
                     }
 
-                    World::CheckSpzButton(); // Die Spezialkn�pfe umschalten
+                    World::UpdateButtons(); // Die Spezialkn�pfe umschalten
                     Direct::CheckMouse(m_window); // Den MouseZustand abchecken
 
                     if (Direct::CheckKey() == 0) { // Das Keyboard abfragen

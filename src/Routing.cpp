@@ -10,7 +10,7 @@ Coordinate NewPos; // Nur innerhalb des Pathfindings benutzt
 void MarkRoute(bool Mark)
 {
     for (short i = 0; i < RouteLaenge; i++) {
-        Scape[Route[i].x][Route[i].y].Marked = Mark;
+        Landscape[Route[i].x][Route[i].y].Marked = Mark;
     }
 }
 
@@ -112,7 +112,7 @@ bool FindTheWay()
         for (short BI = 0; BI <= 3; BI++) { // In jede Richtung schauen
             // ist das Feld noch nicht besucht und frei?
             if ((LenMap[NewPos.x][NewPos.y] == 65535) &&
-                    (Scape[NewPos.x][NewPos.y].Walkable)) {
+                    (Landscape[NewPos.x][NewPos.y].Walkable)) {
                 // Wieviele Schritte braucht man um zu diesem Feld zu kommen
                 short StepCnt = LenMap[Pos.x][Pos.y] + 1;
                 LenMap[NewPos.x][NewPos.y] = StepCnt;
@@ -134,7 +134,7 @@ bool FindTheWay()
         }
     }
 
-    if ((PCnt == 0) || (!Scape[RouteDestination.x][RouteDestination.y].Walkable)) {
+    if ((PCnt == 0) || (!Landscape[RouteDestination.x][RouteDestination.y].Walkable)) {
         RouteDestination.x = ShortKoor.x;
         RouteDestination.y = ShortKoor.y;
 
@@ -221,11 +221,11 @@ void SortRoute()
         SaveRoute[i].y = Pos.y;
 
         RouteKoor[2 * i].x =
-            (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].x +
-             Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].x) / 2;
+            (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x +
+             Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x) / 2;
         RouteKoor[2 * i].y =
-            (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].y +
-             Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].y) / 2;
+            (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y +
+             Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y) / 2;
 
         NewPos.x = Pos.x;
         NewPos.y = Pos.y - 1; // oben mit nachschauen anfangen
@@ -237,38 +237,38 @@ void SortRoute()
                 switch (j) {
                 case 0:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].x +
-                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].x) / 2;
+                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].x +
+                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].y +
-                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].y) / 2;
+                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y +
+                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].y) / 2;
                     break;
 
                 case 1:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].x +
-                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].x) / 2;
+                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x +
+                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][2].y +
-                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].y) / 2;
+                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].y +
+                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y) / 2;
                     break;
 
                 case 2:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].x +
-                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].x) / 2;
+                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].x +
+                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][3].y +
-                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].y) / 2;
+                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y +
+                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].y) / 2;
                     break;
 
                 case 3:
                     RouteKoor[2 * i + 1].x =
-                        (Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].x +
-                         Scape[Pos.x][Pos.y].xScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].x) / 2;
+                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x +
+                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][0].y +
-                         Scape[Pos.x][Pos.y].yScreen + CornerCoord[Scape[Pos.x][Pos.y].Type][1].y) / 2;
+                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].y +
+                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y) / 2;
                     break;
                 }
 
