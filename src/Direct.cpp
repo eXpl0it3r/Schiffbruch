@@ -45,7 +45,6 @@ void finiObjects()
         delete minimapPlayerSprite;
 
         delete s_creditsSprite;
-        delete s_treasureMapSprite;
 
 //        if (lpDDPal != nullptr) {
 //            lpDDPal->Release();
@@ -250,8 +249,8 @@ bool InitDDraw()
 
     // In diese Surface soll die Schatzkarte gespeichert werden
     lpDDSSchatzkarte = Renderer::createEmptyTexture(2 * TREASUREMAP_WIDTH, 2 * TREASUREMAP_HEIGHT, sf::Color::Transparent);
-    s_treasureMapSprite = new sf::Sprite;
-    s_treasureMapSprite->setTexture(*lpDDSSchatzkarte);
+//    s_treasureMapSprite = new sf::Sprite;
+//    s_treasureMapSprite->setTexture(*lpDDSSchatzkarte);
 
     return true;
 }

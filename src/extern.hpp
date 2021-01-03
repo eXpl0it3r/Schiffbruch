@@ -81,7 +81,7 @@ extern sf::Texture *lpDDSButtons; // DirectDraw Buttons surface
 extern sf::Texture *lpDDSInventar; // DirectDraw Inventar surface
 
 extern sf::Texture *lpDDSSchatzkarte; // SchatzkartenSurface
-extern sf::Sprite *s_treasureMapSprite;
+//extern sf::Sprite *s_treasureMapSprite;
 
 extern sf::Sprite *s_creditsSprite;
 

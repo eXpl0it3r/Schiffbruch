@@ -20,7 +20,7 @@ public:
     static void drawSprite(const sf::Sprite &sprite);
 
 
-    static void clearText();
+    static void clearText(const int x, const int y, const int width, const int height);
     static void drawToText(const sf::Sprite &sprite);
     static void setTextPos(const int x, const int y);
 

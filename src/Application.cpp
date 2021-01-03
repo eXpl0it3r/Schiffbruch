@@ -174,9 +174,9 @@ void Application::run()
                 m_screenContent.clear(sf::Color::Transparent);
 
                 m_textOverlay.display();
-                text.setPosition(m_textOffset);
+//                text.setPosition(m_textOffset);
                 m_window.draw(text);
-                m_textOverlay.clear(sf::Color::Transparent);
+//                m_textOverlay.clear(sf::Color::Transparent);
 
                 m_window.display();
                 sf::sleep(sf::milliseconds(16)); // idk, try 60 fps or something
@@ -201,9 +201,12 @@ void Application::drawSprite(const sf::Sprite &sprite)
     s_instance->m_screenContent.draw(sprite);
 }
 
-void Application::clearText()
+void Application::clearText(const int x, const int y, const int width, const int height)
 {
-    s_instance->m_textOverlay.clear(sf::Color::Transparent);
+    sf::RectangleShape shape(sf::Vector2f(width, height));
+    shape.setPosition(x, y);
+    shape.setFillColor(sf::Color::Transparent);
+    s_instance->m_textOverlay.draw(shape, sf::RenderStates(sf::BlendMode(sf::BlendMode::SrcAlpha, sf::BlendMode::Zero)));
 }
 
 void Application::drawToText(const sf::Sprite &sprite)
