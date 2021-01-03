@@ -874,17 +874,12 @@ short DrawText(const int TEXT, short Bereich, short Art)
 
 void HideText(short Area)
 {
-    // TODO
     TextBereich[Area].HasText = false;
-    // Another worst possible way to do it award please
-//    for (int x=TextBereich[Area].textRect.left; x<TextBereich[Area].textRect.right; x++) {
-//        for (int y=TextBereich[Area].textRect.top; y<TextBereich[Area].textRect.bottom; y++) {
-//            sf::Color c = lpDDSSchrift->getPixel(x, y);
-//            c.a = 0;
-//            lpDDSSchrift->setPixel(x, y, c);
-//        }
-//    }
-//    lpDDSSchrift->Blt(&TextBereich[Area].textRect, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
+    Application::clearText(TextBereich[Area].textRect.left,
+                           TextBereich[Area].textRect.top,
+                           TextBereich[Area].textRect.right - TextBereich[Area].textRect.left,
+                           TextBereich[Area].textRect.bottom - TextBereich[Area].textRect.top
+                           );
 }
 
 void DrawSchatzkarte()
@@ -897,7 +892,7 @@ void DrawSchatzkarte()
     rcRectsrc.right = TREASUREMAP_WIDTH;
     rcRectsrc.top = 0;
     rcRectsrc.bottom = TREASUREMAP_HEIGHT;
-    rcRectdes.left = TextBereich[TXTPAPIER].textRect.left;
+    rcRectdes.left =  TextBereich[TXTPAPIER].textRect.left;
     rcRectdes.top = TextBereich[TXTPAPIER].textRect.top;
     rcRectdes.right = rcRectdes.left + TREASUREMAP_WIDTH;
     rcRectdes.bottom = rcRectdes.top + TREASUREMAP_HEIGHT;

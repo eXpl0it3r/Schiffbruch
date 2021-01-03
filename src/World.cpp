@@ -1714,7 +1714,9 @@ void CreatePirateWreck()
 
 void Treasure()
 {
+    puts("Rendering treasure map");
     sf::Image treasureMap;
+    treasureMap.create(TREASUREMAP_WIDTH, TREASUREMAP_HEIGHT, sf::Color::Red);
     sf::Image landscape = Renderer::landscapeImage();
     while (true) {
 
@@ -1736,6 +1738,7 @@ void Treasure()
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     Renderer::GetPixel(static_cast<short>(i + Landscape[SchatzPos.x][SchatzPos.y].xScreen - TREASUREMAP_WIDTH / 2 + TILE_SIZE_X / 2),
                                        static_cast<short>(j + Landscape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), &landscape);
+//                    printf("r %d g %d b %d\n", rgbStruct.r, rgbStruct.g, rgbStruct.b);
                     Renderer::PutPixel(i, j,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
                                        (rgbStruct.r * 30 + rgbStruct.g * 59 + rgbStruct.b * 11) / 100,
@@ -1751,8 +1754,8 @@ void Treasure()
 //            rcRectdes.right = rcRectdes.left + Bmp[CROSS].Width;
 //            rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Height / 2;
 //            rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
-            lpDDSSchatzkarte->loadFromImage(treasureMap);
-            s_treasureMapSprite->setPosition(TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2, rcRectdes.left + Bmp[CROSS].Width);
+//            lpDDSSchatzkarte->loadFromImage(treasureMap);
+//            s_treasureMapSprite->setPosition(TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2, rcRectdes.left + Bmp[CROSS].Width);
 //            Renderer::Blit(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
 
 //            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
@@ -1777,13 +1780,13 @@ void Treasure()
                     }
                 }
             }
-            lpDDSSchatzkarte->loadFromImage(treasureMap);
-            Renderer::BlitToScreen(lpDDSSchatzkarte);
+//            Renderer::BlitToScreen(lpDDSSchatzkarte);
 
 //            lpDDSSchatzkarte->Unlock(nullptr);
             break;
         }
     }
+    lpDDSSchatzkarte->loadFromImage(treasureMap);
 }
 
 void OnRawMaterialsUsed(short Objekt)
