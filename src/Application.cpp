@@ -20,10 +20,15 @@
 Application *Application::s_instance;
 
 Application::Application(const std::string &name)
-    : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::Default)
+    : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::None)
 , m_name(name)
 , m_time(std::time(nullptr))
 {
+    // Ensure borderless windowed mode
+    const sf::Vector2u size(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height) ;
+    m_window.setSize(size);
+    m_window.setPosition({0, 0});
+
     s_instance = this;
 
     m_screenContent.create(MAX_SCREEN_X, MAX_SCREEN_Y);
