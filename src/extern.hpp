@@ -91,7 +91,6 @@ extern sf::Sprite *minimapPlayerSprite;
 extern sf::Texture *minimapPlayerTexture;
 
 extern bool s_textOverlayVisible;
-extern bool s_gameScreenVisible;
 
 extern sf::Sprite *s_creditsSprite;
 extern int s_previousCreditsOverlay;

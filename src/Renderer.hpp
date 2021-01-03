@@ -33,6 +33,8 @@ void CreditsBlt(short Bild, short Prozent); // Zeichnet die Bilder im Abspann
 sf::Image landscapeImage();
 
 
+void drawRect(const int x, const int y, const int width, const int height, const sf::Color &color);
+void drawRectToMap(const int x, const int y, const int width, const int height, const sf::Color &color);
 sf::Texture *createEmptyTexture(const size_t width, const size_t height, const sf::Color &color);
 sf::Texture *loadTexture(const char *file);
 } // namespace Renderer

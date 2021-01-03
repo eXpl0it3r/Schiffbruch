@@ -181,12 +181,12 @@ void Application::run()
 
                 m_landscape.display();
                 landscape.setPosition(m_landscapeOffset);
-                m_landscape.clear(sf::Color::Transparent);
-//                m_window.draw(landscape);
+                m_window.draw(landscape);
+//                m_landscape.clear(sf::Color::Transparent);
 
                 m_screenContent.display();
                 m_window.draw(sprite);
-//                m_screenContent.clear(sf::Color::Transparent);
+                m_screenContent.clear(sf::Color::Transparent);
 
                 m_textOverlay.display();
                 m_window.draw(text);
@@ -207,6 +207,11 @@ void Application::update()
 {
 }
 
+void Application::drawToScreen(const sf::Drawable &sprite)
+{
+    s_instance->m_screenContent.draw(sprite);
+}
+
 void Application::drawSprite(const sf::Sprite &sprite)
 {
     s_instance->m_screenContent.draw(sprite);
@@ -217,12 +222,14 @@ void Application::drawToText(const sf::Sprite &sprite)
     s_instance->m_textOverlay.draw(sprite);
 }
 
+void Application::clearLandscape()
+{
+    s_instance->m_landscape.clear();
+}
+
 void Application::drawToLandscape(const sf::Sprite &sprite)
 {
-    sf::Sprite todrawsprite = sprite;
-    todrawsprite.setPosition(s_instance->m_landscapeOffset);
-    s_instance->m_landscape.draw(todrawsprite);
-//    s_instance->m_screenContent.draw(todrawsprite);
+    s_instance->m_landscape.draw(sprite);
 }
 
 void Application::setLandscapeOffset(const int x, const int y)
@@ -230,6 +237,11 @@ void Application::setLandscapeOffset(const int x, const int y)
     printf("landscape x: %d, y: %d\n", x, y);
     s_instance->m_landscapeOffset.x = -x;
     s_instance->m_landscapeOffset.y = -y;
+}
+
+void Application::clearScreenContent()
+{
+    s_instance->m_screenContent.clear();
 }
 
 sf::Image Application::landscapeImage()

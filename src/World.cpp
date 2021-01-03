@@ -5,6 +5,7 @@
 #include "Renderer.hpp"
 #include "Sound.hpp"
 #include "State.hpp"
+#include "Application.hpp"
 
 #include <cstdio>
 #include <cstring>
@@ -176,12 +177,13 @@ void AddResource(short Art, float Anzahl) // Fügt wassser usw hinzu
 
 void Generate()
 {
-    // Die Kartehintergrundfarbe
+    // The map background color
     rcRectdes.left = 0;
     rcRectdes.top = 0;
     rcRectdes.right = 2 * MAX_TILES_X;
     rcRectdes.bottom = 2 * MAX_TILESY;
-    lpDDSKarte = Renderer::createEmptyTexture(MAX_TILES_X, MAX_TILESY, sf::Color(247, 222, 191));
+    sf::Image newContent;
+    newContent.create(MAX_TILES_X * 2, MAX_TILESY * 2, sf::Color(247, 222, 191));
 //    ddbltfx.dwFillColor = Renderer::RGB2DWORD(247, 222, 191);
 //        lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
 
@@ -191,6 +193,7 @@ void Generate()
     rcRectdes.right = MAX_SURFACE_X;
     rcRectdes.bottom = MAX_SURFACE_Y;
 
+    Application::clearLandscape();
 //    lpDDSScape = Renderer::createEmptyTexture(MAX_SURFACE_X, MAX_SURFACE_Y, sf::Color::Black);
 //    ddbltfx.dwFillColor = Renderer::RGB2DWORD(0, 0, 0);
 //        lpDDSScape->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
@@ -284,7 +287,6 @@ void Generate()
             sf::Color c;
             if ((Landscape[x][y].Terrain == 1) && (Landscape[x][y].Type == 0)) { // Meer
                 c = sf::Color(228, 207, 182);
-//                ddbltfx.dwFillColor = Renderer::RGB2DWORD(228, 207, 182);
             } else {
                 if ((Landscape[x][y].Type == 0) &&
                         ((Landscape[x][y].Terrain == 2) ||
@@ -296,11 +298,23 @@ void Generate()
                     c = sf::Color(139 + Landscape[x][y].Height * 20, 128 + Landscape[x][y].Height * 20, 115 + Landscape[x][y].Height * 20);
                 }
             }
-            lpDDSKarte = Renderer::createEmptyTexture(rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top, c);
+
+//                    printf("minimap %d %d\n", rcRectdes.left, rcRectdes.top);
+            // TODO: more efficient
+            for (int ix=rcRectdes.left; ix<rcRectdes.right; ix++) {
+                for (int iy=rcRectdes.top; iy<rcRectdes.bottom; iy++) {
+//                    printf("minimap %d %d\n", ix, iy);
+                    newContent.setPixel(ix, iy, c);
+                }
+            }
+//            Renderer::drawRect(rcRectdes.left, rcRectdes.top, rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top, c);
+//            printf("ddskarte %d %d\n", rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top);
+//            lpDDSKarte = Renderer::createEmptyTexture(rcRectdes.right - rcRectdes.left, rcRectdes.bottom - rcRectdes.top, c);
 
 //                lpDDSKarte->Blt(&rcRectdes, nullptr, nullptr, DDBLT_COLORFILL, &ddbltfx);
         }
     }
+    lpDDSKarte->loadFromImage(newContent);
 }
 
 void UpdateButtons()

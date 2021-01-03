@@ -15,8 +15,13 @@ public:
     void run();
     void update();
 
+    static void drawToScreen(const sf::Drawable &sprite);
+    static void clearScreenContent();
     static void drawSprite(const sf::Sprite &sprite);
+
     static void drawToText(const sf::Sprite &sprite);
+
+    static void clearLandscape();
     static void drawToLandscape(const sf::Sprite &sprite);
     static void setLandscapeOffset(const int x, const int y);
 
