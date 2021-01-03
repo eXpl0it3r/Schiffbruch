@@ -1042,7 +1042,7 @@ void CalcGuyKoor()
         }
     }
 
-    if (Bild % Landscape[Guy.Pos.x][Guy.Pos.y].RunningTime == 0) {
+    if (CurrentFrame % Landscape[Guy.Pos.x][Guy.Pos.y].RunningTime == 0) {
         Step++;
         short i;
 
@@ -1228,7 +1228,7 @@ void AbspannCalc()
                 continue;
             }
 
-            i = 150 / LastBild;
+            i = 150 / FPS;
             Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top -= i;
 
             if (Bmp[CreditsList[CreditsNum][k].Picture].targetRect.top < MAX_SCREEN_Y - 400) {
@@ -1254,13 +1254,13 @@ void AbspannCalc()
             }
         }
     } else if (CreditsState == 1) {
-        i = LastBild / Bmp[CreditsNum].Speed;
+        i = FPS / Bmp[CreditsNum].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (Bild % i == 0) {
+        if (CurrentFrame % i == 0) {
             Bmp[CreditsNum].AnimationPhase++;
 
             if (Bmp[CreditsNum].AnimationPhase >= Bmp[CreditsNum].AnimationPhaseCount) {
@@ -1288,13 +1288,13 @@ void Animationen()
                 continue;
             }
 
-            i = LastBild / Bmp[j].Speed;
+            i = FPS / Bmp[j].Speed;
 
             if (i < 1) {
                 i = 1;
             }
 
-            if (Bild % i == 0) {
+            if (CurrentFrame % i == 0) {
                 if ((j < TREE_DOWN_1) || (j > TREE_DOWN_4) || // Die Baumfällenanimation nur ein mal abspielen
                         (Landscape[x][y].AnimationPhase != Bmp[j].AnimationPhaseCount - 1)) {
                     Landscape[x][y].AnimationPhase++;
@@ -1311,13 +1311,13 @@ void Animationen()
             continue;
         }
 
-        i = LastBild / Bmp[j].Speed;
+        i = FPS / Bmp[j].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (Bild % i == 0) {
+        if (CurrentFrame % i == 0) {
             Bmp[j].AnimationPhase++;
 
             if (Bmp[j].AnimationPhase >= Bmp[j].AnimationPhaseCount) {
@@ -1332,13 +1332,13 @@ void Animationen()
     if (((Guy.AnimationState >= GUY_LEFT) && (Guy.AnimationState <= GUY_BELOW)) ||
             ((Guy.AnimationState >= GUY_BOAT_LEFT) && (Guy.AnimationState <= GUY_BOAT_BELOW)) ||
             (Guy.AnimationState == GUY_SHIP) || (Guy.AnimationState == GUY_SWIM)) {
-        i = LastBild / Bmp[Guy.AnimationState].Speed;
+        i = FPS / Bmp[Guy.AnimationState].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (LastBild - Bmp[Guy.AnimationState].Speed < 0) {
+        if (FPS - Bmp[Guy.AnimationState].Speed < 0) {
             loop = 2;
         } else {
             loop = 1;
@@ -1348,7 +1348,7 @@ void Animationen()
             loop = loop * 2;
         }
 
-        for (short k = 0; k < loop; k++) if ((Bild % i == 0) && (Guy.IsActive)) {
+        for (short k = 0; k < loop; k++) if ((CurrentFrame % i == 0) && (Guy.IsActive)) {
                 CalcGuyKoor();
             }
 
@@ -1358,13 +1358,13 @@ void Animationen()
     // sonstige Aktionen
     if ((Guy.AnimationState >= GUY_SEARCH) && (Guy.AnimationState <= GUY_SLINGSHOT) &&
             (Bmp[Guy.AnimationState].AnimationPhase != Bmp[Guy.AnimationState].AnimationPhaseCount)) {
-        i = LastBild / Bmp[Guy.AnimationState].Speed;
+        i = FPS / Bmp[Guy.AnimationState].Speed;
 
         if (i < 1) {
             i = 1;
         }
 
-        if (Bild % i == 0) {
+        if (CurrentFrame % i == 0) {
             Bmp[Guy.AnimationState].AnimationPhase++;
 
             if (Bmp[Guy.AnimationState].AnimationPhase >= Bmp[Guy.AnimationState].AnimationPhaseCount) {
