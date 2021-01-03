@@ -19,7 +19,7 @@ void SaveGame()
         return;
     }
 
-    ofs.write(reinterpret_cast<char *>(Scape), sizeof(Scape));
+    ofs.write(reinterpret_cast<char *>(Landscape), sizeof(Landscape));
     ofs.write(reinterpret_cast<char *>(&Guy), sizeof(Guy));
     ofs.write(reinterpret_cast<char *>(&IsInBoat), sizeof(IsInBoat));
     ofs.write(reinterpret_cast<char *>(&Camera), sizeof(Camera));
@@ -51,7 +51,7 @@ bool LoadGame()
         return (false);
     }
 
-    ifs.read(reinterpret_cast<char *>(Scape), sizeof(Scape));
+    ifs.read(reinterpret_cast<char *>(Landscape), sizeof(Landscape));
     ifs.read(reinterpret_cast<char *>(&Guy), sizeof(Guy));
     ifs.read(reinterpret_cast<char *>(&IsInBoat), sizeof(IsInBoat));
     ifs.read(reinterpret_cast<char *>(&Camera), sizeof(Camera));
@@ -2375,7 +2375,7 @@ void NewGame(bool neu)
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
-        World::Meer();
+        World::CreateSea();
 
         Renderer::DrawString("Lege Fluss fest...", 5, 65, 2);
         rcRectdes.left = 0;
@@ -2383,7 +2383,7 @@ void NewGame(bool neu)
         rcRectdes.right = MAX_SCREEN_X;
         rcRectdes.bottom = MAX_SCREEN_Y;
 //            lpDDSPrimary->Blt(&rcRectdes, lpDDSSchrift, &rcRectdes, DDBLT_KEYSRC | DDBLT_WAIT, nullptr);
-        World::Flow();
+        World::CreateRiver();
         Math::CalcKoor();
 
         Renderer::DrawString("Pflanze Baeume...", 5, 95, 2);
@@ -2401,11 +2401,11 @@ void NewGame(bool neu)
         Guy.Pos.x = 1;
         Guy.Pos.y = MAX_TILESY / 2;
         Guy.ScreenPosition.x =
-            (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-             Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
+            (Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+             Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
         Guy.ScreenPosition.y =
-            (Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-             Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
+            (Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+             Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
 
         Camera.x = Guy.ScreenPosition.x - static_cast<short>(rcGesamt.right / 2);
         Camera.y = Guy.ScreenPosition.y - static_cast<short>(rcGesamt.bottom / 2);
@@ -2446,18 +2446,18 @@ void NewGame(bool neu)
     // Schatzvergraben und Schatzkarte malen
     for (y = 0; y < MAX_TILESY; y++)
         for (x = 0; x < MAX_TILES_X; x++) {
-            Entdeckttmp[x][y] = Scape[x][y].Discovered;
-            Scape[x][y].Discovered = true;
+            Entdeckttmp[x][y] = Landscape[x][y].Discovered;
+            Landscape[x][y].Discovered = true;
         }
 
     World::Generate(); // Einmal vor dem Schatz schon entdeckt malen
     World::Treasure();
 
     for (y = 0; y < MAX_TILESY; y++) for (x = 0; x < MAX_TILES_X; x++) {
-            Scape[x][y].Discovered = Entdeckttmp[x][y];
+            Landscape[x][y].Discovered = Entdeckttmp[x][y];
         }
 
-    World::Entdecken();
+    World::UpdateDiscovered();
     LAnimation = Anitmp;
     World::Generate(); // Und nochmal ohne das die Gegend entdeckt ist
     Guy.OriginalPosition = Guy.ScreenPosition;

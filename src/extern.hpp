@@ -56,7 +56,7 @@ extern GUY Guy;
 extern BMP Bmp[SPRITE_COUNT];
 extern WAV Wav[25]; // Sound::COUNT;
 extern CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
-extern SCAPE Scape[MAX_TILES_X][MAX_TILESY];
+extern SCAPE Landscape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
 extern sf::Image *lpDDSPrimary; // DirectDraw primary surface

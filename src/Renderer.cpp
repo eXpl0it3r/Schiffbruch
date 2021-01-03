@@ -59,22 +59,22 @@ Coordinate GetTile(short PosX, short PosY)
     for (short y = 0; y < MAX_TILESY; y++) {
         for (short x = 0; x < MAX_TILES_X; x++) {
             // Die in Betracht kommenden Kacheln rausfinden
-            if ((PosX > Scape[x][y].xScreen) && (PosX < Scape[x][y].xScreen + TILE_SIZE_X) &&
-                    (PosY > Scape[x][y].yScreen) && (PosY < Scape[x][y].yScreen + TILE_SIZE_Y)) {
+            if ((PosX > Landscape[x][y].xScreen) && (PosX < Landscape[x][y].xScreen + TILE_SIZE_X) &&
+                    (PosY > Landscape[x][y].yScreen) && (PosY < Landscape[x][y].yScreen + TILE_SIZE_Y)) {
                 if ((Math::InTriangle(PosX, PosY,
-                                     Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][0].x,
-                                     Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][0].y,
-                                     Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][1].x,
-                                     Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][1].y,
-                                     Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][3].x,
-                                     Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][3].y)) ||
+                                     Landscape[x][y].xScreen + CornerCoord[Landscape[x][y].Type][0].x,
+                                     Landscape[x][y].yScreen + CornerCoord[Landscape[x][y].Type][0].y,
+                                     Landscape[x][y].xScreen + CornerCoord[Landscape[x][y].Type][1].x,
+                                     Landscape[x][y].yScreen + CornerCoord[Landscape[x][y].Type][1].y,
+                                     Landscape[x][y].xScreen + CornerCoord[Landscape[x][y].Type][3].x,
+                                     Landscape[x][y].yScreen + CornerCoord[Landscape[x][y].Type][3].y)) ||
                         (Math::InTriangle(PosX, PosY,
-                                         Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][2].x,
-                                         Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][2].y,
-                                         Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][1].x,
-                                         Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][1].y,
-                                         Scape[x][y].xScreen + CornerCoord[Scape[x][y].Type][3].x,
-                                         Scape[x][y].yScreen + CornerCoord[Scape[x][y].Type][3].y))) {
+                                         Landscape[x][y].xScreen + CornerCoord[Landscape[x][y].Type][2].x,
+                                         Landscape[x][y].yScreen + CornerCoord[Landscape[x][y].Type][2].y,
+                                         Landscape[x][y].xScreen + CornerCoord[Landscape[x][y].Type][1].x,
+                                         Landscape[x][y].yScreen + CornerCoord[Landscape[x][y].Type][1].y,
+                                         Landscape[x][y].xScreen + CornerCoord[Landscape[x][y].Type][3].x,
+                                         Landscape[x][y].yScreen + CornerCoord[Landscape[x][y].Type][3].y))) {
                     return {x, y};
                 }
             }
@@ -290,77 +290,77 @@ void DrawObjects()
 
             // Die nichtsichbaren Kacheln (oder nicht betroffenen) ausfiltern
 
-            if (!((Scape[x][y].xScreen > Camera.x + rcPlayingSurface.left - TILE_SIZE_X) &&
-                    (Scape[x][y].xScreen < Camera.x + rcPlayingSurface.right + TILE_SIZE_X) &&
-                    (Scape[x][y].yScreen > Camera.y + rcPlayingSurface.top - TILE_SIZE_Y) &&
-                    (Scape[x][y].yScreen < Camera.y + rcPlayingSurface.bottom + TILE_SIZE_Y) &&
-                    (Scape[x][y].Discovered) &&
-                    ((Scape[x][y].Marked) || (Scape[x][y].Object != -1) || (drawGuy)))) {
+            if (!((Landscape[x][y].xScreen > Camera.x + rcPlayingSurface.left - TILE_SIZE_X) &&
+                    (Landscape[x][y].xScreen < Camera.x + rcPlayingSurface.right + TILE_SIZE_X) &&
+                    (Landscape[x][y].yScreen > Camera.y + rcPlayingSurface.top - TILE_SIZE_Y) &&
+                    (Landscape[x][y].yScreen < Camera.y + rcPlayingSurface.bottom + TILE_SIZE_Y) &&
+                    (Landscape[x][y].Discovered) &&
+                    ((Landscape[x][y].Marked) || (Landscape[x][y].Object != -1) || (drawGuy)))) {
                 continue;
             }
 
-            if (Scape[x][y].Marked) { // Die Rahmen um die markierten Kacheln malen
-                rcRectsrc.left = TILE_SIZE_X * Scape[x][y].Type;
-                rcRectsrc.right = TILE_SIZE_X * Scape[x][y].Type + TILE_SIZE_X;
+            if (Landscape[x][y].Marked) { // Die Rahmen um die markierten Kacheln malen
+                rcRectsrc.left = TILE_SIZE_X * Landscape[x][y].Type;
+                rcRectsrc.right = TILE_SIZE_X * Landscape[x][y].Type + TILE_SIZE_X;
                 rcRectsrc.top = 2 * TILE_SIZE_Y;
                 rcRectsrc.bottom = 3 * TILE_SIZE_Y;
-                rcRectdes.left = Scape[x][y].xScreen - Camera.x;
+                rcRectdes.left = Landscape[x][y].xScreen - Camera.x;
                 rcRectdes.right = rcRectdes.left + TILE_SIZE_X;
-                rcRectdes.top = Scape[x][y].yScreen - Camera.y;
+                rcRectdes.top = Landscape[x][y].yScreen - Camera.y;
                 rcRectdes.bottom = rcRectdes.top + TILE_SIZE_Y;
                 Math::CalcRect(rcPlayingSurface);
                 Blitten(lpDDSMisc, lpDDSBack, true);
             }
 
             // paint landscape animations (and field)
-            if ((Scape[x][y].Object != -1) && (LAnimation) &&
-                    ((Scape[x][y].Object <= FLOODGATE_6))
-                    || (Scape[x][y].Object == FIELD) // Der Guy ist immer vor diesen Objecten
-                    || (Scape[x][y].Object == PIPE)
-                    || (Scape[x][y].Object == SOS)) {
+            if ((Landscape[x][y].Object != -1) && (LAnimation) &&
+                    ((Landscape[x][y].Object <= FLOODGATE_6))
+                    || (Landscape[x][y].Object == FIELD) // Der Guy ist immer vor diesen Objecten
+                    || (Landscape[x][y].Object == PIPE)
+                    || (Landscape[x][y].Object == SOS)) {
                 // Sound abspielen
-                if (Scape[x][y].Object != -1 &&
+                if (Landscape[x][y].Object != -1 &&
                         ((Guy.Pos.x - 1 <= x) && (x <= Guy.Pos.x + 1)) &&
                         ((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1))) {
                     if ((x == Guy.Pos.x) && (y == Guy.Pos.y)) {
-                        Sound::PlaySound(Bmp[Scape[x][y].Object].Sound, 100);
-                    } else if (Bmp[Scape[x][y].Object].Sound != Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
-                        Sound::PlaySound(Bmp[Scape[x][y].Object].Sound, 90);
+                        Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 100);
+                    } else if (Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
+                        Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 90);
                     }
                 }
 
-                DrawPicture(Scape[x][y].xScreen + Scape[x][y].ObjectPosOffset.x - Camera.x,
-                              Scape[x][y].yScreen + Scape[x][y].ObjectPosOffset.y - Camera.y,
-                              Scape[x][y].Object, rcPlayingSurface, Scape[x][y].ReverseAnimation,
-                              static_cast<short>(Scape[x][y].AnimationPhase));
+                DrawPicture(Landscape[x][y].xScreen + Landscape[x][y].ObjectPosOffset.x - Camera.x,
+                              Landscape[x][y].yScreen + Landscape[x][y].ObjectPosOffset.y - Camera.y,
+                              Landscape[x][y].Object, rcPlayingSurface, Landscape[x][y].ReverseAnimation,
+                              static_cast<short>(Landscape[x][y].AnimationPhase));
             } else {
-                if (((Scape[x][y].Object >= TREE_1) && (Scape[x][y].Object <= TREE_DOWN_4)) ||
-                        (Scape[x][y].Object == TREE_BIG) || (Scape[x][y].Object == FIRE) ||
-                        (Scape[x][y].Object == WRECK_1) || (Scape[x][y].Object == WRECK_2) ||
-                        (Scape[x][y].Object >= TENT)) { // Bäume und Früchte (und alle anderen Objecte) malen
+                if (((Landscape[x][y].Object >= TREE_1) && (Landscape[x][y].Object <= TREE_DOWN_4)) ||
+                        (Landscape[x][y].Object == TREE_BIG) || (Landscape[x][y].Object == FIRE) ||
+                        (Landscape[x][y].Object == WRECK_1) || (Landscape[x][y].Object == WRECK_2) ||
+                        (Landscape[x][y].Object >= TENT)) { // Bäume und Früchte (und alle anderen Objecte) malen
                     // Sound abspielen
-                    if (Scape[x][y].Object != -1 &&
+                    if (Landscape[x][y].Object != -1 &&
                             ((Guy.Pos.x - 1 <= x) && (x <= Guy.Pos.x + 1)) &&
                             ((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1))) {
                         if ((x == Guy.Pos.x) && (y == Guy.Pos.y)) {
-                            Sound::PlaySound(Bmp[Scape[x][y].Object].Sound, 100);
-                        } else if (Bmp[Scape[x][y].Object].Sound != Bmp[Scape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
-                            Sound::PlaySound(Bmp[Scape[x][y].Object].Sound, 90);
+                            Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 100);
+                        } else if (Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
+                            Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 90);
                         }
                     }
 
                     if (drawGuy) {
-                        if ((Guy.ScreenPosition.y) < (Scape[x][y].yScreen + Scape[x][y].ObjectPosOffset.y
-                                                 + Bmp[Scape[x][y].Object].Height)) {
+                        if ((Guy.ScreenPosition.y) < (Landscape[x][y].yScreen + Landscape[x][y].ObjectPosOffset.y
+                                                 + Bmp[Landscape[x][y].Object].Height)) {
                             DrawGuy();
                             drawGuy = false;
                         }
                     }
 
-                    DrawPicture(Scape[x][y].xScreen + Scape[x][y].ObjectPosOffset.x - Camera.x,
-                                  Scape[x][y].yScreen + Scape[x][y].ObjectPosOffset.y - Camera.y,
-                                  Scape[x][y].Object, rcPlayingSurface, false,
-                                  static_cast<short>(Scape[x][y].AnimationPhase));
+                    DrawPicture(Landscape[x][y].xScreen + Landscape[x][y].ObjectPosOffset.x - Camera.x,
+                                  Landscape[x][y].yScreen + Landscape[x][y].ObjectPosOffset.y - Camera.y,
+                                  Landscape[x][y].Object, rcPlayingSurface, false,
+                                  static_cast<short>(Landscape[x][y].AnimationPhase));
                 }
             }
 

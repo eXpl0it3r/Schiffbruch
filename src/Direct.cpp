@@ -390,23 +390,23 @@ short CheckKey()
 
             for (short x = Guy.Pos.x; x < MAX_TILES_X; x++) {
                 Guy.Pos.x = x;
-                World::Entdecken();
+                World::UpdateDiscovered();
 
-                if (Scape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) {
+                if (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) {
                     break;
                 }
             }
 
-            Scape[Guy.Pos.x - 2][Guy.Pos.y].Object = WRECK_1;
-            Scape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_1].targetRect.left);
-            Scape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
+            Landscape[Guy.Pos.x - 2][Guy.Pos.y].Object = WRECK_1;
+            Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_1].targetRect.left);
+            Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
 
             Guy.ScreenPosition.x =
-                (Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                 Scape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
+                (Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                 Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2;
             Guy.ScreenPosition.y =
-                (Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                 Scape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Scape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
+                (Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2;
             RouteStart.x = -1;
             RouteStart.y = -1;
             RouteDestination.x = -1;
