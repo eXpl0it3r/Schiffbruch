@@ -2238,8 +2238,8 @@ void InitStructs()
     TwoClicks = -1;
     Night = false;
     Frage = -1;
-    LastBild = 100;
-    Bild = 0;
+    FPS = 100;
+    CurrentFrame = 0;
     MousePosition.x = MAX_SCREEN_X / 2;
     MousePosition.y = MAX_SCREEN_Y / 2;
     Direct::Reset();

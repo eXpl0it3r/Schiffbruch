@@ -82,8 +82,8 @@ void Application::run()
     while (m_window.isOpen()) {
         m_window.clear(sf::Color::Black);
         process_events();
-        Bild++;
-        LastBild = 60;
+        CurrentFrame++;
+        FPS = 60;
 
         // BilderproSec ausgeben
         //                    /*
