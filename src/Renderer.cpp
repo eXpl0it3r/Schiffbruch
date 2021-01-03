@@ -755,7 +755,7 @@ void DrawString(const char *string, short x, short y, short Art)
     }
 }
 
-short DrawText(int TEXT, short Bereich, short Art)
+short DrawText(const int TEXT, short Bereich, short Art)
 {
     short BWidth = 0;
     short BHeight = 0;

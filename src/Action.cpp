@@ -665,10 +665,10 @@ void search()
 
             case 2:
                 if (Guy.Inventory[RAW_LIANA] < 10) {
-                    PapierText = Renderer::DrawText(ROHLIANEGEFUNDEN, TXTPAPIER, 1);
+                    PapierText = Renderer::DrawText(STRING_LIANA_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_LIANA]++;
                 } else {
-                    PapierText = Renderer::DrawText(ROHLIANEZUVIEL, TXTPAPIER, 1);
+                    PapierText = Renderer::DrawText(STRING_LIANA_FULL, TXTPAPIER, 1);
                 }
 
                 break;

@@ -64,11 +64,11 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
             break;
 
         case RAW_LEAF:
-            name = GetLanguageString(BLATT);
+            name = GetLanguageString(STRING_LEAF);
             break;
 
         case RAW_LIANA:
-            name = GetLanguageString(LIANE);
+            name = GetLanguageString(STRING_LIANA);
             break;
 
         case RAW_TREE_TRUNK:
