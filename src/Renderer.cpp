@@ -157,8 +157,8 @@ void BlitToScreen(sf::Texture *from)
     }
 
     if (srcrect.width <= 0 || srcrect.height <= 0) {
-        puts("!!!!!!!! empty source rect !!!!!!!!");
-        puts("!!!!!!!! probably the panel !!!!!!!!");
+//        puts("!!!!!!!! empty source rect !!!!!!!!");
+//        puts("!!!!!!!! probably the panel !!!!!!!!");
         return;
     }
     sf::Sprite sprite;
@@ -919,8 +919,6 @@ void Show()
     rcRectdes.bottom = rcPlayingSurface.bottom;
     Application::setLandscapeOffset(rcRectsrc.left, rcRectsrc.top);
 
-//    BlitToScreen(lpDDSScape); // Landschaft zeichnen
-
     DrawObjects();
 
     DrawPanel();
@@ -1016,7 +1014,6 @@ void ShowIntro()
 
     // TODO: more efficient way of filling with black
     Application::clearScreenContent();
-//    lpDDSBack->create(lpDDSBack->getSize().x, lpDDSBack->getSize().y, sf::Color(0, 0, 0));
 
     rcRectsrc.left = Camera.x + rcPlayingSurface.left;
     rcRectsrc.top = Camera.y + rcPlayingSurface.top;
@@ -1026,8 +1023,7 @@ void ShowIntro()
     rcRectdes.top = rcPlayingSurface.top;
     rcRectdes.right = rcPlayingSurface.right;
     rcRectdes.bottom = rcPlayingSurface.bottom;
-
-//    BlitToScreen(lpDDSScape); // Landschaft zeichnen
+    Application::setLandscapeOffset(rcRectsrc.left, rcRectsrc.top);
 
     DrawObjects();
 
