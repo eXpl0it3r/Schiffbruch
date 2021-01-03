@@ -5,6 +5,8 @@
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include <vector>
 
@@ -59,27 +61,39 @@ extern CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 extern SCAPE Landscape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
-extern sf::Image *lpDDSPrimary; // DirectDraw primary surface
-extern sf::Image *lpDDSBack; // DirectDraw back surface
-extern sf::Image *lpDDSMisc; // DirectDraw Bilder surface
-extern sf::Image *lpDDSPanel; // DirectDraw Panel surface
-extern sf::Image *lpDDSGuyAni; // DirectDraw GuyAni surface
-extern sf::Image *lpDDSAnimation; // DirectDraw Animation surface
-extern sf::Image *lpDDSKarte; // DirectDraw MiniMap surface
-extern sf::Image *lpDDSSchrift; // DirectDraw Schrift surface
-extern sf::Image *lpDDSSchrift1; // DirectDraw Schrift1 surface
-extern sf::Image *lpDDSSchrift2; // DirectDraw Schrift2 surface
-extern sf::Image *lpDDSTextFeld; // DirectDraw TextFeld surface
-extern sf::Image *lpDDSPaper; // DirectDraw Paier surface
-extern sf::Image *lpDDSBaum; // DirectDraw Bäume surface
-extern sf::Image *lpDDSBau; // DirectDraw Bauwerke surface
-extern sf::Image *lpDDSCredits; // DirectDraw Credits surface
-extern sf::Image *lpDDSLogo; // DirectDraw Logo surface
-extern sf::Image *lpDDSCursor; // DirectDraw Cursor surface
-extern sf::Image *lpDDSButtons; // DirectDraw Buttons surface
-extern sf::Image *lpDDSInventar; // DirectDraw Inventar surface
-extern sf::Image *lpDDSScape; // DirectDraw Landschaft surface
-extern sf::Image *lpDDSSchatzkarte; // SchatzkartenSurface
-extern sf::Image *darknessOverlay;
+extern sf::Texture *screenTexture; // DirectDraw primary surface
+extern sf::Texture *lpDDSBack; // DirectDraw back surface
+extern sf::Texture *lpDDSMisc; // DirectDraw Bilder surface
+extern sf::Texture *lpDDSPanel; // DirectDraw Panel surface
+extern sf::Texture *lpDDSGuyAni; // DirectDraw GuyAni surface
+extern sf::Texture *lpDDSAnimation; // DirectDraw Animation surface
+extern sf::Texture *lpDDSKarte; // DirectDraw MiniMap surface
+extern sf::Texture *lpDDSSchrift1; // DirectDraw Schrift1 surface
+extern sf::Texture *lpDDSSchrift2; // DirectDraw Schrift2 surface
+extern sf::Texture *lpDDSTextFeld; // DirectDraw TextFeld surface
+extern sf::Texture *lpDDSPaper; // DirectDraw Paier surface
+extern sf::Texture *lpDDSBaum; // DirectDraw Bäume surface
+extern sf::Texture *lpDDSBau; // DirectDraw Bauwerke surface
+extern sf::Texture *lpDDSCredits; // DirectDraw Credits surface
+extern sf::Texture *lpDDSLogo; // DirectDraw Logo surface
+extern sf::Texture *lpDDSCursor; // DirectDraw Cursor surface
+extern sf::Texture *lpDDSButtons; // DirectDraw Buttons surface
+extern sf::Texture *lpDDSInventar; // DirectDraw Inventar surface
+
+extern sf::Texture *lpDDSSchatzkarte; // SchatzkartenSurface
+extern sf::Sprite *s_treasureMapSprite;
+
+extern sf::Sprite *s_creditsSprite;
+
+extern sf::Sprite *minimapPlayerSprite;
+extern sf::Texture *minimapPlayerTexture;
+
+extern sf::Color s_darknessColor;
+
+extern sf::Sprite *s_creditsSprite;
+extern int s_previousCreditsOverlay;
+//extern bool s_creditsVisible;
+
+extern int s_previousCreditsOverlay;
 
 const char *GetLanguageString(const int index);

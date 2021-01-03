@@ -3,7 +3,7 @@
 #include "headers.hpp"
 //#include "miniwin.h"
 
-#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 struct RECT {
         int left;
@@ -38,7 +38,7 @@ struct GUY {
 };
 
 struct BMP {
-    sf::Image *Surface; // in welcher Surface gespeichert?
+    sf::Texture *Surface; // in welcher Surface gespeichert?
     bool IsAnimationRunning; // Läuft die Animations?
     short AnimationPhaseCount; // Anzahl der Animationsphasen
     short AnimationPhase; // die aktuelle Phase
@@ -74,7 +74,7 @@ struct SCAPE {
     bool Walkable; // notwendig für Pathfinding
     bool Discovered; // Ist dieses Feld schon aufgedeckt?
     short RunningTime; // LaufZeit auf dieser Kachel (1 am schnellsten...)
-    short Object; // Welches Objekt steht drauf (z.Bsp. Flüsse)
+    short Object = -1; // Welches Objekt steht drauf (z.Bsp. Flüsse)
     bool ReverseAnimation; // Wird die Objektanimation umgekehrt abgespielt (für flüsse)
     Coordinate ObjectPosOffset; // Die Koordinaten des Objekts (relativ zu xScreen und yScreen)
     float AnimationPhase; // Welche Animationsphase oder Bildversion

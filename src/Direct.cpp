@@ -20,11 +20,16 @@ bool Button1down; // rechte Maustaste gedrückt gehalten
 void finiObjects()
 {
 //    if (lpDD != nullptr) {
-        if (lpDDSPrimary != nullptr) {
+        if (screenTexture != nullptr) {
 //            lpDDSPrimary->Release();
-            delete lpDDSPrimary;
-            lpDDSPrimary = nullptr;
+            delete screenTexture;
+            screenTexture = nullptr;
         }
+        delete minimapPlayerTexture;
+        delete minimapPlayerSprite;
+
+        delete s_creditsSprite;
+        delete s_treasureMapSprite;
 
 //        if (lpDDPal != nullptr) {
 //            lpDDPal->Release();
@@ -40,11 +45,15 @@ bool InitDDraw()
 {
 //    DDSCAPS2 ddscaps;
 //    LPDIRECTDRAW pDD;
-    darknessOverlay = new sf::Image;
-    darknessOverlay->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0, 0));
+    minimapPlayerTexture = Renderer::createEmptyTexture(2, 2, sf::Color::Red);
+    minimapPlayerSprite = new sf::Sprite;
+    minimapPlayerSprite->setTexture(*minimapPlayerTexture);
 
-    lpDDSBack = new sf::Image;
-    lpDDSBack->create(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
+    s_creditsSprite = new sf::Sprite;
+
+    s_darknessColor = sf::Color::White;
+
+    lpDDSBack = Renderer::createEmptyTexture(MAX_SCREEN_X, MAX_SCREEN_Y, sf::Color(0, 0, 0));
 #if 0
     // Create the main DirectDraw object
     HRESULT ddrval = dx_DirectDrawCreate(nullptr, &pDD, nullptr);
@@ -99,7 +108,7 @@ bool InitDDraw()
 ////        ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
 ////        ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
 //    ddsd.dwBackBufferCount = 1; // Anzahl ??
-    lpDDSPrimary = new sf::Image;
+//    screenTexture = new sf::Texture;
 //    ddrval = lpDD->CreateSurface(&ddsd, &lpDDSPrimary, nullptr);
 
 //    if (ddrval != DD_OK) {
@@ -122,115 +131,112 @@ bool InitDDraw()
 //        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 //        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
     // In diese Surface sollen die Bausteine geladen werden
-    lpDDSMisc = new sf::Image;
-    if (!lpDDSMisc->loadFromFile("images/Misc.BMP")) {
+    lpDDSMisc = Renderer::loadTexture("images/Misc.BMP");
+    if (!lpDDSMisc) {
         puts("Failed to load misc");
         return false;
     }
-    lpDDSMisc->createMaskFromColor(sf::Color(255, 0, 255));
 
     // In diese Surface sollen das Panel geladen werden
-    lpDDSPanel = new sf::Image;
-    if (!lpDDSPanel->loadFromFile("images/Panel.bmp")) {
-        puts("Failed to load panel");
+    lpDDSPanel = Renderer::loadTexture("images/Panel.bmp");
+    if (!lpDDSPanel) {
         return false;
     }
-    lpDDSPanel->createMaskFromColor(sf::Color(255, 0, 255));
 
     // In diese Surface sollen die Animation der Figur gespeichert werden
-    lpDDSGuyAni = new sf::Image;
-    lpDDSGuyAni->loadFromFile("images/GuyAni.bmp");
-    lpDDSGuyAni->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface sollen die Landschaftsanimationen gespeichert werden
-    lpDDSAnimation = new sf::Image;
-    lpDDSAnimation->loadFromFile("images/Animation.BMP");
-    lpDDSAnimation->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface soll die Schrift1 gespeichert werden
-    lpDDSSchrift1 = new sf::Image;
-    lpDDSSchrift1->loadFromFile("images/Schrift1.BMP");
-    lpDDSSchrift1->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface soll die Schrift2 gespeichert werden
-    lpDDSSchrift2 = new sf::Image;
-    lpDDSSchrift2->loadFromFile("images/Schrift2.bmp");
-    lpDDSSchrift2->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface soll das Papier gespeichert werden
-    lpDDSPaper = new sf::Image;
-    lpDDSPaper->loadFromFile("images/Papier.bmp");
-    lpDDSPaper->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln die Bäume gespeichert werden
-    lpDDSBaum = new sf::Image;
-    lpDDSBaum->loadFromFile("images/Baum.bmp");
-    lpDDSBaum->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln die Cursor gespeichert werden
-    lpDDSCursor = new sf::Image;
-    lpDDSCursor->loadFromFile("images/Cursor.BMP");
-    lpDDSCursor->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln die Buttons gespeichert werden
-    lpDDSButtons = new sf::Image;
-    lpDDSButtons->loadFromFile("images/Buttons.bmp");
-    lpDDSButtons->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln das TextFeld gespeichert werden
-    lpDDSTextFeld = new sf::Image;
-    lpDDSTextFeld->loadFromFile("images/Textfeld.bmp");
-    lpDDSTextFeld->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln das Inventar gespeichert werden
-    lpDDSInventar = new sf::Image;
-    lpDDSInventar->loadFromFile("images/Inventar.bmp");
-    lpDDSInventar->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln die Bauwerke gespeichert werden
-    lpDDSBau = new sf::Image;
-    lpDDSBau->loadFromFile("images/Bau.bmp");
-    lpDDSBau->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln die Credits gespeichert werden
-    lpDDSCredits = new sf::Image;
-    lpDDSCredits->loadFromFile("images/Credits.bmp");
-    lpDDSCredits->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface solln das Logo gespeichert werden
-    lpDDSLogo = new sf::Image;
-    lpDDSLogo->loadFromFile("images/Logo.bmp");
-    lpDDSLogo->createMaskFromColor(sf::Color(255, 0, 255));
-
-    // In diese Surface soll die MiniMap gespeichert werden
-    lpDDSKarte = new sf::Image;
-    lpDDSKarte->create(2 * MAX_TILES_X, 2 * MAX_TILESY, sf::Color::Transparent);
-
-    // The landscape should be saved in this surface
-    lpDDSScape = new sf::Image;
-    lpDDSScape->create(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y, sf::Color::Transparent);
-    if (lpDDSScape->getSize().x == 0) {
-        puts("Failed to create scape!");
+    lpDDSGuyAni = Renderer::loadTexture("images/GuyAni.bmp");
+    if (!lpDDSGuyAni) {
+        return false;
     }
 
-    // In diese Surface soll die Schrift gespeichert werden
-    lpDDSSchrift = new sf::Image;
-    lpDDSSchrift->create(2 * MAX_SCREEN_X, 2 * MAX_SCREEN_Y, sf::Color::Transparent);
-    // TODO
-    lpDDSSchrift->createMaskFromColor(sf::Color(255, 0, 255));
+    // In diese Surface sollen die Landschaftsanimationen gespeichert werden
+    lpDDSAnimation = Renderer::loadTexture("images/Animation.BMP");
+    if (!lpDDSAnimation) {
+        return false;
+    }
 
+    // In diese Surface soll die Schrift1 gespeichert werden
+    lpDDSSchrift1 = Renderer::loadTexture("images/Schrift1.BMP");
+    if (!lpDDSSchrift1) {
+        puts("failed to load schrift1");
+        return false;
+    }
+
+    // In diese Surface soll die Schrift2 gespeichert werden
+    lpDDSSchrift2 = Renderer::loadTexture("images/Schrift2.bmp");
+    if (!lpDDSSchrift2) {
+        puts("failed to load schrift2");
+        return false;
+    }
+
+    // In diese Surface soll das Papier gespeichert werden
+    lpDDSPaper = Renderer::loadTexture("images/Papier.bmp");
+    if (!lpDDSPaper) {
+        return false;
+    }
+
+    // In diese Surface solln die Bäume gespeichert werden
+    lpDDSBaum = Renderer::loadTexture("images/Baum.bmp");
+    if (!lpDDSBaum) {
+        return false;
+    }
+
+    // In diese Surface solln die Cursor gespeichert werden
+    lpDDSCursor = Renderer::loadTexture("images/Cursor.BMP");
+    if (!lpDDSCursor) {
+        return false;
+    }
+
+    // In diese Surface solln die Buttons gespeichert werden
+    lpDDSButtons = Renderer::loadTexture("images/Buttons.bmp");
+    if (!lpDDSButtons) {
+        return false;
+    }
+
+    // In diese Surface solln das TextFeld gespeichert werden
+    lpDDSTextFeld = Renderer::loadTexture("images/Textfeld.bmp");
+    if (!lpDDSTextFeld) {
+        return false;
+    }
+
+    // In diese Surface solln das Inventar gespeichert werden
+    lpDDSInventar = Renderer::loadTexture("images/Inventar.bmp");
+    if (!lpDDSInventar) {
+        return false;
+    }
+
+    // In diese Surface solln die Bauwerke gespeichert werden
+    lpDDSBau = Renderer::loadTexture("images/Bau.bmp");
+    if (!lpDDSBau) {
+        return false;
+    }
+
+    // In diese Surface solln die Credits gespeichert werden
+    lpDDSCredits = Renderer::loadTexture("images/Credits.bmp");
+    if (!lpDDSCredits) {
+        return false;
+    }
+
+    // In diese Surface solln das Logo gespeichert werden
+    lpDDSLogo = Renderer::loadTexture("images/Logo.bmp");
+    if (!lpDDSLogo) {
+        return false;
+    }
+
+    // In diese Surface soll die MiniMap gespeichert werden
+    lpDDSKarte = Renderer::createEmptyTexture(2 * MAX_TILES_X, 2 * MAX_TILESY, sf::Color::Transparent);
+
+    // The landscape should be saved in this surface
+//    lpDDSScape = Renderer::createEmptyTexture(2 * MAX_SURFACE_X, 2 * MAX_SURFACE_Y, sf::Color::Transparent);
+
+    // In diese Surface soll die Schrift gespeichert werden
+//    lpDDSSchrift = Renderer::createEmptyTexture(2 * MAX_SCREEN_X, 2 * MAX_SCREEN_Y, sf::Color::Transparent);
 
     // In diese Surface soll die Schatzkarte gespeichert werden
-    lpDDSSchatzkarte = new sf::Image;
-    lpDDSSchatzkarte->create(2 * TREASUREMAP_WIDTH, 2 * TREASUREMAP_HEIGHT, sf::Color::Transparent);
+    lpDDSSchatzkarte = Renderer::createEmptyTexture(2 * TREASUREMAP_WIDTH, 2 * TREASUREMAP_HEIGHT, sf::Color::Transparent);
+    s_treasureMapSprite = new sf::Sprite;
+    s_treasureMapSprite->setTexture(*lpDDSSchatzkarte);
 
-//error:
-
-//    if (ddrval != DD_OK) {
-//        finiObjects();
-//        MessageBox(hWnd, ("DirectDraw Init FAILED: " + std::to_string(ddrval)).c_str(), "Landscape", MB_OK);
-//        DestroyWindow(hWnd);
-//    }
     return true;
 }
 
