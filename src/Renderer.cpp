@@ -371,17 +371,17 @@ void DrawPaper()
     rcRectdes.top = TextBereich[TXTPAPIER].textRect.top - 30;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    BlitToText(lpDDSPaper);
+    BlitToScreen(lpDDSPaper);
     rcRectdes.left = rcRectdes.left + 34;
     rcRectdes.top = rcRectdes.top + 77;
     rcRectdes.right = rcRectdes.right + 0;
     rcRectdes.bottom = TextBereich[TXTPAPIER].textRect.top + PapierText;
 
     // TODO: check that this works
-    sf::RectangleShape rect(sf::Vector2f(lpDDSBack->getSize().x, lpDDSBack->getSize().y));
-    rect.setFillColor(sf::Color(236, 215, 179));
-    rect.setPosition(0, 0);
-    Application::drawToScreen(rect);
+//    sf::RectangleShape rect(sf::Vector2f(lpDDSBack->getSize().x, lpDDSBack->getSize().y));
+//    rect.setFillColor(sf::Color(236, 215, 179));
+//    rect.setPosition(0, 0);
+//    Application::drawToScreen(rect);
 
     rcRectsrc.left = 0;
     rcRectsrc.top = 77;
@@ -391,7 +391,7 @@ void DrawPaper()
     rcRectdes.top = rcRectdes.bottom - 47;
     rcRectdes.right = rcRectdes.left + 464;
     rcRectdes.bottom = rcRectdes.top + 77;
-    BlitToText(lpDDSPaper);
+    BlitToScreen(lpDDSPaper);
 }
 
 void DrawPanel()
