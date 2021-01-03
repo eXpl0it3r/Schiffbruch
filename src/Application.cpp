@@ -37,6 +37,7 @@ Application::Application(const std::string &name)
 
     Spielzustand = State::LOGO;
     Game::InitWaves(); // Nur zum Wavinitialisieren
+    Game::InitStructs();
 
     m_screenContent.create(MAX_SCREEN_X, MAX_SCREEN_Y);
     m_textOverlay.create(MAX_SCREEN_X, MAX_SCREEN_Y);
