@@ -4,6 +4,7 @@ find_package(SDL2)
 cmake_minimum_required(VERSION 3.9)
 
 set (CMAKE_CXX_STANDARD 20)
+include_directories(${PROJECT_BINARY_DIR})
 
 add_subdirectory(tools/resgen)
 add_resource(MISC_BMP "bin/images/Misc.BMP")
