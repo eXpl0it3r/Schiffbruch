@@ -2342,9 +2342,6 @@ void NewGame(bool neu)
     short x, y;
     bool LoadOK = false;
 
-    InitStructs();
-    InitWaves();
-
     if (!neu) {
         LoadOK = LoadGame();
     }
