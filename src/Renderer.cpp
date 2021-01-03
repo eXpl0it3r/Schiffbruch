@@ -155,9 +155,10 @@ void BlitToScreen(sf::Texture *from)
         srcrect.width = std::min(dstWidth, srcrect.width);
         srcrect.height = std::min(dstHeight, srcrect.height);
     }
-    assert(srcrect.width > 0 && srcrect.height > 0);
 
     if (srcrect.width <= 0 || srcrect.height <= 0) {
+        puts("!!!!!!!! empty source rect !!!!!!!!");
+        puts("!!!!!!!! probably the panel !!!!!!!!");
         return;
     }
     sf::Sprite sprite;
