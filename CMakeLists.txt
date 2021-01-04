@@ -52,6 +52,7 @@ add_resource(INVENTAR_BMP "bin/images/Inventar.bmp")
 add_resource(BAU_BMP "bin/images/Bau.bmp")
 add_resource(CREDITS_BMP "bin/images/Credits.bmp")
 add_resource(LOGO_BMP "bin/images/Logo.bmp")
+add_resource(LOGO_PNG "bin/images/Logo.png")
 
 add_resource(ABSPANN_WAV "bin/sounds/abspann.wav")
 add_resource(ANGEL_WAV "bin/sounds/angel.wav")
@@ -123,6 +124,7 @@ add_executable(schiffbruch
     ${BAU_BMP}
     ${CREDITS_BMP}
     ${LOGO_BMP}
+    ${LOGO_PNG}
 
     ${ABSPANN_WAV}
     ${ANGEL_WAV}
