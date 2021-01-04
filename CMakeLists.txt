@@ -1,6 +1,5 @@
 project(schiffbruch)
 find_package(SFML COMPONENTS system window graphics audio REQUIRED)
-find_package(SDL2)
 cmake_minimum_required(VERSION 3.9)
 
 set (CMAKE_CXX_STANDARD 20)
@@ -151,7 +150,7 @@ add_executable(schiffbruch
 
 add_definitions(-Wno-writable-strings)
 
-target_link_libraries(schiffbruch sfml-system sfml-window sfml-graphics sfml-audio SDL2::SDL2)
+target_link_libraries(schiffbruch sfml-system sfml-window sfml-graphics sfml-audio)
 
 target_include_directories(schiffbruch PRIVATE miniwin/ ${PROJECT_SOURCE_DIR})
 
