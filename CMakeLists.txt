@@ -32,6 +32,8 @@ if (VC_STATIC)
     message(STATUS "Static build with MSVC")
     set(CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
     set(CMAKE_C_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
+else()
+    add_definitions(-Wno-writable-strings)
 endif()
 
 add_subdirectory(tools/resgen)
@@ -147,8 +149,6 @@ add_executable(schiffbruch
     ${WALD_WAV}
     ${WOLF_WAV}
 )
-
-add_definitions(-Wno-writable-strings)
 
 target_link_libraries(schiffbruch sfml-system sfml-window sfml-graphics sfml-audio)
 
