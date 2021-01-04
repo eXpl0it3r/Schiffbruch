@@ -387,7 +387,7 @@ void MouseInPanel(short Button, short Push)
                         (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase == 1))) {
                 Guy.CurrentAction = Action::DRINK;
             } else {
-                PapierText = Renderer::DrawText(KEINESSENTRINKEN, TXTPAPIER, 1);
+                PapierText = Renderer::DrawText(STRING_NOTHING_EAT_DRINK, TXTPAPIER, 1);
             }
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_SLEEP].targetRect)) &&
@@ -850,7 +850,7 @@ void MouseInPanel(short Button, short Push)
                     break;
 
                 case RAW_AXE:
-                    Renderer::DrawText(AXT, TXTTEXTFELD, 2);
+                    Renderer::DrawText(STRING_AXE, TXTTEXTFELD, 2);
                     break;
 
                 case RAW_LEAF:

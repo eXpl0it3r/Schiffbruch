@@ -96,4 +96,4 @@ extern int s_previousCreditsOverlay;
 
 extern int s_previousCreditsOverlay;
 
-const char *GetLanguageString(const int index);
+const char *GetLanguageString(const unsigned index);
