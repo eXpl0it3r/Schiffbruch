@@ -18,7 +18,7 @@
 #include "bin/images/Cursor.BMP.h"
 #include "bin/images/GuyAni.bmp.h"
 #include "bin/images/Inventar.bmp.h"
-#include "bin/images/Logo.bmp.h"
+#include "bin/images/Logo.png.h"
 #include "bin/images/Misc.BMP.h"
 #include "bin/images/Panel.bmp.h"
 #include "bin/images/Papier.bmp.h"
@@ -244,9 +244,9 @@ bool InitDDraw()
     }
 
     // In diese Surface solln das Logo gespeichert werden
-    lpDDSLogo = Renderer::loadTexture(resource_Logo_bmp_data, resource_Logo_bmp_size);
+    lpDDSLogo = Renderer::loadTexture(resource_Logo_png_data, resource_Logo_png_size);
     if (!lpDDSLogo) {
-        puts("failed to load logo.bmp");
+        puts("failed to load logo.png");
         return false;
     }
 
