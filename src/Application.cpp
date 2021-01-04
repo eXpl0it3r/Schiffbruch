@@ -45,7 +45,10 @@ Application::Application(const std::string &name)
     Sound::Init();
     s_SoundState = 1; // Activate sound
 
-    Direct::InitDDraw();
+    if (!Direct::InitDDraw()) {
+        puts("Failed to init graphics");
+        exit(1);
+    }
 
     s_GameState = State::LOGO;
     Game::InitWaves(); // Nur zum Wavinitialisieren

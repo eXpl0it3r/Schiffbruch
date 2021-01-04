@@ -6,6 +6,6 @@
 //#include <dinput.h>
 
 //#include "ddutil.h"
-#include "resource.h"
+#include "strings.h"
 
 #include "constants.hpp"

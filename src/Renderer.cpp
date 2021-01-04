@@ -40,8 +40,9 @@ sf::Texture *createEmptyTexture(const size_t width, const size_t height, const s
 
 }
 
-sf::Texture *loadTexture(const unsigned char data[], const size_t size)
+sf::Texture *loadTexture(const void *data, const size_t size)
 {
+    printf("Loading %lu bytes from %p...\n", size, data);
     sf::Image image;
     if (!image.loadFromMemory(data, size) || ! image.getSize().x) {
         fprintf(stderr, "Failed to load bmp\n");

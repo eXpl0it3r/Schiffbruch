@@ -24,6 +24,8 @@
 #include "bin/sounds/trinken.wav.h"
 #include "bin/sounds/wald.wav.h"
 #include "bin/sounds/wolf.wav.h"
+#include <string>
+#include <unordered_map>
 
 namespace Sound {
 static std::vector<sf::SoundBuffer> sound_buffers; // Sound::COUNT - Wavedateispeicher
