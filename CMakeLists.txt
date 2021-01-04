@@ -6,6 +6,35 @@ cmake_minimum_required(VERSION 3.9)
 set (CMAKE_CXX_STANDARD 20)
 include_directories(${PROJECT_BINARY_DIR})
 
+#############################
+## Compiler specific stuff ##
+#############################
+option(ENABLE_IPO "Enable link-time optimization, improves speed and memory usage (https://en.wikipedia.org/wiki/Interprocedural_optimization)")
+if (ENABLE_IPO)
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT IPO_AVAILABLE OUTPUT IPO_ERROR)
+    if (IPO_AVAILABLE)
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION True)
+
+        if (CMAKE_COMPILER_IS_GNUCXX)
+            message(STATUS "Enabling all link time optimizations")
+            add_definitions(-fuse-linker-plugin)
+        else()
+            message(STATUS "Disabling linker plugin for link time optimization")
+        endif()
+    else()
+        message(STATUS "IPO/LTO not supported: <${IPO_ERROR}>")
+    endif()
+else()
+    message(STATUS "Not enabling IPO/LTO")
+endif()
+
+if (VC_STATIC)
+    message(STATUS "Static build with MSVC")
+    set(CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
+endif()
+
 add_subdirectory(tools/resgen)
 add_resource(MISC_BMP "bin/images/Misc.BMP")
 add_resource(PANEL_BMP "bin/images/Panel.bmp")
