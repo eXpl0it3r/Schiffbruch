@@ -28,7 +28,7 @@ void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
     // Info anzeigen
     Coordinate Erg = Renderer::GetTile((MousePosition.x + Camera.x), (MousePosition.y + Camera.y)); // Die angeklickte Kachel
 
-    if (Landscape[Erg.x][Erg.y].Discovered) {
+    if (Erg.x >= 0 && Erg.y >= 0 && Landscape[Erg.x][Erg.y].Discovered) {
         Text = GetLanguageString(45 + Landscape[Erg.x][Erg.y].Terrain);
 
         if ((Landscape[Erg.x][Erg.y].Object != -1) && (Landscape[Erg.x][Erg.y].Object != SEA_WAVES)) {
