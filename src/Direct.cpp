@@ -152,17 +152,17 @@ bool InitDDraw()
         return false;
     }
 
-    // In diese Surface sollen das Panel geladen werden
-    lpDDSPanel = Renderer::loadTexture(resource_Panel_bmp_data, resource_Panel_bmp_size);
-    if (!lpDDSPanel) {
-        puts("failed to load panel.bmp");
-        return false;
-    }
-
     // In diese Surface sollen die Animation der Figur gespeichert werden
     lpDDSGuyAni = Renderer::loadTexture(resource_GuyAni_bmp_data, resource_GuyAni_bmp_size);
     if (!lpDDSGuyAni) {
         puts("failed to load guyani.bmp");
+        return false;
+    }
+
+    // In diese Surface sollen das Panel geladen werden
+    lpDDSPanel = Renderer::loadTexture(resource_Panel_bmp_data, resource_Panel_bmp_size);
+    if (!lpDDSPanel) {
+        puts("failed to load panel.bmp");
         return false;
     }
 
