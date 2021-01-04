@@ -1,47 +1,57 @@
-version: 1.2.{build}
-image: Visual Studio 2017
+version: 1.0.{build}
+branches:
+  only:
+  - master
+image: Visual Studio 2019
 configuration: Release
-platform: Win32
+platform: x86
+environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  VCPKG_DEFAULT_TRIPLET: x86-windows-static
+  BUILDCACHE_DIR: c:\tools\buildcache\cache
+  BUILDCACHE_DEBUG: 1
+install:
+- cmd: >-
+    cd C:\projects\Schiffbruch
+
+    vcpkg version
+
+    vcpkg update
+
+    vcpkg upgrade --no-dry-run
+
+    vcpkg install sfml:x86-windows-static
+
+    vcpkg integrate install
+cache:
+- C:\Tools\vcpkg\installed\
+- c:\tools\buildcache\cache
+- C:\Tools\vcpkg\downloads\
+- C:\Tools\vcpkg\packages\
+- C:\Users\appveyor\AppData\Local\vcpkg\archives\
 before_build:
 - cmd: >-
-    git clone https://github.com/SFML/SFML.git
+    cd c:\projects\Schiffbruch
 
-    cd SFML
+    git submodule update --init --recursive
 
-    mkdir ..\extlibs
-
-    mkdir build
+    if not exist build mkdir build
 
     cd build
 
-    cmake -DCMAKE_INSTALL_PREFIX=../../extlibs -DBUILD_SHARED_LIBS=FALSE -DSFML_USE_STATIC_STD_LIBS=TRUE ..
-
-    msbuild /m INSTALL.vcxproj
-
-    cd ..\..\
-
-    rmdir SFML /Q /S
+    cmake -DENABLE_IPO=True -DCMAKE_BUILD_TYPE=Release -DVC_STATIC=True -G "Visual Studio 16 2019" -A Win32 -DVCPKG_TARGET_TRIPLET=x86-windows-static -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
 build:
+  project: build\Schiffbruch.vcxproj
   parallel: true
   verbosity: normal
 after_build:
 - cmd: >-
-    mkdir Schiffbruch
+    cd C:\projects\Schiffbruch\build\Release
 
-    xcopy bin\* Schiffbruch\ /E
+    7z a ..\..\Schiffbruch.zip Schiffbruch.exe
 
-    copy build\Release\Schiffbruch.exe Schiffbruch
+    echo %time%
 
-    copy extlibs\bin\openal32.dll Schiffbruch
 artifacts:
-- path: Schiffbruch
-  name: Schiffbruch
-deploy:
-- provider: GitHub
-  release: Schiffbruch
-  auth_token:
-    secure: krNF+BFj+w2O15FO6BiPJ1J1NQ7QffQYWKF2qexIigODVTNv4t8sZTG3+YGsR8rt
-  artifact: Schiffbruch
-  draft: true
-  on:
-    branch: master
+- path: Schiffbruch.zip
+deploy: off
