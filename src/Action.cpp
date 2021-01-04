@@ -630,10 +630,10 @@ void search()
 
             case 1:
                 if (Guy.Inventory[RAW_LEAF] < 10) {
-                    PapierText = Renderer::DrawText(ROHBLATTGEFUNDEN, TXTPAPIER, 1);
+                    PapierText = Renderer::DrawText(STRING_LEAF_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_LEAF]++;
                 } else {
-                    PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
+                    PapierText = Renderer::DrawText(STRING_ALREADY_HAVE_LEAF, TXTPAPIER, 1);
                 }
 
                 break;
@@ -655,10 +655,10 @@ void search()
 
             case 1:
                 if (Guy.Inventory[RAW_LEAF] < 10) {
-                    PapierText = Renderer::DrawText(ROHBLATTGEFUNDEN, TXTPAPIER, 1);
+                    PapierText = Renderer::DrawText(STRING_LEAF_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_LEAF]++;
                 } else {
-                    PapierText = Renderer::DrawText(ROHBLATTZUVIEL, TXTPAPIER, 1);
+                    PapierText = Renderer::DrawText(STRING_ALREADY_HAVE_LEAF, TXTPAPIER, 1);
                 }
 
                 break;

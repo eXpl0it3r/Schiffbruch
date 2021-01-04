@@ -1801,7 +1801,7 @@ void OnRawMaterialsUsed(short Objekt)
             Bmp[BUTTON_CHOP].AnimationPhase = 0;
             Bmp[BUTTON_BOAT].AnimationPhase = 0;
             Bmp[BUTTON_PIPE].AnimationPhase = 0;
-            PapierText = Renderer::DrawText(BAUEAXT, TXTPAPIER, 1);
+            PapierText = Renderer::DrawText(STRING_BUILD_AXE, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
         } else if (Guy.Inventory[RAW_HOE] < 1) {
             Guy.Inventory[RAW_STONE]--;
@@ -1811,7 +1811,7 @@ void OnRawMaterialsUsed(short Objekt)
             PapierText = Renderer::DrawText(BAUEEGGE, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
         } else {
-            PapierText = Renderer::DrawText(STEINPLUSASTNICHTS, TXTPAPIER, 1);
+            PapierText = Renderer::DrawText(STRING_STONE_BRANCH_NOTHING_ELSE, TXTPAPIER, 1);
         }
     } else if (((Objekt == RAW_LIANA) && (TwoClicks == RAW_TREE_BRANCH)) || ((Objekt == RAW_TREE_BRANCH) && (TwoClicks == RAW_LIANA))) {
         if (Guy.Inventory[RAW_FISHING_POLE] < 1) {
@@ -1836,7 +1836,7 @@ void OnRawMaterialsUsed(short Objekt)
             PapierText = Renderer::DrawText(STEINPLUSLIANENICHTS, TXTPAPIER, 1);
         }
     } else {
-        PapierText = Renderer::DrawText(NICHTBASTELN, TXTPAPIER, 1);
+        PapierText = Renderer::DrawText(STRING_CANT_BUILD, TXTPAPIER, 1);
     }
 
     TwoClicks = -1;

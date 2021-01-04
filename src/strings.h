@@ -1,4 +1,3 @@
-
 #define TESTTEXT1                       1
 #define GITTERAN                        2
 #define GITTERAUS                       3
@@ -19,13 +18,13 @@
 #define ROHSTEINGEFUNDEN                18
 #define ROHSTEINZUVIEL                  19
 #define NICHTSGEFUNDEN                  20
-#define AXT                             21
-#define KEINESSENTRINKEN                22
-#define BAUEAXT                         23
-#define STEINPLUSASTNICHTS              24
-#define NICHTBASTELN                    25
-#define ROHBLATTGEFUNDEN                26
-#define ROHBLATTZUVIEL                  27
+#define STRING_AXE                             21
+#define STRING_NOTHING_EAT_DRINK                22
+#define STRING_BUILD_AXE                         23
+#define STRING_STONE_BRANCH_NOTHING_ELSE              24
+#define STRING_CANT_BUILD                    25
+#define STRING_LEAF_FOUND                26
+#define STRING_ALREADY_HAVE_LEAF                  27
 #define STRING_LEAF                           28
 #define ROHSTAMMZUVIEL                  29
 #define MEBAUENAUF                      30
