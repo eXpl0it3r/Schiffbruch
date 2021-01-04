@@ -494,8 +494,8 @@ void Compute(short MinimumSize, short maximumSize)// Size of the island in numbe
                 Landscape[x][y].FireTimer = 0;
             }
 
-        short x; // Startposition der Berechnung
-        short y;
+        int x; // Startposition der Berechnung
+        int y;
         Landscape[MidX][MidY].Type = 0; // Gipfel festlegen (Flach)
         Landscape[MidX][MidY].Height = MOUNTAIN_HEIGHT; // und mit der Hoehe
 
@@ -900,13 +900,13 @@ void Compute(short MinimumSize, short maximumSize)// Size of the island in numbe
                         }
                     }
 
-                    // Verzwickte Fälle ausfiltern
-                    if (((Vierecke[Landscape[x][y].Type][1][2] == 2) && (Vierecke[Landscape[x + 1][y - 1].Type][0][3] == 2)) ||
-                            ((Vierecke[Landscape[x][y].Type][1][4] == 2) && (Vierecke[Landscape[x + 1][y - 1].Type][0][1] == 2))) {
+                    // Filter out tricky cases
+                    if (((Vierecke[Landscape[x][y].Type][1][2] == 2) && (y > 0 && Vierecke[Landscape[x + 1][y - 1].Type][0][3] == 2)) ||
+                            ((Vierecke[Landscape[x][y].Type][1][4] == 2) && (y > 0 && Vierecke[Landscape[x + 1][y - 1].Type][0][1] == 2))) {
                         hasFound = false;
                     }
 
-                    // Nebeninseln vermeiden
+                    // Avoid secondary islands
                     if (((Landscape[x + 1][y].Type == 0) && (Landscape[x + 1][y].Height == 0)) &&
                             ((Landscape[x][y + 1].Type == 0) && (Landscape[x][y + 1].Height == 0))) {
                         Landscape[x][y].Type = 0;
@@ -1429,9 +1429,11 @@ void CreateRiver() // Number of rivers and the minimum length
 
         for (m = 0; m < NUMBER_OF_RIVERS; m++) {
             for (i = 0; i <= riverLength[m]; i++) {
-                // Für die Kachel, einen Vorgang davor
-                Landscape[x1][y1].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.left);
-                Landscape[x1][y1].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.top);
+                // For the tile, one process before
+                if (x1 != -1 && y1 != -1) {
+                    Landscape[x1][y1].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.left);
+                    Landscape[x1][y1].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x1][y1].Object].targetRect.top);
+                }
 
                 x1 = Rivers[m][i].x;
                 y1 = Rivers[m][i].y;

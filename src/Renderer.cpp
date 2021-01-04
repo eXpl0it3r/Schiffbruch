@@ -293,7 +293,7 @@ void DrawObjects()
                         ((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1))) {
                     if ((x == Guy.Pos.x) && (y == Guy.Pos.y)) {
                         Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 100);
-                    } else if (Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
+                    } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1 || Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
                         Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 90);
                     }
                 }
@@ -313,7 +313,7 @@ void DrawObjects()
                             ((Guy.Pos.y - 1 <= y) && (y <= Guy.Pos.y + 1))) {
                         if ((x == Guy.Pos.x) && (y == Guy.Pos.y)) {
                             Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 100);
-                        } else if (Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
+                        } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1 || Bmp[Landscape[x][y].Object].Sound != Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Sound) {
                             Sound::PlaySound(Bmp[Landscape[x][y].Object].Sound, 90);
                         }
                     }
