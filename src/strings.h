@@ -1,7 +1,4 @@
-//{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
-// Used by Landscape.rc
-//
+
 #define TESTTEXT1                       1
 #define GITTERAN                        2
 #define GITTERAUS                       3
