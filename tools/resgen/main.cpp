@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     }
 
     const std::string cFilename = inFilename + ".c";
-    std::ofstream cStream(cFilename);
+    std::ofstream cStream(cFilename, std::ios::binary|std::ios::out);
     if (!cStream.is_open()) {
         std::cerr << "Failed to open " << cFilename << " for writing" << std::endl;
         return 1;
