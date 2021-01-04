@@ -45,7 +45,7 @@ endif()
 
 add_subdirectory(tools/resgen)
 add_resource(MISC_BMP "bin/images/Misc.BMP")
-add_resource(PANEL_BMP "bin/images/Panel.bmp")
+add_resource(PANEL_PNG "bin/images/Panel.png")
 add_resource(GUYANI_BMP "bin/images/GuyAni.bmp")
 add_resource(ANIMATION_BMP "bin/images/Animation.BMP")
 add_resource(BAUM_BMP "bin/images/Baum.bmp")
@@ -117,7 +117,7 @@ add_executable(schiffbruch
     src/World.hpp
 
     ${MISC_BMP}
-    ${PANEL_BMP}
+    ${PANEL_PNG}
     ${GUYANI_BMP}
     ${ANIMATION_BMP}
     ${BAUM_BMP}

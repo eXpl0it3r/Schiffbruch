@@ -20,7 +20,7 @@
 #include "bin/images/Inventar.bmp.h"
 #include "bin/images/Logo.png.h"
 #include "bin/images/Misc.BMP.h"
-#include "bin/images/Panel.bmp.h"
+#include "bin/images/Panel.png.h"
 #include "bin/images/Papier.bmp.h"
 #include "bin/images/Schrift1.BMP.h"
 #include "bin/images/Schrift2.bmp.h"
@@ -160,9 +160,9 @@ bool InitDDraw()
     }
 
     // In diese Surface sollen das Panel geladen werden
-    lpDDSPanel = Renderer::loadTexture(resource_Panel_bmp_data, resource_Panel_bmp_size);
+    lpDDSPanel = Renderer::loadTexture(resource_Panel_png_data, resource_Panel_png_size);
     if (!lpDDSPanel) {
-        puts("failed to load panel.bmp");
+        puts("failed to load panel.png");
         return false;
     }
 
