@@ -136,7 +136,7 @@ void AddTime(short h, short m)
             }
         }
 
-    AddResource(Resources::GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[Resources::WASSER] - 50 + Guy.ResourceAmount[Resources::NAHRUNG] - 50) / 1000);
+    AddResource(Resources::Health, (60 * h + m) * (Guy.ResourceAmount[Resources::Water] - 50 + Guy.ResourceAmount[Resources::Food] - 50) / 1000);
 
     if ((s_GameState == State::GAME) && (!IsInBoat)) {
         for (short i = 0; i <= (60 * h + m); i++) {
@@ -167,7 +167,7 @@ void AddResource(short Art, float Anzahl) // Fügt wassser usw hinzu
     }
 
     // Wann tod
-    if ((Guy.ResourceAmount[Resources::GESUNDHEIT] <= 0) && (Guy.CurrentAction != Action::DEATH) &&
+    if ((Guy.ResourceAmount[Resources::Health] <= 0) && (Guy.CurrentAction != Action::DEATH) &&
             (Guy.CurrentAction != Action::DAY_END) && (s_GameState == State::GAME)) {
         Guy.IsActive = false;
         Guy.ActionNumber = 0;

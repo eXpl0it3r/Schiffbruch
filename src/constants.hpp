@@ -216,24 +216,7 @@ enum Textfields {
 
 // Resourcen
 enum Resources {
-    WASSER = 0,
-    NAHRUNG = 1,
-    GESUNDHEIT = 2,
+    Water = 0,
+    Food = 1,
+    Health = 2,
 };
-
-// Bilder
-static const char Misc[] = "MISC";
-static const char Panel[] = "PANEL";
-static const char GuyAni[] = "GUYANI";
-static const char Animation[] = "ANIMATION";
-static const char Schrift1[] = "SCHRIFT1";
-static const char Schrift2[] = "SCHRIFT2";
-static const char TextFeld[] = "TEXTFELD";
-static const char Papier[] = "PAPIER";
-static const char Baum[] = "BAUM";
-static const char Cursorbmp[] = "CURSORBMP";
-static const char Buttons[] = "BUTTONS";
-static const char Inventarbmp[] = "INVENTARBMP";
-static const char Bau[] = "BAU";
-static const char Credits[] = "CREDITS";
-static const char Logo[] = "LOGO";

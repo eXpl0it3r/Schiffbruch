@@ -273,11 +273,12 @@ void Reset()
     Button1down = false;
 }
 
-void CheckMouse(const sf::Window &win)
+void CheckMouse(const Coordinate newMousePos)
 {
     // Mausbewegung
-    short xDiff = MousePosition.x - sf::Mouse::getPosition(win).x; // Die Differenz zur vorherigen Position ((Für Scrollen)
-    MousePosition.x = sf::Mouse::getPosition(win).x;
+    short xDiff = MousePosition.x - newMousePos.x; // Die Differenz zur vorherigen Position ((Für Scrollen)
+
+    MousePosition.x = newMousePos.x;
 
     if (MousePosition.x < 0) {
         MousePosition.x = 0;
@@ -287,8 +288,8 @@ void CheckMouse(const sf::Window &win)
         MousePosition.x = MAX_SCREEN_X - 2;
     }
 
-    short yDiff = MousePosition.y - sf::Mouse::getPosition(win).y; // Die Differenz zur vorherigen Position ((Für Scrollen)
-    MousePosition.y = sf::Mouse::getPosition(win).y;
+    short yDiff = MousePosition.y - newMousePos.y; // Die Differenz zur vorherigen Position ((Für Scrollen)
+    MousePosition.y = newMousePos.y;
 
     if (MousePosition.y < 0) {
         MousePosition.y = 0;
@@ -296,6 +297,9 @@ void CheckMouse(const sf::Window &win)
 
     if (MousePosition.y > MAX_SCREEN_Y - 2) {
         MousePosition.y = MAX_SCREEN_Y - 2;
+        if (yDiff < 0) {
+            yDiff = 0;
+        }
     }
 
     if (TwoClicks == -1) {
@@ -396,7 +400,7 @@ void CheckMouse(const sf::Window &win)
 
     // die Maus ist in der Spielflaeche ->
     if (Math::InRect(MousePosition.x, MousePosition.y, rcPlayingSurface)) {
-        Math::MouseInSpielflaeche(Button, Push, xDiff, yDiff);
+        Math::UpdateMousePosition(Button, Push, xDiff, yDiff);
     }
 
     // die Maus ist im Panel ->
