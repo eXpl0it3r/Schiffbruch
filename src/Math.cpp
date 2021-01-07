@@ -966,8 +966,8 @@ void CalcGuyKoor()
             World::AddTime(0, Landscape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].RunningTime * 5);
         }
 
-        World::AddResource(NAHRUNG, -1);
-        World::AddResource(WASSER, -1);
+        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::WASSER, -1);
 
         if ((Guy.AnimationState == GUY_SHIP) || (Guy.AnimationState == GUY_SWIM)) {
             Guy.AnimationState -= 2;    // nichts machen

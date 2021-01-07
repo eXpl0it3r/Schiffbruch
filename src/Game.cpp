@@ -2223,9 +2223,9 @@ void InitStructs()
     TextBereich[TXTCHANCE].textRect.right = TextBereich[TXTCHANCE].textRect.left + 3 * FONT2_LETTER_WIDTH;
     TextBereich[TXTCHANCE].textRect.bottom = TextBereich[TXTCHANCE].textRect.top + FONT2_LETTER_HEIGHT;
 
-    Guy.ResourceAmount[WASSER] = 100;
-    Guy.ResourceAmount[NAHRUNG] = 100;
-    Guy.ResourceAmount[GESUNDHEIT] = 100;
+    Guy.ResourceAmount[Resources::WASSER] = 100;
+    Guy.ResourceAmount[Resources::NAHRUNG] = 100;
+    Guy.ResourceAmount[Resources::GESUNDHEIT] = 100;
 
     for (i = RAW_TREE_BRANCH; i <= RAW_SLINGSHOT; i++) {
         Guy.Inventory[i] = 0;
