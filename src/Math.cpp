@@ -19,7 +19,7 @@ namespace Math {
 float Schrittx, Schritty; // Zum Figur laufen lassen
 Coordinate GuyPosScreenStart; // Absolute StartPosition bei einem Schritt (Für CalcGuyKoor)
 
-void MouseInSpielflaeche(short Button, short Push, short xDiff, short yDiff)
+void UpdateMousePosition(short Button, short Push, short xDiff, short yDiff)
 {
 //    char Text[1024], TextTmp[1024]; // Text für Infoleiste
     std::string Text;
@@ -966,8 +966,8 @@ void CalcGuyKoor()
             World::AddTime(0, Landscape[Route[(RoutePunkt + 1) / 2].x][Route[(RoutePunkt + 1) / 2].y].RunningTime * 5);
         }
 
-        World::AddResource(Resources::NAHRUNG, -1);
-        World::AddResource(Resources::WASSER, -1);
+        World::AddResource(Resources::Food, -1);
+        World::AddResource(Resources::Water, -1);
 
         if ((Guy.AnimationState == Tiles::GUY_SHIP) || (Guy.AnimationState == Tiles::GUY_SWIM)) {
             Guy.AnimationState -= 2;    // nichts machen

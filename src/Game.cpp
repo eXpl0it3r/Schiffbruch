@@ -958,8 +958,8 @@ void InitStructs()
     Bmp[Tiles::TENT].targetRect.right = Bmp[Tiles::TENT].targetRect.left + Bmp[Tiles::TENT].Width;
     Bmp[Tiles::TENT].targetRect.top = 9;
     Bmp[Tiles::TENT].targetRect.bottom = Bmp[Tiles::TENT].targetRect.top + Bmp[Tiles::TENT].Height;
-    Bmp[Tiles::TENT].RequiredRawMaterials[RAW_TREE_BRANCH] = 5;
-    Bmp[Tiles::TENT].RequiredRawMaterials[RAW_LEAF] = 5;
+    Bmp[Tiles::TENT].RequiredRawMaterials[Tiles::RAW_TREE_BRANCH] = 5;
+    Bmp[Tiles::TENT].RequiredRawMaterials[Tiles::RAW_LEAF] = 5;
     Bmp[Tiles::TENT].RequiredActionCases = 16;
 
     Bmp[Tiles::BOAT].AnimationPhaseCount = 2;
@@ -974,8 +974,8 @@ void InitStructs()
     Bmp[Tiles::BOAT].targetRect.right = Bmp[Tiles::BOAT].targetRect.left + Bmp[Tiles::BOAT].Width;
     Bmp[Tiles::BOAT].targetRect.top = 20;
     Bmp[Tiles::BOAT].targetRect.bottom = Bmp[Tiles::BOAT].targetRect.top + Bmp[Tiles::BOAT].Height;
-    Bmp[Tiles::BOAT].RequiredRawMaterials[RAW_TREE_BRANCH] = 2;
-    Bmp[Tiles::BOAT].RequiredRawMaterials[RAW_TREE_TRUNK] = 1;
+    Bmp[Tiles::BOAT].RequiredRawMaterials[Tiles::RAW_TREE_BRANCH] = 2;
+    Bmp[Tiles::BOAT].RequiredRawMaterials[Tiles::RAW_TREE_TRUNK] = 1;
     Bmp[Tiles::BOAT].RequiredActionCases = 16;
 
     Bmp[Tiles::PIPE].AnimationPhaseCount = 2;
@@ -990,7 +990,7 @@ void InitStructs()
     Bmp[Tiles::PIPE].targetRect.right = Bmp[Tiles::PIPE].targetRect.left + Bmp[Tiles::PIPE].Width;
     Bmp[Tiles::PIPE].targetRect.top = 16;
     Bmp[Tiles::PIPE].targetRect.bottom = Bmp[Tiles::PIPE].targetRect.top + Bmp[Tiles::PIPE].Height;
-    Bmp[Tiles::PIPE].RequiredRawMaterials[RAW_TREE_TRUNK] = 1;
+    Bmp[Tiles::PIPE].RequiredRawMaterials[Tiles::RAW_TREE_TRUNK] = 1;
     Bmp[Tiles::PIPE].RequiredActionCases = 18;
 
     Bmp[Tiles::SOS].AnimationPhaseCount = 1;
@@ -1005,7 +1005,7 @@ void InitStructs()
     Bmp[Tiles::SOS].targetRect.right = Bmp[Tiles::SOS].targetRect.left + Bmp[Tiles::SOS].Width;
     Bmp[Tiles::SOS].targetRect.top = 20;
     Bmp[Tiles::SOS].targetRect.bottom = Bmp[Tiles::SOS].targetRect.top + Bmp[Tiles::SOS].Height;
-    Bmp[Tiles::SOS].RequiredRawMaterials[RAW_STONE] = 10;
+    Bmp[Tiles::SOS].RequiredRawMaterials[Tiles::RAW_STONE] = 10;
     Bmp[Tiles::SOS].RequiredActionCases = 20;
 
     Bmp[Tiles::HOUSE_1].AnimationPhaseCount = 1;
@@ -1020,7 +1020,7 @@ void InitStructs()
     Bmp[Tiles::HOUSE_1].targetRect.right = Bmp[Tiles::HOUSE_1].targetRect.left + Bmp[Tiles::HOUSE_1].Width;
     Bmp[Tiles::HOUSE_1].targetRect.top = 0;
     Bmp[Tiles::HOUSE_1].targetRect.bottom = Bmp[Tiles::HOUSE_1].targetRect.top + Bmp[Tiles::HOUSE_1].Height;
-    Bmp[Tiles::HOUSE_1].RequiredRawMaterials[RAW_TREE_BRANCH] = 4;
+    Bmp[Tiles::HOUSE_1].RequiredRawMaterials[Tiles::RAW_TREE_BRANCH] = 4;
     Bmp[Tiles::HOUSE_1].RequiredActionCases = 19;
     Bmp[Tiles::HOUSE_1].Sound = Sound::FOREST;
 
@@ -1036,8 +1036,8 @@ void InitStructs()
     Bmp[Tiles::HOUSE_2].targetRect.right = Bmp[Tiles::HOUSE_2].targetRect.left + Bmp[Tiles::HOUSE_2].Width;
     Bmp[Tiles::HOUSE_2].targetRect.top = 0;
     Bmp[Tiles::HOUSE_2].targetRect.bottom = Bmp[Tiles::HOUSE_2].targetRect.top + Bmp[Tiles::HOUSE_2].Height;
-    Bmp[Tiles::HOUSE_2].RequiredRawMaterials[RAW_TREE_BRANCH] = 3;
-    Bmp[Tiles::HOUSE_2].RequiredRawMaterials[RAW_TREE_TRUNK] = 3;
+    Bmp[Tiles::HOUSE_2].RequiredRawMaterials[Tiles::RAW_TREE_BRANCH] = 3;
+    Bmp[Tiles::HOUSE_2].RequiredRawMaterials[Tiles::RAW_TREE_TRUNK] = 3;
     Bmp[Tiles::HOUSE_2].RequiredActionCases = 21;
     Bmp[Tiles::HOUSE_2].Sound = Sound::FOREST;
 
@@ -1053,9 +1053,9 @@ void InitStructs()
     Bmp[Tiles::HOUSE_3].targetRect.right = Bmp[Tiles::HOUSE_3].targetRect.left + Bmp[Tiles::HOUSE_3].Width;
     Bmp[Tiles::HOUSE_3].targetRect.top = 0;
     Bmp[Tiles::HOUSE_3].targetRect.bottom = Bmp[Tiles::HOUSE_3].targetRect.top + Bmp[Tiles::HOUSE_3].Height;
-    Bmp[Tiles::HOUSE_3].RequiredRawMaterials[RAW_TREE_BRANCH] = 4;
-    Bmp[Tiles::HOUSE_3].RequiredRawMaterials[RAW_TREE_TRUNK] = 4;
-    Bmp[Tiles::HOUSE_3].RequiredRawMaterials[RAW_LEAF] = 5;
+    Bmp[Tiles::HOUSE_3].RequiredRawMaterials[Tiles::RAW_TREE_BRANCH] = 4;
+    Bmp[Tiles::HOUSE_3].RequiredRawMaterials[Tiles::RAW_TREE_TRUNK] = 4;
+    Bmp[Tiles::HOUSE_3].RequiredRawMaterials[Tiles::RAW_LEAF] = 5;
     Bmp[Tiles::HOUSE_3].RequiredActionCases = 21;
     Bmp[Tiles::HOUSE_3].Sound = Sound::FOREST;
 
@@ -1071,8 +1071,8 @@ void InitStructs()
     Bmp[Tiles::BONFIRE].targetRect.right = Bmp[Tiles::BONFIRE].targetRect.left + Bmp[Tiles::BONFIRE].Width;
     Bmp[Tiles::BONFIRE].targetRect.top = 10;
     Bmp[Tiles::BONFIRE].targetRect.bottom = Bmp[Tiles::BONFIRE].targetRect.top + Bmp[Tiles::BONFIRE].Height;
-    Bmp[Tiles::BONFIRE].RequiredRawMaterials[RAW_TREE_BRANCH] = 5;
-    Bmp[Tiles::BONFIRE].RequiredRawMaterials[RAW_TREE_TRUNK] = 4;
+    Bmp[Tiles::BONFIRE].RequiredRawMaterials[Tiles::RAW_TREE_BRANCH] = 5;
+    Bmp[Tiles::BONFIRE].RequiredRawMaterials[Tiles::RAW_TREE_TRUNK] = 4;
     Bmp[Tiles::BONFIRE].RequiredActionCases = 9;
 
     // Allgemein Bäume
@@ -1775,9 +1775,9 @@ void InitStructs()
     Bmp[Tiles::COLUMN_3].Surface = lpDDSPanel;
 
     // Rohstoffe
-    for (i = RAW_TREE_BRANCH; i <= RAW_SLINGSHOT; i++) {
+    for (i = Tiles::RAW_TREE_BRANCH; i <= Tiles::RAW_SLINGSHOT; i++) {
         Bmp[i].AnimationPhaseCount = 1;
-        Bmp[i].sourceRect.left = 18 + (i - RAW_TREE_BRANCH) * 16;
+        Bmp[i].sourceRect.left = 18 + (i - Tiles::RAW_TREE_BRANCH) * 16;
         Bmp[i].sourceRect.top = 0;
         Bmp[i].sourceRect.right = Bmp[i].sourceRect.left + 16;
         Bmp[i].sourceRect.bottom = Bmp[i].sourceRect.top + 15;
@@ -2223,11 +2223,11 @@ void InitStructs()
     TextBereich[TXTCHANCE].textRect.right = TextBereich[TXTCHANCE].textRect.left + 3 * FONT2_LETTER_WIDTH;
     TextBereich[TXTCHANCE].textRect.bottom = TextBereich[TXTCHANCE].textRect.top + FONT2_LETTER_HEIGHT;
 
-    Guy.ResourceAmount[Resources::WASSER] = 100;
-    Guy.ResourceAmount[Resources::NAHRUNG] = 100;
-    Guy.ResourceAmount[Resources::GESUNDHEIT] = 100;
+    Guy.ResourceAmount[Resources::Water] = 100;
+    Guy.ResourceAmount[Resources::Food] = 100;
+    Guy.ResourceAmount[Resources::Health] = 100;
 
-    for (i = RAW_TREE_BRANCH; i <= RAW_SLINGSHOT; i++) {
+    for (i = Tiles::RAW_TREE_BRANCH; i <= Tiles::RAW_SLINGSHOT; i++) {
         Guy.Inventory[i] = 0;
     }
 

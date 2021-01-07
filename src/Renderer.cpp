@@ -614,7 +614,7 @@ void DrawPanel()
     }
 
     // Säule1
-    short i = Bmp[Tiles::COLUMN_1].Height - static_cast<short>(Guy.ResourceAmount[Resources::WASSER]) * Bmp[Tiles::COLUMN_1].Height / 100;
+    short i = Bmp[Tiles::COLUMN_1].Height - static_cast<short>(Guy.ResourceAmount[Resources::Water]) * Bmp[Tiles::COLUMN_1].Height / 100;
     rcRectsrc = Bmp[Tiles::COLUMN_1].sourceRect;
     rcRectsrc.top += i;
     rcRectdes = Bmp[Tiles::COLUMN_1].targetRect;
@@ -622,7 +622,7 @@ void DrawPanel()
     BlitToScreen(Bmp[Tiles::COLUMN_1].Surface);
 
     // Säule2
-    i = Bmp[Tiles::COLUMN_2].Height - static_cast<short>(Guy.ResourceAmount[Resources::NAHRUNG]) * Bmp[Tiles::COLUMN_2].Height / 100;
+    i = Bmp[Tiles::COLUMN_2].Height - static_cast<short>(Guy.ResourceAmount[Resources::Food]) * Bmp[Tiles::COLUMN_2].Height / 100;
     rcRectsrc = Bmp[Tiles::COLUMN_2].sourceRect;
     rcRectsrc.top += i;
     rcRectdes = Bmp[Tiles::COLUMN_2].targetRect;
@@ -630,7 +630,7 @@ void DrawPanel()
     BlitToScreen(Bmp[Tiles::COLUMN_2].Surface);
 
     // Säule3
-    i = Bmp[Tiles::COLUMN_3].Height - static_cast<short>(Guy.ResourceAmount[Resources::GESUNDHEIT]) * Bmp[Tiles::COLUMN_3].Height / 100;
+    i = Bmp[Tiles::COLUMN_3].Height - static_cast<short>(Guy.ResourceAmount[Resources::Health]) * Bmp[Tiles::COLUMN_3].Height / 100;
     rcRectsrc = Bmp[Tiles::COLUMN_3].sourceRect;
     rcRectsrc.top += i;
     rcRectdes = Bmp[Tiles::COLUMN_3].targetRect;
@@ -803,7 +803,7 @@ short DrawText(const int TEXT, short Bereich, short Art)
                 break;
 
             case 'b':
-                Anzahl = std::sprintf(StdString2, " %d", static_cast<short>(Guy.ResourceAmount[Resources::GESUNDHEIT]));
+                Anzahl = std::sprintf(StdString2, " %d", static_cast<short>(Guy.ResourceAmount[Resources::Health]));
                 DrawString(StdString2, Posx, Posy, Art);
                 Posx += BWidth * (Anzahl);
                 break;

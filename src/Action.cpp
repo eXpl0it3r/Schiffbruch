@@ -358,7 +358,7 @@ void quit()
         }
 
         if (Frage == 1) {
-            if (Guy.ResourceAmount[Resources::GESUNDHEIT] > 10) {
+            if (Guy.ResourceAmount[Resources::Health] > 10) {
                 Game::SaveGame();
             }
 
@@ -478,8 +478,8 @@ void destroy()
     case 4:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_CHOP;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 5);
         break;
 
@@ -487,8 +487,8 @@ void destroy()
     case 5:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_BEAT;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 5);
         break;
 
@@ -731,7 +731,7 @@ void eat()
     case 3:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_EAT;
-        World::AddResource(Resources::NAHRUNG, 15);
+        World::AddResource(Resources::Food, 15);
         World::AddTime(0, 2);
         break;
 
@@ -781,7 +781,7 @@ void slingshot()
     case 4:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_SEARCH;
-        World::AddResource(Resources::NAHRUNG, 5);
+        World::AddResource(Resources::Food, 5);
         World::AddTime(0, 20);
         break;
 
@@ -813,7 +813,7 @@ void drink()
     case 3:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_DRINK;
-        World::AddResource(Resources::WASSER, 30);
+        World::AddResource(Resources::Water, 30);
         World::AddTime(0, 3);
         break;
 
@@ -850,8 +850,8 @@ void log()
     case 6:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_CHOP;
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 10);
         break;
 
@@ -1068,7 +1068,7 @@ void fish()
             break;
         }
 
-        Guy.ResourceAmount[Resources::GESUNDHEIT] += 2;
+        Guy.ResourceAmount[Resources::Health] += 2;
         World::AddTime(0, 20);
         break;
 
@@ -1124,7 +1124,7 @@ void fish()
         break;
 
     case 9:
-        Guy.ResourceAmount[Resources::NAHRUNG] += 20;
+        Guy.ResourceAmount[Resources::Food] += 20;
         Guy.CurrentAction = Action::NOTHING;
         break;
     }
@@ -1231,8 +1231,8 @@ void treasure()
 
     case 2:
         World::AddTime(0, 20);
-        World::AddResource(Resources::WASSER, -10);
-        World::AddResource(Resources::NAHRUNG, -10);
+        World::AddResource(Resources::Water, -10);
+        World::AddResource(Resources::Food, -10);
         Guy.ScreenPosition.x += 5;
         Guy.ScreenPosition.y -= 1;
         Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -1287,8 +1287,8 @@ void field()
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 4;
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 25,
                             Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 30);
         break;
 
@@ -1296,8 +1296,8 @@ void field()
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 5;
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
                             Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 19);
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 30);
         break;
 
@@ -1305,8 +1305,8 @@ void field()
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 6;
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
                             Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 17);
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 30);
         break;
 
@@ -1314,8 +1314,8 @@ void field()
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 7;
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 34,
                             Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 30);
         break;
 
@@ -1323,8 +1323,8 @@ void field()
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 8;
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 36,
                             Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 30);
         break;
 
@@ -1578,9 +1578,9 @@ void day_end()
         // Je nach Schlafort Zustand verändern
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
                 (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            World::AddResource(Resources::GESUNDHEIT, -5);
+            World::AddResource(Resources::Health, -5);
 
-            if (Guy.ResourceAmount[Resources::GESUNDHEIT] <= 0) {
+            if (Guy.ResourceAmount[Resources::Health] <= 0) {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
@@ -1593,7 +1593,7 @@ void day_end()
             }
         } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
                    (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            World::AddResource(Resources::GESUNDHEIT, +20);
+            World::AddResource(Resources::Health, +20);
             Guy.IsActive = true;
             PapierText = Renderer::DrawText(TAGENDE4, TXTPAPIER, 1);
         } else if (IsInBoat) {
@@ -1605,9 +1605,9 @@ void day_end()
             Hours = 0;
             Minutes = 0;
         } else {
-            World::AddResource(Resources::GESUNDHEIT, -20);
+            World::AddResource(Resources::Health, -20);
 
-            if (Guy.ResourceAmount[Resources::GESUNDHEIT] <= 0) {
+            if (Guy.ResourceAmount[Resources::Health] <= 0) {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
@@ -1702,7 +1702,7 @@ void day_end()
         Guy.AnimationState = Tiles::GUY_LEFT;
         Guy.CurrentAction = Action::NOTHING;
 
-        if (Guy.ResourceAmount[Resources::GESUNDHEIT] > 10) {
+        if (Guy.ResourceAmount[Resources::Health] > 10) {
             Game::SaveGame();
         }
 
@@ -1863,8 +1863,8 @@ void tent()
     case 13:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_TIE_DOWN;
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 15);
         break;
 
@@ -1889,8 +1889,8 @@ void tent()
     case 8:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_TIE_UP;
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 15);
         break;
 
@@ -1983,8 +1983,8 @@ void boat()
     case 14:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_BEAT;
-        World::AddResource(Resources::WASSER, -2);
-        World::AddResource(Resources::NAHRUNG, -2);
+        World::AddResource(Resources::Water, -2);
+        World::AddResource(Resources::Food, -2);
         World::AddTime(0, 15);
         break;
 
@@ -2082,8 +2082,8 @@ void pipe()
     case 13:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_BEAT;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 5);
         break;
 
@@ -2095,8 +2095,8 @@ void pipe()
     case 16:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_CHOP;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 5);
         break;
 
@@ -2192,8 +2192,8 @@ void sos()
         Guy.IsActive = true;
         Guy.ScreenPosition.x += 4;
         Guy.AnimationState = Tiles::GUY_LAYING_TENT;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2206,8 +2206,8 @@ void sos()
         Guy.IsActive = true;
         Guy.ScreenPosition.x -= 4;
         Guy.AnimationState = Tiles::GUY_STAND_UP;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2268,8 +2268,8 @@ void fireplace()
         Guy.IsActive = true;
         Guy.ScreenPosition.x += 4;
         Guy.AnimationState = Tiles::GUY_LAYING_TENT;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2277,8 +2277,8 @@ void fireplace()
         Guy.IsActive = true;
         Guy.ScreenPosition.x -= 4;
         Guy.AnimationState = Tiles::GUY_STAND_UP;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 1);
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::BONFIRE].AnimationPhaseCount + 1);
         break;
@@ -2293,8 +2293,8 @@ void fireplace()
     case 7:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_TIE_UP;
-        World::AddResource(Resources::WASSER, -1);
-        World::AddResource(Resources::NAHRUNG, -1);
+        World::AddResource(Resources::Water, -1);
+        World::AddResource(Resources::Food, -1);
         World::AddTime(0, 1);
 
         if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber != 5)
@@ -2355,8 +2355,8 @@ void house1()
     case 5:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_1;
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2367,8 +2367,8 @@ void house1()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_1;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_1].AnimationPhaseCount + 1);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2379,8 +2379,8 @@ void house1()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_1;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_1].AnimationPhaseCount + 2);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2391,8 +2391,8 @@ void house1()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_1;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_1].AnimationPhaseCount + 3);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2439,8 +2439,8 @@ void house2()
     case 2:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_CLIMBING_1;
-        World::AddResource(Resources::NAHRUNG, -1);
-        World::AddResource(Resources::WASSER, -1);
+        World::AddResource(Resources::Food, -1);
+        World::AddResource(Resources::Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2450,8 +2450,8 @@ void house2()
     case 6:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2462,8 +2462,8 @@ void house2()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 1);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2474,8 +2474,8 @@ void house2()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 2);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2486,8 +2486,8 @@ void house2()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 3);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2495,8 +2495,8 @@ void house2()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_CLIMBING_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 4);
-        World::AddResource(Resources::NAHRUNG, -1);
-        World::AddResource(Resources::WASSER, -1);
+        World::AddResource(Resources::Food, -1);
+        World::AddResource(Resources::Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2543,8 +2543,8 @@ void house3()
     case 2:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_CLIMBING_1;
-        World::AddResource(Resources::NAHRUNG, -1);
-        World::AddResource(Resources::WASSER, -1);
+        World::AddResource(Resources::Food, -1);
+        World::AddResource(Resources::Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2554,8 +2554,8 @@ void house3()
     case 6:
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2566,8 +2566,8 @@ void house3()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 1);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2578,8 +2578,8 @@ void house3()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 2);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2590,8 +2590,8 @@ void house3()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_HAMMER_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 3);
-        World::AddResource(Resources::NAHRUNG, -0.5);
-        World::AddResource(Resources::WASSER, -0.5);
+        World::AddResource(Resources::Food, -0.5);
+        World::AddResource(Resources::Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2599,8 +2599,8 @@ void house3()
         Guy.IsActive = true;
         Guy.AnimationState = Tiles::GUY_CLIMBING_2;
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 4);
-        World::AddResource(Resources::NAHRUNG, -1);
-        World::AddResource(Resources::WASSER, -1);
+        World::AddResource(Resources::Food, -1);
+        World::AddResource(Resources::Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2650,8 +2650,8 @@ void sleep()
                 (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
             Guy.IsActive = true;
             Guy.AnimationState = Tiles::GUY_CLIMBING_1;
-            World::AddResource(Resources::NAHRUNG, -1);
-            World::AddResource(Resources::WASSER, -1);
+            World::AddResource(Resources::Food, -1);
+            World::AddResource(Resources::Water, -1);
         }
 
         break;
@@ -2695,7 +2695,7 @@ void sleep()
             Guy.AnimationState = Tiles::GUY_SLEEPING;
         }
 
-        World::AddResource(Resources::GESUNDHEIT, 5);
+        World::AddResource(Resources::Health, 5);
         World::AddTime(0, 30);
         break;
 
@@ -2718,8 +2718,8 @@ void sleep()
                 (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
             Guy.IsActive = true;
             Guy.AnimationState = Tiles::GUY_CLIMBING_2;
-            World::AddResource(Resources::NAHRUNG, -1);
-            World::AddResource(Resources::WASSER, -1);
+            World::AddResource(Resources::Food, -1);
+            World::AddResource(Resources::Water, -1);
         }
 
         break;

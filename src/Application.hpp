@@ -4,6 +4,7 @@
 #include "extern.hpp"
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include <string>
 
