@@ -237,7 +237,7 @@ bool InitDDraw()
     }
 
     // In diese Surface solln die Credits gespeichert werden
-    lpDDSCredits = Renderer::loadTexture(resource_Credits_bmp_data, resource_Credits_bmp_size);
+    lpDDSCredits = Renderer::loadTexture(resource_Credits_bmp_data, resource_Credits_bmp_size, sf::Color::Black);
     if (!lpDDSCredits) {
         puts("failed to load credits.bmp");
         return false;
