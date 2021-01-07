@@ -237,7 +237,7 @@ bool InitDDraw()
     }
 
     // In diese Surface solln die Credits gespeichert werden
-    lpDDSCredits = Renderer::loadTexture(resource_Credits_bmp_data, resource_Credits_bmp_size);
+    lpDDSCredits = Renderer::loadTexture(resource_Credits_bmp_data, resource_Credits_bmp_size, sf::Color::Black);
     if (!lpDDSCredits) {
         puts("failed to load credits.bmp");
         return false;
@@ -548,6 +548,11 @@ short CheckKey()
             Bmp[BUTTON_HOUSE_2].AnimationPhase = 0;
             Bmp[BUTTON_HOUSE_3].AnimationPhase = 0;
         }//
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5))
+        {
+            s_GameState = State::OUTRO;
+        }
 #endif
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
