@@ -254,7 +254,7 @@ void Generate()
                 Renderer::BlitToLandscape(lpDDSMisc);
             }
 
-            // Landschaftsobjekte zeichnen (falls Animationen ausgeschaltet sind)
+            // Draw landscape objects (if animations are switched off)
             if ((!LAnimation) && (Landscape[x][y].Object != -1)) {
                 if ((Landscape[x][y].Object >= SEA_WAVES) && (Landscape[x][y].Object <= FLOODGATE_6)) {
                     rcRectsrc.left = Bmp[Landscape[x][y].Object].sourceRect.left;
@@ -274,7 +274,7 @@ void Generate()
                     rcRectdes.top = Landscape[x][y].yScreen + Bmp[Landscape[x][y].Object].targetRect.top;
                     rcRectdes.bottom = Landscape[x][y].yScreen + Bmp[Landscape[x][y].Object].targetRect.bottom;
                     // Landschaftsobjekt zeichnen
-                    Renderer::BlitToLandscape(lpDDSMisc);
+                    Renderer::BlitToLandscape(lpDDSAnimation);
                 }
             }
 
