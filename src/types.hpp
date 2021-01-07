@@ -5,6 +5,9 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
+namespace Action {
+enum Type : short;
+}
 struct RECT {
         int left;
         int top;
@@ -27,12 +30,12 @@ struct RGBSTRUCT {
 
 struct GUY {
     bool IsActive; // Ist er aktiv?
-    short CurrentAction; // Welche Aktion (Suchen, fischen ...) (Übergeordnet über Zustand)
+    Action::Type CurrentAction; // Welche Aktion (Suchen, fischen ...) (Übergeordnet über Zustand)
     Coordinate Pos; // KachelPosition der Spielfigur
     Coordinate OriginalPosition; // Die ursprünglich Position in der Kachel (für die Aktionsprozeduren)
     Coordinate ScreenPosition; // Absolute Position der Spielfigur
-    short AnimationState; // Was macht er gerade? (Animation)(linkslaufen,rechtslaufen...,angeln..)
-    short ActionNumber; // Bei welcher Aktion (für die Aktionsprozeduren)
+    short AnimationState = Tiles::INVALID; // Was macht er gerade? (Animation)(linkslaufen,rechtslaufen...,angeln..)
+    short ActionStep; // Bei welcher Aktion (für die Aktionsprozeduren)
     float ResourceAmount[3]; // Wieviel Wasservorrat usw
     short Inventory[SPRITE_COUNT]; // Welche Rohstoffe usw. besitzt man
 };
@@ -74,11 +77,11 @@ struct SCAPE {
     bool Walkable; // notwendig für Pathfinding
     bool Discovered; // Ist dieses Feld schon aufgedeckt?
     short RunningTime; // LaufZeit auf dieser Kachel (1 am schnellsten...)
-    short Object = -1; // Welches Objekt steht drauf (z.Bsp. Flüsse)
+    short Object = Tiles::INVALID; // Welches Objekt steht drauf (z.Bsp. Flüsse)
     bool ReverseAnimation; // Wird die Objektanimation umgekehrt abgespielt (für flüsse)
     Coordinate ObjectPosOffset; // Die Koordinaten des Objekts (relativ zu xScreen und yScreen)
     float AnimationPhase; // Welche Animationsphase oder Bildversion
-    short ConstructionActionNumber; // Welche Aktionsnummer (um Baustellen vortzusetzen)
+    short ConstructionActionStep; // Welche Aktionsnummer (um Baustellen vortzusetzen)
     Coordinate GPosAlt; // Damit der Guy an der richtigen Stelle (x,y) weiterbaut
     short RequiredRawMaterials[SPRITE_COUNT]; //Anzahl des i.Rohstoffs, den man noch zum bauen braucht
     float FireTimer; //Bis jetzt nur fürs Feuer nötig

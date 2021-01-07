@@ -10,6 +10,6 @@ void finiObjects();
 
 bool InitDDraw(); // DirectDraw initialisieren
 void Reset();
-void CheckMouse(const sf::Window &win); // Maus abfragen
+void CheckMouse(const Coordinate newMousePos); // Maus abfragen
 short CheckKey(); // Tastatur abfragen
 }

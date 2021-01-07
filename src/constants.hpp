@@ -20,7 +20,9 @@ const int NUMBER_OF_RIVERS = 1; // Wieviele Flüsse? Mehr als 1 funktioniert sel
 const int TREASUREMAP_WIDTH = 370; // Schatzkartenbreite
 const int TREASUREMAP_HEIGHT = 370; // Schatzkartenhöhe
 
-enum Tiles {
+namespace Tiles {
+enum Tile {
+    INVALID = -1,
     SEA_WAVES = 0,
     RIVER_1 = SEA_WAVES + 1,
     RIVER_2 = SEA_WAVES + 2,
@@ -47,30 +49,30 @@ enum Tiles {
     FLOODGATE_5 = SEA_WAVES + 23,
     FLOODGATE_6 = SEA_WAVES + 24,
     TREE_1 = 25,
-    TREE_2 = TREE_1 + 1,
-    TREE_3 = TREE_1 + 2,
-    TREE_4 = TREE_1 + 3,
-    BUSH = TREE_1 + 4,
-    TREE_DOWN_1 = TREE_1 + 5,
-    TREE_DOWN_2 = TREE_1 + 6,
-    TREE_DOWN_3 = TREE_1 + 7,
-    TREE_DOWN_4 = TREE_1 + 8,
-    TREE_BIG = TREE_1 + 9,
-    FIRE = TREE_1 + 10,
-    WRECK_1 = TREE_1 + 11,
-    WRECK_2 = TREE_1 + 12,
+    TREE_2 = 26,//TREE_1 + 1,
+    TREE_3 = 27,//TREE_1 + 2,
+    TREE_4 = 28,//TREE_1 + 3,
+    BUSH = 29,//TREE_1 + 4,
+    TREE_DOWN_1 = 30,//TREE_1 + 5,
+    TREE_DOWN_2 = 31,//TREE_1 + 6,
+    TREE_DOWN_3 = 32,//TREE_1 + 7,
+    TREE_DOWN_4 = 33,//TREE_1 + 8,
+    TREE_BIG = 34,//TREE_1 + 9,
+    FIRE = 35,//TREE_1 + 10,
+    WRECK_1 = 36,//TREE_1 + 11,
+    WRECK_2 = 37,//TREE_1 + 12,
     FIELD = 38,
-    TENT = FIELD + 1,
-    BOAT = FIELD + 2,
-    PIPE = FIELD + 3,
-    SOS = FIELD + 4,
-    HOUSE_1 = FIELD + 5,
-    HOUSE_2 = FIELD + 6,
-    HOUSE_3 = FIELD + 7,
-    BONFIRE = FIELD + 8,
+    TENT = 39,//FIELD + 1,
+    BOAT = 40,//FIELD + 2,
+    PIPE = 41,//FIELD + 3,
+    SOS = 42,//FIELD + 4,
+    HOUSE_1 = 43,//FIELD + 5,
+    HOUSE_2 = 44,//FIELD + 6,
+    HOUSE_3 = 45,//FIELD + 7,
+    BONFIRE = 46,//FIELD + 8,
     CURSOR_ARROW = 47,
-    CURSOR_DIRECTION = CURSOR_ARROW + 1,
-    CURSOR_CLOCK = CURSOR_ARROW + 2,
+    CURSOR_DIRECTION = 48,// CURSOR_ARROW + 1,
+    CURSOR_CLOCK = 49,//CURSOR_ARROW + 2,
     GUY_LEFT = 50,
     GUY_OVER = GUY_LEFT + 1,
     GUY_RIGHT = GUY_LEFT + 2,
@@ -203,6 +205,8 @@ enum Tiles {
     DPSOFTWARE = PROGRAMMING + 14,
     SPRITE_COUNT = DPSOFTWARE + 1, // Wieviele Bilder
 };
+}
+static constexpr int SPRITE_COUNT = int(Tiles::SPRITE_COUNT);
 
 // Textfelder
 enum Textfields {
@@ -216,24 +220,7 @@ enum Textfields {
 
 // Resourcen
 enum Resources {
-    WASSER = 0,
-    NAHRUNG = 1,
-    GESUNDHEIT = 2,
+    Water = 0,
+    Food = 1,
+    Health = 2,
 };
-
-// Bilder
-static const char Misc[] = "MISC";
-static const char Panel[] = "PANEL";
-static const char GuyAni[] = "GUYANI";
-static const char Animation[] = "ANIMATION";
-static const char Schrift1[] = "SCHRIFT1";
-static const char Schrift2[] = "SCHRIFT2";
-static const char TextFeld[] = "TEXTFELD";
-static const char Papier[] = "PAPIER";
-static const char Baum[] = "BAUM";
-static const char Cursorbmp[] = "CURSORBMP";
-static const char Buttons[] = "BUTTONS";
-static const char Inventarbmp[] = "INVENTARBMP";
-static const char Bau[] = "BAU";
-static const char Credits[] = "CREDITS";
-static const char Logo[] = "LOGO";

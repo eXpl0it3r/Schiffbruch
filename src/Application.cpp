@@ -62,14 +62,32 @@ void Application::process_events()
     sf::Event event;
 
     while (m_window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+        switch(event.type){
+        case sf::Event::Closed:
             Direct::finiObjects();
             m_window.close();
-        } else if (event.type == sf::Event::KeyReleased) {
+            break;
+        case sf::Event::MouseButtonPressed:
+        case sf::Event::MouseButtonReleased:
+            if (s_GameState == State::GAME) {
+                sf::Vector2f mappedPos = m_window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+                Direct::CheckMouse(Coordinate({short(mappedPos.x), short(mappedPos.y)}));
+            }
+            break;
+        case sf::Event::MouseMoved:
+            if (s_GameState == State::GAME) {
+                sf::Vector2f mappedPos = m_window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+                Direct::CheckMouse(Coordinate({short(mappedPos.x), short(mappedPos.y)}));
+            }
+            break;
+        case sf::Event::KeyReleased:
             if (event.key.code == sf::Keyboard::F4) {
                 Direct::finiObjects();
                 m_window.close();
             }
+            break;
+        default:
+            break;
         }
     }
 }
@@ -115,7 +133,7 @@ void Application::run()
             Math::Animationen(); // Animationen weiterschalten
 
             if (!Guy.IsActive) { // Aktionen starten
-                Action::handler(Guy.CurrentAction);
+                Actions::handler(Guy.CurrentAction);
             }
 
             Renderer::ShowIntro(); // Bild auffrischen
@@ -126,12 +144,11 @@ void Application::run()
                 }
 
                 Guy.IsActive = false;
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::DAY_END;
             }
 
             World::UpdateButtons(); // Die Spezialkn�pfe umschalten
-            Direct::CheckMouse(m_window); // Den MouseZustand abchecken
 
             if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
                 m_window.close();
@@ -142,7 +159,7 @@ void Application::run()
             Math::Animationen(); // Die Animationsphasen weiterschalten
 
             if (!Guy.IsActive) { // Die Aktionen starten
-                Action::handler(Guy.CurrentAction);
+                Actions::handler(Guy.CurrentAction);
             }
 
             Renderer::Show(); // Das Bild zeichnen
