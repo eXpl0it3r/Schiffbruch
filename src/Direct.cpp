@@ -300,7 +300,7 @@ void CheckMouse(const sf::Window &win)
 
     if (TwoClicks == -1) {
         if (Guy.IsActive) {
-            if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_STOP].targetRect) && (Bmp[BUTTON_STOP].AnimationPhase != -1)) {
+            if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_STOP].targetRect) && (Bmp[Tiles::BUTTON_STOP].AnimationPhase != -1)) {
                 CursorTyp = CURSOR_ARROW;
             } else {
                 CursorTyp = CURSOR_CLOCK;
@@ -350,7 +350,7 @@ void CheckMouse(const sf::Window &win)
     // Wenn ein Text steht, dann bei Mausdruck Text weg
     if (PapierText != -1) {
         if (Frage == 0) {
-            if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[YES].targetRect)) {
+            if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::YES].targetRect)) {
                 CursorTyp = CURSOR_ARROW;
 
                 if ((Button == 0) && (Push == 1)) {
@@ -360,7 +360,7 @@ void CheckMouse(const sf::Window &win)
                     Guy.IsActive = false;
                     PlaySound(Sound::CLICK2, 100);
                 }
-            } else if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[NO].targetRect)) {
+            } else if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::NO].targetRect)) {
                 CursorTyp = CURSOR_ARROW;
 
                 if ((Button == 0) && (Push == 1)) {
@@ -388,8 +388,8 @@ void CheckMouse(const sf::Window &win)
 
     // Wenn der Guy aktiv dann linke Mouse-Buttons ignorieren
     if ((Guy.IsActive) && (Button == 0)) {
-        if (!(Math::InRect(MousePosition.x, MousePosition.y, Bmp[BUTTON_STOP].targetRect)) ||
-                (Bmp[BUTTON_STOP].AnimationPhase == -1)) {
+        if (!(Math::InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_STOP].targetRect)) ||
+                (Bmp[Tiles::BUTTON_STOP].AnimationPhase == -1)) {
             Button = -1;
         }
     }
@@ -431,8 +431,8 @@ short CheckKey()
             }
 
             Landscape[Guy.Pos.x - 2][Guy.Pos.y].Object = WRECK_1;
-            Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_1].targetRect.left);
-            Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
+            Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::WRECK_1].targetRect.left);
+            Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::WRECK_1].targetRect.top);
 
             Guy.ScreenPosition.x =
                 (Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
@@ -516,37 +516,37 @@ short CheckKey()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
         {
-            Guy.Inventory[RAW_TREE_BRANCH] = 10;
-            Guy.Inventory[RAW_STONE] = 10;
-            Guy.Inventory[RAW_LEAF] = 10;
-            Guy.Inventory[RAW_LIANA] = 10;
-            Guy.Inventory[RAW_TREE_TRUNK] = 9;
+            Guy.Inventory[Tiles::RAW_TREE_BRANCH] = 10;
+            Guy.Inventory[Tiles::RAW_STONE] = 10;
+            Guy.Inventory[Tiles::RAW_LEAF] = 10;
+            Guy.Inventory[Tiles::RAW_LIANA] = 10;
+            Guy.Inventory[Tiles::RAW_TREE_TRUNK] = 9;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            Guy.Inventory[RAW_AXE]   = 1;
-            Guy.Inventory[RAW_HOE]  = 1;
-            Guy.Inventory[RAW_FISHING_POLE]  = 1;
-            Guy.Inventory[RAW_HAMMER]   = 1;
-            Guy.Inventory[RAW_TELESCOPE] = 1;
-            Guy.Inventory[RAW_MATCH] = 1;
-            Guy.Inventory[RAW_SHOVEL] = 1;
-            Guy.Inventory[RAW_MAP] = 1;
-            Guy.Inventory[RAW_SLINGSHOT] = 1;
+            Guy.Inventory[Tiles::RAW_AXE]   = 1;
+            Guy.Inventory[Tiles::RAW_HOE]  = 1;
+            Guy.Inventory[Tiles::RAW_FISHING_POLE]  = 1;
+            Guy.Inventory[Tiles::RAW_HAMMER]   = 1;
+            Guy.Inventory[Tiles::RAW_TELESCOPE] = 1;
+            Guy.Inventory[Tiles::RAW_MATCH] = 1;
+            Guy.Inventory[Tiles::RAW_SHOVEL] = 1;
+            Guy.Inventory[Tiles::RAW_MAP] = 1;
+            Guy.Inventory[Tiles::RAW_SLINGSHOT] = 1;
 
-            Bmp[BUTTON_CHOP].AnimationPhase  = 0;
-            Bmp[BUTTON_FISH].AnimationPhase  = 0;
-            Bmp[BUTTON_IGNITE].AnimationPhase  = 0;
-            Bmp[BUTTON_LOOK_OUT].AnimationPhase = 0;
-            Bmp[BUTTON_TREASUREMAP].AnimationPhase = 0;
-            Bmp[BUTTON_TREASURE].AnimationPhase = 0;
-            Bmp[BUTTON_SLINGSHOT].AnimationPhase = 0;
-            Bmp[BUTTON_FARM].AnimationPhase  = 0;
-            Bmp[BUTTON_BOAT].AnimationPhase  = 0;
-            Bmp[BUTTON_PIPE].AnimationPhase  = 0;
-            Bmp[BUTTON_HOUSE_1].AnimationPhase = 0;
-            Bmp[BUTTON_HOUSE_2].AnimationPhase = 0;
-            Bmp[BUTTON_HOUSE_3].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_CHOP].AnimationPhase  = 0;
+            Bmp[Tiles::BUTTON_FISH].AnimationPhase  = 0;
+            Bmp[Tiles::BUTTON_IGNITE].AnimationPhase  = 0;
+            Bmp[Tiles::BUTTON_LOOK_OUT].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_TREASUREMAP].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_TREASURE].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_SLINGSHOT].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_FARM].AnimationPhase  = 0;
+            Bmp[Tiles::BUTTON_BOAT].AnimationPhase  = 0;
+            Bmp[Tiles::BUTTON_PIPE].AnimationPhase  = 0;
+            Bmp[Tiles::BUTTON_HOUSE_1].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_HOUSE_2].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_HOUSE_3].AnimationPhase = 0;
         }//
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5))

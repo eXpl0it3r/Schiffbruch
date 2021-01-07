@@ -21,13 +21,13 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
     bool keinRohstoff = true;
 
     if (Objekt == -1) {
-        for (short i = 0; i < SPRITE_COUNT; i++) {
+        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
             if (Landscape[x][y].RequiredRawMaterials[i] != 0) {
                 keinRohstoff = false;
             }
         }
     } else {
-        for (short i = 0; i < SPRITE_COUNT; i++) {
+        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
             if (Bmp[Objekt].RequiredRawMaterials[i] != 0) {
                 keinRohstoff = false;
             }
@@ -55,23 +55,23 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
 
         const char *name = "";
         switch (i) {
-        case RAW_TREE_BRANCH:
+        case Tiles::RAW_TREE_BRANCH:
             name = GetLanguageString(AST);
             break;
 
-        case RAW_STONE:
+        case Tiles::RAW_STONE:
             name = GetLanguageString(STEIN);
             break;
 
-        case RAW_LEAF:
+        case Tiles::RAW_LEAF:
             name = GetLanguageString(STRING_LEAF);
             break;
 
-        case RAW_LIANA:
+        case Tiles::RAW_LIANA:
             name = GetLanguageString(STRING_LIANA);
             break;
 
-        case RAW_TREE_TRUNK:
+        case Tiles::RAW_TREE_TRUNK:
             name = GetLanguageString(STAMM);
             break;
         }
@@ -102,7 +102,7 @@ void AddTime(short h, short m)
     for (short y = 0; y < MAX_TILESY; y++)
         for (short x = 0; x < MAX_TILES_X; x++) {
             // Feuer nach einer bestimmten Zeit ausgehen lassen
-            if (Landscape[x][y].Object == FIRE) {
+            if (Landscape[x][y].Object == Tiles::FIRE) {
                 Landscape[x][y].FireTimer += float((60 * h + m) * 0.0005);
 
                 if (Landscape[x][y].FireTimer >= 1) {
@@ -116,8 +116,8 @@ void AddTime(short h, short m)
             }
 
             if ((Landscape[x][y].AnimationPhase == -1) ||
-                    ((Landscape[x][y].Object != FIELD) &&
-                     (Landscape[x][y].Object != BUSH))) {
+                    ((Landscape[x][y].Object != Tiles::FIELD) &&
+                     (Landscape[x][y].Object != Tiles::BUSH))) {
                 continue;    // Wenn kein Fruchtobjekt weiter
             }
 
@@ -125,9 +125,9 @@ void AddTime(short h, short m)
                 continue;
             }
 
-            if (Landscape[x][y].Object == FIELD) {
+            if (Landscape[x][y].Object == Tiles::FIELD) {
                 Landscape[x][y].AnimationPhase += float((60 * h + m) * 0.005);
-            } else if (Landscape[x][y].Object == BUSH) {
+            } else if (Landscape[x][y].Object == Tiles::BUSH) {
                 Landscape[x][y].AnimationPhase += float((60 * h + m) * 0.0005);    // pro Minute Reifungsprozess fortführen
             }
 
@@ -136,7 +136,7 @@ void AddTime(short h, short m)
             }
         }
 
-    AddResource(GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[WASSER] - 50 + Guy.ResourceAmount[NAHRUNG] - 50) / 1000);
+    AddResource(Resources::GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[Resources::WASSER] - 50 + Guy.ResourceAmount[Resources::NAHRUNG] - 50) / 1000);
 
     if ((s_GameState == State::GAME) && (!IsInBoat)) {
         for (short i = 0; i <= (60 * h + m); i++) {
@@ -167,7 +167,7 @@ void AddResource(short Art, float Anzahl) // Fügt wassser usw hinzu
     }
 
     // Wann tod
-    if ((Guy.ResourceAmount[GESUNDHEIT] <= 0) && (Guy.CurrentAction != Action::DEATH) &&
+    if ((Guy.ResourceAmount[Resources::GESUNDHEIT] <= 0) && (Guy.CurrentAction != Action::DEATH) &&
             (Guy.CurrentAction != Action::DAY_END) && (s_GameState == State::GAME)) {
         Guy.IsActive = false;
         Guy.ActionNumber = 0;
@@ -256,11 +256,11 @@ void Generate()
 
             // Draw landscape objects (if animations are switched off)
             if ((!LAnimation) && (Landscape[x][y].Object != -1)) {
-                if ((Landscape[x][y].Object >= SEA_WAVES) && (Landscape[x][y].Object <= FLOODGATE_6)) {
+                if ((Landscape[x][y].Object >= Tiles::SEA_WAVES) && (Landscape[x][y].Object <= Tiles::FLOODGATE_6)) {
                     rcRectsrc.left = Bmp[Landscape[x][y].Object].sourceRect.left;
                     rcRectsrc.right = Bmp[Landscape[x][y].Object].sourceRect.right;
 
-                    if (Landscape[x][y].Object == SEA_WAVES) {
+                    if (Landscape[x][y].Object == Tiles::SEA_WAVES) {
                         short i = rand() % 6;
                         rcRectsrc.top = Bmp[Landscape[x][y].Object].sourceRect.top + i * Bmp[Landscape[x][y].Object].Height;
                         rcRectsrc.bottom = Bmp[Landscape[x][y].Object].sourceRect.bottom + i * Bmp[Landscape[x][y].Object].Height;
@@ -319,28 +319,28 @@ void Generate()
 
 void UpdateButtons()
 {
-    if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= FIELD) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= BONFIRE) &&
+    if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::FIELD) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::BONFIRE) &&
             (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase >= Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount) &&
-            (Bmp[BUTTON_STOP].AnimationPhase == -1)) {
-        if (Bmp[BUTTON_CONTINUE].AnimationPhase == -1) {
-            Bmp[BUTTON_CONTINUE].AnimationPhase = 0;
+            (Bmp[Tiles::BUTTON_STOP].AnimationPhase == -1)) {
+        if (Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase == -1) {
+            Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase = 0;
         }
     } else {
-        Bmp[BUTTON_CONTINUE].AnimationPhase = -1;
+        Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase = -1;
     }
 
-    if ((Bmp[BUTTON_STOP].AnimationPhase == -1) && (((Landscape[Guy.Pos.x][Guy.Pos.y].Object == BOAT) &&
+    if ((Bmp[Tiles::BUTTON_STOP].AnimationPhase == -1) && (((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BOAT) &&
             (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) ||
             ((IsInBoat) &&
              (((Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1) && (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Object == -1)) ||
               ((Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1) && (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Object == -1)) ||
               ((Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1) && (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Object == -1)) ||
               ((Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1) && (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Object == -1)))))) {
-        if (Bmp[BUTTON_LAY_DOWN].AnimationPhase == -1) {
-            Bmp[BUTTON_LAY_DOWN].AnimationPhase = 0;
+        if (Bmp[Tiles::BUTTON_LAY_DOWN].AnimationPhase == -1) {
+            Bmp[Tiles::BUTTON_LAY_DOWN].AnimationPhase = 0;
         }
     } else {
-        Bmp[BUTTON_LAY_DOWN].AnimationPhase = -1;
+        Bmp[Tiles::BUTTON_LAY_DOWN].AnimationPhase = -1;
     }
 }
 
@@ -387,7 +387,7 @@ bool CheckRawMaterials()
     PapierText = Renderer::DrawText(ROHSTOFFNICHT, TXTPAPIER, 1);
     Guy.ActionNumber = 0;
     Guy.CurrentAction = Action::CANCEL;
-    Bmp[BUTTON_STOP].AnimationPhase = -1;
+    Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
     return false;
 }
 
@@ -954,9 +954,9 @@ void CreateSea() // Das Meer und den Strand bestimmen
                 Landscape[x][y].Type = 0;
                 Landscape[x][y].Height = 0;
                 Landscape[x][y].Terrain = 1;
-                Landscape[x][y].Object = SEA_WAVES;
-                Landscape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[SEA_WAVES].targetRect.left);
-                Landscape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[SEA_WAVES].targetRect.top);
+                Landscape[x][y].Object = Tiles::SEA_WAVES;
+                Landscape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::SEA_WAVES].targetRect.left);
+                Landscape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::SEA_WAVES].targetRect.top);
 
                 if (rand() % 2 == 0) {
                     Landscape[x][y].ReverseAnimation = true;
@@ -1024,9 +1024,9 @@ void CreateSea() // Das Meer und den Strand bestimmen
                 }
 
                 Landscape[x][y].Terrain = 1; // sonst Meer
-                Landscape[x][y].Object = SEA_WAVES;
-                Landscape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[SEA_WAVES].targetRect.left);
-                Landscape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[SEA_WAVES].targetRect.top);
+                Landscape[x][y].Object = Tiles::SEA_WAVES;
+                Landscape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::SEA_WAVES].targetRect.left);
+                Landscape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::SEA_WAVES].targetRect.top);
                 Landscape[x][y].AnimationPhase = static_cast<float>(Bmp[Landscape[x][y].Object].AnimationPhaseCount -
                                              rand() % (Bmp[Landscape[x][y].Object].AnimationPhaseCount) - 1);
 
@@ -1091,19 +1091,19 @@ void CheckPipe(short x, short y)
         Landscape[x - 1][y + 1].Terrain = 4;
     }
 
-    if ((Landscape[x - 1][y].Object == PIPE) && (Landscape[x - 1][y].AnimationPhase == 0)) {
+    if ((Landscape[x - 1][y].Object == Tiles::PIPE) && (Landscape[x - 1][y].AnimationPhase == 0)) {
         CheckPipe(x - 1, y);
     }
 
-    if ((Landscape[x][y - 1].Object == PIPE) && (Landscape[x][y - 1].AnimationPhase == 0)) {
+    if ((Landscape[x][y - 1].Object == Tiles::PIPE) && (Landscape[x][y - 1].AnimationPhase == 0)) {
         CheckPipe(x, y - 1);
     }
 
-    if ((Landscape[x + 1][y].Object == PIPE) && (Landscape[x + 1][y].AnimationPhase == 0)) {
+    if ((Landscape[x + 1][y].Object == Tiles::PIPE) && (Landscape[x + 1][y].AnimationPhase == 0)) {
         CheckPipe(x + 1, y);
     }
 
-    if ((Landscape[x][y + 1].Object == PIPE) && (Landscape[x][y + 1].AnimationPhase == 0)) {
+    if ((Landscape[x][y + 1].Object == Tiles::PIPE) && (Landscape[x][y + 1].AnimationPhase == 0)) {
         CheckPipe(x, y + 1);
     }
 }
@@ -1112,7 +1112,7 @@ void FillPipe()
 {
     for (short y = 0; y < MAX_TILESY; y++)
         for (short x = 0; x < MAX_TILES_X; x++) {
-            if ((Landscape[x][y].Object == PIPE) && (Landscape[x][y].AnimationPhase < Bmp[PIPE].AnimationPhaseCount)) {
+            if ((Landscape[x][y].Object == Tiles::PIPE) && (Landscape[x][y].AnimationPhase < Bmp[Tiles::PIPE].AnimationPhaseCount)) {
                 Landscape[x][y].AnimationPhase = 0;
             }
 
@@ -1120,7 +1120,7 @@ void FillPipe()
                 Landscape[x][y].Terrain = 0;
             }
 
-            if ((Landscape[x][y].Object >= FLOODGATE_1) && (Landscape[x][y].Object <= FLOODGATE_6)) {
+            if ((Landscape[x][y].Object >= Tiles::FLOODGATE_1) && (Landscape[x][y].Object <= Tiles::FLOODGATE_6)) {
                 Landscape[x][y].Object -= 14;
                 Landscape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x][y].Object].targetRect.left);
                 Landscape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x][y].Object].targetRect.top);
@@ -1130,7 +1130,7 @@ void FillPipe()
     // StartRohr finden
     for (short y = 0; y < MAX_TILESY; y++)
         for (short x = 0; x < MAX_TILES_X; x++) {
-            if ((Landscape[x][y].Object >= RIVER_1) && (Landscape[x][y].Object <= FLOODGATE_6)) {
+            if ((Landscape[x][y].Object >= Tiles::RIVER_1) && (Landscape[x][y].Object <= Tiles::FLOODGATE_6)) {
                 if (Landscape[x][y].Terrain == 0) {
                     Landscape[x][y].Terrain = 4;
                 }
@@ -1168,43 +1168,43 @@ void FillPipe()
                 }
             }
 
-            if ((Landscape[x][y].Object != PIPE) || (Landscape[x][y].AnimationPhase >= Bmp[PIPE].AnimationPhaseCount)) {
+            if ((Landscape[x][y].Object != Tiles::PIPE) || (Landscape[x][y].AnimationPhase >= Bmp[Tiles::PIPE].AnimationPhaseCount)) {
                 continue;
             }
 
-            if ((Landscape[x - 1][y].Object >= RIVER_5) && (Landscape[x - 1][y].Object <= RIVER_10)) {
+            if ((Landscape[x - 1][y].Object >= Tiles::RIVER_5) && (Landscape[x - 1][y].Object <= Tiles::RIVER_10)) {
                 Landscape[x - 1][y].Object += 14;
                 Landscape[x - 1][y].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x - 1][y].Object].targetRect.left);
                 Landscape[x - 1][y].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x - 1][y].Object].targetRect.top);
                 CheckPipe(x, y);
-            } else if ((Landscape[x - 1][y].Object >= FLOODGATE_1) && (Landscape[x - 1][y].Object <= FLOODGATE_6)) {
+            } else if ((Landscape[x - 1][y].Object >= Tiles::FLOODGATE_1) && (Landscape[x - 1][y].Object <= Tiles::FLOODGATE_6)) {
                 CheckPipe(x, y);
             }
 
-            if ((Landscape[x][y - 1].Object >= RIVER_5) && (Landscape[x][y - 1].Object <= RIVER_10)) {
+            if ((Landscape[x][y - 1].Object >= Tiles::RIVER_5) && (Landscape[x][y - 1].Object <= Tiles::RIVER_10)) {
                 Landscape[x][y - 1].Object += 14;
                 Landscape[x][y - 1].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x][y - 1].Object].targetRect.left);
                 Landscape[x][y - 1].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x][y - 1].Object].targetRect.top);
                 CheckPipe(x, y);
-            } else if ((Landscape[x][y - 1].Object >= FLOODGATE_1) && (Landscape[x][y - 1].Object <= FLOODGATE_6)) {
+            } else if ((Landscape[x][y - 1].Object >= Tiles::FLOODGATE_1) && (Landscape[x][y - 1].Object <= Tiles::FLOODGATE_6)) {
                 CheckPipe(x, y);
             }
 
-            if ((Landscape[x + 1][y].Object >= RIVER_5) && (Landscape[x + 1][y].Object <= RIVER_10)) {
+            if ((Landscape[x + 1][y].Object >= Tiles::RIVER_5) && (Landscape[x + 1][y].Object <= Tiles::RIVER_10)) {
                 Landscape[x + 1][y].Object += 14;
                 Landscape[x + 1][y].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x + 1][y].Object].targetRect.left);
                 Landscape[x + 1][y].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x + 1][y].Object].targetRect.top);
                 CheckPipe(x, y);
-            } else if ((Landscape[x + 1][y].Object >= FLOODGATE_1) && (Landscape[x + 1][y].Object <= FLOODGATE_6)) {
+            } else if ((Landscape[x + 1][y].Object >= Tiles::FLOODGATE_1) && (Landscape[x + 1][y].Object <= Tiles::FLOODGATE_6)) {
                 CheckPipe(x, y);
             }
 
-            if ((Landscape[x][y + 1].Object >= RIVER_5) && (Landscape[x][y + 1].Object <= RIVER_10)) {
+            if ((Landscape[x][y + 1].Object >= Tiles::RIVER_5) && (Landscape[x][y + 1].Object <= Tiles::RIVER_10)) {
                 Landscape[x][y + 1].Object += 14;
                 Landscape[x][y + 1].ObjectPosOffset.x = static_cast<short>(Bmp[Landscape[x][y + 1].Object].targetRect.left);
                 Landscape[x][y + 1].ObjectPosOffset.y = static_cast<short>(Bmp[Landscape[x][y + 1].Object].targetRect.top);
                 CheckPipe(x, y);
-            } else if ((Landscape[x][y + 1].Object >= FLOODGATE_1) && (Landscape[x][y + 1].Object <= FLOODGATE_6)) {
+            } else if ((Landscape[x][y + 1].Object >= Tiles::FLOODGATE_1) && (Landscape[x][y + 1].Object <= Tiles::FLOODGATE_6)) {
                 CheckPipe(x, y);
             }
         }
@@ -1487,22 +1487,22 @@ void CreateRiver() // Number of rivers and the minimum length
                 } else {
                     // Quellen
                     if (x2 > x1) {
-                        Landscape[x1][y1].Object = RIVER_START_1;
+                        Landscape[x1][y1].Object = Tiles::RIVER_START_1;
                         continue;
                     }
 
                     if (x2 < x1) {
-                        Landscape[x1][y1].Object = RIVER_START_4;
+                        Landscape[x1][y1].Object = Tiles::RIVER_START_4;
                         continue;
                     }
 
                     if (y2 > y1) {
-                        Landscape[x1][y1].Object = RIVER_START_2;
+                        Landscape[x1][y1].Object = Tiles::RIVER_START_2;
                         continue;
                     }
 
                     if (y2 < y1) {
-                        Landscape[x1][y1].Object = RIVER_START_3;
+                        Landscape[x1][y1].Object = Tiles::RIVER_START_3;
                         continue;
                     }
                 }
@@ -1510,54 +1510,54 @@ void CreateRiver() // Number of rivers and the minimum length
                 // Alle Möglichkeiten durchgehen
 
                 if (Landscape[x1][y1].Type == 1) {
-                    Landscape[x1][y1].Object = RIVER_1;
+                    Landscape[x1][y1].Object = Tiles::RIVER_1;
                 }
 
                 if (Landscape[x1][y1].Type == 2) {
-                    Landscape[x1][y1].Object = RIVER_2;
+                    Landscape[x1][y1].Object = Tiles::RIVER_2;
                 }
 
                 if (Landscape[x1][y1].Type == 3) {
-                    Landscape[x1][y1].Object = RIVER_3;
+                    Landscape[x1][y1].Object = Tiles::RIVER_3;
                 }
 
                 if (Landscape[x1][y1].Type == 4) {
-                    Landscape[x1][y1].Object = RIVER_4;
+                    Landscape[x1][y1].Object = Tiles::RIVER_4;
                 }
 
                 if (Landscape[x1][y1].Type == 0) {
                     if ((x0 < x1) && (y0 == y1)) {
                         if (Landscape[x1][y1].Terrain == 2) {
-                            Landscape[x1][y1].Object = RIVER_END_3;    // River end/mouth
+                            Landscape[x1][y1].Object = Tiles::RIVER_END_3;    // River end/mouth
                         } else {
                             if ((x1 < x2) && (y1 == y2)) {
-                                Landscape[x1][y1].Object = RIVER_5;
+                                Landscape[x1][y1].Object = Tiles::RIVER_5;
                             }
 
                             if ((x1 == x2) && (y1 < y2)) {
-                                Landscape[x1][y1].Object = RIVER_7;
+                                Landscape[x1][y1].Object = Tiles::RIVER_7;
                             }
 
                             if ((x1 == x2) && (y1 > y2)) {
-                                Landscape[x1][y1].Object = RIVER_9;
+                                Landscape[x1][y1].Object = Tiles::RIVER_9;
                             }
                         }
                     }
 
                     if ((x0 == x1) && (y0 < y1)) {
                         if (Landscape[x1][y1].Terrain == 2) {
-                            Landscape[x1][y1].Object = RIVER_END_4;    // River end/mouth
+                            Landscape[x1][y1].Object = Tiles::RIVER_END_4;    // River end/mouth
                         } else {
                             if ((x1 < x2) && (y1 == y2)) {
-                                Landscape[x1][y1].Object = RIVER_8;
+                                Landscape[x1][y1].Object = Tiles::RIVER_8;
                             }
 
                             if ((x1 == x2) && (y1 < y2)) {
-                                Landscape[x1][y1].Object = RIVER_6;
+                                Landscape[x1][y1].Object = Tiles::RIVER_6;
                             }
 
                             if ((x1 > x2) && (y1 == y2)) {
-                                Landscape[x1][y1].Object = RIVER_9;
+                                Landscape[x1][y1].Object = Tiles::RIVER_9;
                                 Landscape[x1][y1].ReverseAnimation = true;
                             }
                         }
@@ -1565,18 +1565,18 @@ void CreateRiver() // Number of rivers and the minimum length
 
                     if ((x0 > x1) && (y0 == y1)) {
                         if (Landscape[x1][y1].Terrain == 2) {
-                            Landscape[x1][y1].Object = RIVER_END_1;    // River end/mouth
+                            Landscape[x1][y1].Object = Tiles::RIVER_END_1;    // River end/mouth
                         } else {
                             if ((x1 > x2) && (y1 == y2)) {
-                                Landscape[x1][y1].Object = RIVER_5;
+                                Landscape[x1][y1].Object = Tiles::RIVER_5;
                             }
 
                             if ((x1 == x2) && (y1 < y2)) {
-                                Landscape[x1][y1].Object = RIVER_10;
+                                Landscape[x1][y1].Object = Tiles::RIVER_10;
                             }
 
                             if ((x1 == x2) && (y1 > y2)) {
-                                Landscape[x1][y1].Object = RIVER_8;
+                                Landscape[x1][y1].Object = Tiles::RIVER_8;
                             }
 
                             Landscape[x1][y1].ReverseAnimation = true;
@@ -1585,20 +1585,20 @@ void CreateRiver() // Number of rivers and the minimum length
 
                     if ((x0 == x1) && (y0 > y1)) {
                         if (Landscape[x1][y1].Terrain == 2) {
-                            Landscape[x1][y1].Object = RIVER_END_2;    // River end/mouth
+                            Landscape[x1][y1].Object = Tiles::RIVER_END_2;    // River end/mouth
                         } else {
                             if ((x1 == x2) && (y1 > y2)) {
-                                Landscape[x1][y1].Object = RIVER_6;
+                                Landscape[x1][y1].Object = Tiles::RIVER_6;
                             }
 
                             if ((x1 > x2) && (y1 == y2)) {
-                                Landscape[x1][y1].Object = RIVER_7;
+                                Landscape[x1][y1].Object = Tiles::RIVER_7;
                             }
 
                             Landscape[x1][y1].ReverseAnimation = true;
 
                             if ((x1 < x2) && (y1 == y2)) {
-                                Landscape[x1][y1].Object = RIVER_10;
+                                Landscape[x1][y1].Object = Tiles::RIVER_10;
                                 Landscape[x1][y1].ReverseAnimation = false;
                             }
                         }
@@ -1709,9 +1709,9 @@ void CreatePirateWreck()
         break;
     }
 
-    Landscape[x][y].Object = WRECK_2;
-    Landscape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_2].targetRect.left);
-    Landscape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_2].targetRect.top);
+    Landscape[x][y].Object = Tiles::WRECK_2;
+    Landscape[x][y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::WRECK_2].targetRect.left);
+    Landscape[x][y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::WRECK_2].targetRect.top);
 }
 
 void Treasure()
@@ -1751,14 +1751,14 @@ void Treasure()
 //            lpDDSScape->Unlock(nullptr);
 //            lpDDSSchatzkarte->Unlock(nullptr);
 
-//            rcRectsrc = Bmp[CROSS].sourceRect;
-//            rcRectdes.left = TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2;
-//            rcRectdes.right = rcRectdes.left + Bmp[CROSS].Width;
-//            rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[CROSS].Height / 2;
-//            rcRectdes.bottom = rcRectdes.top + Bmp[CROSS].Height;
+//            rcRectsrc = Bmp[Tiles::CROSS].sourceRect;
+//            rcRectdes.left = TREASUREMAP_WIDTH / 2 - Bmp[Tiles::CROSS].Width / 2;
+//            rcRectdes.right = rcRectdes.left + Bmp[Tiles::CROSS].Width;
+//            rcRectdes.top = TREASUREMAP_HEIGHT / 2 - Bmp[Tiles::CROSS].Height / 2;
+//            rcRectdes.bottom = rcRectdes.top + Bmp[Tiles::CROSS].Height;
 //            lpDDSSchatzkarte->loadFromImage(treasureMap);
-//            s_treasureMapSprite->setPosition(TREASUREMAP_WIDTH / 2 - Bmp[CROSS].Width / 2, rcRectdes.left + Bmp[CROSS].Width);
-//            Renderer::Blit(Bmp[CROSS].Surface, lpDDSSchatzkarte, true);
+//            s_treasureMapSprite->setPosition(TREASUREMAP_WIDTH / 2 - Bmp[Tiles::CROSS].Width / 2, rcRectdes.left + Bmp[Tiles::CROSS].Width);
+//            Renderer::Blit(Bmp[Tiles::CROSS].Surface, lpDDSSchatzkarte, true);
 
 //            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
@@ -1793,43 +1793,43 @@ void Treasure()
 
 void OnRawMaterialsUsed(short Objekt)
 {
-    if (((Objekt == RAW_STONE) && (TwoClicks == RAW_TREE_BRANCH)) || ((Objekt == RAW_TREE_BRANCH) && (TwoClicks == RAW_STONE))) {
-        if (Guy.Inventory[RAW_AXE] < 1) {
-            Guy.Inventory[RAW_STONE]--;
-            Guy.Inventory[RAW_TREE_BRANCH]--;
-            Guy.Inventory[RAW_AXE] = 1;
-            Bmp[BUTTON_CHOP].AnimationPhase = 0;
-            Bmp[BUTTON_BOAT].AnimationPhase = 0;
-            Bmp[BUTTON_PIPE].AnimationPhase = 0;
+    if (((Objekt == Tiles::RAW_STONE) && (TwoClicks == Tiles::RAW_TREE_BRANCH)) || ((Objekt == Tiles::RAW_TREE_BRANCH) && (TwoClicks == Tiles::RAW_STONE))) {
+        if (Guy.Inventory[Tiles::RAW_AXE] < 1) {
+            Guy.Inventory[Tiles::RAW_STONE]--;
+            Guy.Inventory[Tiles::RAW_TREE_BRANCH]--;
+            Guy.Inventory[Tiles::RAW_AXE] = 1;
+            Bmp[Tiles::BUTTON_CHOP].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_BOAT].AnimationPhase = 0;
+            Bmp[Tiles::BUTTON_PIPE].AnimationPhase = 0;
             PapierText = Renderer::DrawText(STRING_BUILD_AXE, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
-        } else if (Guy.Inventory[RAW_HOE] < 1) {
-            Guy.Inventory[RAW_STONE]--;
-            Guy.Inventory[RAW_TREE_BRANCH]--;
-            Guy.Inventory[RAW_HOE] = 1;
-            Bmp[BUTTON_FARM].AnimationPhase = 0;
+        } else if (Guy.Inventory[Tiles::RAW_HOE] < 1) {
+            Guy.Inventory[Tiles::RAW_STONE]--;
+            Guy.Inventory[Tiles::RAW_TREE_BRANCH]--;
+            Guy.Inventory[Tiles::RAW_HOE] = 1;
+            Bmp[Tiles::BUTTON_FARM].AnimationPhase = 0;
             PapierText = Renderer::DrawText(BAUEEGGE, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
         } else {
             PapierText = Renderer::DrawText(STRING_STONE_BRANCH_NOTHING_ELSE, TXTPAPIER, 1);
         }
-    } else if (((Objekt == RAW_LIANA) && (TwoClicks == RAW_TREE_BRANCH)) || ((Objekt == RAW_TREE_BRANCH) && (TwoClicks == RAW_LIANA))) {
-        if (Guy.Inventory[RAW_FISHING_POLE] < 1) {
-            Guy.Inventory[RAW_LIANA]--;
-            Guy.Inventory[RAW_TREE_BRANCH]--;
-            Guy.Inventory[RAW_FISHING_POLE] = 1;
-            Bmp[BUTTON_FISH].AnimationPhase = 0;
+    } else if (((Objekt == Tiles::RAW_LIANA) && (TwoClicks == Tiles::RAW_TREE_BRANCH)) || ((Objekt == Tiles::RAW_TREE_BRANCH) && (TwoClicks == Tiles::RAW_LIANA))) {
+        if (Guy.Inventory[Tiles::RAW_FISHING_POLE] < 1) {
+            Guy.Inventory[Tiles::RAW_LIANA]--;
+            Guy.Inventory[Tiles::RAW_TREE_BRANCH]--;
+            Guy.Inventory[Tiles::RAW_FISHING_POLE] = 1;
+            Bmp[Tiles::BUTTON_FISH].AnimationPhase = 0;
             PapierText = Renderer::DrawText(BAUEANGEL, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
         } else {
             PapierText = Renderer::DrawText(ASTPLUSLIANENICHTS, TXTPAPIER, 1);
         }
-    } else if (((Objekt == RAW_LIANA) && (TwoClicks == RAW_STONE)) || ((Objekt == RAW_STONE) && (TwoClicks == RAW_LIANA))) {
-        if (Guy.Inventory[RAW_SLINGSHOT] < 1) {
-            Guy.Inventory[RAW_LIANA]--;
-            Guy.Inventory[RAW_STONE]--;
-            Guy.Inventory[RAW_SLINGSHOT] = 1;
-            Bmp[BUTTON_SLINGSHOT].AnimationPhase = 0;
+    } else if (((Objekt == Tiles::RAW_LIANA) && (TwoClicks == Tiles::RAW_STONE)) || ((Objekt == Tiles::RAW_STONE) && (TwoClicks == Tiles::RAW_LIANA))) {
+        if (Guy.Inventory[Tiles::RAW_SLINGSHOT] < 1) {
+            Guy.Inventory[Tiles::RAW_LIANA]--;
+            Guy.Inventory[Tiles::RAW_STONE]--;
+            Guy.Inventory[Tiles::RAW_SLINGSHOT] = 1;
+            Bmp[Tiles::BUTTON_SLINGSHOT].AnimationPhase = 0;
             PapierText = Renderer::DrawText(BAUESCHLEUDER, TXTPAPIER, 1);
             PlaySound(Sound::INVENTION, 100);
         } else {
