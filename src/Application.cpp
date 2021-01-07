@@ -218,9 +218,9 @@ void Application::setLandscapeOffset(const int x, const int y)
     s_instance->m_landscapeOffset.y = -y;
 }
 
-void Application::clearScreenContent()
+void Application::clearScreenContent(const sf::Color &color)
 {
-    s_instance->m_screenContent.clear(sf::Color::Transparent);
+    s_instance->m_screenContent.clear(color);
 }
 
 sf::Image Application::landscapeImage()

@@ -20,7 +20,6 @@
 #define MB_LEFT sf::Mouse::Left;
 
 namespace Renderer {
-double pi = 3.1415926535; // pi, was sonst
 
 sf::Texture *createEmptyTexture(const size_t width, const size_t height, const sf::Color &color)
 {
@@ -40,7 +39,7 @@ sf::Texture *createEmptyTexture(const size_t width, const size_t height, const s
 
 }
 
-sf::Texture *loadTexture(const void *data, const size_t size)
+sf::Texture *loadTexture(const void *data, const size_t size, const sf::Color &mask)
 {
     printf("Loading %lu bytes from %p...\n", size, data);
     sf::Image image;
@@ -50,7 +49,7 @@ sf::Texture *loadTexture(const void *data, const size_t size)
     }
     printf("loda image: %d %d\n", image.getSize().x, image.getSize().y);
 
-    image.createMaskFromColor(sf::Color(255, 0, 255));
+    image.createMaskFromColor(mask);
 
     sf::Texture *texture = new sf::Texture;
     texture->loadFromImage(image);
@@ -158,8 +157,6 @@ void BlitToScreen(sf::Texture *from)
     }
 
     if (srcrect.width <= 0 || srcrect.height <= 0) {
-//        puts("!!!!!!!! empty source rect !!!!!!!!");
-//        puts("!!!!!!!! probably the panel !!!!!!!!");
         return;
     }
     sf::Sprite sprite;
@@ -641,15 +638,15 @@ void DrawPanel()
     short diffy = static_cast<short>(Bmp[SUN].targetRect.bottom) - static_cast<short>(Bmp[SUN].targetRect.top) - Bmp[SUN].Height / 2;
     short TagesZeit = (Hours * 10 + Minutes * 10 / 60);
 
-    DrawPicture(static_cast<short>(Bmp[SUN].targetRect.left + diffx * cos(pi - pi * TagesZeit / 120) + diffx),
-                  static_cast<short>(Bmp[SUN].targetRect.top + (-diffy * sin(pi - pi * TagesZeit / 120) + diffy)),
+    DrawPicture(static_cast<short>(Bmp[SUN].targetRect.left + diffx * cos(M_PI - M_PI * TagesZeit / 120) + diffx),
+                  static_cast<short>(Bmp[SUN].targetRect.top + (-diffy * sin(M_PI - M_PI * TagesZeit / 120) + diffy)),
                   SUN, Bmp[SUN].targetRect, false, -1);
 
     // Rettungsring
     short Ringtmp;
 
     if (Chance < 100) {
-        Ringtmp = static_cast<short>(100 * sin(pi / 200 * Chance));
+        Ringtmp = static_cast<short>(100 * sin(M_PI / 200 * Chance));
     } else {
         Ringtmp = 100;
     }
@@ -1037,20 +1034,21 @@ void ShowCredits()
     rcRectdes.right = MAX_SCREEN_X;
     rcRectdes.bottom = MAX_SCREEN_Y;
 
-    Application::clearScreenContent();
+    Application::clearScreenContent(sf::Color(0, 0, 0, 200));
 
     if (CreditsState == 0) {
-        printf("drawing picture %d\n", CreditsNum);;
         DrawPicture(MAX_SCREEN_X / 2 - Bmp[CreditsList[CreditsNum][0].Picture].Width / 2, 100,
                       CreditsList[CreditsNum][0].Picture, rcGesamt, false, -1);
 
         for (int z = 1; z < 10; z++) {
-            if (CreditsList[CreditsNum][z].IsRunning)
+            if (CreditsList[CreditsNum][z].IsRunning) {
                 CreditsBlt(CreditsList[CreditsNum][z].Picture,
-                           static_cast<short>(100 * sin(pi / MAX_SCREEN_Y * (Bmp[CreditsList[CreditsNum][z].Picture].targetRect.top +
+                           static_cast<short>(100 * sin(M_PI / MAX_SCREEN_Y * (Bmp[CreditsList[CreditsNum][z].Picture].targetRect.top +
                                                         Bmp[CreditsList[CreditsNum][z].IsRunning].Height / 2))));
+            }
         }
     } else if (CreditsState == 1) {
+        puts("State 2");
         rcRectsrc = Bmp[CreditsNum].sourceRect;
         rcRectsrc.top += Bmp[CreditsNum].AnimationPhase * Bmp[CreditsNum].Height;
         rcRectsrc.bottom = rcRectsrc.top + Bmp[CreditsNum].Height;
@@ -1139,62 +1137,28 @@ void ShowLogo()
 
 void CreditsBlt(short Bild, short Prozent)
 {
-//    Bmp[Bild].Surface->Lock(nullptr, &ddsd, DDLOCK_WAIT, nullptr);
-//    lpDDSBack->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
+    sf::IntRect srcrect;
+    srcrect.left = Bmp[Bild].sourceRect.left;
+    srcrect.top = Bmp[Bild].sourceRect.top;
+    srcrect.width = Bmp[Bild].sourceRect.right - Bmp[Bild].sourceRect.left;
+    srcrect.height = Bmp[Bild].sourceRect.bottom - Bmp[Bild].sourceRect.top;
 
-//    s_creditsVisible = true;
-//    if (Bild != s_previousCreditsOverlay) {
-//        // TODO: more efficient, two credits?
-//        lpDDSBack->loadFromImage(Bmp[s_previousCreditsOverlay].Surface->copyToImage());
+//    RECT rcRectdes = Bmp[Bild].targetRect;
+//    int dstWidth = rcRectdes.right - rcRectdes.left;
+//    int dstHeight = rcRectdes.bottom - rcRectdes.top;
+//    srcrect.width = std::min(dstWidth, srcrect.width);
+//    srcrect.height = std::min(dstHeight, srcrect.height);
+
+//    assert(srcrect.width > 0 && srcrect.height > 0);
+//    if (srcrect.width <= 0 || srcrect.height <= 0) {
+//        return;
 //    }
-//    sf::Sprite sprite;
-//    sprite.setTexture(*lpDDSBack);
-//    Application::drawSprite(sprite);
-
-    s_creditsSprite->setTexture(*Bmp[Bild].Surface);
-    s_creditsSprite->setPosition(sf::Vector2f(Bmp[Bild].targetRect.left, Bmp[Bild].targetRect.top));
-    s_creditsSprite->setColor(sf::Color(255, 255, 255, 255 * Prozent/100));
-    Application::drawSprite(*s_creditsSprite);
-
-//    for (short x = 0; x < Bmp[Bild].Width; x++)
-//        for (short y = 0; y < Bmp[Bild].Height; y++) {
-//            if ((x + Bmp[Bild].targetRect.left >= MAX_SCREEN_X) || (x + Bmp[Bild].targetRect.left <= 0) ||
-//                    (y + Bmp[Bild].targetRect.top >= MAX_SCREEN_Y) || (y + Bmp[Bild].targetRect.top <= 0)) {
-//                continue;
-//            }
-
-//            Renderer::GetPixel(static_cast<short>(x + Bmp[Bild].targetRect.left),
-////                               static_cast<short>(y + Bmp[Bild].targetRect.top), &ddsd2);
-////            RGBSTRUCT rgbalt = rgbStruct;
-////            Renderer::GetPixel(static_cast<short>(x + Bmp[Bild].sourceRect.left),
-////                               static_cast<short>(y + Bmp[Bild].sourceRect.top), &ddsd);
-
-//            sf::Color rgbStruct = Bmp[Bild].Surface->getPixel(x, y);
-//            if ((rgbStruct.r == 0) && (rgbStruct.g == 0) && (rgbStruct.b == 0)) {
-//                 // idk lol
-//                continue;
-//            }
-
-//            // I think this is right
-//            sf::Color rgbalt = lpDDSBack->getPixel(x, y);
-//            lpDDSBack->setPixel(x, y, sf::Color(
-//                         rgbalt.r + (rgbStruct.r - rgbalt.r) * Prozent / 100,
-//                               rgbalt.g + (rgbStruct.g - rgbalt.g) * Prozent / 100,
-//                               rgbalt.b + (rgbStruct.b - rgbalt.b) * Prozent / 100
-//                                ));
-
-////            PutPixel(static_cast<short>(x + Bmp[Bild].targetRect.left),
-////                     static_cast<short>(y + Bmp[Bild].targetRect.top),
-////                     RGB2DWORD(
-////                         rgbalt.r + (rgbStruct.r - rgbalt.r) * Prozent / 100,
-////                               rgbalt.g + (rgbStruct.g - rgbalt.g) * Prozent / 100,
-////                               rgbalt.b + (rgbStruct.b - rgbalt.b) * Prozent / 100
-////                         ),
-////                     &ddsd2);
-//        }
-
-//    Bmp[Bild].Surface->Unlock(nullptr);
-    //    lpDDSBack->Unlock(nullptr);
+    sf::Sprite sprite;
+    sprite.setTexture(*Bmp[Bild].Surface);
+    sprite.setPosition(sf::Vector2f(Bmp[Bild].targetRect.left, Bmp[Bild].targetRect.top));
+    sprite.setColor(sf::Color(255, 255, 255, 255 * Prozent/100));
+    sprite.setTextureRect(srcrect);
+    Application::drawSprite(sprite);
 }
 
 sf::Image landscapeImage()

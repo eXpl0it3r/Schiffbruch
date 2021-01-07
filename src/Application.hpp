@@ -16,7 +16,7 @@ public:
     void update();
 
     static void drawToScreen(const sf::Drawable &sprite);
-    static void clearScreenContent();
+    static void clearScreenContent(const sf::Color &color = sf::Color::Transparent);
     static void drawSprite(const sf::Sprite &sprite);
 
 
