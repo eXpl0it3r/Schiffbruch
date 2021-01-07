@@ -548,6 +548,11 @@ short CheckKey()
             Bmp[BUTTON_HOUSE_2].AnimationPhase = 0;
             Bmp[BUTTON_HOUSE_3].AnimationPhase = 0;
         }//
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5))
+        {
+            s_GameState = State::OUTRO;
+        }
 #endif
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
