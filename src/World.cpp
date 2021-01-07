@@ -21,13 +21,13 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
     bool keinRohstoff = true;
 
     if (Objekt == -1) {
-        for (short i = 0; i < SPRITE_COUNT; i++) {
+        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
             if (Landscape[x][y].RequiredRawMaterials[i] != 0) {
                 keinRohstoff = false;
             }
         }
     } else {
-        for (short i = 0; i < SPRITE_COUNT; i++) {
+        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
             if (Bmp[Objekt].RequiredRawMaterials[i] != 0) {
                 keinRohstoff = false;
             }
@@ -136,7 +136,7 @@ void AddTime(short h, short m)
             }
         }
 
-    AddResource(GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[Resources::WASSER] - 50 + Guy.ResourceAmount[Resources::NAHRUNG] - 50) / 1000);
+    AddResource(Resources::GESUNDHEIT, (60 * h + m) * (Guy.ResourceAmount[Resources::WASSER] - 50 + Guy.ResourceAmount[Resources::NAHRUNG] - 50) / 1000);
 
     if ((s_GameState == State::GAME) && (!IsInBoat)) {
         for (short i = 0; i <= (60 * h + m); i++) {
