@@ -228,6 +228,10 @@ void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fru
     }
 
     rcRectsrc = Bmp[i].sourceRect;
+    if (i == TENT) {
+        printf("tent: %d, phase: %d, tent: %d\n", i, Phase, TENT);
+    }
+
 
     if (!Reverse) {
         rcRectsrc.top += Phase * (Bmp[i].Height);
