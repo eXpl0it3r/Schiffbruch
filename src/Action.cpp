@@ -676,7 +676,7 @@ void search()
         } else if (IsInBoat) {
             if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::WRECK_1) {
                 if (Guy.Inventory[RAW_TELESCOPE] == 0) {
-                    PapierText = Renderer::DrawText(FERNROHRGEFUNDEN, TXTPAPIER, 1);
+                    PapierText = Renderer::DrawText(STRING_TELESCOPE_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_TELESCOPE] = 1;
                     Bmp[Tiles::BUTTON_LOOK_OUT].AnimationPhase = 0;
                     Guy.Inventory[RAW_HAMMER] = 1;

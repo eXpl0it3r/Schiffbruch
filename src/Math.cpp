@@ -31,45 +31,45 @@ void UpdateMousePosition(short Button, short Push, short xDiff, short yDiff)
     if (Erg.x >= 0 && Erg.y >= 0 && Landscape[Erg.x][Erg.y].Discovered) {
         Text = GetLanguageString(45 + Landscape[Erg.x][Erg.y].Terrain);
 
-        if ((Landscape[Erg.x][Erg.y].Object != -1) && (Landscape[Erg.x][Erg.y].Object != SEA_WAVES)) {
+        if ((Landscape[Erg.x][Erg.y].Object != -1) && (Landscape[Erg.x][Erg.y].Object != Tiles::SEA_WAVES)) {
             Text += " ";
             Text += GetLanguageString(STRING_WITH);
             Text += " ";
 
-            if ((Landscape[Erg.x][Erg.y].Object >= TREE_1) && (Landscape[Erg.x][Erg.y].Object <= TREE_4)) {
+            if ((Landscape[Erg.x][Erg.y].Object >= Tiles::TREE_1) && (Landscape[Erg.x][Erg.y].Object <= Tiles::TREE_4)) {
                 Text += GetLanguageString(STRING_TREE);
-            } else if ((Landscape[Erg.x][Erg.y].Object >= RIVER_1) && (Landscape[Erg.x][Erg.y].Object <= FLOODGATE_6)) {
+            } else if ((Landscape[Erg.x][Erg.y].Object >= Tiles::RIVER_1) && (Landscape[Erg.x][Erg.y].Object <= Tiles::FLOODGATE_6)) {
                 Text += GetLanguageString(FLUSSTEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == BUSH) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::BUSH) {
                 Text += GetLanguageString(STRING_BUSH);
-            } else if (Landscape[Erg.x][Erg.y].Object == TENT) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::TENT) {
                 Text += GetLanguageString(STRING_TENT);
-            } else if (Landscape[Erg.x][Erg.y].Object == FIELD) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::FIELD) {
                 Text += GetLanguageString(STRING_FIELD);
-            } else if (Landscape[Erg.x][Erg.y].Object == BOAT) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::BOAT) {
                 Text += GetLanguageString(BOOTTEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == PIPE) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::PIPE) {
                 Text += GetLanguageString(ROHRTEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == SOS) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::SOS) {
                 Text += GetLanguageString(SOSTEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == HOUSE_1) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::HOUSE_1) {
                 Text += GetLanguageString(HAUS1TEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == HOUSE_2) {
-                Text += GetLanguageString(HAUS2TEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == HOUSE_3) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::HOUSE_2) {
+                Text += GetLanguageString(STRING_TREE_AND_PLATFORM);
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::HOUSE_3) {
                 Text += GetLanguageString(HAUS3TEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == TREE_BIG) {
-                Text += GetLanguageString(BAUMGROSSTEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == BONFIRE) {
-                Text += GetLanguageString(FEUERSTELLETEXT);
-            } else if (Landscape[Erg.x][Erg.y].Object == FIRE) {
-                Text += GetLanguageString(FEUERTEXT);
-            } else if ((Landscape[Erg.x][Erg.y].Object == WRECK_1) || (Landscape[Erg.x][Erg.y].Object == WRECK_2)) {
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::TREE_BIG) {
+                Text += GetLanguageString(STRING_BIG_TREE);
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::BONFIRE) {
+                Text += GetLanguageString(STRING_BONFIRE);
+            } else if (Landscape[Erg.x][Erg.y].Object == Tiles::FIRE) {
+                Text += GetLanguageString(STRING_SMOKE_SIGNAL);
+            } else if ((Landscape[Erg.x][Erg.y].Object == Tiles::WRECK_1) || (Landscape[Erg.x][Erg.y].Object == Tiles::WRECK_2)) {
                 Text += GetLanguageString(WRACKTEXT);
             }
 
-            if ((Landscape[Erg.x][Erg.y].Object >= FIELD) &&
-                    (Landscape[Erg.x][Erg.y].Object <= BONFIRE)) {
+            if ((Landscape[Erg.x][Erg.y].Object >= Tiles::FIELD) &&
+                    (Landscape[Erg.x][Erg.y].Object <= Tiles::BONFIRE)) {
                 // Baufortschrittanzeigen
                 Text += " (";
                 Text += std::to_string((Landscape[Erg.x][Erg.y].ConstructionActionNumber * 100) / Bmp[Landscape[Erg.x][Erg.y].Object].RequiredActionCases);
@@ -292,39 +292,39 @@ void MouseInPanel(short Button, short Push)
                                 Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y);
 
             switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object) {
-            case TENT:
+            case Tiles::TENT:
                 Guy.CurrentAction = Action::TENT;
                 break;
 
-            case FIELD:
+            case Tiles::FIELD:
                 Guy.CurrentAction = Action::FIELD;
                 break;
 
-            case BOAT:
+            case Tiles::BOAT:
                 Guy.CurrentAction = Action::BOAT;
                 break;
 
-            case PIPE:
+            case Tiles::PIPE:
                 Guy.CurrentAction = Action::PIPE;
                 break;
 
-            case SOS:
+            case Tiles::SOS:
                 Guy.CurrentAction = Action::SOS_SIGN;
                 break;
 
-            case HOUSE_1:
+            case Tiles::HOUSE_1:
                 Guy.CurrentAction = Action::HOUSE1;
                 break;
 
-            case HOUSE_2:
+            case Tiles::HOUSE_2:
                 Guy.CurrentAction = Action::HOUSE2;
                 break;
 
-            case HOUSE_3:
+            case Tiles::HOUSE_3:
                 Guy.CurrentAction = Action::HOUSE3;
                 break;
 
-            case BONFIRE:
+            case Tiles::BONFIRE:
                 Guy.CurrentAction = Action::FIREPLACE;
                 break;
             }
@@ -377,13 +377,13 @@ void MouseInPanel(short Button, short Push)
             PlaySound(Sound::CLICK2, 100);
             Guy.ActionNumber = 0;
 
-            if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object == BUSH) ||
-                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object == FIELD)) &&
+            if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BUSH) ||
+                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::FIELD)) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase == Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount - 1)) {
                 Guy.CurrentAction = Action::EAT;
-            } else if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) &&
-                        (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6)) ||
-                       ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == PIPE) &&
+            } else if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::RIVER_1) &&
+                        (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::FLOODGATE_6)) ||
+                       ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::PIPE) &&
                         (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase == 1))) {
                 Guy.CurrentAction = Action::DRINK;
             } else {
@@ -415,12 +415,12 @@ void MouseInPanel(short Button, short Push)
             Guy.ActionNumber = 0;
 
             if (Guy.Inventory[RAW_TREE_TRUNK] <= 10) {
-                if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
-                        (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4)) {
+                if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
+                        (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
                     Guy.CurrentAction = Action::LOG;
-                } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) ||
-                           ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) &&
-                            (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3))) {
+                } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) ||
+                           ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::HOUSE_1) &&
+                            (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::HOUSE_3))) {
                     PapierText = Renderer::DrawText(BAUMZUGROSS, TXTPAPIER, 1);
                 } else {
                     PapierText = Renderer::DrawText(KEINBAUM, TXTPAPIER, 1);
@@ -438,8 +438,8 @@ void MouseInPanel(short Button, short Push)
             PlaySound(Sound::CLICK2, 100);
             Guy.ActionNumber = 0;
 
-            if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) &&
-                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6)) ||
+            if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::RIVER_1) &&
+                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::FLOODGATE_6)) ||
                     (IsInBoat)) {
                 Guy.CurrentAction = Action::FISH;
             } else {
@@ -448,18 +448,18 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_IGNITE].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[Tiles::BUTTON_IGNITE].AnimationPhase != -1)) {
-        Renderer::DrawText(BEGINNANZUENDEN, TXTTEXTFELD, 2);
-        Bmp[Tiles::BUTTON_IGNITE].IsAnimationRunning = true;
+        Renderer::DrawText(STRING_LIGHT_BONFIRE, TXTTEXTFELD, 2);
+        Bmp[BUTTON_IGNITE].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
             Guy.ActionNumber = 0;
 
-            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == BONFIRE) &&
+            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BONFIRE) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
                 Guy.CurrentAction = Action::LIGHT;
             } else {
-                PapierText = Renderer::DrawText(KEINEFEUERST, TXTPAPIER, 1);
+                PapierText = Renderer::DrawText(STRING_ONLY_LIGHT_BONFIRE, TXTPAPIER, 1);
             }
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_LOOK_OUT].targetRect)) &&
@@ -505,13 +505,13 @@ void MouseInPanel(short Button, short Push)
             PlaySound(Sound::CLICK2, 100);
             Guy.ActionNumber = 0;
 
-            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
-                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4)) {
+            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
+                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
                 Guy.ActionNumber = 0;
                 Guy.CurrentAction = Action::SLINGSHOT;
-            } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) ||
-                       ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) &&
-                        (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3))) {
+            } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) ||
+                       ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::HOUSE_1) &&
+                        (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::HOUSE_3))) {
                 PapierText = Renderer::DrawText(BAUMZUGROSS, TXTPAPIER, 1);
             } else {
                 PapierText = Renderer::DrawText(KEINVOGEL, TXTPAPIER, 1);
@@ -546,7 +546,7 @@ void MouseInPanel(short Button, short Push)
                 Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::FIELD;
-            } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object == FIELD)) {
+            } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::FIELD)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -577,7 +577,7 @@ void MouseInPanel(short Button, short Push)
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::TENT;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == TENT)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -611,7 +611,7 @@ void MouseInPanel(short Button, short Push)
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::BOAT;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == BOAT)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BOAT)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -641,7 +641,7 @@ void MouseInPanel(short Button, short Push)
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::PIPE;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == PIPE)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::PIPE)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -671,7 +671,7 @@ void MouseInPanel(short Button, short Push)
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::SOS_SIGN;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == SOS)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::SOS)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -695,15 +695,15 @@ void MouseInPanel(short Button, short Push)
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
 
-            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
-                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4)) {
+            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
+                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
                 PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) {
+            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) {
                 Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::HOUSE1;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_1)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_1)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -727,17 +727,17 @@ void MouseInPanel(short Button, short Push)
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
 
-            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
-                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4)) {
+            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
+                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
                 PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) {
+            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) {
                 PapierText = Renderer::DrawText(NICHTOHNELEITER, TXTPAPIER, 1);
-            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_1) {
+            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_1) {
                 Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::HOUSE2;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_2)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_2)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -749,7 +749,7 @@ void MouseInPanel(short Button, short Push)
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_HOUSE_3].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_HOUSE_3].AnimationPhase != -1)) {
-        std::string text = GetLanguageString(STRING_BEGIN_HOUSE_3);
+        std::string text = GetLanguageString(STRING_BUILD_TREEHOUSE);
         World::RawMaterialsDescriptionString(-1, -1, HOUSE_3);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
@@ -761,18 +761,18 @@ void MouseInPanel(short Button, short Push)
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
 
-            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) &&
-                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_4)) {
+            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
+                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
                 PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
-            } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == TREE_BIG) ||
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_1)) {
+            } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) ||
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_1)) {
                 PapierText = Renderer::DrawText(NICHTOHNEPLATTFORM, TXTPAPIER, 1);
-            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_2) {
+            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_2) {
                 Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::HOUSE3;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -802,7 +802,7 @@ void MouseInPanel(short Button, short Push)
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::FIREPLACE;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
-                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == BONFIRE)) {
+                       (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BONFIRE)) {
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.OriginalPosition = Guy.ScreenPosition;
                 Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x,
@@ -820,8 +820,8 @@ void MouseInPanel(short Button, short Push)
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
 
-            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= FIELD) &&
-                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= BONFIRE)) {
+            if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::FIELD) &&
+                    (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::BONFIRE)) {
                 Guy.ActionNumber = 0;
                 Guy.CurrentAction = Action::DESTROY;
             } else {
