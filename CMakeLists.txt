@@ -7,10 +7,8 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-include_directories(${PROJECT_BINARY_DIR})
-
 option(ENABLE_IPO "Enable link-time optimization, improves speed and memory usage (https://en.wikipedia.org/wiki/Interprocedural_optimization)")
-if (ENABLE_IPO)
+if(ENABLE_IPO)
     include(CheckIPOSupported)
     check_ipo_supported(RESULT IPO_AVAILABLE OUTPUT IPO_ERROR)
     if (IPO_AVAILABLE)
@@ -30,13 +28,14 @@ else()
 endif()
 
 option(ENABLE_SANITIZERS "Enable runtime sanitizing (for development)")
-if (ENABLE_SANITIZERS)
+if(ENABLE_SANITIZERS)
     message("Enabling asan and ubsan")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
 endif()
 
 add_subdirectory(tools/resgen)
+
 add_resource(MISC_BMP "bin/images/Misc.BMP")
 add_resource(PANEL_PNG "bin/images/Panel.png")
 add_resource(GUYANI_BMP "bin/images/GuyAni.bmp")
@@ -79,6 +78,8 @@ add_resource(TRINKEN_WAV "bin/sounds/trinken.wav")
 add_resource(WALD_WAV "bin/sounds/wald.wav")
 add_resource(WOLF_WAV "bin/sounds/wolf.wav")
 
+include_directories(${PROJECT_BINARY_DIR})
+
 add_executable(Schiffbruch
     src/Action.cpp
     src/Application.cpp
@@ -91,6 +92,7 @@ add_executable(Schiffbruch
     src/Routing.cpp
     src/Sound.cpp
     src/World.cpp
+    src/strings.cpp
 
     src/Action.hpp
     src/Application.hpp
@@ -151,8 +153,8 @@ add_executable(Schiffbruch
     ${WOLF_WAV}
 )
 
-target_link_libraries(Schiffbruch PRIVATE sfml-graphics sfml-audio sfml-main dxguid ddraw)
 target_compile_features(Schiffbruch PRIVATE cxx_std_17)
+target_link_libraries(Schiffbruch PRIVATE sfml-graphics sfml-audio sfml-main dxguid ddraw)
 
 # Copy DLLs next to the executable
 if (WIN32 AND BUILD_SHARED_LIBS)
@@ -161,5 +163,4 @@ if (WIN32 AND BUILD_SHARED_LIBS)
 endif()
 
 install(DIRECTORY bin/ DESTINATION ${CMAKE_INSTALL_BINDIR})
-
 install(TARGETS Schiffbruch)

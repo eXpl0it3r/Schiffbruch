@@ -19,6 +19,8 @@
 
 #define MB_LEFT sf::Mouse::Left;
 
+constexpr auto M_PI = 3.14159265358979323846;
+
 namespace Renderer {
 
 sf::Texture *createEmptyTexture(const size_t width, const size_t height, const sf::Color &color)

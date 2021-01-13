@@ -30,14 +30,14 @@ int main(int argc, char *argv[])
     }
 
     // Open outputs
-    const std::string hFilename = inFilename + ".h";
+    const std::string hFilename = inFilename + ".hpp";
     std::ofstream hStream(hFilename);
     if (!hStream.is_open()) {
         std::cerr << "Failed to open " << hFilename << " for writing" << std::endl;
         return 1;
     }
 
-    const std::string cFilename = inFilename + ".c";
+    const std::string cFilename = inFilename + ".cpp";
     std::ofstream cStream(cFilename, std::ios::binary|std::ios::out);
     if (!cStream.is_open()) {
         std::cerr << "Failed to open " << cFilename << " for writing" << std::endl;
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 
     std::string resname = "resource_" + std::regex_replace(inFilename, std::regex("[^A-Za-z0-9]+"), "_");
 
-    // Generate .h
+    // Generate .hpp
     hStream << "#pragma once" << std::endl << std::endl;
     hStream << "// Automatically generated from " << inFilename << std::endl << std::endl;
     hStream << "#ifdef __cplusplus" << std::endl;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
     hStream << "static const unsigned long long " << resname << "_size = " << std::filesystem::file_size(inFilepath) << "ull;" << std::endl;
 
-    // Generate .c
+    // Generate .cpp
     cStream << "// Automatically generated from " << inFilename << std::endl << std::endl;
     cStream << "#include \"" << hFilename << "\"" << std::endl << std::endl;
     cStream << "const unsigned char " << resname << "_data[] = {" << std::endl;
