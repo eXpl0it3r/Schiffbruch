@@ -36,6 +36,13 @@ else()
     add_definitions(-Wno-writable-strings)
 endif()
 
+if(MSVC)
+    add_definitions(/D_USE_MATH_DEFINES)
+    add_definitions(/wd4244 /wd4018 /wd4267 /wd4996 /wd4305 /wd4800 /wd4065)
+
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /fp:fast")
+endif()
+
 option(ENABLE_SANITIZERS "Enable runtime sanitizing (for development)")
 if (ENABLE_SANITIZERS)
     message("Enabling asan and ubsan")
