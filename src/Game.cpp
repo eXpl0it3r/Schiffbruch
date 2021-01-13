@@ -926,7 +926,7 @@ void InitStructs()
     Bmp[Tiles::FLOODGATE_6].targetRect.bottom = Bmp[Tiles::FLOODGATE_6].targetRect.top + Bmp[Tiles::FLOODGATE_6].Height;
 
     // Bauwerke
-    for (i = FIELD; i <= BONFIRE; i++) {
+    for (i = FIELD; i <= Tiles::BONFIRE; i++) {
         Bmp[i].IsAnimationRunning = false;
         Bmp[i].Speed = 0;
         Bmp[i].AnimationPhase = 0;
