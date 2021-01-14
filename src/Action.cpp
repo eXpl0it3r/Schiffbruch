@@ -9,8 +9,8 @@
 #include "State.hpp"
 #include "World.hpp"
 
-namespace Action {
-void handler(short event)
+namespace Actions {
+void handler(Action::Type event)
 {
     if (event != Action::NOTHING) {
         Routing::MarkRoute(false);
@@ -499,10 +499,10 @@ void destroy()
 
         short i = Landscape[Guy.Pos.x][Guy.Pos.y].Object; // Um sich kurz das Objekt zu merken
 
-        if ((i >= HOUSE_1) && (i <= HOUSE_3)) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::TREE_BIG;
+        if ((i >= Tiles::HOUSE_1) && (i <= Tiles::HOUSE_3)) {
+            Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::INVALID;
         } else {
-            Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
+            Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::INVALID;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 0;
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = -1;
@@ -510,7 +510,7 @@ void destroy()
 
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
 
-        if (i == PIPE) {
+        if (i == Action::PIPE) {
             World::FillPipe();
         }
 
@@ -603,13 +603,13 @@ void search()
         }
 
         // Auf Strand und Fluss
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 2) || ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6))) {
-            if (Guy.Inventory[RAW_STONE] < 10) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 2) || ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::RIVER_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::FLOODGATE_6))) {
+            if (Guy.Inventory[Tiles::RAW_STONE] < 10) {
                 PapierText = Renderer::DrawText(ROHSTEINGEFUNDEN, TXTPAPIER, 1);
-                Guy.Inventory[RAW_STONE] += 3;
+                Guy.Inventory[Tiles::RAW_STONE] += 3;
 
-                if (Guy.Inventory[RAW_STONE] > 10) {
-                    Guy.Inventory[RAW_STONE] = 10;
+                if (Guy.Inventory[Tiles::RAW_STONE] > 10) {
+                    Guy.Inventory[Tiles::RAW_STONE] = 10;
                 }
             } else {
                 PapierText = Renderer::DrawText(ROHSTEINZUVIEL, TXTPAPIER, 1);
@@ -619,9 +619,9 @@ void search()
 
             switch (i) {
             case 0:
-                if (Guy.Inventory[RAW_TREE_BRANCH] < 10) {
+                if (Guy.Inventory[Tiles::RAW_TREE_BRANCH] < 10) {
                     PapierText = Renderer::DrawText(ROHASTGEFUNDEN, TXTPAPIER, 1);
-                    Guy.Inventory[RAW_TREE_BRANCH]++;
+                    Guy.Inventory[Tiles::RAW_TREE_BRANCH]++;
                 } else {
                     PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
                 }
@@ -629,24 +629,24 @@ void search()
                 break;
 
             case 1:
-                if (Guy.Inventory[RAW_LEAF] < 10) {
+                if (Guy.Inventory[Tiles::RAW_LEAF] < 10) {
                     PapierText = Renderer::DrawText(STRING_LEAF_FOUND, TXTPAPIER, 1);
-                    Guy.Inventory[RAW_LEAF]++;
+                    Guy.Inventory[Tiles::RAW_LEAF]++;
                 } else {
                     PapierText = Renderer::DrawText(STRING_ALREADY_HAVE_LEAF, TXTPAPIER, 1);
                 }
 
                 break;
             }
-        } else if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_BIG)) ||
-                   ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3))) {
+        } else if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_BIG)) ||
+                   ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::HOUSE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::HOUSE_3))) {
             i = rand() % 3;
 
             switch (i) {
             case 0:
-                if (Guy.Inventory[RAW_TREE_BRANCH] < 10) {
+                if (Guy.Inventory[Tiles::RAW_TREE_BRANCH] < 10) {
                     PapierText = Renderer::DrawText(ROHASTGEFUNDEN, TXTPAPIER, 1);
-                    Guy.Inventory[RAW_TREE_BRANCH]++;
+                    Guy.Inventory[Tiles::RAW_TREE_BRANCH]++;
                 } else {
                     PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
                 }
@@ -654,9 +654,9 @@ void search()
                 break;
 
             case 1:
-                if (Guy.Inventory[RAW_LEAF] < 10) {
+                if (Guy.Inventory[Tiles::RAW_LEAF] < 10) {
                     PapierText = Renderer::DrawText(STRING_LEAF_FOUND, TXTPAPIER, 1);
-                    Guy.Inventory[RAW_LEAF]++;
+                    Guy.Inventory[Tiles::RAW_LEAF]++;
                 } else {
                     PapierText = Renderer::DrawText(STRING_ALREADY_HAVE_LEAF, TXTPAPIER, 1);
                 }
@@ -664,9 +664,9 @@ void search()
                 break;
 
             case 2:
-                if (Guy.Inventory[RAW_LIANA] < 10) {
+                if (Guy.Inventory[Tiles::RAW_LIANA] < 10) {
                     PapierText = Renderer::DrawText(STRING_LIANA_FOUND, TXTPAPIER, 1);
-                    Guy.Inventory[RAW_LIANA]++;
+                    Guy.Inventory[Tiles::RAW_LIANA]++;
                 } else {
                     PapierText = Renderer::DrawText(STRING_LIANA_FULL, TXTPAPIER, 1);
                 }
@@ -675,11 +675,11 @@ void search()
             }
         } else if (IsInBoat) {
             if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::WRECK_1) {
-                if (Guy.Inventory[RAW_TELESCOPE] == 0) {
+                if (Guy.Inventory[Tiles::RAW_TELESCOPE] == 0) {
                     PapierText = Renderer::DrawText(STRING_TELESCOPE_FOUND, TXTPAPIER, 1);
-                    Guy.Inventory[RAW_TELESCOPE] = 1;
+                    Guy.Inventory[Tiles::RAW_TELESCOPE] = 1;
                     Bmp[Tiles::BUTTON_LOOK_OUT].AnimationPhase = 0;
-                    Guy.Inventory[RAW_HAMMER] = 1;
+                    Guy.Inventory[Tiles::RAW_HAMMER] = 1;
                     Bmp[Tiles::BUTTON_HOUSE_1].AnimationPhase = 0;
                     Bmp[Tiles::BUTTON_HOUSE_2].AnimationPhase = 0;
                     Bmp[Tiles::BUTTON_HOUSE_3].AnimationPhase = 0;
@@ -687,11 +687,11 @@ void search()
                     PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
                 }
             } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::WRECK_2) {
-                if (Guy.Inventory[RAW_MAP] == 0) {
+                if (Guy.Inventory[Tiles::RAW_MAP] == 0) {
                     PapierText = Renderer::DrawText(KARTEGEFUNDEN, TXTPAPIER, 1);
-                    Guy.Inventory[RAW_MAP] = 1;
+                    Guy.Inventory[Tiles::RAW_MAP] = 1;
                     Bmp[Tiles::BUTTON_TREASUREMAP].AnimationPhase = 0;
-                    Guy.Inventory[RAW_SHOVEL] = 1;
+                    Guy.Inventory[Tiles::RAW_SHOVEL] = 1;
                     Bmp[Tiles::BUTTON_TREASURE].AnimationPhase = 0;
                 } else {
                     PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
@@ -871,29 +871,29 @@ void log()
         break;
 
     case 9:
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
-        Guy.Inventory[RAW_TREE_TRUNK]++;
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::INVALID;
+        Guy.Inventory[Tiles::RAW_TREE_TRUNK]++;
 
-        if (Guy.Inventory[RAW_TREE_TRUNK] > 10) {
-            Guy.Inventory[RAW_TREE_TRUNK] = 10;
+        if (Guy.Inventory[Tiles::RAW_TREE_TRUNK] > 10) {
+            Guy.Inventory[Tiles::RAW_TREE_TRUNK] = 10;
         }
 
-        Guy.Inventory[RAW_TREE_BRANCH] += 5;
+        Guy.Inventory[Tiles::RAW_TREE_BRANCH] += 5;
 
-        if (Guy.Inventory[RAW_TREE_BRANCH] > 10) {
-            Guy.Inventory[RAW_TREE_BRANCH] = 10;
+        if (Guy.Inventory[Tiles::RAW_TREE_BRANCH] > 10) {
+            Guy.Inventory[Tiles::RAW_TREE_BRANCH] = 10;
         }
 
-        Guy.Inventory[RAW_LEAF] += 5;
+        Guy.Inventory[Tiles::RAW_LEAF] += 5;
 
-        if (Guy.Inventory[RAW_LEAF] > 10) {
-            Guy.Inventory[RAW_LEAF] = 10;
+        if (Guy.Inventory[Tiles::RAW_LEAF] > 10) {
+            Guy.Inventory[Tiles::RAW_LEAF] = 10;
         }
 
-        Guy.Inventory[RAW_LIANA] += 2;
+        Guy.Inventory[Tiles::RAW_LIANA] += 2;
 
-        if (Guy.Inventory[RAW_LIANA] > 10) {
-            Guy.Inventory[RAW_LIANA] = 10;
+        if (Guy.Inventory[Tiles::RAW_LIANA] > 10) {
+            Guy.Inventory[Tiles::RAW_LIANA] = 10;
         }
 
         Guy.CurrentAction = Action::NOTHING;
@@ -1148,14 +1148,14 @@ void light()
 
     case 2:
         Guy.IsActive = true;
-        Guy.AnimationState = GUY_SET_FIRE;
+        Guy.AnimationState = Tiles::GUY_SET_FIRE;
         Guy.ScreenPosition.x += 5;
         World::AddTime(0, 1);
         break;
 
     case 3:
         Guy.IsActive = true;
-        Guy.AnimationState = GUY_WAITING;
+        Guy.AnimationState = Tiles::GUY_WAITING;
         Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::FIRE;
         Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::FIRE].targetRect.left);
         Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::FIRE].targetRect.top);
@@ -1185,20 +1185,20 @@ void lookout()
     switch (Guy.ActionNumber) {
     case 1:
         Guy.IsActive = true;
-        Guy.AnimationState = GUY_LOOK_OUT;
+        Guy.AnimationState = Tiles::GUY_LOOK_OUT;
         World::AddTime(0, 40);
         Chance += 1 + Landscape[Guy.Pos.x][Guy.Pos.y].Height;
         break;
 
     case 2:
         Guy.IsActive = true;
-        Guy.AnimationState = GUY_WAITING;
+        Guy.AnimationState = Tiles::GUY_WAITING;
         World::AddTime(0, 40);
         break;
 
     case 3:
         Guy.IsActive = true;
-        Guy.AnimationState = GUY_LOOK_OUT;
+        Guy.AnimationState = Tiles::GUY_LOOK_OUT;
         World::AddTime(0, 40);
         break;
 
@@ -1226,7 +1226,7 @@ void treasure()
         Guy.ScreenPosition.x -= 5;
         Guy.ScreenPosition.y += 1;
         Guy.IsActive = true;
-        Guy.AnimationState = GUY_SHOVEL;
+        Guy.AnimationState = Tiles::GUY_SHOVEL;
         break;
 
     case 2:
@@ -1240,7 +1240,7 @@ void treasure()
         if (((Guy.Pos.x == SchatzPos.x) && (Guy.Pos.y == SchatzPos.y)) &&
                 (!SchatzGef)) {
             PapierText = Renderer::DrawText(SCHATZGEFUNDEN, TXTPAPIER, 1);
-            Guy.Inventory[RAW_MATCH] = 1;
+            Guy.Inventory[Tiles::RAW_MATCH] = 1;
             Bmp[Tiles::BUTTON_IGNITE].AnimationPhase = 0;
             SchatzGef = true;
         } else {
@@ -1565,13 +1565,13 @@ void day_end()
         PlaySound(Sound::WOLF, 100);
 
         // Falsche Objekte Löschen
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_DOWN_1) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_DOWN_4)) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
-            Guy.Inventory[RAW_TREE_TRUNK]++;
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_DOWN_1) &&
+                (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_DOWN_4)) {
+            Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::INVALID;
+            Guy.Inventory[Tiles::RAW_TREE_TRUNK]++;
 
-            if (Guy.Inventory[RAW_TREE_TRUNK] > 10) {
-                Guy.Inventory[RAW_TREE_TRUNK] = 10;
+            if (Guy.Inventory[Tiles::RAW_TREE_TRUNK] > 10) {
+                Guy.Inventory[Tiles::RAW_TREE_TRUNK] = 10;
             }
         }
 
@@ -1584,7 +1584,7 @@ void day_end()
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
-                Guy.CurrentAction = DEATH;
+                Guy.CurrentAction = Action::DEATH;
                 Hours = 0;
                 Minutes = 0;
             } else {
@@ -1601,7 +1601,7 @@ void day_end()
             Guy.AnimationState = Tiles::GUY_BOAT_WAITING;
             PapierText = Renderer::DrawText(TAGENDE3, TXTPAPIER, 1);
             Guy.ActionNumber = 2;
-            Guy.CurrentAction = DEATH;
+            Guy.CurrentAction = Action::DEATH;
             Hours = 0;
             Minutes = 0;
         } else {
@@ -1611,7 +1611,7 @@ void day_end()
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
-                Guy.CurrentAction = DEATH;
+                Guy.CurrentAction = Action::DEATH;
                 Hours = 0;
                 Minutes = 0;
             } else {

@@ -303,10 +303,10 @@ void ShortRoute(short Zielx, short Ziely)
     // Die Animation gleich anschließend starten
     Guy.IsActive = true;
 
-    if ((IsInBoat) && (Guy.AnimationState != GUY_SWIM)) {
-        Guy.AnimationState = GUY_BOAT_LEFT;
-    } else if (Guy.AnimationState != GUY_SWIM) {
-        Guy.AnimationState = GUY_LEFT;
+    if ((IsInBoat) && (Guy.AnimationState != Tiles::GUY_SWIM)) {
+        Guy.AnimationState = Tiles::GUY_BOAT_LEFT;
+    } else if (Guy.AnimationState != Tiles::GUY_SWIM) {
+        Guy.AnimationState = Tiles::GUY_LEFT;
     }
 
     RoutePunkt = -1;

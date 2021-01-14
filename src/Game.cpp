@@ -110,21 +110,21 @@ void InitStructs()
     }
 
     // Guy
-    for (i = GUY_LEFT; i <= GUY_BELOW; i++) {
+    for (i = Tiles::GUY_LEFT; i <= Tiles::GUY_BELOW; i++) {
         Bmp[i].IsAnimationRunning = false;
         Bmp[i].AnimationPhaseCount = 4;
         Bmp[i].Speed = 30;
         Bmp[i].AnimationPhase = 0;
         Bmp[i].Surface = lpDDSGuyAni;
-        Bmp[i].sourceRect.left = 7 * (i - GUY_LEFT);
-        Bmp[i].sourceRect.right = 7 + 7 * (i - GUY_LEFT);
+        Bmp[i].sourceRect.left = 7 * (i - Tiles::GUY_LEFT);
+        Bmp[i].sourceRect.right = 7 + 7 * (i - Tiles::GUY_LEFT);
         Bmp[i].sourceRect.top = 0;
         Bmp[i].sourceRect.bottom = 18;
         Bmp[i].Width = 7;
         Bmp[i].Height = 18;
     }
 
-    for (i = GUY_SEARCH; i <= GUY_SLINGSHOT; i++) {
+    for (i = Tiles::GUY_SEARCH; i <= Tiles::GUY_SLINGSHOT; i++) {
         Bmp[i].IsAnimationRunning = false;
         Bmp[i].AnimationPhase = 0;
         Bmp[i].Surface = lpDDSGuyAni;
@@ -624,13 +624,13 @@ void InitStructs()
     Bmp[Tiles::GUY_SLINGSHOT].Height = 20;
 
     // Cursor
-    for (i = CURSOR_ARROW; i <= CURSOR_CLOCK; i++) {
+    for (i = Tiles::CURSOR_ARROW; i <= Tiles::CURSOR_CLOCK; i++) {
         Bmp[i].IsAnimationRunning = false;
         Bmp[i].AnimationPhaseCount = 1;
         Bmp[i].Speed = 0;
         Bmp[i].AnimationPhase = 0;
         Bmp[i].Surface = lpDDSCursor;
-        Bmp[i].sourceRect.left = (i - CURSOR_ARROW) * 18;
+        Bmp[i].sourceRect.left = (i - Tiles::CURSOR_ARROW) * 18;
         Bmp[i].sourceRect.top = 0;
         Bmp[i].sourceRect.right = Bmp[i].sourceRect.left + 18;
         Bmp[i].sourceRect.bottom = 18;
@@ -639,7 +639,7 @@ void InitStructs()
     }
 
     // Landschaftsanimationen
-    for (i = SEA_WAVES; i <= FLOODGATE_6; i++) {
+    for (i = Tiles::SEA_WAVES; i <= Tiles::FLOODGATE_6; i++) {
         Bmp[i].IsAnimationRunning = true;
         Bmp[i].AnimationPhaseCount = 7;
         Bmp[i].Speed = 7;
@@ -926,7 +926,7 @@ void InitStructs()
     Bmp[Tiles::FLOODGATE_6].targetRect.bottom = Bmp[Tiles::FLOODGATE_6].targetRect.top + Bmp[Tiles::FLOODGATE_6].Height;
 
     // Bauwerke
-    for (i = FIELD; i <= Tiles::BONFIRE; i++) {
+    for (i = Tiles::FIELD; i <= Tiles::BONFIRE; i++) {
         Bmp[i].IsAnimationRunning = false;
         Bmp[i].Speed = 0;
         Bmp[i].AnimationPhase = 0;
@@ -1076,7 +1076,7 @@ void InitStructs()
     Bmp[Tiles::BONFIRE].RequiredActionCases = 9;
 
     // Allgemein Bäume
-    for (i = TREE_1; i <= TREE_4; i++) {
+    for (i = Tiles::TREE_1; i <= Tiles::TREE_4; i++) {
         Bmp[i].IsAnimationRunning = true;
         Bmp[i].AnimationPhaseCount = 4;
         Bmp[i].Speed = 4;
@@ -1200,7 +1200,7 @@ void InitStructs()
     // Buttons
 
     // StandardBmponsinitialisierung
-    for (i = BUTTON_GRID; i <= BUTTON_DESTROY; i++) {
+    for (i = Tiles::BUTTON_GRID; i <= Tiles::BUTTON_DESTROY; i++) {
         Bmp[i].IsAnimationRunning = false;
         Bmp[i].Surface = lpDDSButtons;
         Bmp[i].AnimationPhaseCount = 1;
@@ -1686,7 +1686,7 @@ void InitStructs()
     Bmp[Tiles::BUTTON_DESTROY].Speed = 5;
 
     // SpzAni
-    for (i = TREE_DOWN_1; i <= TREE_DOWN_4; i++) {
+    for (i = Tiles::TREE_DOWN_1; i <= Tiles::TREE_DOWN_4; i++) {
         Bmp[i].IsAnimationRunning = true;
         Bmp[i].Surface = lpDDSBaum;
         Bmp[i].AnimationPhase = 0;
@@ -2173,24 +2173,24 @@ void InitStructs()
             CreditsList[i][k].Picture = -1;
         }
 
-    CreditsList[0][0].Picture = PROGRAMMING;
+    CreditsList[0][0].Picture = Tiles::PROGRAMMING;
     CreditsList[0][1].IsRunning = true; // nur den hier true setzen, löst dann alles andere aus
-    CreditsList[0][1].Picture = DIRK_PLATE;
-    CreditsList[1][0].Picture = MUSIC;
-    CreditsList[1][1].Picture = HEIKO;
-    CreditsList[2][0].Picture = SOUNDS;
-    CreditsList[2][1].Picture = DIRK_PLATE;
-    CreditsList[3][0].Picture = TEST_PLAYER;
-    CreditsList[3][1].Picture = MATTHIAS;
-    CreditsList[3][2].Picture = TOBIAS;
-    CreditsList[3][3].Picture = SIGRID;
-    CreditsList[4][0].Picture = PATHFINDING;
-    CreditsList[4][1].Picture = JOHN;
-    CreditsList[5][0].Picture = FURTHER_HELP;
-    CreditsList[5][1].Picture = HEIKO;
-    CreditsList[5][2].Picture = GISELA;
-    CreditsList[6][0].Picture = SCHWARZ;
-    CreditsList[6][1].Picture = DPSOFTWARE;
+    CreditsList[0][1].Picture = Tiles::DIRK_PLATE;
+    CreditsList[1][0].Picture = Tiles::MUSIC;
+    CreditsList[1][1].Picture = Tiles::HEIKO;
+    CreditsList[2][0].Picture = Tiles::SOUNDS;
+    CreditsList[2][1].Picture = Tiles::DIRK_PLATE;
+    CreditsList[3][0].Picture = Tiles::TEST_PLAYER;
+    CreditsList[3][1].Picture = Tiles::MATTHIAS;
+    CreditsList[3][2].Picture = Tiles::TOBIAS;
+    CreditsList[3][3].Picture = Tiles::SIGRID;
+    CreditsList[4][0].Picture = Tiles::PATHFINDING;
+    CreditsList[4][1].Picture = Tiles::JOHN;
+    CreditsList[5][0].Picture = Tiles::FURTHER_HELP;
+    CreditsList[5][1].Picture = Tiles::HEIKO;
+    CreditsList[5][2].Picture = Tiles::GISELA;
+    CreditsList[6][0].Picture = Tiles::SCHWARZ;
+    CreditsList[6][1].Picture = Tiles::DPSOFTWARE;
 
     // Textausgabe
     TextBereich[TXTTEXTFELD].HasText = false;
@@ -2231,7 +2231,7 @@ void InitStructs()
         Guy.Inventory[i] = 0;
     }
 
-    CursorTyp = CURSOR_ARROW;
+    CursorTyp = Tiles::CURSOR_ARROW;
     Gitter = false;
     PapierText = -1;
     HauptMenue = 0;
@@ -2415,7 +2415,7 @@ void NewGame(bool neu)
 
         s_GameState = State::INTRO;
         Guy.IsActive = false;
-        Guy.AnimationState = GUY_SHIP;
+        Guy.AnimationState = Tiles::GUY_SHIP;
         Guy.ActionNumber = 0;
         Guy.CurrentAction = Action::INTRO;
     }

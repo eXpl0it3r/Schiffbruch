@@ -31,7 +31,7 @@ void UpdateMousePosition(short Button, short Push, short xDiff, short yDiff)
     if (Erg.x >= 0 && Erg.y >= 0 && Landscape[Erg.x][Erg.y].Discovered) {
         Text = GetLanguageString(45 + Landscape[Erg.x][Erg.y].Terrain);
 
-        if ((Landscape[Erg.x][Erg.y].Object != -1) && (Landscape[Erg.x][Erg.y].Object != Tiles::SEA_WAVES)) {
+        if ((Landscape[Erg.x][Erg.y].Object != Tiles::INVALID) && (Landscape[Erg.x][Erg.y].Object != Tiles::SEA_WAVES)) {
             Text += " ";
             Text += GetLanguageString(STRING_WITH);
             Text += " ";
@@ -89,7 +89,7 @@ void UpdateMousePosition(short Button, short Push, short xDiff, short yDiff)
     if ((Button == 1) && (Push == 0)) {
         Camera.x += xDiff;
         Camera.y += yDiff;
-        CursorTyp = CURSOR_DIRECTION;
+        CursorTyp = Tiles::CURSOR_DIRECTION;
     }
 
     // Wenn Maustaste gedrückt wird
@@ -414,7 +414,7 @@ void MouseInPanel(short Button, short Push)
             PlaySound(Sound::CLICK2, 100);
             Guy.ActionNumber = 0;
 
-            if (Guy.Inventory[RAW_TREE_TRUNK] <= 10) {
+            if (Guy.Inventory[Tiles::RAW_TREE_TRUNK] <= 10) {
                 if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
                         (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
                     Guy.CurrentAction = Action::LOG;
@@ -449,7 +449,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_IGNITE].targetRect)) &&
                (HauptMenue == Menu::ACTION) && (Bmp[Tiles::BUTTON_IGNITE].AnimationPhase != -1)) {
         Renderer::DrawText(STRING_LIGHT_BONFIRE, TXTTEXTFELD, 2);
-        Bmp[BUTTON_IGNITE].IsAnimationRunning = true;
+        Bmp[Tiles::BUTTON_IGNITE].IsAnimationRunning = true;
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
@@ -529,7 +529,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_FARM].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_FARM].AnimationPhase != -1)) {
         std::string text = GetLanguageString(BEGINNFELD);
-        World::RawMaterialsDescriptionString(-1, -1, FIELD);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::FIELD);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -559,7 +559,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_TENT].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_TENT].AnimationPhase != -1)) {
         std::string text = GetLanguageString(BEGINNZELT);
-        World::RawMaterialsDescriptionString(-1, -1, TENT);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::TENT);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -590,7 +590,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_BOAT].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_BOAT].AnimationPhase != -1)) {
         std::string text = GetLanguageString(BEGINNBOOT);
-        World::RawMaterialsDescriptionString(-1, -1, BOAT);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::BOAT);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -624,7 +624,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_PIPE].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_PIPE].AnimationPhase != -1)) {
         std::string text = GetLanguageString(BEGINNROHR);
-        World::RawMaterialsDescriptionString(-1, -1, PIPE);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::PIPE);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -654,7 +654,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_SOS].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_SOS].AnimationPhase != -1)) {
         std::string text = GetLanguageString(STRINGBEGIN_WRITE_SOS);
-        World::RawMaterialsDescriptionString(-1, -1, SOS);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::SOS);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -684,7 +684,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_HOUSE_1].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_HOUSE_1].AnimationPhase != -1)) {
         std::string text = GetLanguageString(BEGINNHAUS1);
-        World::RawMaterialsDescriptionString(-1, -1, HOUSE_1);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::HOUSE_1);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -716,7 +716,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_HOUSE_2].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_HOUSE_2].AnimationPhase != -1)) {
         std::string text = GetLanguageString(BEGINNHAUS2);
-        World::RawMaterialsDescriptionString(-1, -1, HOUSE_2);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::HOUSE_2);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -750,7 +750,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_HOUSE_3].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_HOUSE_3].AnimationPhase != -1)) {
         std::string text = GetLanguageString(STRING_BUILD_TREEHOUSE);
-        World::RawMaterialsDescriptionString(-1, -1, HOUSE_3);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::HOUSE_3);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -785,7 +785,7 @@ void MouseInPanel(short Button, short Push)
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_FIRE].targetRect)) &&
                (HauptMenue == Menu::BUILD) && (Bmp[Tiles::BUTTON_FIRE].AnimationPhase != -1)) {
         std::string text = GetLanguageString(STRING_BEGIN_BONFIRE);
-        World::RawMaterialsDescriptionString(-1, -1, BONFIRE);
+        World::RawMaterialsDescriptionString(-1, -1, Tiles::BONFIRE);
         text += RohString;
         TextBereich[TXTTEXTFELD].HasText = true;
         Renderer::DrawString(text.c_str(), static_cast<short>(TextBereich[TXTTEXTFELD].textRect.left),
@@ -828,8 +828,8 @@ void MouseInPanel(short Button, short Push)
                 PapierText = Renderer::DrawText(STRING_NOTHING_TO_DESTROY, TXTPAPIER, 1);
             }
         }
-    } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[INVENTORY_PAPER].targetRect)) && (HauptMenue == Menu::INVENTORY)) {
-        for (short i = RAW_TREE_BRANCH; i <= RAW_SLINGSHOT; i++) {
+    } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::INVENTORY_PAPER].targetRect)) && (HauptMenue == Menu::INVENTORY)) {
+        for (short i = Tiles::RAW_TREE_BRANCH; i <= Tiles::RAW_SLINGSHOT; i++) {
             if (InRect(MousePosition.x, MousePosition.y, Bmp[i].targetRect) && (Guy.Inventory[i] > 0)) {
                 if ((Button == 0) && (Push == 1)) {
                     if (TwoClicks == -1) {
@@ -841,59 +841,59 @@ void MouseInPanel(short Button, short Push)
                 }
 
                 switch (i) {
-                case RAW_TREE_BRANCH:
+                case Tiles::RAW_TREE_BRANCH:
                     Renderer::DrawText(AST, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_STONE:
+                case Tiles::RAW_STONE:
                     Renderer::DrawText(STEIN, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_AXE:
+                case Tiles::RAW_AXE:
                     Renderer::DrawText(STRING_AXE, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_LEAF:
+                case Tiles::RAW_LEAF:
                     Renderer::DrawText(STRING_LEAF, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_TREE_TRUNK:
+                case Tiles::RAW_TREE_TRUNK:
                     Renderer::DrawText(STAMM, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_HOE:
+                case Tiles::RAW_HOE:
                     Renderer::DrawText(EGGE, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_LIANA:
+                case Tiles::RAW_LIANA:
                     Renderer::DrawText(STRING_LIANA, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_FISHING_POLE:
+                case Tiles::RAW_FISHING_POLE:
                     Renderer::DrawText(ANGEL, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_HAMMER:
+                case Tiles::RAW_HAMMER:
                     Renderer::DrawText(HAMMERTEXT, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_TELESCOPE:
+                case Tiles::RAW_TELESCOPE:
                     Renderer::DrawText(STRING_TELESCOPE, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_MATCH:
+                case Tiles::RAW_MATCH:
                     Renderer::DrawText(STRING_MATCHES, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_SHOVEL:
+                case Tiles::RAW_SHOVEL:
                     Renderer::DrawText(STRING_SHOVEL, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_MAP:
+                case Tiles::RAW_MAP:
                     Renderer::DrawText(STRING_MAP, TXTTEXTFELD, 2);
                     break;
 
-                case RAW_SLINGSHOT:
+                case Tiles::RAW_SLINGSHOT:
                     Renderer::DrawText(STRING_SLINGSHOT, TXTTEXTFELD, 2);
                     break;
                 }
@@ -1295,7 +1295,7 @@ void Animationen()
             }
 
             if (CurrentFrame % i == 0) {
-                if ((j < TREE_DOWN_1) || (j > TREE_DOWN_4) || // Die Baumfällenanimation nur ein mal abspielen
+                if ((j < Tiles::TREE_DOWN_1) || (j > Tiles::TREE_DOWN_4) || // Die Baumfällenanimation nur ein mal abspielen
                         (Landscape[x][y].AnimationPhase != Bmp[j].AnimationPhaseCount - 1)) {
                     Landscape[x][y].AnimationPhase++;
                 }

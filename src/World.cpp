@@ -40,13 +40,13 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
 
     strcat(RohString, " ->");
 
-    for (short i = 0; i < SPRITE_COUNT; i++) {
+    for (short tile = 0; tile < SPRITE_COUNT; tile++) {
         if (Objekt == -1) {
-            if (Landscape[x][y].RequiredRawMaterials[i] == 0) {
+            if (Landscape[x][y].RequiredRawMaterials[tile] == 0) {
                 continue;
             }
         } else {
-            if (Bmp[Objekt].RequiredRawMaterials[i] == 0) {
+            if (Bmp[Objekt].RequiredRawMaterials[tile] == 0) {
                 continue;
             }
         }
@@ -54,7 +54,7 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
         strcat(RohString, " ");
 
         const char *name = "";
-        switch (i) {
+        switch (tile) {
         case Tiles::RAW_TREE_BRANCH:
             name = GetLanguageString(AST);
             break;
@@ -80,9 +80,9 @@ void RawMaterialsDescriptionString(short x, short y, short Objekt)
         strcat(RohString, "=");
 
         if (Objekt == -1) {
-            std::sprintf(TmpString, "%d", Landscape[x][y].RequiredRawMaterials[i]);
+            std::sprintf(TmpString, "%d", Landscape[x][y].RequiredRawMaterials[tile]);
         } else {
-            std::sprintf(TmpString, "%d", Bmp[Objekt].RequiredRawMaterials[i]);
+            std::sprintf(TmpString, "%d", Bmp[Objekt].RequiredRawMaterials[tile]);
         }
 
         strcat(RohString, TmpString);
@@ -106,7 +106,7 @@ void AddTime(short h, short m)
                 Landscape[x][y].FireTimer += float((60 * h + m) * 0.0005);
 
                 if (Landscape[x][y].FireTimer >= 1) {
-                    Landscape[x][y].Object = -1;
+                    Landscape[x][y].Object = Tiles::INVALID;
                     Landscape[x][y].FireTimer = 0;
                     Landscape[x][y].ObjectPosOffset.x = 0;
                     Landscape[x][y].ObjectPosOffset.y = 0;
@@ -255,7 +255,7 @@ void Generate()
             }
 
             // Draw landscape objects (if animations are switched off)
-            if ((!LAnimation) && (Landscape[x][y].Object != -1)) {
+            if ((!LAnimation) && (Landscape[x][y].Object != Tiles::INVALID)) {
                 if ((Landscape[x][y].Object >= Tiles::SEA_WAVES) && (Landscape[x][y].Object <= Tiles::FLOODGATE_6)) {
                     rcRectsrc.left = Bmp[Landscape[x][y].Object].sourceRect.left;
                     rcRectsrc.right = Bmp[Landscape[x][y].Object].sourceRect.right;
@@ -332,10 +332,10 @@ void UpdateButtons()
     if ((Bmp[Tiles::BUTTON_STOP].AnimationPhase == -1) && (((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BOAT) &&
             (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) ||
             ((IsInBoat) &&
-             (((Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1) && (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Object == -1)) ||
-              ((Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1) && (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Object == -1)) ||
-              ((Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1) && (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Object == -1)) ||
-              ((Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1) && (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Object == -1)))))) {
+             (((Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1) && (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Object == Tiles::INVALID)) ||
+              ((Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1) && (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Object == Tiles::INVALID)) ||
+              ((Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1) && (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Object == Tiles::INVALID)) ||
+              ((Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1) && (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Object == Tiles::INVALID)))))) {
         if (Bmp[Tiles::BUTTON_LAY_DOWN].AnimationPhase == -1) {
             Bmp[Tiles::BUTTON_LAY_DOWN].AnimationPhase = 0;
         }
@@ -478,7 +478,7 @@ void Compute(short MinimumSize, short maximumSize)// Size of the island in numbe
                 Landscape[x][y].Walkable = true;
                 Landscape[x][y].Discovered = false;
                 Landscape[x][y].RunningTime = 1;
-                Landscape[x][y].Object = -1;
+                Landscape[x][y].Object = Tiles::INVALID;
                 Landscape[x][y].ReverseAnimation = false;
                 Landscape[x][y].ObjectPosOffset.x = 0;
                 Landscape[x][y].ObjectPosOffset.y = 0;
@@ -1007,7 +1007,7 @@ void CreateSea() // Das Meer und den Strand bestimmen
 
                 if ((Anzahl >= 1) && (Anzahl < 6)) {
                     Landscape[x][y].Terrain = 2;
-                    Landscape[x][y].Object = -1;
+                    Landscape[x][y].Object = Tiles::INVALID;
                     Landscape[x][y].ReverseAnimation = false;
                     Landscape[x][y].Walkable = true;
                     Landscape[x][y].AnimationPhase = -1;
@@ -1016,7 +1016,7 @@ void CreateSea() // Das Meer und den Strand bestimmen
 
                 if (Anzahl >= 6) {
                     Landscape[x][y].Terrain = 3;
-                    Landscape[x][y].Object = -1;
+                    Landscape[x][y].Object = Tiles::INVALID;
                     Landscape[x][y].ReverseAnimation = false;
                     Landscape[x][y].Walkable = false;
                     Landscape[x][y].AnimationPhase = -1;
@@ -1212,8 +1212,8 @@ void FillPipe()
     // Felder auf trockenen Wiesen löschen
     for (short y = 0; y < MAX_TILESY; y++) {
         for (short x = 0; x < MAX_TILES_X; x++) {
-            if ((Landscape[x][y].Object == FIELD) && (Landscape[x][y].Terrain == 0)) {
-                Landscape[x][y].Object = -1;
+            if ((Landscape[x][y].Object == Tiles::FIELD) && (Landscape[x][y].Terrain == 0)) {
+                Landscape[x][y].Object = Tiles::INVALID;
                 Landscape[x][y].ObjectPosOffset.x = 0;
                 Landscape[x][y].ObjectPosOffset.y = 0;
                 Landscape[x][y].AnimationPhase = -1;
@@ -1640,13 +1640,13 @@ void CreateTrees(short percent)
             }
 
             if ((Landscape[x][y].Terrain == 2) && (Landscape[x][y].Type == 0)) { // Only make palm trees at the beach
-                Landscape[x][y].Object = TREE_2;
+                Landscape[x][y].Object = Tiles::TREE_2;
             } else {
                 short r = rand() % 5; // random speicherung
-                Landscape[x][y].Object = TREE_1 + r;
+                Landscape[x][y].Object = Tiles::TREE_1 + r;
 
                 if ((rand() % 50 == 1) || (!hasBigTree)) {
-                    Landscape[x][y].Object = TREE_BIG;
+                    Landscape[x][y].Object = Tiles::TREE_BIG;
                     hasBigTree = true;
                 }
             }
@@ -1656,7 +1656,7 @@ void CreateTrees(short percent)
             Landscape[x][y].ObjectPosOffset.y = Pos.y - static_cast<short>(Bmp[Landscape[x][y].Object].Height);
 
             // Startphase
-            if (Landscape[x][y].Object == BUSH) {
+            if (Landscape[x][y].Object == Tiles::BUSH) {
                 Landscape[x][y].AnimationPhase = static_cast<float>(Bmp[Landscape[x][y].Object].AnimationPhaseCount) - 1;
             } else
                 Landscape[x][y].AnimationPhase = static_cast<float>(Bmp[Landscape[x][y].Object].AnimationPhaseCount -

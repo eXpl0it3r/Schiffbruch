@@ -228,8 +228,8 @@ void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fru
     }
 
     rcRectsrc = Bmp[i].sourceRect;
-    if (i == TENT) {
-        printf("tent: %d, phase: %d, tent: %d\n", i, Phase, TENT);
+    if (i == Tiles::TENT) {
+        printf("tent: %d, phase: %d, tent: %d\n", i, Phase, Tiles::TENT);
     }
 
 
@@ -304,7 +304,7 @@ void DrawObjects()
                               Landscape[x][y].Object, rcPlayingSurface, Landscape[x][y].ReverseAnimation,
                               static_cast<short>(Landscape[x][y].AnimationPhase));
             } else {
-                if ((((Landscape[x][y].Object >= TREE_1) && (Landscape[x][y].Object <= TREE_DOWN_4))) ||
+                if ((((Landscape[x][y].Object >= Tiles::TREE_1) && (Landscape[x][y].Object <= Tiles::TREE_DOWN_4))) ||
                         (Landscape[x][y].Object == Tiles::TREE_BIG) || (Landscape[x][y].Object == Tiles::FIRE) ||
                         (Landscape[x][y].Object == Tiles::WRECK_1) || (Landscape[x][y].Object == Tiles::WRECK_2) ||
                         (Landscape[x][y].Object >= Tiles::TENT)) { // Bäume und Früchte (und alle anderen Objecte) malen
@@ -344,7 +344,7 @@ void DrawObjects()
 void DrawGuy()
 {
     if (IsInBoat) {
-        if (Guy.AnimationState == GUY_SHIP) {
+        if (Guy.AnimationState == Tiles::GUY_SHIP) {
             DrawPicture(Guy.ScreenPosition.x - 30 - Camera.x,
                           Guy.ScreenPosition.y - 28 - Camera.y,
                           Guy.AnimationState, rcPlayingSurface, false, -1);
@@ -450,7 +450,7 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_GRID].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_GRID].targetRect.top),
-                  BUTTON_GRID, rcPanel, false, -1);
+                  Tiles::BUTTON_GRID, rcPanel, false, -1);
 
     // SOUNDknopf
     if ((s_SoundState == 0) || (s_SoundState == -1)) {
@@ -461,7 +461,7 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_SOUND].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_SOUND].targetRect.top),
-                  BUTTON_SOUND, rcPanel, false, -1);
+                  Tiles::BUTTON_SOUND, rcPanel, false, -1);
 
     // ANIMATIONknopf
     if (!LAnimation) {
@@ -472,22 +472,22 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_ANIMATION].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_ANIMATION].targetRect.top),
-                  BUTTON_ANIMATION, rcPanel, false, -1);
+                  Tiles::BUTTON_ANIMATION, rcPanel, false, -1);
 
     // BEENDENknopf
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_END].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_END].targetRect.top),
-                  BUTTON_END, rcPanel, false, -1);
+                  Tiles::BUTTON_END, rcPanel, false, -1);
 
     // NEUknopf
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_NEW].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_NEW].targetRect.top),
-                  BUTTON_NEW, rcPanel, false, -1);
+                  Tiles::BUTTON_NEW, rcPanel, false, -1);
 
     // TAGNEUknopf
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_NEW_DAY].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_NEW_DAY].targetRect.top),
-                  BUTTON_NEW_DAY, rcPanel, false, -1);
+                  Tiles::BUTTON_NEW_DAY, rcPanel, false, -1);
 
     // Aktionsknopf
     if (HauptMenue == Menu::ACTION) {
@@ -498,7 +498,7 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_ACTION].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_ACTION].targetRect.top),
-                  BUTTON_ACTION, rcPanel, false, -1);
+                  Tiles::BUTTON_ACTION, rcPanel, false, -1);
 
     // BauKnopf
     if (HauptMenue == Menu::BUILD) {
@@ -509,7 +509,7 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_CONSTRUCT].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_CONSTRUCT].targetRect.top),
-                  BUTTON_CONSTRUCT, rcPanel, false, -1);
+                  Tiles::BUTTON_CONSTRUCT, rcPanel, false, -1);
 
     // Inventoryknopf
     if (HauptMenue == Menu::INVENTORY) {
@@ -520,34 +520,34 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_INVENTORY].targetRect.left),
                   static_cast<short>(Bmp[Tiles::BUTTON_INVENTORY].targetRect.top),
-                  BUTTON_INVENTORY, rcPanel, false, -1);
+                  Tiles::BUTTON_INVENTORY, rcPanel, false, -1);
 
     // WEITERknopf
     if (Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1)
         DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_CONTINUE].targetRect.left),
                       static_cast<short>(Bmp[Tiles::BUTTON_CONTINUE].targetRect.top),
-                      BUTTON_CONTINUE, rcPanel, false, -1);
+                      Tiles::BUTTON_CONTINUE, rcPanel, false, -1);
 
     // STOPknopf
     if (Bmp[Tiles::BUTTON_STOP].AnimationPhase != -1)
         DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_STOP].targetRect.left),
                       static_cast<short>(Bmp[Tiles::BUTTON_STOP].targetRect.top),
-                      BUTTON_STOP, rcPanel, false, -1);
+                      Tiles::BUTTON_STOP, rcPanel, false, -1);
 
     // ABLEGENknopf
     if (Bmp[Tiles::BUTTON_LAY_DOWN].AnimationPhase != -1)
         DrawPicture(static_cast<short>(Bmp[Tiles::BUTTON_LAY_DOWN].targetRect.left),
                       static_cast<short>(Bmp[Tiles::BUTTON_LAY_DOWN].targetRect.top),
-                      BUTTON_LAY_DOWN, rcPanel, false, -1);
+                      Tiles::BUTTON_LAY_DOWN, rcPanel, false, -1);
 
     // Welches Menü zeichnen?
     switch (HauptMenue) {
     case Menu::ACTION:
-        for (short i = BUTTON_SEARCH; i <= BUTTON_SLINGSHOT; i++) {
+        for (short i = Tiles::BUTTON_SEARCH; i <= Tiles::BUTTON_SLINGSHOT; i++) {
             if (Bmp[i].AnimationPhase == -1) {
                 DrawPicture(static_cast<short>(Bmp[i].targetRect.left),
                               static_cast<short>(Bmp[i].targetRect.top),
-                              BUTTON_QUESTION, rcPanel, false, -1);
+                              Tiles::BUTTON_QUESTION, rcPanel, false, -1);
                 continue;
             }
 
@@ -559,11 +559,11 @@ void DrawPanel()
         break;
 
     case Menu::BUILD:
-        for (short i = BUTTON_TENT; i <= BUTTON_DESTROY; i++) {
+        for (short i = Tiles::BUTTON_TENT; i <= Tiles::BUTTON_DESTROY; i++) {
             if (Bmp[i].AnimationPhase == -1) {
                 DrawPicture(static_cast<short>(Bmp[i].targetRect.left),
                               static_cast<short>(Bmp[i].targetRect.top),
-                              BUTTON_QUESTION, rcPanel, false, -1);
+                              Tiles::BUTTON_QUESTION, rcPanel, false, -1);
                 continue;
             }
 
@@ -577,9 +577,9 @@ void DrawPanel()
     case Menu::INVENTORY:
         DrawPicture(static_cast<short>(Bmp[Tiles::INVENTORY_PAPER].targetRect.left),
                       static_cast<short>(Bmp[Tiles::INVENTORY_PAPER].targetRect.top),
-                      INVENTORY_PAPER, rcPanel, false, -1);
+                      Tiles::INVENTORY_PAPER, rcPanel, false, -1);
 
-        for (short i = RAW_TREE_BRANCH; i <= RAW_SLINGSHOT; i++) {
+        for (short i = Tiles::RAW_TREE_BRANCH; i <= Tiles::RAW_SLINGSHOT; i++) {
             if (Guy.Inventory[i] <= 0) {
                 continue;
             }
@@ -594,19 +594,19 @@ void DrawPanel()
                 if (j < 5) {
                     DrawPicture(static_cast<short>(Bmp[i].targetRect.left) + 20 + j * 4,
                                   static_cast<short>(Bmp[Tiles::ROEMISCH1].targetRect.top),
-                                  ROEMISCH1, rcPanel, false, -1);
+                                  Tiles::ROEMISCH1, rcPanel, false, -1);
                 } else if (j == 5)
                     DrawPicture(static_cast<short>(Bmp[i].targetRect.left) + 23,
                                   static_cast<short>(Bmp[Tiles::ROEMISCH2].targetRect.top),
-                                  ROEMISCH2, rcPanel, false, -1);
+                                  Tiles::ROEMISCH2, rcPanel, false, -1);
                 else if ((j > 5) && (j < 10)) {
                     DrawPicture(static_cast<short>(Bmp[i].targetRect.left) + 20 + j * 4,
                                   static_cast<short>(Bmp[Tiles::ROEMISCH1].targetRect.top),
-                                  ROEMISCH1, rcPanel, false, -1);
+                                  Tiles::ROEMISCH1, rcPanel, false, -1);
                 } else if (j == 10)
                     DrawPicture(static_cast<short>(Bmp[i].targetRect.left) + 43,
                                   static_cast<short>(Bmp[Tiles::ROEMISCH2].targetRect.top),
-                                  ROEMISCH2, rcPanel, false, -1);
+                                  Tiles::ROEMISCH2, rcPanel, false, -1);
             }
         }
 
@@ -644,7 +644,7 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::SUN].targetRect.left + diffx * cos(M_PI - M_PI * TagesZeit / 120) + diffx),
                   static_cast<short>(Bmp[Tiles::SUN].targetRect.top + (-diffy * sin(M_PI - M_PI * TagesZeit / 120) + diffy)),
-                  SUN, Bmp[Tiles::SUN].targetRect, false, -1);
+                  Tiles::SUN, Bmp[Tiles::SUN].targetRect, false, -1);
 
     // Rettungsring
     short Ringtmp;
@@ -661,7 +661,7 @@ void DrawPanel()
 
     DrawPicture(static_cast<short>(Bmp[Tiles::RING].targetRect.left),
                   static_cast<short>(Bmp[Tiles::RING].targetRect.top + Ringtmp),
-                  RING, rcPanel, false, -1);
+                  Tiles::RING, rcPanel, false, -1);
 
     // Die ChanceZahl ausgeben
     HideText(TXTCHANCE);
@@ -966,7 +966,7 @@ void Show()
     }
 
     // Cursor
-    if (CursorTyp == CURSOR_ARROW)
+    if (CursorTyp == Tiles::CURSOR_ARROW)
         DrawPicture(MousePosition.x, MousePosition.y,
                       CursorTyp, rcGesamt, false, -1);
     else

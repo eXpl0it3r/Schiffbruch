@@ -3,9 +3,9 @@
 #include "headers.hpp"
 #include "extern.hpp"
 
-namespace Action {
-// Actions
-enum Actions : short {
+namespace Action
+{
+enum Type : short {
     NOTHING = 0,
     SEARCH = 1,
     EAT = 2,
@@ -38,8 +38,11 @@ enum Actions : short {
     DEATH = 29,
     DAY_RESTART = 30,
 };
+}
 
-void handler(short event);
+namespace Actions {
+
+void handler(Action::Type event);
 
 // Aktionen
 void search(); // Kacheln durchsuchen

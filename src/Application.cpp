@@ -134,7 +134,7 @@ void Application::run()
             Math::Animationen(); // Animationen weiterschalten
 
             if (!Guy.IsActive) { // Aktionen starten
-                Action::handler(Guy.CurrentAction);
+                Actions::handler(Guy.CurrentAction);
             }
 
             Renderer::ShowIntro(); // Bild auffrischen
@@ -160,7 +160,7 @@ void Application::run()
             Math::Animationen(); // Die Animationsphasen weiterschalten
 
             if (!Guy.IsActive) { // Die Aktionen starten
-                Action::handler(Guy.CurrentAction);
+                Actions::handler(Guy.CurrentAction);
             }
 
             Renderer::Show(); // Das Bild zeichnen

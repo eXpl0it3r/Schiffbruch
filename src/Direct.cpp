@@ -305,12 +305,12 @@ void CheckMouse(const Coordinate newMousePos)
     if (TwoClicks == -1) {
         if (Guy.IsActive) {
             if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_STOP].targetRect) && (Bmp[Tiles::BUTTON_STOP].AnimationPhase != -1)) {
-                CursorTyp = CURSOR_ARROW;
+                CursorTyp = Tiles::CURSOR_ARROW;
             } else {
-                CursorTyp = CURSOR_CLOCK;
+                CursorTyp = Tiles::CURSOR_CLOCK;
             }
         } else {
-            CursorTyp = CURSOR_ARROW;
+            CursorTyp = Tiles::CURSOR_ARROW;
         }
     }
 
@@ -355,7 +355,7 @@ void CheckMouse(const Coordinate newMousePos)
     if (PapierText != -1) {
         if (Frage == 0) {
             if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::YES].targetRect)) {
-                CursorTyp = CURSOR_ARROW;
+                CursorTyp = Tiles::CURSOR_ARROW;
 
                 if ((Button == 0) && (Push == 1)) {
                     Frage = 1;
@@ -365,7 +365,7 @@ void CheckMouse(const Coordinate newMousePos)
                     PlaySound(Sound::CLICK2, 100);
                 }
             } else if (Math::InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::NO].targetRect)) {
-                CursorTyp = CURSOR_ARROW;
+                CursorTyp = Tiles::CURSOR_ARROW;
 
                 if ((Button == 0) && (Push == 1)) {
                     Frage = 2;
@@ -434,7 +434,7 @@ short CheckKey()
                 }
             }
 
-            Landscape[Guy.Pos.x - 2][Guy.Pos.y].Object = WRECK_1;
+            Landscape[Guy.Pos.x - 2][Guy.Pos.y].Object = Tiles::WRECK_1;
             Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::WRECK_1].targetRect.left);
             Landscape[Guy.Pos.x - 2][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::WRECK_1].targetRect.top);
 
@@ -455,7 +455,7 @@ short CheckKey()
                 World::ToggleIsInBoat();
             }
 
-            Guy.AnimationState = GUY_LEFT;
+            Guy.AnimationState = Tiles::GUY_LEFT;
             Guy.CurrentAction = Action::NOTHING;
             s_GameState = State::GAME;
             Guy.OriginalPosition = Guy.ScreenPosition;
