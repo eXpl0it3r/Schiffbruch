@@ -170,3 +170,4 @@ target_link_libraries(schiffbruch sfml-system sfml-window sfml-graphics sfml-aud
 
 target_include_directories(schiffbruch PRIVATE miniwin/ ${PROJECT_SOURCE_DIR})
 
+install(TARGETS schiffbruch DESTINATION bin)
