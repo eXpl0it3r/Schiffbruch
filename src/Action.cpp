@@ -9,136 +9,139 @@
 #include "State.hpp"
 #include "World.hpp"
 
-namespace Action {
+namespace Action
+{
 void handler(short event)
 {
-    if (event != Action::NOTHING) {
+    if (event != NOTHING)
+    {
         Routing::MarkRoute(false);
         RouteDestination.x = -1;
         RouteDestination.y = -1;
     }
 
-    switch (event) {
-    case Action::NOTHING:
+    switch (event)
+    {
+    case NOTHING:
         break;
 
-    case Action::SEARCH:
+    case SEARCH:
         search();
         break;
 
-    case Action::EAT:
+    case EAT:
         eat();
         break;
 
-    case Action::DRINK:
+    case DRINK:
         drink();
         break;
 
-    case Action::LOG:
+    case LOG:
         log();
         break;
 
-    case Action::FIELD:
+    case FIELD:
         field();
         break;
 
-    case Action::DAY_END:
+    case DAY_END:
         day_end();
         break;
 
-    case Action::RESCUED:
+    case RESCUED:
         rescued();
         break;
 
-    case Action::TENT:
+    case TENT:
         tent();
         break;
 
-    case Action::SLEEP:
+    case SLEEP:
         sleep();
         break;
 
-    case Action::CANCEL:
+    case CANCEL:
         cancel();
         break;
 
-    case Action::FISH:
+    case FISH:
         fish();
         break;
 
-    case Action::BOAT:
+    case BOAT:
         boat();
         break;
 
-    case Action::UNDOCK:
+    case UNDOCK:
         undock();
         break;
 
-    case Action::DOCK:
+    case DOCK:
         dock();
         break;
 
-    case Action::PIPE:
+    case PIPE:
         pipe();
         break;
 
-    case Action::DESTROY:
+    case DESTROY:
         destroy();
         break;
 
-    case Action::SOS_SIGN:
+    case SOS_SIGN:
         sos();
         break;
 
-    case Action::HOUSE1:
+    case HOUSE1:
         house1();
         break;
 
-    case Action::HOUSE2:
+    case HOUSE2:
         house2();
         break;
 
-    case Action::HOUSE3:
+    case HOUSE3:
         house3();
         break;
 
-    case Action::FIREPLACE:
+    case FIREPLACE:
         fireplace();
         break;
 
-    case Action::LIGHT:
+    case LIGHT:
         light();
         break;
 
-    case Action::LOOKOUT:
+    case LOOKOUT:
         lookout();
         break;
 
-    case Action::TREASURE:
+    case TREASURE:
         treasure();
         break;
 
-    case Action::INTRO:
+    case INTRO:
         intro();
         break;
 
-    case Action::SLINGSHOT:
+    case SLINGSHOT:
         slingshot();
         break;
 
-    case Action::QUIT:
+    case QUIT:
         quit();
         break;
 
-    case Action::RESTART:
+    case RESTART:
         restart();
         break;
 
-    case Action::DAY_RESTART:
+    case DAY_RESTART:
         day_restart();
         break;
 
-    case Action::DEATH:
+    case DEATH:
         death();
         break;
     }
@@ -148,7 +151,8 @@ void intro()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         // Intro Route herstellen
         Guy.IsActive = true;
@@ -159,8 +163,11 @@ void intro()
         RouteStart.y = Guy.Pos.y;
         RouteDestination.y = Guy.Pos.y;
 
-        for (short x = Guy.Pos.x; x < MAX_TILES_X; x++) { // Zielkoordinate für Introroute finden
-            if (Landscape[x][Guy.Pos.y].Terrain != 1) {
+        for (short x = Guy.Pos.x; x < MAX_TILES_X; x++)
+        {
+            // Zielkoordinate für Introroute finden
+            if (Landscape[x][Guy.Pos.y].Terrain != 1)
+            {
                 break;
             }
 
@@ -173,39 +180,41 @@ void intro()
     case 2:
         Guy.ScreenPosition.y -= 10;
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_SHIP_DOWN;
+        Guy.AnimationState = GUY_SHIP_DOWN;
         PlaySound(Sound::SPLAT, 100);
         PlaySound(Sound::CRASH, 100);
         break;
 
     case 3:
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::WRECK_1;
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::WRECK_1].targetRect.left);
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::WRECK_1].targetRect.top);
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = WRECK_1;
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[WRECK_1].targetRect.left);
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[WRECK_1].targetRect.top);
 
         World::ToggleIsInBoat();
         Guy.Pos.x += 2;
         Guy.ScreenPosition.y += 10;
-        Guy.AnimationState = Tiles::GUY_SWIM;
-        Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].x) / 2),
-                            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y) / 2));
+        Guy.AnimationState = GUY_SWIM;
+        Routing::ShortRoute(
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].x) / 2),
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y) / 2));
         break;
 
     case 4:
         StopSound(Sound::SWIM); // Sound hier sofort stoppen
-        Guy.AnimationState = Tiles::GUY_LEFT;
-        Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
-                            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
+        Guy.AnimationState = GUY_LEFT;
+        Routing::ShortRoute(
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
         break;
 
     case 5:
         Guy.OriginalPosition = Guy.ScreenPosition;
         s_GameState = State::GAME;
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         PapierText = Renderer::DrawText(INTROTEXT, TXTPAPIER, 1);
         Game::SaveGame();
         break;
@@ -216,44 +225,59 @@ void restart()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
-    case 1: {
-        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+    switch (Guy.ActionNumber)
+    {
+    case 1:
+        {
+            Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
-        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
-            Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-        } else if (RoutePunkt % 2 == 0) {
-            Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);    // Nur bis zur Mitte der aktuellen Kacheln laufen
-        } else {
-            Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+            {
+                Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+            }
+            else if (RoutePunkt % 2 == 0)
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);
+                // Nur bis zur Mitte der aktuellen Kacheln laufen
+            }
+            else
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            }
+
+            TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
+            break;
         }
-
-        TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
-        break;
-    }
 
     case 2:
         Guy.IsActive = true;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_WAITING;
-        } else {
-            Guy.AnimationState = Tiles::GUY_WAITING;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_WAITING;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_WAITING;
         }
 
         PapierText = Renderer::DrawText(NEUBEGINNEN, TXTPAPIER, 1);
         break;
 
     case 3:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_LEFT;
-        } else {
-            Guy.AnimationState = Tiles::GUY_LEFT;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_LEFT;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_LEFT;
         }
 
-        if (Frage == 1) {
+        if (Frage == 1)
+        {
             Game::NewGame(true);
             return;
         }
@@ -267,52 +291,69 @@ void day_restart()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
-    case 1: {
-        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+    switch (Guy.ActionNumber)
+    {
+    case 1:
+        {
+            Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
-        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
-            Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-        } else if (RoutePunkt % 2 == 0) {
-            Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);    // Nur bis zur Mitte der aktuellen Kacheln laufen
-        } else {
-            Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+            {
+                Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+            }
+            else if (RoutePunkt % 2 == 0)
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);
+                // Nur bis zur Mitte der aktuellen Kacheln laufen
+            }
+            else
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            }
+
+            TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
+            break;
         }
 
-        TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
-        break;
-    }
+    case 2:
+        {
+            Guy.IsActive = true;
 
-    case 2: {
-        Guy.IsActive = true;
+            if (IsInBoat)
+            {
+                Guy.AnimationState = GUY_BOAT_WAITING;
+            }
+            else
+            {
+                Guy.AnimationState = GUY_WAITING;
+            }
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_WAITING;
-        } else {
-            Guy.AnimationState = Tiles::GUY_WAITING;
+            PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
+            break;
         }
 
-        PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
-        break;
-    }
+    case 3:
+        {
+            Guy.CurrentAction = NOTHING;
 
-    case 3: {
-        Guy.CurrentAction = Action::NOTHING;
+            if (IsInBoat)
+            {
+                Guy.AnimationState = GUY_BOAT_LEFT;
+            }
+            else
+            {
+                Guy.AnimationState = GUY_LEFT;
+            }
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_LEFT;
-        } else {
-            Guy.AnimationState = Tiles::GUY_LEFT;
+            if (Frage == 1)
+            {
+                Game::NewGame(false);
+                return;
+            }
+
+            Frage = -1;
+            break;
         }
-
-        if (Frage == 1) {
-            Game::NewGame(false);
-            return;
-        }
-
-        Frage = -1;
-        break;
-    }
     }
 }
 
@@ -320,45 +361,61 @@ void quit()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
-    case 1: {
-        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+    switch (Guy.ActionNumber)
+    {
+    case 1:
+        {
+            Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
-        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
-            Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-        } else if (RoutePunkt % 2 == 0) {
-            Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);    // Nur bis zur Mitte der aktuellen Kacheln laufen
-        } else {
-            Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+            {
+                Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+            }
+            else if (RoutePunkt % 2 == 0)
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);
+                // Nur bis zur Mitte der aktuellen Kacheln laufen
+            }
+            else
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            }
+
+            TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
+            break;
         }
-
-        TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
-        break;
-    }
 
     case 2:
         Guy.IsActive = true;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_WAITING;
-        } else {
-            Guy.AnimationState = Tiles::GUY_WAITING;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_WAITING;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_WAITING;
         }
 
         PapierText = Renderer::DrawText(SPIELVERLASSEN, TXTPAPIER, 1);
         break;
 
     case 3:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_LEFT;
-        } else {
-            Guy.AnimationState = Tiles::GUY_LEFT;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_LEFT;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_LEFT;
         }
 
-        if (Frage == 1) {
-            if (Guy.ResourceAmount[Resources::Health] > 10) {
+        if (Frage == 1)
+        {
+            if (Guy.ResourceAmount[Health] > 10)
+            {
                 Game::SaveGame();
             }
 
@@ -374,23 +431,28 @@ void death()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Guy.IsActive = true;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_WAITING;
-        } else {
-            Guy.AnimationState = Tiles::GUY_WAITING;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_WAITING;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_WAITING;
         }
 
         PapierText = Renderer::DrawText(TOD, TXTPAPIER, 1);
         break;
 
     case 2:
-        if (!IsInBoat) {
+        if (!IsInBoat)
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_LAYING_TENT;
+            Guy.AnimationState = GUY_LAYING_TENT;
         }
 
         break;
@@ -400,10 +462,13 @@ void death()
         Night = false;
         Renderer::Fade(100, 100, 100);
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_DEAD;
-        } else {
-            Guy.AnimationState = Tiles::GUY_DEAD;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_DEAD;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_DEAD;
         }
 
         break;
@@ -411,24 +476,30 @@ void death()
     case 4:
         Guy.IsActive = true;
         Night = true;
-        Guy.AnimationState = Tiles::GUY_WAITING;
+        Guy.AnimationState = GUY_WAITING;
         PapierText = Renderer::DrawText(TAGNEU, TXTPAPIER, 1);
         break;
 
     case 5:
         Night = false;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_LEFT;
-        } else {
-            Guy.AnimationState = Tiles::GUY_LEFT;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_LEFT;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_LEFT;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
 
-        if (Frage == 2) {
+        if (Frage == 2)
+        {
             s_GameState = State::OUTRO;
-        } else {
+        }
+        else
+        {
             Game::NewGame(false);
         }
 
@@ -441,32 +512,36 @@ void cancel()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.x = Guy.ScreenPosition.x;
         Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y = Guy.ScreenPosition.y;
 
-        Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
-                            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
+        Routing::ShortRoute(
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
         break;
 
     case 2:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void destroy()
 {
-    if (Guy.ActionNumber == 0) {
-        Guy.OriginalPosition = Guy.ScreenPosition;    // Die Originalposition merken
+    if (Guy.ActionNumber == 0)
+    {
+        Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
                             + Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width + 4,
@@ -477,49 +552,55 @@ void destroy()
     case 2:
     case 4:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_CHOP;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_CHOP;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 5);
         break;
 
     case 3:
     case 5:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_BEAT;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_BEAT;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 5);
         break;
 
-    case 6: {
-        if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::SOS) {
-            Chance -= 0.1f;
+    case 6:
+        {
+            if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == SOS)
+            {
+                Chance -= 0.1f;
+            }
+
+            short i = Landscape[Guy.Pos.x][Guy.Pos.y].Object; // Um sich kurz das Objekt zu merken
+
+            if ((i >= HOUSE_1) && (i <= HOUSE_3))
+            {
+                Landscape[Guy.Pos.x][Guy.Pos.y].Object = TREE_BIG;
+            }
+            else
+            {
+                Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = -1;
+            }
+
+            Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+
+            if (i == PIPE)
+            {
+                World::FillPipe();
+            }
+
+            Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+            break;
         }
-
-        short i = Landscape[Guy.Pos.x][Guy.Pos.y].Object; // Um sich kurz das Objekt zu merken
-
-        if ((i >= HOUSE_1) && (i <= HOUSE_3)) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::TREE_BIG;
-        } else {
-            Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
-            Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
-            Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 0;
-            Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = -1;
-        }
-
-        Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
-
-        if (i == PIPE) {
-            World::FillPipe();
-        }
-
-        Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-        break;
-    }
 
     case 7:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
@@ -529,35 +610,43 @@ void search()
     Coordinate target;
     short i;
 
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
-    while (true) {
+    while (true)
+    {
         target.x = Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + rand() % TILE_SIZE_X;
         target.y = Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + rand() % TILE_SIZE_Y;
         Coordinate Erg = Renderer::GetTile(target.x, target.y);
 
-        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
-            break;    // Wenn das gefundene Ziel in der Kachel, dann fertig
+        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+        {
+            break; // Wenn das gefundene Ziel in der Kachel, dann fertig
         }
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
     case 3:
     case 5:
     case 7:
-        if (IsInBoat) {
-            if (Guy.ActionNumber == 1) {
+        if (IsInBoat)
+        {
+            if (Guy.ActionNumber == 1)
+            {
                 Guy.IsActive = true;
                 Guy.ScreenPosition.y -= 2;
-                Guy.AnimationState = Tiles::GUY_DIVING_1;
+                Guy.AnimationState = GUY_DIVING_1;
                 PlaySound(Sound::SPLAT, 100);
             }
-        } else {
+        }
+        else
+        {
             Routing::ShortRoute(target.x, target.y);
         }
 
@@ -569,23 +658,28 @@ void search()
     case 8:
         Guy.IsActive = true;
 
-        if (IsInBoat) {
-            if (Guy.ActionNumber == 2) {
+        if (IsInBoat)
+        {
+            if (Guy.ActionNumber == 2)
+            {
                 Guy.ScreenPosition.y += 5;
             }
 
-            Guy.AnimationState = Tiles::GUY_DIVING_2;
-        } else {
-            Guy.AnimationState = Tiles::GUY_SEARCH;
+            Guy.AnimationState = GUY_DIVING_2;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_SEARCH;
         }
 
         World::AddTime(0, 4);
         break;
 
     case 9:
-        if (IsInBoat) {
+        if (IsInBoat)
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_DIVING_3;
+            Guy.AnimationState = GUY_DIVING_3;
             PlaySound(Sound::SPLAT, 100);
         }
 
@@ -598,128 +692,175 @@ void search()
     case 11:
         Guy.IsActive = true;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_LEFT;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_LEFT;
         }
 
         // Auf Strand und Fluss
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 2) || ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6))) {
-            if (Guy.Inventory[RAW_STONE] < 10) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 2) || ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= RIVER_1) && (
+            Landscape[Guy.Pos.x][Guy.Pos.y].Object <= FLOODGATE_6)))
+        {
+            if (Guy.Inventory[RAW_STONE] < 10)
+            {
                 PapierText = Renderer::DrawText(ROHSTEINGEFUNDEN, TXTPAPIER, 1);
                 Guy.Inventory[RAW_STONE] += 3;
 
-                if (Guy.Inventory[RAW_STONE] > 10) {
+                if (Guy.Inventory[RAW_STONE] > 10)
+                {
                     Guy.Inventory[RAW_STONE] = 10;
                 }
-            } else {
+            }
+            else
+            {
                 PapierText = Renderer::DrawText(ROHSTEINZUVIEL, TXTPAPIER, 1);
             }
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BUSH) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == BUSH)
+        {
             i = rand() % 2;
 
-            switch (i) {
+            switch (i)
+            {
             case 0:
-                if (Guy.Inventory[RAW_TREE_BRANCH] < 10) {
+                if (Guy.Inventory[RAW_TREE_BRANCH] < 10)
+                {
                     PapierText = Renderer::DrawText(ROHASTGEFUNDEN, TXTPAPIER, 1);
                     Guy.Inventory[RAW_TREE_BRANCH]++;
-                } else {
+                }
+                else
+                {
                     PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
                 }
 
                 break;
 
             case 1:
-                if (Guy.Inventory[RAW_LEAF] < 10) {
+                if (Guy.Inventory[RAW_LEAF] < 10)
+                {
                     PapierText = Renderer::DrawText(STRING_LEAF_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_LEAF]++;
-                } else {
+                }
+                else
+                {
                     PapierText = Renderer::DrawText(STRING_ALREADY_HAVE_LEAF, TXTPAPIER, 1);
                 }
 
                 break;
             }
-        } else if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_BIG)) ||
-                   ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3))) {
+        }
+        else if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <=
+                TREE_BIG)) ||
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= HOUSE_1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= HOUSE_3))
+        )
+        {
             i = rand() % 3;
 
-            switch (i) {
+            switch (i)
+            {
             case 0:
-                if (Guy.Inventory[RAW_TREE_BRANCH] < 10) {
+                if (Guy.Inventory[RAW_TREE_BRANCH] < 10)
+                {
                     PapierText = Renderer::DrawText(ROHASTGEFUNDEN, TXTPAPIER, 1);
                     Guy.Inventory[RAW_TREE_BRANCH]++;
-                } else {
+                }
+                else
+                {
                     PapierText = Renderer::DrawText(ROHASTZUVIEL, TXTPAPIER, 1);
                 }
 
                 break;
 
             case 1:
-                if (Guy.Inventory[RAW_LEAF] < 10) {
+                if (Guy.Inventory[RAW_LEAF] < 10)
+                {
                     PapierText = Renderer::DrawText(STRING_LEAF_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_LEAF]++;
-                } else {
+                }
+                else
+                {
                     PapierText = Renderer::DrawText(STRING_ALREADY_HAVE_LEAF, TXTPAPIER, 1);
                 }
 
                 break;
 
             case 2:
-                if (Guy.Inventory[RAW_LIANA] < 10) {
+                if (Guy.Inventory[RAW_LIANA] < 10)
+                {
                     PapierText = Renderer::DrawText(STRING_LIANA_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_LIANA]++;
-                } else {
+                }
+                else
+                {
                     PapierText = Renderer::DrawText(STRING_LIANA_FULL, TXTPAPIER, 1);
                 }
 
                 break;
             }
-        } else if (IsInBoat) {
-            if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::WRECK_1) {
-                if (Guy.Inventory[RAW_TELESCOPE] == 0) {
+        }
+        else if (IsInBoat)
+        {
+            if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == WRECK_1)
+            {
+                if (Guy.Inventory[RAW_TELESCOPE] == 0)
+                {
                     PapierText = Renderer::DrawText(STRING_TELESCOPE_FOUND, TXTPAPIER, 1);
                     Guy.Inventory[RAW_TELESCOPE] = 1;
-                    Bmp[Tiles::BUTTON_LOOK_OUT].AnimationPhase = 0;
+                    Bmp[BUTTON_LOOK_OUT].AnimationPhase = 0;
                     Guy.Inventory[RAW_HAMMER] = 1;
-                    Bmp[Tiles::BUTTON_HOUSE_1].AnimationPhase = 0;
-                    Bmp[Tiles::BUTTON_HOUSE_2].AnimationPhase = 0;
-                    Bmp[Tiles::BUTTON_HOUSE_3].AnimationPhase = 0;
-                } else {
+                    Bmp[BUTTON_HOUSE_1].AnimationPhase = 0;
+                    Bmp[BUTTON_HOUSE_2].AnimationPhase = 0;
+                    Bmp[BUTTON_HOUSE_3].AnimationPhase = 0;
+                }
+                else
+                {
                     PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
                 }
-            } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::WRECK_2) {
-                if (Guy.Inventory[RAW_MAP] == 0) {
+            }
+            else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == WRECK_2)
+            {
+                if (Guy.Inventory[RAW_MAP] == 0)
+                {
                     PapierText = Renderer::DrawText(KARTEGEFUNDEN, TXTPAPIER, 1);
                     Guy.Inventory[RAW_MAP] = 1;
-                    Bmp[Tiles::BUTTON_TREASUREMAP].AnimationPhase = 0;
+                    Bmp[BUTTON_TREASUREMAP].AnimationPhase = 0;
                     Guy.Inventory[RAW_SHOVEL] = 1;
-                    Bmp[Tiles::BUTTON_TREASURE].AnimationPhase = 0;
-                } else {
+                    Bmp[BUTTON_TREASURE].AnimationPhase = 0;
+                }
+                else
+                {
                     PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
                 }
-            } else {
+            }
+            else
+            {
                 PapierText = Renderer::DrawText(NICHTSGEFUNDEN2, TXTPAPIER, 1);
             }
-        } else {
+        }
+        else
+        {
             PapierText = Renderer::DrawText(NICHTSGEFUNDEN, TXTPAPIER, 1);
         }
 
         break;
 
     case 12:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void eat()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
                             + Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2,
@@ -730,8 +871,8 @@ void eat()
     case 2:
     case 3:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_EAT;
-        World::AddResource(Resources::Food, 15);
+        Guy.AnimationState = GUY_EAT;
+        World::AddResource(Food, 15);
         World::AddTime(0, 2);
         break;
 
@@ -741,20 +882,22 @@ void eat()
         break;
 
     case 5:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void slingshot()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
                             + Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2 - 14,
@@ -764,7 +907,7 @@ void slingshot()
 
     case 2:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_SLINGSHOT;
+        Guy.AnimationState = GUY_SLINGSHOT;
         Guy.ScreenPosition.x += 5;
         World::AddTime(0, 2);
         PlaySound(Sound::SLINGSHOT, 100);
@@ -780,8 +923,8 @@ void slingshot()
 
     case 4:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_SEARCH;
-        World::AddResource(Resources::Food, 5);
+        Guy.AnimationState = GUY_SEARCH;
+        World::AddResource(Food, 5);
         World::AddTime(0, 20);
         break;
 
@@ -790,20 +933,22 @@ void slingshot()
         break;
 
     case 6:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void drink()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Routing::ShortRoute(Guy.ScreenPosition.x - 4,
                             Guy.ScreenPosition.y - 2);
@@ -812,8 +957,8 @@ void drink()
     case 2:
     case 3:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_DRINK;
-        World::AddResource(Resources::Water, 30);
+        Guy.AnimationState = GUY_DRINK;
+        World::AddResource(Water, 30);
         World::AddTime(0, 3);
         break;
 
@@ -822,20 +967,22 @@ void drink()
         break;
 
     case 5:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void log()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
                             + Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2 + 9,
@@ -849,22 +996,23 @@ void log()
     case 5:
     case 6:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_CHOP;
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Guy.AnimationState = GUY_CHOP;
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 10);
         break;
 
-    case 7: {
-        Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_WAITING;
-        short i = Landscape[Guy.Pos.x][Guy.Pos.y].Object + (Tiles::TREE_DOWN_1 - Tiles::TREE_1);
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = i;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x -= 17;
-        PlaySound(Sound::TIMBER, 100);
-        break;
-    }
+    case 7:
+        {
+            Guy.IsActive = true;
+            Guy.AnimationState = GUY_WAITING;
+            short i = Landscape[Guy.Pos.x][Guy.Pos.y].Object + (TREE_DOWN_1 - TREE_1);
+            Landscape[Guy.Pos.x][Guy.Pos.y].Object = i;
+            Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
+            Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x -= 17;
+            PlaySound(Sound::TIMBER, 100);
+            break;
+        }
 
     case 8:
         Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
@@ -874,96 +1022,103 @@ void log()
         Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
         Guy.Inventory[RAW_TREE_TRUNK]++;
 
-        if (Guy.Inventory[RAW_TREE_TRUNK] > 10) {
+        if (Guy.Inventory[RAW_TREE_TRUNK] > 10)
+        {
             Guy.Inventory[RAW_TREE_TRUNK] = 10;
         }
 
         Guy.Inventory[RAW_TREE_BRANCH] += 5;
 
-        if (Guy.Inventory[RAW_TREE_BRANCH] > 10) {
+        if (Guy.Inventory[RAW_TREE_BRANCH] > 10)
+        {
             Guy.Inventory[RAW_TREE_BRANCH] = 10;
         }
 
         Guy.Inventory[RAW_LEAF] += 5;
 
-        if (Guy.Inventory[RAW_LEAF] > 10) {
+        if (Guy.Inventory[RAW_LEAF] > 10)
+        {
             Guy.Inventory[RAW_LEAF] = 10;
         }
 
         Guy.Inventory[RAW_LIANA] += 2;
 
-        if (Guy.Inventory[RAW_LIANA] > 10) {
+        if (Guy.Inventory[RAW_LIANA] > 10)
+        {
             Guy.Inventory[RAW_LIANA] = 10;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void fish()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
-        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object) {
-        case Tiles::RIVER_1:
+        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object)
+        {
+        case RIVER_1:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 35,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
             break;
 
-        case Tiles::RIVER_2:
+        case RIVER_2:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 19,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
             break;
 
-        case Tiles::RIVER_3:
+        case RIVER_3:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 22,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 20);
             break;
 
-        case Tiles::RIVER_4:
+        case RIVER_4:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 34,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 23);
             break;
 
-        case Tiles::RIVER_6:
-        case Tiles::RIVER_7:
-        case Tiles::RIVER_END_2:
-        case Tiles::RIVER_START_2:
-        case Tiles::FLOODGATE_2:
-        case Tiles::FLOODGATE_3:
+        case RIVER_6:
+        case RIVER_7:
+        case RIVER_END_2:
+        case RIVER_START_2:
+        case FLOODGATE_2:
+        case FLOODGATE_3:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 34,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 33);
             break;
 
-        case Tiles::RIVER_5:
-        case Tiles::RIVER_9:
-        case Tiles::RIVER_END_1:
-        case Tiles::RIVER_START_1:
-        case Tiles::FLOODGATE_1:
-        case Tiles::FLOODGATE_5:
+        case RIVER_5:
+        case RIVER_9:
+        case RIVER_END_1:
+        case RIVER_START_1:
+        case FLOODGATE_1:
+        case FLOODGATE_5:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 20,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 33);
             break;
 
-        case Tiles::RIVER_8:
-        case Tiles::RIVER_END_4:
-        case Tiles::RIVER_START_3:
-        case Tiles::FLOODGATE_4:
+        case RIVER_8:
+        case RIVER_END_4:
+        case RIVER_START_3:
+        case FLOODGATE_4:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 22,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
             break;
 
-        case Tiles::RIVER_10:
-        case Tiles::RIVER_END_3:
-        case Tiles::RIVER_START_4:
-        case Tiles::FLOODGATE_6:
+        case RIVER_10:
+        case RIVER_END_3:
+        case RIVER_START_4:
+        case FLOODGATE_6:
             Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + 32,
                                 Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + 26);
             break;
@@ -975,46 +1130,48 @@ void fish()
         Guy.IsActive = true;
         PlaySound(Sound::FISH, 100);
 
-        if (IsInBoat) {
+        if (IsInBoat)
+        {
             Guy.ScreenPosition.y -= 2;
-            Guy.AnimationState = Tiles::GUY_BOAT_FISHING_1;
+            Guy.AnimationState = GUY_BOAT_FISHING_1;
         }
 
-        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object) {
-        case Tiles::RIVER_1:
-        case Tiles::RIVER_6:
-        case Tiles::RIVER_7:
-        case Tiles::RIVER_END_2:
-        case Tiles::RIVER_START_2:
-        case Tiles::FLOODGATE_2:
-        case Tiles::FLOODGATE_3:
-            Guy.AnimationState = Tiles::GUY_FISHING_LEFT_1;
+        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object)
+        {
+        case RIVER_1:
+        case RIVER_6:
+        case RIVER_7:
+        case RIVER_END_2:
+        case RIVER_START_2:
+        case FLOODGATE_2:
+        case FLOODGATE_3:
+            Guy.AnimationState = GUY_FISHING_LEFT_1;
             break;
 
-        case Tiles::RIVER_2:
-        case Tiles::RIVER_5:
-        case Tiles::RIVER_9:
-        case Tiles::RIVER_END_1:
-        case Tiles::RIVER_START_1:
-        case Tiles::FLOODGATE_1:
-        case Tiles::FLOODGATE_5:
-            Guy.AnimationState = Tiles::GUY_FISHING_ABOVE_1;
+        case RIVER_2:
+        case RIVER_5:
+        case RIVER_9:
+        case RIVER_END_1:
+        case RIVER_START_1:
+        case FLOODGATE_1:
+        case FLOODGATE_5:
+            Guy.AnimationState = GUY_FISHING_ABOVE_1;
             break;
 
-        case Tiles::RIVER_3:
-        case Tiles::RIVER_8:
-        case Tiles::RIVER_END_4:
-        case Tiles::RIVER_START_3:
-        case Tiles::FLOODGATE_4:
-            Guy.AnimationState = Tiles::GUY_FISHING_RIGHT_1;
+        case RIVER_3:
+        case RIVER_8:
+        case RIVER_END_4:
+        case RIVER_START_3:
+        case FLOODGATE_4:
+            Guy.AnimationState = GUY_FISHING_RIGHT_1;
             break;
 
-        case Tiles::RIVER_4:
-        case Tiles::RIVER_10:
-        case Tiles::RIVER_END_3:
-        case Tiles::RIVER_START_4:
-        case Tiles::FLOODGATE_6:
-            Guy.AnimationState = Tiles::GUY_FISHING_BELOW_1;
+        case RIVER_4:
+        case RIVER_10:
+        case RIVER_END_3:
+        case RIVER_START_4:
+        case FLOODGATE_6:
+            Guy.AnimationState = GUY_FISHING_BELOW_1;
             break;
         }
 
@@ -1026,94 +1183,98 @@ void fish()
     case 6:
         Guy.IsActive = true;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_FISHING_2;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_FISHING_2;
         }
 
-        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object) {
-        case Tiles::RIVER_1:
-        case Tiles::RIVER_6:
-        case Tiles::RIVER_7:
-        case Tiles::RIVER_END_2:
-        case Tiles::RIVER_START_2:
-        case Tiles::FLOODGATE_2:
-        case Tiles::FLOODGATE_3:
-            Guy.AnimationState = Tiles::GUY_FISHING_LEFT_2;
+        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object)
+        {
+        case RIVER_1:
+        case RIVER_6:
+        case RIVER_7:
+        case RIVER_END_2:
+        case RIVER_START_2:
+        case FLOODGATE_2:
+        case FLOODGATE_3:
+            Guy.AnimationState = GUY_FISHING_LEFT_2;
             break;
 
-        case Tiles::RIVER_2:
-        case Tiles::RIVER_5:
-        case Tiles::RIVER_9:
-        case Tiles::RIVER_END_1:
-        case Tiles::RIVER_START_1:
-        case Tiles::FLOODGATE_1:
-        case Tiles::FLOODGATE_5:
-            Guy.AnimationState = Tiles::GUY_FISHING_ABOVE_2;
+        case RIVER_2:
+        case RIVER_5:
+        case RIVER_9:
+        case RIVER_END_1:
+        case RIVER_START_1:
+        case FLOODGATE_1:
+        case FLOODGATE_5:
+            Guy.AnimationState = GUY_FISHING_ABOVE_2;
             break;
 
-        case Tiles::RIVER_3:
-        case Tiles::RIVER_8:
-        case Tiles::RIVER_END_4:
-        case Tiles::RIVER_START_3:
-        case Tiles::FLOODGATE_4:
-            Guy.AnimationState = Tiles::GUY_FISHING_RIGHT_2;
+        case RIVER_3:
+        case RIVER_8:
+        case RIVER_END_4:
+        case RIVER_START_3:
+        case FLOODGATE_4:
+            Guy.AnimationState = GUY_FISHING_RIGHT_2;
             break;
 
-        case Tiles::RIVER_4:
-        case Tiles::RIVER_10:
-        case Tiles::RIVER_END_3:
-        case Tiles::RIVER_START_4:
-        case Tiles::FLOODGATE_6:
-            Guy.AnimationState = Tiles::GUY_FISHING_BELOW_2;
+        case RIVER_4:
+        case RIVER_10:
+        case RIVER_END_3:
+        case RIVER_START_4:
+        case FLOODGATE_6:
+            Guy.AnimationState = GUY_FISHING_BELOW_2;
             break;
         }
 
-        Guy.ResourceAmount[Resources::Health] += 2;
+        Guy.ResourceAmount[Health] += 2;
         World::AddTime(0, 20);
         break;
 
     case 7:
         Guy.IsActive = true;
 
-        if (IsInBoat) {
-            Guy.AnimationState = Tiles::GUY_BOAT_FISHING_3;
+        if (IsInBoat)
+        {
+            Guy.AnimationState = GUY_BOAT_FISHING_3;
         }
 
-        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object) {
-        case Tiles::RIVER_1:
-        case Tiles::RIVER_6:
-        case Tiles::RIVER_7:
-        case Tiles::RIVER_END_2:
-        case Tiles::RIVER_START_2:
-        case Tiles::FLOODGATE_2:
-        case Tiles::FLOODGATE_3:
-            Guy.AnimationState = Tiles::GUY_FISHING_LEFT_3;
+        switch (Landscape[Guy.Pos.x][Guy.Pos.y].Object)
+        {
+        case RIVER_1:
+        case RIVER_6:
+        case RIVER_7:
+        case RIVER_END_2:
+        case RIVER_START_2:
+        case FLOODGATE_2:
+        case FLOODGATE_3:
+            Guy.AnimationState = GUY_FISHING_LEFT_3;
             break;
 
-        case Tiles::RIVER_2:
-        case Tiles::RIVER_5:
-        case Tiles::RIVER_9:
-        case Tiles::RIVER_END_1:
-        case Tiles::RIVER_START_1:
-        case Tiles::FLOODGATE_1:
-        case Tiles::FLOODGATE_5:
-            Guy.AnimationState = Tiles::GUY_FISHING_ABOVE_3;
+        case RIVER_2:
+        case RIVER_5:
+        case RIVER_9:
+        case RIVER_END_1:
+        case RIVER_START_1:
+        case FLOODGATE_1:
+        case FLOODGATE_5:
+            Guy.AnimationState = GUY_FISHING_ABOVE_3;
             break;
 
-        case Tiles::RIVER_3:
-        case Tiles::RIVER_8:
-        case Tiles::RIVER_END_4:
-        case Tiles::RIVER_START_3:
-        case Tiles::FLOODGATE_4:
-            Guy.AnimationState = Tiles::GUY_FISHING_RIGHT_3;
+        case RIVER_3:
+        case RIVER_8:
+        case RIVER_END_4:
+        case RIVER_START_3:
+        case FLOODGATE_4:
+            Guy.AnimationState = GUY_FISHING_RIGHT_3;
             break;
 
-        case Tiles::RIVER_4:
-        case Tiles::RIVER_10:
-        case Tiles::RIVER_END_3:
-        case Tiles::RIVER_START_4:
-        case Tiles::FLOODGATE_6:
-            Guy.AnimationState = Tiles::GUY_FISHING_BELOW_3;
+        case RIVER_4:
+        case RIVER_10:
+        case RIVER_END_3:
+        case RIVER_START_4:
+        case FLOODGATE_6:
+            Guy.AnimationState = GUY_FISHING_BELOW_3;
             break;
         }
 
@@ -1124,21 +1285,23 @@ void fish()
         break;
 
     case 9:
-        Guy.ResourceAmount[Resources::Food] += 20;
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.ResourceAmount[Food] += 20;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void light()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x
                             + Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2 - 10,
@@ -1156,9 +1319,9 @@ void light()
     case 3:
         Guy.IsActive = true;
         Guy.AnimationState = GUY_WAITING;
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::FIRE;
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::FIRE].targetRect.left);
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::FIRE].targetRect.top);
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = FIRE;
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[FIRE].targetRect.left);
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[FIRE].targetRect.top);
         Chance += 2 + 2 * Landscape[Guy.Pos.x][Guy.Pos.y].Height;
         World::AddTime(0, 2);
         Guy.ScreenPosition.x -= 5;
@@ -1169,20 +1332,22 @@ void light()
         break;
 
     case 5:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void lookout()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Guy.IsActive = true;
         Guy.AnimationState = GUY_LOOK_OUT;
@@ -1208,20 +1373,22 @@ void lookout()
 
     case 5:
         Chance -= 1 + Landscape[Guy.Pos.x][Guy.Pos.y].Height;
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void treasure()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition;
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Guy.ScreenPosition.x -= 5;
         Guy.ScreenPosition.y += 1;
@@ -1231,36 +1398,41 @@ void treasure()
 
     case 2:
         World::AddTime(0, 20);
-        World::AddResource(Resources::Water, -10);
-        World::AddResource(Resources::Food, -10);
+        World::AddResource(Water, -10);
+        World::AddResource(Food, -10);
         Guy.ScreenPosition.x += 5;
         Guy.ScreenPosition.y -= 1;
         Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
         if (((Guy.Pos.x == SchatzPos.x) && (Guy.Pos.y == SchatzPos.y)) &&
-                (!SchatzGef)) {
+            (!SchatzGef))
+        {
             PapierText = Renderer::DrawText(SCHATZGEFUNDEN, TXTPAPIER, 1);
             Guy.Inventory[RAW_MATCH] = 1;
-            Bmp[Tiles::BUTTON_IGNITE].AnimationPhase = 0;
+            Bmp[BUTTON_IGNITE].AnimationPhase = 0;
             SchatzGef = true;
-        } else {
+        }
+        else
+        {
             PapierText = Renderer::DrawText(KEINSCHATZ, TXTPAPIER, 1);
         }
 
         break;
 
     case 3:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void field()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::FIELD].RequiredRawMaterials[i];
         }
 
@@ -1272,59 +1444,67 @@ void field()
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 23);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 23);
         break;
 
     case 4:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 4;
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 25,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 25,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 30);
         break;
 
     case 7:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 5;
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 19);
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 19);
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 30);
         break;
 
     case 10:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 6;
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 17);
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 17);
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 30);
         break;
 
     case 13:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 7;
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 34,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 34,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 30);
         break;
 
     case 16:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 8;
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 36,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 36,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 30);
         break;
 
@@ -1341,7 +1521,7 @@ void field()
     case 17:
     case 18:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_FARMING;
+        Guy.AnimationState = GUY_FARMING;
         break;
 
     case 19:
@@ -1353,14 +1533,15 @@ void field()
 
     case 20:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if (Bmp[Tiles::FIELD].First) {
+        if (Bmp[Tiles::FIELD].First)
+        {
             PapierText = Renderer::DrawText(FELDHILFE, TXTPAPIER, 1);
             Bmp[Tiles::FIELD].First = false;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
@@ -1371,16 +1552,18 @@ void day_end()
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         Renderer::Fade(100, 90, 90);
         Hours = 12;
         Minutes = 0;
         TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if ((Guy.AnimationState == Tiles::GUY_SLEEPING_TENT) || (Guy.AnimationState == Tiles::GUY_SLEEPING) ||
-                (Guy.AnimationState == Tiles::GUY_SLEEP_HOUSE) || (IsInBoat)) {
+        if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
+            (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
+        {
             break;
         }
 
@@ -1388,11 +1571,17 @@ void day_end()
         Landscape[Guy.Pos.x][Guy.Pos.y].GPosAlt.y = Guy.ScreenPosition.y;
         Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
-        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
+        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+        {
             Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-        } else if (RoutePunkt % 2 == 0) {
-            Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);    // Nur bis zur Mitte der aktuellen Kacheln laufen
-        } else {
+        }
+        else if (RoutePunkt % 2 == 0)
+        {
+            Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);
+            // Nur bis zur Mitte der aktuellen Kacheln laufen
+        }
+        else
+        {
             Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
         }
 
@@ -1403,8 +1592,9 @@ void day_end()
         Hours = 12;
         Minutes = 0;
 
-        if ((Guy.AnimationState == Tiles::GUY_SLEEPING_TENT) || (Guy.AnimationState == Tiles::GUY_SLEEPING) ||
-                (Guy.AnimationState == Tiles::GUY_SLEEP_HOUSE) || (IsInBoat)) {
+        if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
+            (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
+        {
             break;
         }
 
@@ -1412,49 +1602,68 @@ void day_end()
         Erg.x = -1;
         Erg.y = -1;
 
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) || (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) || (Landscape[Guy.Pos.x][Guy.Pos.y].Object ==
+            HOUSE_3))
+        {
             Erg.x = Guy.Pos.x;
             Erg.y = Guy.Pos.y;
-        } else if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Object == Tiles::HOUSE_3) {
+        }
+        else if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Object == HOUSE_3)
+        {
             Erg.x = Guy.Pos.x - 1;
             Erg.y = Guy.Pos.y;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Object == Tiles::HOUSE_3) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Object == HOUSE_3)
+        {
             Erg.x = Guy.Pos.x;
             Erg.y = Guy.Pos.y - 1;
-        } else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Object == Tiles::HOUSE_3) {
+        }
+        else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Object == HOUSE_3)
+        {
             Erg.x = Guy.Pos.x + 1;
             Erg.y = Guy.Pos.y;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Object == Tiles::HOUSE_3) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Object == HOUSE_3)
+        {
             Erg.x = Guy.Pos.x;
             Erg.y = Guy.Pos.y + 1;
-        } else if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Object == Tiles::TENT) {
+        }
+        else if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Object == Tiles::TENT)
+        {
             Erg.x = Guy.Pos.x - 1;
             Erg.y = Guy.Pos.y;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Object == Tiles::TENT) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Object == Tiles::TENT)
+        {
             Erg.x = Guy.Pos.x;
             Erg.y = Guy.Pos.y - 1;
-        } else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Object == Tiles::TENT) {
+        }
+        else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Object == Tiles::TENT)
+        {
             Erg.x = Guy.Pos.x + 1;
             Erg.y = Guy.Pos.y;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Object == Tiles::TENT) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Object == Tiles::TENT)
+        {
             Erg.x = Guy.Pos.x;
             Erg.y = Guy.Pos.y + 1;
         }
 
-        if ((Erg.x != -1) && (Erg.y != -1)) {
+        if ((Erg.x != -1) && (Erg.y != -1))
+        {
             Guy.Pos.x = Erg.x;
             Guy.Pos.y = Erg.y;
 
             if ((Landscape[Erg.x][Erg.y].Object == Tiles::TENT) &&
-                    (Landscape[Erg.x][Erg.y].AnimationPhase < Bmp[Landscape[Erg.x][Erg.y].Object].AnimationPhaseCount))
+                (Landscape[Erg.x][Erg.y].AnimationPhase < Bmp[Landscape[Erg.x][Erg.y].Object].AnimationPhaseCount))
                 Routing::ShortRoute(Landscape[Erg.x][Erg.y].xScreen + Landscape[Erg.x][Erg.y].ObjectPosOffset.x + 3,
                                     Landscape[Erg.x][Erg.y].yScreen + Landscape[Erg.x][Erg.y].ObjectPosOffset.y + 20);
-            else if ((Landscape[Erg.x][Erg.y].Object == Tiles::HOUSE_3) &&
-                     (Landscape[Erg.x][Erg.y].AnimationPhase < Bmp[Landscape[Erg.x][Erg.y].Object].AnimationPhaseCount))
+            else if ((Landscape[Erg.x][Erg.y].Object == HOUSE_3) &&
+                (Landscape[Erg.x][Erg.y].AnimationPhase < Bmp[Landscape[Erg.x][Erg.y].Object].AnimationPhaseCount))
                 Routing::ShortRoute(Landscape[Erg.x][Erg.y].xScreen + Landscape[Erg.x][Erg.y].ObjectPosOffset.x +
-                                    Bmp[Tiles::TREE_BIG].Width / 2,
+                                    Bmp[TREE_BIG].Width / 2,
                                     Landscape[Erg.x][Erg.y].yScreen + Landscape[Erg.x][Erg.y].ObjectPosOffset.y +
-                                    Bmp[Tiles::TREE_BIG].Height + 1);
+                                    Bmp[TREE_BIG].Height + 1);
         }
 
         break;
@@ -1464,15 +1673,18 @@ void day_end()
         Hours = 12;
         Minutes = 0;
 
-        if ((Guy.AnimationState == Tiles::GUY_SLEEPING_TENT) || (Guy.AnimationState == Tiles::GUY_SLEEPING) ||
-                (Guy.AnimationState == Tiles::GUY_SLEEP_HOUSE) || (IsInBoat)) {
+        if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
+            (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
+        {
             break;
         }
 
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_CLIMBING_1;
+            Guy.AnimationState = GUY_CLIMBING_1;
         }
 
         break;
@@ -1482,23 +1694,31 @@ void day_end()
         Hours = 12;
         Minutes = 0;
 
-        if ((Guy.AnimationState == Tiles::GUY_SLEEPING_TENT) || (Guy.AnimationState == Tiles::GUY_SLEEPING) ||
-                (Guy.AnimationState == Tiles::GUY_SLEEP_HOUSE) || (IsInBoat)) {
+        if ((Guy.AnimationState == GUY_SLEEPING_TENT) || (Guy.AnimationState == GUY_SLEEPING) ||
+            (Guy.AnimationState == GUY_SLEEP_HOUSE) || (IsInBoat))
+        {
             break;
         }
 
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_ENTER_TENT;
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+            Guy.AnimationState = GUY_ENTER_TENT;
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_ENTER_HOUSE;
-        } else {
+            Guy.AnimationState = GUY_ENTER_HOUSE;
+        }
+        else
+        {
             Guy.ScreenPosition.x += 3;
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_LAYING_TENT;
+            Guy.AnimationState = GUY_LAYING_TENT;
         }
 
         break;
@@ -1508,28 +1728,38 @@ void day_end()
         Hours = 12;
         Minutes = 0;
 
-        if (IsInBoat) {
+        if (IsInBoat)
+        {
             break;
         }
 
         Guy.IsActive = true;
 
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            if (Guy.AnimationState != Tiles::GUY_SLEEPING_TENT) {
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            if (Guy.AnimationState != GUY_SLEEPING_TENT)
+            {
                 Guy.ScreenPosition.x += 4;
             }
 
-            Guy.AnimationState = Tiles::GUY_SLEEPING_TENT;
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            if (Guy.AnimationState != Tiles::GUY_SLEEP_HOUSE) {
+            Guy.AnimationState = GUY_SLEEPING_TENT;
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            if (Guy.AnimationState != GUY_SLEEP_HOUSE)
+            {
                 Guy.ScreenPosition.x += 14;
             }
 
-            Guy.AnimationState = Tiles::GUY_SLEEP_HOUSE;
-        } else {
-            Guy.AnimationState = Tiles::GUY_SLEEPING;
+            Guy.AnimationState = GUY_SLEEP_HOUSE;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_SLEEPING;
         }
 
         break;
@@ -1539,26 +1769,34 @@ void day_end()
         Hours = 12;
         Minutes = 0;
 
-        if (IsInBoat) {
+        if (IsInBoat)
+        {
             break;
         }
 
         Guy.IsActive = true;
 
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            Guy.AnimationState = Tiles::GUY_SLEEPING_TENT;
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            Guy.AnimationState = Tiles::GUY_SLEEP_HOUSE;
-        } else {
-            Guy.AnimationState = Tiles::GUY_SLEEPING;
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            Guy.AnimationState = GUY_SLEEPING_TENT;
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            Guy.AnimationState = GUY_SLEEP_HOUSE;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_SLEEPING;
         }
 
         break;
 
     case 7:
-        Renderer::Fade(0, 0, 0);// Don't get confused as the picture in Show () will be painted over in black
+        Renderer::Fade(0, 0, 0); // Don't get confused as the picture in Show () will be painted over in black
         Night = true;
         Hours = 12;
         Minutes = 0;
@@ -1566,55 +1804,72 @@ void day_end()
 
         // Falsche Objekte Löschen
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= TREE_DOWN_1) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_DOWN_4)) {
+            (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= TREE_DOWN_4))
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
             Guy.Inventory[RAW_TREE_TRUNK]++;
 
-            if (Guy.Inventory[RAW_TREE_TRUNK] > 10) {
+            if (Guy.Inventory[RAW_TREE_TRUNK] > 10)
+            {
                 Guy.Inventory[RAW_TREE_TRUNK] = 10;
             }
         }
 
         // Je nach Schlafort Zustand verändern
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            World::AddResource(Resources::Health, -5);
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            World::AddResource(Health, -5);
 
-            if (Guy.ResourceAmount[Resources::Health] <= 0) {
+            if (Guy.ResourceAmount[Health] <= 0)
+            {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
                 Guy.CurrentAction = DEATH;
                 Hours = 0;
                 Minutes = 0;
-            } else {
+            }
+            else
+            {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE2, TXTPAPIER, 1);
             }
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            World::AddResource(Resources::Health, +20);
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            World::AddResource(Health, +20);
             Guy.IsActive = true;
             PapierText = Renderer::DrawText(TAGENDE4, TXTPAPIER, 1);
-        } else if (IsInBoat) {
+        }
+        else if (IsInBoat)
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_BOAT_WAITING;
+            Guy.AnimationState = GUY_BOAT_WAITING;
             PapierText = Renderer::DrawText(TAGENDE3, TXTPAPIER, 1);
             Guy.ActionNumber = 2;
             Guy.CurrentAction = DEATH;
             Hours = 0;
             Minutes = 0;
-        } else {
-            World::AddResource(Resources::Health, -20);
+        }
+        else
+        {
+            World::AddResource(Health, -20);
 
-            if (Guy.ResourceAmount[Resources::Health] <= 0) {
+            if (Guy.ResourceAmount[Health] <= 0)
+            {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE5, TXTPAPIER, 1);
                 Guy.ActionNumber = 2;
                 Guy.CurrentAction = DEATH;
                 Hours = 0;
                 Minutes = 0;
-            } else {
+            }
+            else
+            {
                 Guy.IsActive = true;
                 PapierText = Renderer::DrawText(TAGENDE1, TXTPAPIER, 1);
             }
@@ -1633,13 +1888,20 @@ void day_end()
         Guy.IsActive = true;
 
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            Guy.AnimationState = Tiles::GUY_SLEEPING_TENT;
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            Guy.AnimationState = Tiles::GUY_SLEEP_HOUSE;
-        } else {
-            Guy.AnimationState = Tiles::GUY_SLEEPING;
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            Guy.AnimationState = GUY_SLEEPING_TENT;
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            Guy.AnimationState = GUY_SLEEP_HOUSE;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_SLEEPING;
         }
 
         break;
@@ -1654,13 +1916,20 @@ void day_end()
         Guy.IsActive = true;
 
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            Guy.AnimationState = Tiles::GUY_SLEEPING_TENT;
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            Guy.AnimationState = Tiles::GUY_SLEEP_HOUSE;
-        } else {
-            Guy.AnimationState = Tiles::GUY_SLEEPING;
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            Guy.AnimationState = GUY_SLEEPING_TENT;
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            Guy.AnimationState = GUY_SLEEP_HOUSE;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_SLEEPING;
         }
 
         break;
@@ -1672,12 +1941,16 @@ void day_end()
         StopSound(Sound::SNORE);
         Guy.IsActive = true;
 
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.ScreenPosition.x -= 14;
-            Guy.AnimationState = Tiles::GUY_EXIT_HOUSE;
-        } else {
-            Guy.AnimationState = Tiles::GUY_STAND_UP;
+            Guy.AnimationState = GUY_EXIT_HOUSE;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_STAND_UP;
         }
 
         break;
@@ -1687,10 +1960,12 @@ void day_end()
         Hours = 0;
         Minutes = 0;
 
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_CLIMBING_2;
+            Guy.AnimationState = GUY_CLIMBING_2;
         }
 
         break;
@@ -1699,10 +1974,11 @@ void day_end()
         Renderer::Fade(100, 100, 100);
         Hours = 0;
         Minutes = 0;
-        Guy.AnimationState = Tiles::GUY_LEFT;
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.AnimationState = GUY_LEFT;
+        Guy.CurrentAction = NOTHING;
 
-        if (Guy.ResourceAmount[Resources::Health] > 10) {
+        if (Guy.ResourceAmount[Health] > 10)
+        {
             Game::SaveGame();
         }
 
@@ -1714,31 +1990,40 @@ void rescued()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
-    case 1: {
-        Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+    switch (Guy.ActionNumber)
+    {
+    case 1:
+        {
+            Coordinate Erg = Renderer::GetTile(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
 
-        if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y)) {
-            Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-        } else if (RoutePunkt % 2 == 0) {
-            Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);    //Nur bis zur Mitte der aktuellen Kacheln laufen
-        } else {
-            Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            if ((Erg.x == Guy.Pos.x) && (Erg.y == Guy.Pos.y))
+            {
+                Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
+            }
+            else if (RoutePunkt % 2 == 0)
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt].x, RouteKoor[RoutePunkt].y);
+                //Nur bis zur Mitte der aktuellen Kacheln laufen
+            }
+            else
+            {
+                Routing::ShortRoute(RouteKoor[RoutePunkt + 1].x, RouteKoor[RoutePunkt + 1].y);
+            }
+
+            TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
+            break;
         }
-
-        TwoClicks = -1; // Keine Ahnung warum ich das hier machen muß
-        break;
-    }
 
     case 2:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_WAITING;
+        Guy.AnimationState = GUY_WAITING;
         PapierText = Renderer::DrawText(GERETTET, TXTPAPIER, 1);
         break;
 
     case 3:
-        if (Frage == 2) {
-            Guy.CurrentAction = Action::NOTHING;
+        if (Frage == 2)
+        {
+            Guy.CurrentAction = NOTHING;
             Frage = -1;
             break;
         }
@@ -1750,7 +2035,7 @@ void rescued()
     case 4:
         // Route herstellen
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_LEFT;
+        Guy.AnimationState = GUY_LEFT;
         RoutePunkt = -1;
         Steps = 0;
         Step = 0;
@@ -1758,8 +2043,11 @@ void rescued()
         RouteStart.y = Guy.Pos.y;
         RouteDestination.y = Guy.Pos.y;
 
-        for (short x = MAX_TILES_X - 1; x > 1; x--) { // Position des Rettungsschiffs festlegen
-            if (Landscape[x][Guy.Pos.y].Terrain != 1) {
+        for (short x = MAX_TILES_X - 1; x > 1; x--)
+        {
+            // Position des Rettungsschiffs festlegen
+            if (Landscape[x][Guy.Pos.y].Terrain != 1)
+            {
                 break;
             }
 
@@ -1768,40 +2056,43 @@ void rescued()
 
         // Schiff hinbauen
         Landscape[RouteDestination.x][RouteDestination.y].AnimationPhase = 0;
-        Landscape[RouteDestination.x][RouteDestination.y].Object = Tiles::GUY_SHIP;
+        Landscape[RouteDestination.x][RouteDestination.y].Object = GUY_SHIP;
         Landscape[RouteDestination.x][RouteDestination.y].ObjectPosOffset.x = 10;
         Landscape[RouteDestination.x][RouteDestination.y].ObjectPosOffset.y = 10;
         RouteDestination.x -= 2;
         Routing::FindTheWay();
-        Guy.AnimationState = Tiles::GUY_LEFT;
+        Guy.AnimationState = GUY_LEFT;
         break;
 
     case 5:
-        Guy.AnimationState = Tiles::GUY_LEFT;
-        Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].x) / 2),
-                            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
+        Guy.AnimationState = GUY_LEFT;
+        Routing::ShortRoute(
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].x) / 2),
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
         break;
 
     case 6:
         Guy.Pos.x += 2;
-        Guy.AnimationState = Tiles::GUY_SWIM;
-        Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
-                            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
+        Guy.AnimationState = GUY_SWIM;
+        Routing::ShortRoute(
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
         break;
 
     case 7:
         Guy.ScreenPosition.y -= 10;
 
-        if (!IsInBoat) {
+        if (!IsInBoat)
+        {
             World::ToggleIsInBoat();
         }
 
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_SHIP;
+        Guy.AnimationState = GUY_SHIP;
         RoutePunkt = -1;
         Steps = 0;
         Step = 0;
@@ -1810,19 +2101,19 @@ void rescued()
         RouteDestination.y = Guy.Pos.y;
         RouteDestination.x = MAX_TILES_X - 2;
         Routing::FindTheWay();
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::SEA_WAVES].targetRect.left);
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::SEA_WAVES].targetRect.top);
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::SEA_WAVES;
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[SEA_WAVES].targetRect.left);
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[SEA_WAVES].targetRect.top);
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = SEA_WAVES;
         break;
 
     case 8:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_SHIP;
+        Guy.AnimationState = GUY_SHIP;
         break;
 
     case 9:
-        Guy.CurrentAction = Action::NOTHING;
-        Guy.AnimationState = Tiles::GUY_LEFT;
+        Guy.CurrentAction = NOTHING;
+        Guy.AnimationState = GUY_LEFT;
         s_GameState = State::OUTRO;
         break;
     }
@@ -1830,31 +2121,37 @@ void rescued()
 
 void tent()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
         Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::TENT;
         printf("drawing tent: %d\n", Landscape[Guy.Pos.x][Guy.Pos.y].Object);
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::TENT].RequiredRawMaterials[i];
         }
 
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+            AnimationPhaseCount;
         Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::TENT].targetRect.left);
         Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::TENT].targetRect.top);
     }
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
         break;
 
     case 2:
@@ -1862,16 +2159,17 @@ void tent()
     case 12:
     case 13:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_TIE_DOWN;
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Guy.AnimationState = GUY_TIE_DOWN;
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 15);
         break;
 
     case 4:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 2;
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
         break;
 
     case 5:
@@ -1880,17 +2178,18 @@ void tent()
         break;
 
     case 6:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 3,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 3,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
 
         break;
 
     case 7:
     case 8:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_TIE_UP;
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Guy.AnimationState = GUY_TIE_UP;
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 15);
         break;
 
@@ -1901,18 +2200,21 @@ void tent()
         break;
 
     case 10:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
         break;
 
     case 11:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
         break;
 
     case 14:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 31,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
         break;
 
     case 15:
@@ -1921,25 +2223,28 @@ void tent()
 
     case 16:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if (Bmp[Tiles::TENT].First) {
+        if (Bmp[Tiles::TENT].First)
+        {
             PapierText = Renderer::DrawText(ZELTHILFE, TXTPAPIER, 1);
             Bmp[Tiles::TENT].First = false;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void boat()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
         Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::BOAT;
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::BOAT].RequiredRawMaterials[i];
         }
 
@@ -1950,25 +2255,30 @@ void boat()
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 30,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 30,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
         break;
 
     case 2:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 29,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 29,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
         break;
 
     case 3:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 19);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 19);
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::BOAT].AnimationPhaseCount + 1);
         break;
 
@@ -1982,21 +2292,23 @@ void boat()
     case 13:
     case 14:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_BEAT;
-        World::AddResource(Resources::Water, -2);
-        World::AddResource(Resources::Food, -2);
+        Guy.AnimationState = GUY_BEAT;
+        World::AddResource(Water, -2);
+        World::AddResource(Food, -2);
         World::AddTime(0, 15);
         break;
 
     case 7:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 16);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 22,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 16);
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::BOAT].AnimationPhaseCount + 2);
         break;
 
     case 11:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 14,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 11);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 14,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 11);
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::BOAT].AnimationPhaseCount + 3);
         break;
 
@@ -2005,43 +2317,53 @@ void boat()
         break;
 
     case 16:
-        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain == 1) {
+        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain == 1)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 10;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 25;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 10;
-        } else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1) {
+        }
+        else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 30;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 27;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = 0;
             Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = 28;
         }
 
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if (Bmp[Tiles::BOAT].First) {
+        if (Bmp[Tiles::BOAT].First)
+        {
             PapierText = Renderer::DrawText(BOOTHILFE, TXTPAPIER, 1);
             Bmp[Tiles::BOAT].First = false;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void pipe()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
         Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::PIPE;
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
             Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::PIPE].RequiredRawMaterials[i];
         }
 
@@ -2052,25 +2374,30 @@ void pipe()
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 30,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 30,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 21);
         break;
 
     case 2:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 29,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 29,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
         break;
 
     case 3:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::PIPE].AnimationPhaseCount + 1);
         break;
 
@@ -2081,9 +2408,9 @@ void pipe()
     case 12:
     case 13:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_BEAT;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_BEAT;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 5);
         break;
 
@@ -2094,15 +2421,16 @@ void pipe()
     case 15:
     case 16:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_CHOP;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_CHOP;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 5);
         break;
 
     case 10:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 17,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 17,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::PIPE].AnimationPhaseCount + 2);
         break;
 
@@ -2113,74 +2441,85 @@ void pipe()
     case 18:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
         World::FillPipe();
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if (Bmp[Tiles::PIPE].First) {
+        if (Bmp[Tiles::PIPE].First)
+        {
             PapierText = Renderer::DrawText(ROHRHILFE, TXTPAPIER, 1);
             Bmp[Tiles::PIPE].First = false;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void sos()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::SOS;
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = SOS;
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::SOS].RequiredRawMaterials[i];
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
+            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[SOS].RequiredRawMaterials[i];
         }
 
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Tiles::SOS].AnimationPhaseCount;
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::SOS].targetRect.left);
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::SOS].targetRect.top);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[SOS].AnimationPhaseCount;
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[SOS].targetRect.left);
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[SOS].targetRect.top);
     }
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 4,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 4,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 13);
         break;
 
     case 4:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 12,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 17);
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::SOS].AnimationPhaseCount + 1);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 12,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 17);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 1);
         break;
 
     case 7:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 12,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 9);
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::SOS].AnimationPhaseCount + 2);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 12,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 9);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 2);
         break;
 
     case 10:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 19,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::SOS].AnimationPhaseCount + 3);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 19,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 12);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 3);
         break;
 
     case 13:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 21,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 5);
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::SOS].AnimationPhaseCount + 4);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 21,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 5);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 4);
         break;
 
     case 16:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 8);
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::SOS].AnimationPhaseCount + 5);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 28,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 8);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[SOS].AnimationPhaseCount + 5);
         break;
 
     case 2:
@@ -2191,9 +2530,9 @@ void sos()
     case 17:
         Guy.IsActive = true;
         Guy.ScreenPosition.x += 4;
-        Guy.AnimationState = Tiles::GUY_LAYING_TENT;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_LAYING_TENT;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2205,9 +2544,9 @@ void sos()
     case 18:
         Guy.IsActive = true;
         Guy.ScreenPosition.x -= 4;
-        Guy.AnimationState = Tiles::GUY_STAND_UP;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_STAND_UP;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2218,88 +2557,99 @@ void sos()
     case 20:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
 
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 0) || (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 4)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 0) || (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 4))
+        {
             Chance += 1;
-        } else {
-            Chance += 2;    // Dürfte nur noch der Strand übrig sein
+        }
+        else
+        {
+            Chance += 2; // Dürfte nur noch der Strand übrig sein
         }
 
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if (Bmp[Tiles::SOS].First) {
+        if (Bmp[SOS].First)
+        {
             PapierText = Renderer::DrawText(SOSHILFE, TXTPAPIER, 1);
-            Bmp[Tiles::SOS].First = false;
+            Bmp[SOS].First = false;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void fireplace()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::BONFIRE;
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = BONFIRE;
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::BONFIRE].RequiredRawMaterials[i];
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
+            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[BONFIRE].RequiredRawMaterials[i];
         }
 
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Tiles::BONFIRE].AnimationPhaseCount;
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[Tiles::BONFIRE].targetRect.left);
-        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[Tiles::BONFIRE].targetRect.top);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[BONFIRE].AnimationPhaseCount;
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = static_cast<short>(Bmp[BONFIRE].targetRect.left);
+        Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = static_cast<short>(Bmp[BONFIRE].targetRect.top);
     }
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 4,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 16);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 4,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 16);
         break;
 
     case 2:
         Guy.IsActive = true;
         Guy.ScreenPosition.x += 4;
-        Guy.AnimationState = Tiles::GUY_LAYING_TENT;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_LAYING_TENT;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 1);
         break;
 
     case 3:
         Guy.IsActive = true;
         Guy.ScreenPosition.x -= 4;
-        Guy.AnimationState = Tiles::GUY_STAND_UP;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_STAND_UP;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 1);
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::BONFIRE].AnimationPhaseCount + 1);
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[BONFIRE].AnimationPhaseCount + 1);
         break;
 
     case 4:
         Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 15);
+                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y
+                            + 15);
         break;
 
     case 5:
     case 6:
     case 7:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_TIE_UP;
-        World::AddResource(Resources::Water, -1);
-        World::AddResource(Resources::Food, -1);
+        Guy.AnimationState = GUY_TIE_UP;
+        World::AddResource(Water, -1);
+        World::AddResource(Food, -1);
         World::AddTime(0, 1);
 
         if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber != 5)
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase =
-                static_cast<short>(Bmp[Tiles::BONFIRE].AnimationPhaseCount + Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber - 4);
+                static_cast<short>(Bmp[BONFIRE].AnimationPhaseCount + Landscape[Guy.Pos.x][Guy.Pos.y].
+                    ConstructionActionNumber - 4);
 
         break;
 
@@ -2309,44 +2659,50 @@ void fireplace()
 
     case 9:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if (Bmp[Tiles::BONFIRE].First) {
+        if (Bmp[BONFIRE].First)
+        {
             PapierText = Renderer::DrawText(FEUERSTELLEHILFE, TXTPAPIER, 1);
-            Bmp[Tiles::BONFIRE].First = false;
+            Bmp[BONFIRE].First = false;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void house1()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::HOUSE_1].RequiredRawMaterials[i];
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
+            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[HOUSE_1].RequiredRawMaterials[i];
         }
 
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Tiles::HOUSE_1].AnimationPhaseCount;
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::HOUSE_1;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[HOUSE_1].AnimationPhaseCount;
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = HOUSE_1;
     }
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
-                            Bmp[Tiles::TREE_BIG].Width / 2 - 3,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
-                            Bmp[Tiles::TREE_BIG].Height + 1);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
+            Bmp[TREE_BIG].Width / 2 - 3,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
+            Bmp[TREE_BIG].Height + 1);
         break;
 
     case 2:
@@ -2354,9 +2710,9 @@ void house1()
     case 4:
     case 5:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_1;
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_1;
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2365,10 +2721,10 @@ void house1()
     case 8:
     case 9:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_1;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_1].AnimationPhaseCount + 1);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_1;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 1);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2377,10 +2733,10 @@ void house1()
     case 12:
     case 13:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_1;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_1].AnimationPhaseCount + 2);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_1;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 2);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2389,10 +2745,10 @@ void house1()
     case 16:
     case 17:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_1;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_1].AnimationPhaseCount + 3);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_1;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_1].AnimationPhaseCount + 3);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2402,45 +2758,50 @@ void house1()
 
     case 19:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
-        Guy.CurrentAction = Action::NOTHING;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void house2()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::HOUSE_2].RequiredRawMaterials[i];
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
+            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[HOUSE_2].RequiredRawMaterials[i];
         }
 
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Tiles::HOUSE_2].AnimationPhaseCount;
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::HOUSE_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[HOUSE_2].AnimationPhaseCount;
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = HOUSE_2;
     }
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
-                            Bmp[Tiles::TREE_BIG].Width / 2,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
-                            Bmp[Tiles::TREE_BIG].Height + 1);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
+            Bmp[TREE_BIG].Width / 2,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
+            Bmp[TREE_BIG].Height + 1);
         break;
 
     case 2:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_CLIMBING_1;
-        World::AddResource(Resources::Food, -1);
-        World::AddResource(Resources::Water, -1);
+        Guy.AnimationState = GUY_CLIMBING_1;
+        World::AddResource(Food, -1);
+        World::AddResource(Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2449,9 +2810,9 @@ void house2()
     case 5:
     case 6:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2460,10 +2821,10 @@ void house2()
     case 9:
     case 10:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 1);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 1);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2472,10 +2833,10 @@ void house2()
     case 13:
     case 14:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 2);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 2);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2484,19 +2845,19 @@ void house2()
     case 17:
     case 18:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 3);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 3);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
     case 19:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_CLIMBING_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_2].AnimationPhaseCount + 4);
-        World::AddResource(Resources::Food, -1);
-        World::AddResource(Resources::Water, -1);
+        Guy.AnimationState = GUY_CLIMBING_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_2].AnimationPhaseCount + 4);
+        World::AddResource(Food, -1);
+        World::AddResource(Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2506,45 +2867,50 @@ void house2()
 
     case 21:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
-        Guy.CurrentAction = Action::NOTHING;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void house3()
 {
-    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0) {
+    if (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
 
-        for (short i = 0; i < Tiles::SPRITE_COUNT; i++) {
-            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[Tiles::HOUSE_3].RequiredRawMaterials[i];
+        for (short i = 0; i < SPRITE_COUNT; i++)
+        {
+            Landscape[Guy.Pos.x][Guy.Pos.y].RequiredRawMaterials[i] = Bmp[HOUSE_3].RequiredRawMaterials[i];
         }
 
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[Tiles::HOUSE_3].AnimationPhaseCount;
-        Landscape[Guy.Pos.x][Guy.Pos.y].Object = Tiles::HOUSE_3;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = Bmp[HOUSE_3].AnimationPhaseCount;
+        Landscape[Guy.Pos.x][Guy.Pos.y].Object = HOUSE_3;
     }
 
     Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber++;
 
-    if (!World::CheckRawMaterials()) {
+    if (!World::CheckRawMaterials())
+    {
         Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber--;
         return;
     }
 
-    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber) {
+    switch (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
-                            Bmp[Tiles::TREE_BIG].Width / 2,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
-                            Bmp[Tiles::TREE_BIG].Height + 1);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
+            Bmp[TREE_BIG].Width / 2,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
+            Bmp[TREE_BIG].Height + 1);
         break;
 
     case 2:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_CLIMBING_1;
-        World::AddResource(Resources::Food, -1);
-        World::AddResource(Resources::Water, -1);
+        Guy.AnimationState = GUY_CLIMBING_1;
+        World::AddResource(Food, -1);
+        World::AddResource(Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2553,9 +2919,9 @@ void house3()
     case 5:
     case 6:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2564,10 +2930,10 @@ void house3()
     case 9:
     case 10:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 1);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 1);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2576,10 +2942,10 @@ void house3()
     case 13:
     case 14:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 2);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 2);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
@@ -2588,19 +2954,19 @@ void house3()
     case 17:
     case 18:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_HAMMER_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 3);
-        World::AddResource(Resources::Food, -0.5);
-        World::AddResource(Resources::Water, -0.5);
+        Guy.AnimationState = GUY_HAMMER_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 3);
+        World::AddResource(Food, -0.5);
+        World::AddResource(Water, -0.5);
         World::AddTime(0, 1);
         break;
 
     case 19:
         Guy.IsActive = true;
-        Guy.AnimationState = Tiles::GUY_CLIMBING_2;
-        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[Tiles::HOUSE_3].AnimationPhaseCount + 4);
-        World::AddResource(Resources::Food, -1);
-        World::AddResource(Resources::Water, -1);
+        Guy.AnimationState = GUY_CLIMBING_2;
+        Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = static_cast<short>(Bmp[HOUSE_3].AnimationPhaseCount + 4);
+        World::AddResource(Food, -1);
+        World::AddResource(Water, -1);
         World::AddTime(0, 1);
         break;
 
@@ -2610,65 +2976,81 @@ void house3()
 
     case 21:
         Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
+        Bmp[BUTTON_STOP].AnimationPhase = -1;
 
-        if (Bmp[Tiles::HOUSE_3].First) {
+        if (Bmp[HOUSE_3].First)
+        {
             PapierText = Renderer::DrawText(HAUS3HILFE, TXTPAPIER, 1);
-            Bmp[Tiles::HOUSE_3].First = false;
+            Bmp[HOUSE_3].First = false;
         }
 
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
 
 void sleep()
 {
-    if (Guy.ActionNumber == 0) {
+    if (Guy.ActionNumber == 0)
+    {
         Guy.OriginalPosition = Guy.ScreenPosition; // Die Originalposition merken
     }
 
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
-            Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 3,
-                                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
-        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                 (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount))
-            Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
-                                Bmp[Tiles::TREE_BIG].Width / 2 + 1,
-                                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
-                                Bmp[Tiles::TREE_BIG].Height + 1);
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+            Routing::ShortRoute(
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 3,
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 20);
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+            Routing::ShortRoute(
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
+                Bmp[TREE_BIG].Width / 2 + 1,
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
+                Bmp[TREE_BIG].Height + 1);
 
         break;
 
     case 2:
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_CLIMBING_1;
-            World::AddResource(Resources::Food, -1);
-            World::AddResource(Resources::Water, -1);
+            Guy.AnimationState = GUY_CLIMBING_1;
+            World::AddResource(Food, -1);
+            World::AddResource(Water, -1);
         }
 
         break;
 
     case 3:
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_ENTER_TENT;
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+            Guy.AnimationState = GUY_ENTER_TENT;
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_ENTER_HOUSE;
-        } else {
+            Guy.AnimationState = GUY_ENTER_HOUSE;
+        }
+        else
+        {
             Guy.ScreenPosition.x += 3;
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_LAYING_TENT;
+            Guy.AnimationState = GUY_LAYING_TENT;
         }
 
         break;
@@ -2678,24 +3060,33 @@ void sleep()
         Guy.IsActive = true;
 
         if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TENT) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            if (Guy.ActionNumber == 4) {
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            if (Guy.ActionNumber == 4)
+            {
                 Guy.ScreenPosition.x += 4;
             }
 
-            Guy.AnimationState = Tiles::GUY_SLEEPING_TENT;
-        } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                   (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
-            if (Guy.ActionNumber == 4) {
+            Guy.AnimationState = GUY_SLEEPING_TENT;
+        }
+        else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
+            if (Guy.ActionNumber == 4)
+            {
                 Guy.ScreenPosition.x += 14;
             }
 
-            Guy.AnimationState = Tiles::GUY_SLEEP_HOUSE;
-        } else {
-            Guy.AnimationState = Tiles::GUY_SLEEPING;
+            Guy.AnimationState = GUY_SLEEP_HOUSE;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_SLEEPING;
         }
 
-        World::AddResource(Resources::Health, 5);
+        World::AddResource(Health, 5);
         World::AddTime(0, 30);
         break;
 
@@ -2703,30 +3094,36 @@ void sleep()
         Guy.IsActive = true;
         StopSound(Sound::SNORE);
 
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.ScreenPosition.x -= 14;
-            Guy.AnimationState = Tiles::GUY_EXIT_HOUSE;
-        } else {
-            Guy.AnimationState = Tiles::GUY_STAND_UP;
+            Guy.AnimationState = GUY_EXIT_HOUSE;
+        }
+        else
+        {
+            Guy.AnimationState = GUY_STAND_UP;
         }
 
         break;
 
     case 7:
-        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_3) &&
-                (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
+        if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == HOUSE_3) &&
+            (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].
+                AnimationPhaseCount))
+        {
             Guy.IsActive = true;
-            Guy.AnimationState = Tiles::GUY_CLIMBING_2;
-            World::AddResource(Resources::Food, -1);
-            World::AddResource(Resources::Water, -1);
+            Guy.AnimationState = GUY_CLIMBING_2;
+            World::AddResource(Food, -1);
+            World::AddResource(Water, -1);
         }
 
         break;
 
     case 8:
         Routing::ShortRoute(Guy.OriginalPosition.x, Guy.OriginalPosition.y);
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         break;
     }
 }
@@ -2735,41 +3132,52 @@ void undock()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
-        Routing::ShortRoute(Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 14,
-                            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 11);
+        Routing::ShortRoute(
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x + 14,
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y + 11);
         break;
 
     case 2:
         World::ToggleIsInBoat();
         Guy.ScreenPosition.x = Landscape[Guy.Pos.x][Guy.Pos.y].xScreen +
-                               Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
-                               Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
+            Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x +
+            Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
         Guy.ScreenPosition.y = Landscape[Guy.Pos.x][Guy.Pos.y].yScreen +
-                               Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
-                               Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Height / 2;
+            Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y +
+            Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Height / 2;
         Landscape[Guy.Pos.x][Guy.Pos.y].Object = -1;
 
-        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain == 1) {
+        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain == 1)
+        {
             Guy.Pos.x--;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1) {
-            Guy.Pos.y--;
-        } else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1) {
-            Guy.Pos.x++;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1) {
-            Guy.Pos.y++;
         }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1)
+        {
+            Guy.Pos.y--;
+        }
+        else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1)
+        {
+            Guy.Pos.x++;
+        }
+        else
+            if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1)
+            {
+                Guy.Pos.y++;
+            }
 
-        Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
-                            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
+        Routing::ShortRoute(
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
 
         break;
 
     case 3:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         Guy.OriginalPosition.x = Guy.ScreenPosition.x;
         Guy.OriginalPosition.y = Guy.ScreenPosition.y;
         break;
@@ -2780,43 +3188,78 @@ void dock()
 {
     Guy.ActionNumber++;
 
-    switch (Guy.ActionNumber) {
+    switch (Guy.ActionNumber)
+    {
     case 1:
-        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1) {
-            Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].x) / 2),
-                                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y) / 2));
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1) {
-            Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].x +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
-                                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].y) / 2));
-        } else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1) {
-            Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].x) / 2),
-                                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1) {
-            Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].x +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x) / 2),
-                                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y +
-                                  Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].y) / 2));
+        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1)
+        {
+            Routing::ShortRoute(
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].x
+                    ) /
+                    2),
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].y +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y
+                    ) /
+                    2));
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1)
+        {
+            Routing::ShortRoute(
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].x +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x
+                    ) /
+                    2),
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].y
+                    ) /
+                    2));
+        }
+        else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1)
+        {
+            Routing::ShortRoute(
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].x
+                    ) /
+                    2),
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].y +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y
+                    ) /
+                    2));
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1)
+        {
+            Routing::ShortRoute(
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].x +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x
+                    ) /
+                    2),
+                ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y +
+                        Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].y
+                    ) /
+                    2));
         }
 
         break;
 
     case 2:
-        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1) {
+        if (Landscape[Guy.Pos.x - 1][Guy.Pos.y].Terrain != 1)
+        {
             Guy.Pos.x--;
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain != 1)
+        {
             Guy.Pos.y--;
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
-        } else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1) {
+        }
+        else if (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain != 1)
+        {
             Guy.Pos.x++;
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 0;
-        } else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1) {
+        }
+        else if (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain != 1)
+        {
             Guy.Pos.y++;
             Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase = 1;
         }
@@ -2826,21 +3269,22 @@ void dock()
 
         World::ToggleIsInBoat();
         Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.x = Guy.ScreenPosition.x -
-                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen -
-                Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
+            Landscape[Guy.Pos.x][Guy.Pos.y].xScreen -
+            Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Width / 2;
         Landscape[Guy.Pos.x][Guy.Pos.y].ObjectPosOffset.y = Guy.ScreenPosition.y -
-                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen -
-                Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Height / 2;
+            Landscape[Guy.Pos.x][Guy.Pos.y].yScreen -
+            Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].Height / 2;
 
-        Routing::ShortRoute(((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
-                            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
-                              Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
+        Routing::ShortRoute(
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][0].x +
+                Landscape[Guy.Pos.x][Guy.Pos.y].xScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][2].x) / 2),
+            ((Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][1].y +
+                Landscape[Guy.Pos.x][Guy.Pos.y].yScreen + CornerCoord[Landscape[Guy.Pos.x][Guy.Pos.y].Type][3].y) / 2));
 
         break;
 
     case 3:
-        Guy.CurrentAction = Action::NOTHING;
+        Guy.CurrentAction = NOTHING;
         Guy.OriginalPosition.x = Guy.ScreenPosition.x;
         Guy.OriginalPosition.y = Guy.ScreenPosition.y;
         break;

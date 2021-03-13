@@ -47,11 +47,11 @@ extern Coordinate CornerCoord[13][4];
 extern TextArea TextBereich[TEXTANZ];
 
 extern Coordinate Camera, // aktueller Kartenausschnitt
-       MousePosition, //     "    Mauskoordinaten
-       RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
-       Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
-       RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
-       SchatzPos; // Hier ist der Schatz vergraben
+                  MousePosition, //     "    Mauskoordinaten
+                  RouteDestination, RouteStart, // Koordinaten des Starts und des Endes der Route
+                  Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
+                  RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
+                  SchatzPos; // Hier ist der Schatz vergraben
 
 extern RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 extern GUY Guy;
@@ -61,39 +61,39 @@ extern CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 extern SCAPE Landscape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
-extern sf::Texture *screenTexture; // DirectDraw primary surface
-extern sf::Texture *lpDDSBack; // DirectDraw back surface
-extern sf::Texture *lpDDSMisc; // DirectDraw Bilder surface
-extern sf::Texture *lpDDSPanel; // DirectDraw Panel surface
-extern sf::Texture *lpDDSGuyAni; // DirectDraw GuyAni surface
-extern sf::Texture *lpDDSAnimation; // DirectDraw Animation surface
-extern sf::Texture *lpDDSKarte; // DirectDraw MiniMap surface
-extern sf::Texture *lpDDSSchrift1; // DirectDraw Schrift1 surface
-extern sf::Texture *lpDDSSchrift2; // DirectDraw Schrift2 surface
-extern sf::Texture *lpDDSTextFeld; // DirectDraw TextFeld surface
-extern sf::Texture *lpDDSPaper; // DirectDraw Paier surface
-extern sf::Texture *lpDDSBaum; // DirectDraw Bäume surface
-extern sf::Texture *lpDDSBau; // DirectDraw Bauwerke surface
-extern sf::Texture *lpDDSCredits; // DirectDraw Credits surface
-extern sf::Texture *lpDDSLogo; // DirectDraw Logo surface
-extern sf::Texture *lpDDSCursor; // DirectDraw Cursor surface
-extern sf::Texture *lpDDSButtons; // DirectDraw Buttons surface
-extern sf::Texture *lpDDSInventar; // DirectDraw Inventar surface
+extern sf::Texture* screenTexture; // DirectDraw primary surface
+extern sf::Texture* lpDDSBack; // DirectDraw back surface
+extern sf::Texture* lpDDSMisc; // DirectDraw Bilder surface
+extern sf::Texture* lpDDSPanel; // DirectDraw Panel surface
+extern sf::Texture* lpDDSGuyAni; // DirectDraw GuyAni surface
+extern sf::Texture* lpDDSAnimation; // DirectDraw Animation surface
+extern sf::Texture* lpDDSKarte; // DirectDraw MiniMap surface
+extern sf::Texture* lpDDSSchrift1; // DirectDraw Schrift1 surface
+extern sf::Texture* lpDDSSchrift2; // DirectDraw Schrift2 surface
+extern sf::Texture* lpDDSTextFeld; // DirectDraw TextFeld surface
+extern sf::Texture* lpDDSPaper; // DirectDraw Paier surface
+extern sf::Texture* lpDDSBaum; // DirectDraw Bäume surface
+extern sf::Texture* lpDDSBau; // DirectDraw Bauwerke surface
+extern sf::Texture* lpDDSCredits; // DirectDraw Credits surface
+extern sf::Texture* lpDDSLogo; // DirectDraw Logo surface
+extern sf::Texture* lpDDSCursor; // DirectDraw Cursor surface
+extern sf::Texture* lpDDSButtons; // DirectDraw Buttons surface
+extern sf::Texture* lpDDSInventar; // DirectDraw Inventar surface
 
-extern sf::Texture *lpDDSSchatzkarte; // SchatzkartenSurface
+extern sf::Texture* lpDDSSchatzkarte; // SchatzkartenSurface
 //extern sf::Sprite *s_treasureMapSprite;
 
-extern sf::Sprite *s_creditsSprite;
+extern sf::Sprite* s_creditsSprite;
 
-extern sf::Sprite *minimapPlayerSprite;
-extern sf::Texture *minimapPlayerTexture;
+extern sf::Sprite* minimapPlayerSprite;
+extern sf::Texture* minimapPlayerTexture;
 
 extern sf::Color s_darknessColor;
 
-extern sf::Sprite *s_creditsSprite;
+extern sf::Sprite* s_creditsSprite;
 extern int s_previousCreditsOverlay;
 //extern bool s_creditsVisible;
 
 extern int s_previousCreditsOverlay;
 
-const char *GetLanguageString(const unsigned index);
+const char* GetLanguageString(unsigned index);

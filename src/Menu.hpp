@@ -1,7 +1,9 @@
 #pragma once
 
-namespace Menu {
-enum Type : short {
+namespace Menu
+{
+enum Type : short
+{
     NONE = 0,
     ACTION = 1,
     BUILD = 2,

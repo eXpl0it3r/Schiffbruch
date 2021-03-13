@@ -11,22 +11,21 @@
 class Application
 {
 public:
-    Application(const std::string &name);
+    Application(const std::string& name);
 
     void run();
     void update();
 
-    static void drawToScreen(const sf::Drawable &sprite);
-    static void clearScreenContent(const sf::Color &color = sf::Color::Transparent);
-    static void drawSprite(const sf::Sprite &sprite);
+    static void drawToScreen(const sf::Drawable& sprite);
+    static void clearScreenContent(const sf::Color& color = sf::Color::Transparent);
+    static void drawSprite(const sf::Sprite& sprite);
 
-
-    static void clearText(const int x, const int y, const int width, const int height);
-    static void drawToText(const sf::Sprite &sprite);
+    static void clearText(int x, int y, int width, int height);
+    static void drawToText(const sf::Sprite& sprite);
 
     static void clearLandscape();
-    static void drawToLandscape(const sf::Sprite &sprite);
-    static void setLandscapeOffset(const int x, const int y);
+    static void drawToLandscape(const sf::Sprite& sprite);
+    static void setLandscapeOffset(int x, int y);
 
     static sf::Image landscapeImage();
 
@@ -44,5 +43,5 @@ private:
     sf::Vector2f m_landscapeOffset;
 
     // TODO: get rid of
-    static Application *s_instance;
+    static Application* s_instance;
 };

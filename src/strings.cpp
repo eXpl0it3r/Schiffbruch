@@ -1,4 +1,8 @@
-const char *GetLanguageString(const unsigned index) { static const char *strings[] = { "Since this file is used 1-indexed, this line is not used.", "Dies ist ein Test. /a Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. /z /z Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test.",
+const char* GetLanguageString(const unsigned index)
+{
+    static const char* strings[] = {
+        "Since this file is used 1-indexed, this line is not used.",
+        "Dies ist ein Test. /a Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. /z /z Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test. Dies ist ein Test.",
         "Turn grid on",
         "Turn grid off",
         "This feature has not been included yet, unfortunately. Please wait for a future version of Landscape. The full range of features will be available at that time.",
@@ -140,7 +144,8 @@ const char *GetLanguageString(const unsigned index) { static const char *strings
         "Turn off sound",
         "Sorry. No sound"
     };
-    if (index >= sizeof strings) {
+    if (index >= sizeof strings)
+    {
         return "????";
     }
     return strings[index];

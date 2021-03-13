@@ -1,7 +1,9 @@
 #pragma once
 
-namespace State {
-enum Type : short {
+namespace State
+{
+enum Type : short
+{
     NOTHING = 0,
     INTRO = 1,
     GAME = 2,

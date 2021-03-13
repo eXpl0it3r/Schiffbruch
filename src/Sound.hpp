@@ -3,13 +3,15 @@
 #include "headers.hpp"
 #include "extern.hpp"
 
-namespace Sound {
+namespace Sound
+{
 void Init();
 void LoadSound(short Sound); // Lädt einen Sound in den Speicher
 void PlaySound(short Sound, short Volume); // Spiel eine Wavedatei mit Prozentualer Lautstärke
 void StopSound(short Sound); // Stoppt ein Sound
 
-enum Type {
+enum Type
+{
     NOTHING = 0,
     STORM = 1,
     SWIM = STORM + 1,

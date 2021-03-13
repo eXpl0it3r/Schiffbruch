@@ -2,48 +2,55 @@
 
 #include "Math.hpp"
 
-namespace Routing {
+namespace Routing
+{
 int LenMap[MAX_TILES_X][MAX_TILESY];
 Coordinate SaveRoute[MAX_TILES_X * MAX_TILESY]; // Zum zwischenspeichern der Route
 Coordinate NewPos; // Nur innerhalb des Pathfindings benutzt
 
 void MarkRoute(bool Mark)
 {
-    for (short i = 0; i < RouteLaenge; i++) {
+    for (short i = 0; i < RouteLaenge; i++)
+    {
         Landscape[Route[i].x][Route[i].y].Marked = Mark;
     }
 }
 
 short RotateRight(short Dir) // Richtungskoordinate rechtsrum umrechnen
 {
-    switch (Dir) {
-    case 2: {
-        NewPos.x++;
-        NewPos.y++;
-        Dir = 4;
-        break;
-    }
+    switch (Dir)
+    {
+    case 2:
+        {
+            NewPos.x++;
+            NewPos.y++;
+            Dir = 4;
+            break;
+        }
 
-    case 4: {
-        NewPos.x--;
-        NewPos.y++;
-        Dir = 8;
-        break;
-    }
+    case 4:
+        {
+            NewPos.x--;
+            NewPos.y++;
+            Dir = 8;
+            break;
+        }
 
-    case 8: {
-        NewPos.x--;
-        NewPos.y--;
-        Dir = 1;
-        break;
-    }
+    case 8:
+        {
+            NewPos.x--;
+            NewPos.y--;
+            Dir = 1;
+            break;
+        }
 
-    case 1: {
-        NewPos.x++;
-        NewPos.y--;
-        Dir = 2;
-        break;
-    }
+    case 1:
+        {
+            NewPos.x++;
+            NewPos.y--;
+            Dir = 2;
+            break;
+        }
     }
 
     return Dir;
@@ -56,12 +63,13 @@ bool FindTheWay()
     Coordinate Plist[MAX_TILES_X * MAX_TILESY]; // Besuchte Punkte merken
     short Llist[MAX_TILES_X * MAX_TILESY]; // Länge vom Punkt zum Ziel
 
-    Coordinate ShPos{0, 0};
-    Coordinate BestLine{0, 0};
-    Coordinate ShortKoor{0, 0};
+    Coordinate ShPos{ 0, 0 };
+    Coordinate BestLine{ 0, 0 };
+    Coordinate ShortKoor{ 0, 0 };
 
     for (short AI = 0; AI < MAX_TILESY; AI++)
-        for (short BI = 0; BI < MAX_TILES_X; BI++) {
+        for (short BI = 0; BI < MAX_TILES_X; BI++)
+        {
             LenMap[AI][BI] = 65535;
             Llist[AI * BI] = 0;
             Plist[AI * BI].x = 0;
@@ -82,12 +90,15 @@ bool FindTheWay()
     NewPos = Pos;
     bool GoalReached = false;
 
-    while ((!GoalReached) && (PCnt > 0)) {
+    while ((!GoalReached) && (PCnt > 0))
+    {
         // den mit der kürzesten Entfernung zum Ziel finden (der in der Liste ist)
         short Shortest = 0;
 
-        for (short CI = 0; CI <= PCnt - 1; CI++) {
-            if (Llist[CI] < Llist[Shortest]) {
+        for (short CI = 0; CI <= PCnt - 1; CI++)
+        {
+            if (Llist[CI] < Llist[Shortest])
+            {
                 Shortest = CI;
             }
         }
@@ -96,7 +107,8 @@ bool FindTheWay()
         Pos = Plist[Shortest];
 
         // Den kürzesten merken
-        if ((ShortEntf > Llist[Shortest]) || (ShortEntf == -1)) {
+        if ((ShortEntf > Llist[Shortest]) || (ShortEntf == -1))
+        {
             ShortEntf = Llist[Shortest];
             ShortKoor = Plist[Shortest];
         }
@@ -109,10 +121,12 @@ bool FindTheWay()
         Dir = 2;
         NewPos.y--; // Oben nachschauen anfangen
 
-        for (short BI = 0; BI <= 3; BI++) { // In jede Richtung schauen
+        for (short BI = 0; BI <= 3; BI++)
+        { // In jede Richtung schauen
             // ist das Feld noch nicht besucht und frei?
             if ((LenMap[NewPos.x][NewPos.y] == 65535) &&
-                    (Landscape[NewPos.x][NewPos.y].Walkable)) {
+                (Landscape[NewPos.x][NewPos.y].Walkable))
+            {
                 // Wieviele Schritte braucht man um zu diesem Feld zu kommen
                 short StepCnt = LenMap[Pos.x][Pos.y] + 1;
                 LenMap[NewPos.x][NewPos.y] = StepCnt;
@@ -125,7 +139,8 @@ bool FindTheWay()
             }
 
             // Ziel erreicht?
-            if ((NewPos.x == RouteDestination.x) && (NewPos.y == RouteDestination.y)) {
+            if ((NewPos.x == RouteDestination.x) && (NewPos.y == RouteDestination.y))
+            {
                 GoalReached = true;
                 BI = 3;
             }
@@ -134,29 +149,35 @@ bool FindTheWay()
         }
     }
 
-    if ((PCnt == 0) || (!Landscape[RouteDestination.x][RouteDestination.y].Walkable)) {
+    if ((PCnt == 0) || (!Landscape[RouteDestination.x][RouteDestination.y].Walkable))
+    {
         RouteDestination.x = ShortKoor.x;
         RouteDestination.y = ShortKoor.y;
 
-        if (FindTheWay()) {
+        if (FindTheWay())
+        {
             return true;
         }
 
         return false;
     }
 
-    if (GoalReached) { // Punkt rückwärts durchgehen und Abkürzungen finden
+    if (GoalReached)
+    { // Punkt rückwärts durchgehen und Abkürzungen finden
         Pos = RouteDestination;
         Coordinate LineStartPos = Pos;
 
-        while ((Pos.x != RouteStart.x) || (Pos.y != RouteStart.y)) {
+        while ((Pos.x != RouteStart.x) || (Pos.y != RouteStart.y))
+        {
             NewPos = Pos;
             int ShStep = 65535;
             Dir = 2;
             NewPos.y--; // Zuerst nach oben probieren
 
-            for (short AI = 0; AI <= 3; AI++) {
-                if (LenMap[NewPos.x][NewPos.y] < ShStep) {
+            for (short AI = 0; AI <= 3; AI++)
+            {
+                if (LenMap[NewPos.x][NewPos.y] < ShStep)
+                {
                     ShStep = LenMap[NewPos.x][NewPos.y];
                     ShPos = NewPos;
                 }
@@ -167,11 +188,13 @@ bool FindTheWay()
             Pos = ShPos;
 
             // Linie beste Linie ohne Unterbrechung finden
-            if (!Math::LineIntersect(LineStartPos, Pos, false)) {
+            if (!Math::LineIntersect(LineStartPos, Pos, false))
+            {
                 BestLine = Pos;
             }
 
-            if ((Pos.x == RouteStart.x) && (Pos.y == RouteStart.y)) {
+            if ((Pos.x == RouteStart.x) && (Pos.y == RouteStart.y))
+            {
                 Pos = BestLine;
                 Math::LineIntersect(LineStartPos, Pos, true);
                 LineStartPos = Pos;
@@ -192,15 +215,22 @@ bool CheckRoute(short x, short y, bool save, short Laenge) // Nachprüfen ob auf
 {
     short i;
 
-    if (!save) {
-        for (i = 0; i < RouteLaenge; i++) {
-            if ((x == Route[i].x) && (y == Route[i].y)) {
+    if (!save)
+    {
+        for (i = 0; i < RouteLaenge; i++)
+        {
+            if ((x == Route[i].x) && (y == Route[i].y))
+            {
                 return true;
             }
         }
-    } else {
-        for (i = 0; i <= Laenge; i++) {
-            if ((x == SaveRoute[i].x) && (y == SaveRoute[i].y)) {
+    }
+    else
+    {
+        for (i = 0; i <= Laenge; i++)
+        {
+            if ((x == SaveRoute[i].x) && (y == SaveRoute[i].y))
+            {
                 return true;
             }
         }
@@ -216,59 +246,63 @@ void SortRoute()
     Pos.x = RouteStart.x;
     Pos.y = RouteStart.y;
 
-    for (short i = 0; i < RouteLaenge; i++) { // Alle Teile vom Start durchgehen
+    for (short i = 0; i < RouteLaenge; i++)
+    { // Alle Teile vom Start durchgehen
         SaveRoute[i].x = Pos.x;
         SaveRoute[i].y = Pos.y;
 
         RouteKoor[2 * i].x =
-            (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x +
-             Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x) / 2;
+        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x +
+            Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x) / 2;
         RouteKoor[2 * i].y =
-            (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y +
-             Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y) / 2;
+        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y +
+            Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y) / 2;
 
         NewPos.x = Pos.x;
         NewPos.y = Pos.y - 1; // oben mit nachschauen anfangen
         short Dir = 2;
 
-        for (short j = 0; j <= 3; j++) {
+        for (short j = 0; j <= 3; j++)
+        {
             if ((CheckRoute(NewPos.x, NewPos.y, false, RouteLaenge)) &&
-                    (!CheckRoute(NewPos.x, NewPos.y, true, i))) {
-                switch (j) {
+                (!CheckRoute(NewPos.x, NewPos.y, true, i)))
+            {
+                switch (j)
+                {
                 case 0:
                     RouteKoor[2 * i + 1].x =
-                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].x +
-                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x) / 2;
+                    (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].x +
+                        Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y +
-                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].y) / 2;
+                    (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y +
+                        Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].y) / 2;
                     break;
 
                 case 1:
                     RouteKoor[2 * i + 1].x =
-                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x +
-                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].x) / 2;
+                    (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].x +
+                        Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].y +
-                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y) / 2;
+                    (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][2].y +
+                        Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y) / 2;
                     break;
 
                 case 2:
                     RouteKoor[2 * i + 1].x =
-                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].x +
-                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x) / 2;
+                    (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].x +
+                        Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y +
-                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].y) / 2;
+                    (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][3].y +
+                        Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].y) / 2;
                     break;
 
                 case 3:
                     RouteKoor[2 * i + 1].x =
-                        (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x +
-                         Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].x) / 2;
+                    (Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].x +
+                        Landscape[Pos.x][Pos.y].xScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].x) / 2;
                     RouteKoor[2 * i + 1].y =
-                        (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].y +
-                         Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y) / 2;
+                    (Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][0].y +
+                        Landscape[Pos.x][Pos.y].yScreen + CornerCoord[Landscape[Pos.x][Pos.y].Type][1].y) / 2;
                     break;
                 }
 
@@ -282,7 +316,8 @@ void SortRoute()
         Pos.y = NewPos.y;
     }
 
-    for (short i = 0; i <= RouteLaenge; i++) { // Wieder in die Originalroute speichern
+    for (short i = 0; i <= RouteLaenge; i++)
+    { // Wieder in die Originalroute speichern
         Route[i].x = SaveRoute[i].x;
         Route[i].y = SaveRoute[i].y;
     }
@@ -303,9 +338,12 @@ void ShortRoute(short Zielx, short Ziely)
     // Die Animation gleich anschließend starten
     Guy.IsActive = true;
 
-    if ((IsInBoat) && (Guy.AnimationState != GUY_SWIM)) {
+    if ((IsInBoat) && (Guy.AnimationState != GUY_SWIM))
+    {
         Guy.AnimationState = GUY_BOAT_LEFT;
-    } else if (Guy.AnimationState != GUY_SWIM) {
+    }
+    else if (Guy.AnimationState != GUY_SWIM)
+    {
         Guy.AnimationState = GUY_LEFT;
     }
 

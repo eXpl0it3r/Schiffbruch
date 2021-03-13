@@ -3,9 +3,11 @@
 #include "headers.hpp"
 #include "extern.hpp"
 
-namespace Action {
+namespace Action
+{
 // Actions
-enum Actions : short {
+enum Actions : short
+{
     NOTHING = 0,
     SEARCH = 1,
     EAT = 2,

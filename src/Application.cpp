@@ -17,17 +17,17 @@
 #include <exception>
 #include <cassert>
 
-Application *Application::s_instance;
+Application* Application::s_instance;
 
-Application::Application(const std::string &name)
-    : m_window({MAX_SCREEN_X, MAX_SCREEN_Y}, name, sf::Style::None)
-, m_name(name)
-, m_time(std::time(nullptr))
+Application::Application(const std::string& name)
+    : m_window({ MAX_SCREEN_X, MAX_SCREEN_Y }, name, sf::Style::None)
+    , m_name(name)
+    , m_time(std::time(nullptr))
 {
     // Ensure borderless windowed mode
     const sf::Vector2u size(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height) ;
     m_window.setSize(size);
-    m_window.setPosition({0, 0});
+    m_window.setPosition({ 0, 0 });
 
     s_instance = this;
 
@@ -45,7 +45,8 @@ Application::Application(const std::string &name)
     Sound::Init();
     s_SoundState = 1; // Activate sound
 
-    if (!Direct::InitDDraw()) {
+    if (!Direct::InitDDraw())
+    {
         puts("Failed to init graphics");
         exit(1);
     }
@@ -61,27 +62,33 @@ void Application::process_events()
 {
     sf::Event event;
 
-    while (m_window.pollEvent(event)) {
-        switch(event.type){
+    while (m_window.pollEvent(event))
+    {
+        switch (event.type)
+        {
         case sf::Event::Closed:
             Direct::finiObjects();
             m_window.close();
             break;
         case sf::Event::MouseButtonPressed:
         case sf::Event::MouseButtonReleased:
-            if (s_GameState == State::GAME) {
-                sf::Vector2f mappedPos = m_window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-                Direct::CheckMouse(Coordinate({short(mappedPos.x), short(mappedPos.y)}));
+            if (s_GameState == State::GAME)
+            {
+                sf::Vector2f mappedPos = m_window.mapPixelToCoords(
+                    sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+                Direct::CheckMouse(Coordinate({ static_cast<short>(mappedPos.x), static_cast<short>(mappedPos.y) }));
             }
             break;
         case sf::Event::MouseMoved:
-            if (s_GameState == State::GAME) {
+            if (s_GameState == State::GAME)
+            {
                 sf::Vector2f mappedPos = m_window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
-                Direct::CheckMouse(Coordinate({short(mappedPos.x), short(mappedPos.y)}));
+                Direct::CheckMouse(Coordinate({ static_cast<short>(mappedPos.x), static_cast<short>(mappedPos.y) }));
             }
             break;
         case sf::Event::KeyReleased:
-            if (event.key.code == sf::Keyboard::F4) {
+            if (event.key.code == sf::Keyboard::F4)
+            {
                 Direct::finiObjects();
                 m_window.close();
             }
@@ -105,7 +112,8 @@ void Application::run()
     sf::Sprite text;
     text.setTexture(m_textOverlay.getTexture());
 
-    while (m_window.isOpen()) {
+    while (m_window.isOpen())
+    {
         m_window.clear(sf::Color::Black);
         process_events();
         CurrentFrame++;
@@ -119,27 +127,41 @@ void Application::run()
         //                Renderer::DrawString(StdString,(short)TextBereich[TXTFPS].textRect.left,(short)TextBereich[TXTFPS].textRect.top,1);
         //                    */
 
-        if (s_GameState == State::LOGO) {
-            if (Direct::CheckKey() == 2) { // Das Keyboard abfragen
+        if (s_GameState == State::LOGO)
+        {
+            if (Direct::CheckKey() == 2)
+            {
+                // Das Keyboard abfragen
                 continue;
             }
             Renderer::ShowLogo(); // Bild auffrischen
-        } else if ((s_GameState == State::INTRO) || (s_GameState == State::RESCUED)) {
-            if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
+        }
+        else if ((s_GameState == State::INTRO) || (s_GameState == State::RESCUED))
+        {
+            if (Direct::CheckKey() == 0)
+            {
+                // Das Keyboard abfragen
                 m_window.close();
                 break;
             }
 
             Math::Animationen(); // Animationen weiterschalten
 
-            if (!Guy.IsActive) { // Aktionen starten
+            if (!Guy.IsActive)
+            {
+                // Aktionen starten
                 Action::handler(Guy.CurrentAction);
             }
 
             Renderer::ShowIntro(); // Bild auffrischen
-        } else if (s_GameState == State::GAME) {
-            if ((Hours >= 12) && (Minutes != 0) && (Guy.CurrentAction != Action::DAY_END)) { // Hier ist der Tag zuende
-                if (Guy.CurrentAction == Action::LOOKOUT) {
+        }
+        else if (s_GameState == State::GAME)
+        {
+            if ((Hours >= 12) && (Minutes != 0) && (Guy.CurrentAction != Action::DAY_END))
+            {
+                // Hier ist der Tag zuende
+                if (Guy.CurrentAction == Action::LOOKOUT)
+                {
                     Chance -= 1 + Landscape[Guy.Pos.x][Guy.Pos.y].Height;
                 }
 
@@ -150,7 +172,9 @@ void Application::run()
 
             World::UpdateButtons(); // Die Spezialkn�pfe umschalten
 
-            if (Direct::CheckKey() == 0) { // Das Keyboard abfragen
+            if (Direct::CheckKey() == 0)
+            {
+                // Das Keyboard abfragen
                 m_window.close();
                 break;
             }
@@ -158,13 +182,18 @@ void Application::run()
             Renderer::LimitScroll(); // Das Scrollen an die Grenzen der Landschaft anpassen
             Math::Animationen(); // Die Animationsphasen weiterschalten
 
-            if (!Guy.IsActive) { // Die Aktionen starten
+            if (!Guy.IsActive)
+            {
+                // Die Aktionen starten
                 Action::handler(Guy.CurrentAction);
             }
 
             Renderer::Show(); // Das Bild zeichnen
-        } else if (s_GameState == State::OUTRO) {
-            if (Direct::CheckKey() == 0) {
+        }
+        else if (s_GameState == State::OUTRO)
+        {
+            if (Direct::CheckKey() == 0)
+            {
                 m_window.close();
                 break;
             }
@@ -187,7 +216,7 @@ void Application::run()
         m_window.draw(text);
 
         m_window.display();
-        sf::sleep(sf::milliseconds(16)); // idk, try 60 fps or something
+        sleep(sf::milliseconds(16)); // idk, try 60 fps or something
     }
 }
 
@@ -195,12 +224,12 @@ void Application::update()
 {
 }
 
-void Application::drawToScreen(const sf::Drawable &sprite)
+void Application::drawToScreen(const sf::Drawable& sprite)
 {
     s_instance->m_screenContent.draw(sprite);
 }
 
-void Application::drawSprite(const sf::Sprite &sprite)
+void Application::drawSprite(const sf::Sprite& sprite)
 {
     s_instance->m_screenContent.draw(sprite);
 }
@@ -210,10 +239,11 @@ void Application::clearText(const int x, const int y, const int width, const int
     sf::RectangleShape shape(sf::Vector2f(width, height));
     shape.setPosition(x, y);
     shape.setFillColor(sf::Color::Transparent);
-    s_instance->m_textOverlay.draw(shape, sf::RenderStates(sf::BlendMode(sf::BlendMode::SrcAlpha, sf::BlendMode::Zero)));
+    s_instance->m_textOverlay.
+                draw(shape, sf::RenderStates(sf::BlendMode(sf::BlendMode::SrcAlpha, sf::BlendMode::Zero)));
 }
 
-void Application::drawToText(const sf::Sprite &sprite)
+void Application::drawToText(const sf::Sprite& sprite)
 {
     s_instance->m_textOverlay.draw(sprite);
 }
@@ -223,7 +253,7 @@ void Application::clearLandscape()
     s_instance->m_landscape.clear();
 }
 
-void Application::drawToLandscape(const sf::Sprite &sprite)
+void Application::drawToLandscape(const sf::Sprite& sprite)
 {
     s_instance->m_landscape.draw(sprite);
 }
@@ -234,7 +264,7 @@ void Application::setLandscapeOffset(const int x, const int y)
     s_instance->m_landscapeOffset.y = -y;
 }
 
-void Application::clearScreenContent(const sf::Color &color)
+void Application::clearScreenContent(const sf::Color& color)
 {
     s_instance->m_screenContent.clear(color);
 }

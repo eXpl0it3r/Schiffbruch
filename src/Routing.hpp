@@ -3,7 +3,8 @@
 #include "headers.hpp"
 #include "extern.hpp"
 
-namespace Routing {
+namespace Routing
+{
 void MarkRoute(bool Mark); // Markiert die Route
 bool FindTheWay(); // PathFinding
 short RotateRight(short Dir); // Richtungskoordinate rechtsrum umrechnen

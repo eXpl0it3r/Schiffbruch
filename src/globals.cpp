@@ -39,32 +39,31 @@ short Step, Steps;
 
 //Bereiche
 //                             links,      oben,                      rechts,                             unten
-RECT rcGesamt = {0, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
-RECT rcPlayingSurface = {0, 0, MAX_SCREEN_X - 195, MAX_SCREEN_Y - 20};
-RECT rcPanel = {MAX_SCREEN_X - 205, 0, MAX_SCREEN_X, MAX_SCREEN_Y};
-RECT rcKarte = {MAX_SCREEN_X - 158, 27, rcKarte.left + MAX_TILES_X * 2, rcKarte.top + (MAX_TILESY + 13) * 2};
+RECT rcGesamt = { 0, 0, MAX_SCREEN_X, MAX_SCREEN_Y };
+RECT rcPlayingSurface = { 0, 0, MAX_SCREEN_X - 195, MAX_SCREEN_Y - 20 };
+RECT rcPanel = { MAX_SCREEN_X - 205, 0, MAX_SCREEN_X, MAX_SCREEN_Y };
+RECT rcKarte = { MAX_SCREEN_X - 158, 27, rcKarte.left + MAX_TILES_X * 2, rcKarte.top + (MAX_TILESY + 13) * 2 };
 
 //Die Eckkoordinaten der Kacheln (Achtung: mit überlappendem Rand)
 Coordinate CornerCoord[13][4] = {
     //       0           1           2           3          Ecke
-    {{-1, 29}, {26, 15}, {54, 30}, {27, 44}},//0
-    {{-1, 13}, {26, 15}, {54, 30}, {27, 28}},//1
-    {{-1, 29}, {26, 15}, {54, 14}, {27, 28}},//2
-    {{-1, 29}, {26, -1}, {54, 14}, {27, 44}},//3
-    {{-1, 13}, {26, -1}, {54, 30}, {27, 44}},//4
-    {{-1, 13}, {26, 15}, {54, 30}, {27, 44}},//5
-    {{-1, 29}, {26, 15}, {54, 30}, {27, 28}},//6		Kacheltyp
-    {{-1, 29}, {26, 15}, {54, 14}, {27, 44}},//7
-    {{-1, 29}, {26, -1}, {54, 30}, {27, 44}},//8
-    {{-1, 13}, {26, -1}, {54, 14}, {27, 44}},//9
-    {{-1, 13}, {26, -1}, {54, 30}, {27, 28}},//10
-    {{-1, 13}, {26, 15}, {54, 14}, {27, 28}},//11
-    {{-1, 29}, {26, -1}, {54, 14}, {27, 28}},//12
+    { { -1, 29 }, { 26, 15 }, { 54, 30 }, { 27, 44 } },//0
+    { { -1, 13 }, { 26, 15 }, { 54, 30 }, { 27, 28 } },//1
+    { { -1, 29 }, { 26, 15 }, { 54, 14 }, { 27, 28 } },//2
+    { { -1, 29 }, { 26, -1 }, { 54, 14 }, { 27, 44 } },//3
+    { { -1, 13 }, { 26, -1 }, { 54, 30 }, { 27, 44 } },//4
+    { { -1, 13 }, { 26, 15 }, { 54, 30 }, { 27, 44 } },//5
+    { { -1, 29 }, { 26, 15 }, { 54, 30 }, { 27, 28 } },//6		Kacheltyp
+    { { -1, 29 }, { 26, 15 }, { 54, 14 }, { 27, 44 } },//7
+    { { -1, 29 }, { 26, -1 }, { 54, 30 }, { 27, 44 } },//8
+    { { -1, 13 }, { 26, -1 }, { 54, 14 }, { 27, 44 } },//9
+    { { -1, 13 }, { 26, -1 }, { 54, 30 }, { 27, 28 } },//10
+    { { -1, 13 }, { 26, 15 }, { 54, 14 }, { 27, 28 } },//11
+    { { -1, 29 }, { 26, -1 }, { 54, 14 }, { 27, 28 } },//12
 
 };
 
 TextArea TextBereich[TEXTANZ];
-
 
 Coordinate Camera, // aktueller Kartenausschnitt
            MousePosition, //     "    Mauskoordinaten
@@ -80,35 +79,35 @@ CREDITS CreditsList[10][10]; // Namenabfolge im Abspann
 SCAPE Landscape[MAX_TILES_X][MAX_TILESY];
 
 // DirectDraw
-sf::Texture *screenTexture = nullptr; // DirectDraw primary surface
-sf::Texture *lpDDSBack = nullptr; // DirectDraw back surface
-sf::Texture *lpDDSMisc = nullptr; // DirectDraw Bilder surface
-sf::Texture *lpDDSPanel = nullptr; // DirectDraw Panel surface
-sf::Texture *lpDDSGuyAni = nullptr; // DirectDraw GuyAni surface
-sf::Texture *lpDDSAnimation = nullptr; // DirectDraw Animation surface
-sf::Texture *lpDDSKarte = nullptr; // DirectDraw MiniMap surface
-sf::Texture *lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
-sf::Texture *lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
-sf::Texture *lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
-sf::Texture *lpDDSPaper = nullptr; // DirectDraw Paier surface
-sf::Texture *lpDDSBaum = nullptr; // DirectDraw Bäume surface
-sf::Texture *lpDDSBau = nullptr; // DirectDraw Bauwerke surface
-sf::Texture *lpDDSCredits = nullptr; // DirectDraw Credits surface
-sf::Texture *lpDDSLogo = nullptr; // DirectDraw Logo surface
-sf::Texture *lpDDSCursor = nullptr; // DirectDraw Cursor surface
-sf::Texture *lpDDSButtons = nullptr; // DirectDraw Buttons surface
-sf::Texture *lpDDSInventar = nullptr; // DirectDraw Inventar surface
+sf::Texture* screenTexture = nullptr; // DirectDraw primary surface
+sf::Texture* lpDDSBack = nullptr; // DirectDraw back surface
+sf::Texture* lpDDSMisc = nullptr; // DirectDraw Bilder surface
+sf::Texture* lpDDSPanel = nullptr; // DirectDraw Panel surface
+sf::Texture* lpDDSGuyAni = nullptr; // DirectDraw GuyAni surface
+sf::Texture* lpDDSAnimation = nullptr; // DirectDraw Animation surface
+sf::Texture* lpDDSKarte = nullptr; // DirectDraw MiniMap surface
+sf::Texture* lpDDSSchrift1 = nullptr; // DirectDraw Schrift1 surface
+sf::Texture* lpDDSSchrift2 = nullptr; // DirectDraw Schrift2 surface
+sf::Texture* lpDDSTextFeld = nullptr; // DirectDraw TextFeld surface
+sf::Texture* lpDDSPaper = nullptr; // DirectDraw Paier surface
+sf::Texture* lpDDSBaum = nullptr; // DirectDraw Bäume surface
+sf::Texture* lpDDSBau = nullptr; // DirectDraw Bauwerke surface
+sf::Texture* lpDDSCredits = nullptr; // DirectDraw Credits surface
+sf::Texture* lpDDSLogo = nullptr; // DirectDraw Logo surface
+sf::Texture* lpDDSCursor = nullptr; // DirectDraw Cursor surface
+sf::Texture* lpDDSButtons = nullptr; // DirectDraw Buttons surface
+sf::Texture* lpDDSInventar = nullptr; // DirectDraw Inventar surface
 
-sf::Texture *lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
-sf::Sprite *s_treasureMapSprite;
+sf::Texture* lpDDSSchatzkarte = nullptr; // SchatzkartenSurface
+sf::Sprite* s_treasureMapSprite;
 
 sf::Color s_darknessColor;
 
-sf::Sprite *s_creditsSprite;
+sf::Sprite* s_creditsSprite;
 int s_previousCreditsOverlay;
 
-sf::Sprite *minimapPlayerSprite;
-sf::Texture *minimapPlayerTexture;
+sf::Sprite* minimapPlayerSprite;
+sf::Texture* minimapPlayerTexture;
 
 //LPDIRECTDRAWPALETTE lpDDPal = nullptr; // DirectDraw palette
 //DDBLTFX ddbltfx; // DirectDraw Effekte

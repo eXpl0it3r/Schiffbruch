@@ -20,7 +20,8 @@ const int NUMBER_OF_RIVERS = 1; // Wieviele Flüsse? Mehr als 1 funktioniert sel
 const int TREASUREMAP_WIDTH = 370; // Schatzkartenbreite
 const int TREASUREMAP_HEIGHT = 370; // Schatzkartenhöhe
 
-enum Tiles {
+enum Tiles
+{
     SEA_WAVES = 0,
     RIVER_1 = SEA_WAVES + 1,
     RIVER_2 = SEA_WAVES + 2,
@@ -205,7 +206,8 @@ enum Tiles {
 };
 
 // Textfelder
-enum Textfields {
+enum Textfields
+{
     TXTTEXTFELD = 0,
     TXTFPS = 1,
     TXTTAGESZEIT = 2,
@@ -215,7 +217,8 @@ enum Textfields {
 };
 
 // Resourcen
-enum Resources {
+enum Resources
+{
     Water = 0,
     Food = 1,
     Health = 2,
