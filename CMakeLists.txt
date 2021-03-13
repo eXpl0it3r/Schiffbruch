@@ -28,19 +28,19 @@ else()
     message(STATUS "Not enabling IPO/LTO")
 endif()
 
-if (VC_STATIC)
-    message(STATUS "Static build with MSVC")
-    set(CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
-    set(CMAKE_C_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
-else()
-    add_definitions(-Wno-writable-strings)
-endif()
-
 if(MSVC)
+    if(VC_STATIC)
+        message(STATUS "Static build with MSVC")
+        set(CMAKE_CXX_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
+        set(CMAKE_C_FLAGS_RELEASE "/MT /O2 /Ob2 /DNDEBUG")
+    endif()
+
     add_definitions(/D_USE_MATH_DEFINES)
     add_definitions(/wd4244 /wd4018 /wd4267 /wd4996 /wd4305 /wd4800 /wd4065)
 
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /fp:fast")
+else()
+    add_definitions(-Wno-writable-strings)
 endif()
 
 option(ENABLE_SANITIZERS "Enable runtime sanitizing (for development)")
@@ -166,7 +166,7 @@ add_executable(schiffbruch
     ${WOLF_WAV}
 )
 
-target_link_libraries(schiffbruch sfml-system sfml-window sfml-graphics sfml-audio)
+target_link_libraries(schiffbruch sfml-graphics sfml-audio)
 
 target_include_directories(schiffbruch PRIVATE miniwin/ ${PROJECT_SOURCE_DIR})
 
