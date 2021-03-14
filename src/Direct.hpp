@@ -2,14 +2,15 @@
 
 #include "headers.hpp"
 #include "extern.hpp"
+#include <SFML/Window.hpp>
 
 namespace Direct
 {
-    // finished with all objects we use; release them
-    void finiObjects();
+// finished with all objects we use; release them
+void finiObjects();
 
-    void InitDDraw(HWND hWnd); // DirectDraw initialisieren
-    void Reset();
-    void CheckMouse(); // Maus abfragen
-    short CheckKey(); // Tastatur abfragen
+bool InitDDraw(); // DirectDraw initialisieren
+void Reset();
+void CheckMouse(Coordinate newMousePos); // Maus abfragen
+short CheckKey(); // Tastatur abfragen
 }

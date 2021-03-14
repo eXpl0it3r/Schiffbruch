@@ -6,25 +6,36 @@
 
 namespace Renderer
 {
-    inline DWORD RGB2DWORD(BYTE r, BYTE g, BYTE b); // Rechnet 24Bit RGB in 16 Bit um (Für ddbltfx.dwFillColor)
-    void ZeichneObjekte(); // Alles Landschaftsdetails zeichnen, die nicht im Speicher sind
-    void ZeichneGuy(); // Zeichnet die Spielfigur
-    void ZeichnePanel(); // Zeichnet die Karte
-    void ZeichneBilder(short x, short y, short i, RECT Ziel, bool Reverse, short Frucht); // Zeichnet die Bmp-Bilder			
-    void ZeichnePapier(); // Zeichnet das Papier für den Text
-    void Textloeschen(short Bereich); // Löscht einen Breich in der Textsurface
-    void DrawString(char* string, short x, short y, short Art); // Schreibt einen String an eine gewünschte Stelle
-    short DrawText(int TEXT, short Bereich, short Art); // Schreibt einen Text in ein Rechteck
-    void DrawSchatzkarte(); // Schatzkarte malen
-    void LimitScroll(); // Verhindert das Scrollen aus dem Bild
-    void Blitten(LPDIRECTDRAWSURFACE4 lpDDSVon, LPDIRECTDRAWSURFACE4 lpDDSNach, bool Transp);
-    void PutPixel(short x, short y, DWORD color, LPDDSURFACEDESC2 ddsd); // Schreibt Pixel in eine Surface (davor lock())
-    void GetPixel(short x, short y, LPDDSURFACEDESC2 ddsd); // Das Ergebnis wird in rgbStruct gespeichert
-    void Fade(short RP, short GP, short BP); // Bild abdunkeln mittels Gamma-Werten (in Prozent pro Farbwert)
-    ZWEID GetKachel(short x, short y); // Welche Kachel ist unter den angegebenen Koordinaten
-    void Zeige(); // Landschaft anzeigen
-    void ZeigeIntro(); // Für das Intro zuständig
-    void ZeigeAbspann(); // Für den Abspann
-    void ZeigeLogo(); // Zeigt das Logo
-    void AbspannBlt(short Bild, short Prozent); // Zeichnet die Bilder im Abspann
+//DWORD RGB2DWORD(BYTE r, BYTE g, BYTE b); // Rechnet 24Bit RGB in 16 Bit um (Für ddbltfx.dwFillColor)
+void DrawObjects(); // Alles Landschaftsdetails zeichnen, die nicht im Speicher sind
+void DrawGuy(); // Zeichnet die Spielfigur
+void DrawPanel(); // Zeichnet die Karte
+void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fruit); // Zeichnet die Bmp-Bilder
+void DrawPaper(); // Zeichnet das Papier für den Text
+void HideText(short Bereich); // Löscht einen Breich in der Textsurface
+void DrawString(const char* string, short x, short y, short Art); // Schreibt einen String an eine gewünschte Stelle
+short DrawText(int TEXT, short Bereich, short Art); // Schreibt einen Text in ein Rechteck
+void DrawSchatzkarte(); // Schatzkarte malen
+void LimitScroll(); // Verhindert das Scrollen aus dem Bild
+//void Blit(sf::Texture *from, sf::Texture *to, bool Transp);
+//void Blit(sf::Image *from, sf::Texture *to, bool Transp);
+void BlitToScreen(sf::Texture* from);
+void BlitToText(sf::Texture* from);
+void BlitToLandscape(sf::Texture* from);
+void PutPixel(short x, short y, uint8_t r, uint8_t g, uint8_t b,
+              sf::Image* img); // Schreibt Pixel in eine Surface (davor lock())
+void GetPixel(short x, short y, sf::Image* img); // Das Ergebnis wird in rgbStruct gespeichert
+void Fade(short RP, short GP, short BP); // Bild abdunkeln mittels Gamma-Werten (in Prozent pro Farbwert)
+Coordinate GetTile(short x, short y); // Welche Kachel ist unter den angegebenen Koordinaten
+void Show(); // Landschaft anzeigen
+void ShowIntro(); // Für das Intro zuständig
+void ShowCredits(); // Für den Abspann
+void ShowLogo(); // Zeigt das Logo
+void CreditsBlt(short Bild, short Prozent); // Zeichnet die Bilder im Abspann
+sf::Image landscapeImage();
+
+void drawRect(int x, int y, int width, int height, const sf::Color& color);
+void drawRectToMap(int x, int y, int width, int height, const sf::Color& color);
+sf::Texture* createEmptyTexture(size_t width, size_t height, const sf::Color& color);
+sf::Texture* loadTexture(const void* data, size_t size, const sf::Color& mask = sf::Color(255, 0, 255));
 } // namespace Renderer
