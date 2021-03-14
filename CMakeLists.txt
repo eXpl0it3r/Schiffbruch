@@ -1,15 +1,14 @@
+cmake_minimum_required(VERSION 3.15)
+
 project(schiffbruch)
-find_package(SFML COMPONENTS system window graphics audio REQUIRED)
-cmake_minimum_required(VERSION 3.9)
 
-set (CMAKE_CXX_STANDARD 20)
-include_directories(${PROJECT_BINARY_DIR})
+set(CMAKE_CXX_STANDARD 17)
 
-#############################
-## Compiler specific stuff ##
-#############################
+find_package(SFML COMPONENTS audio graphics window system REQUIRED)
+
+# Compiler specific stuff
 option(ENABLE_IPO "Enable link-time optimization, improves speed and memory usage (https://en.wikipedia.org/wiki/Interprocedural_optimization)")
-if (ENABLE_IPO)
+if(ENABLE_IPO)
     include(CheckIPOSupported)
     check_ipo_supported(RESULT IPO_AVAILABLE OUTPUT IPO_ERROR)
     if (IPO_AVAILABLE)
@@ -28,6 +27,13 @@ else()
     message(STATUS "Not enabling IPO/LTO")
 endif()
 
+option(ENABLE_SANITIZERS "Enable runtime sanitizing (for development)")
+if (ENABLE_SANITIZERS)
+    message("Enabling asan and ubsan")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+endif()
+
 if(MSVC)
     if(VC_STATIC)
         message(STATUS "Static build with MSVC")
@@ -43,14 +49,9 @@ else()
     add_definitions(-Wno-writable-strings)
 endif()
 
-option(ENABLE_SANITIZERS "Enable runtime sanitizing (for development)")
-if (ENABLE_SANITIZERS)
-    message("Enabling asan and ubsan")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
-endif()
-
+# Convert images into header files
 add_subdirectory(tools/resgen)
+
 add_resource(MISC_BMP "bin/images/Misc.BMP")
 add_resource(PANEL_PNG "bin/images/Panel.png")
 add_resource(GUYANI_BMP "bin/images/GuyAni.bmp")
@@ -92,6 +93,8 @@ add_resource(STURM_WAV "bin/sounds/sturm.wav")
 add_resource(TRINKEN_WAV "bin/sounds/trinken.wav")
 add_resource(WALD_WAV "bin/sounds/wald.wav")
 add_resource(WOLF_WAV "bin/sounds/wolf.wav")
+
+include_directories(${PROJECT_BINARY_DIR})
 
 add_executable(schiffbruch
     src/Action.cpp
@@ -167,7 +170,5 @@ add_executable(schiffbruch
 )
 
 target_link_libraries(schiffbruch sfml-graphics sfml-audio)
-
-target_include_directories(schiffbruch PRIVATE miniwin/ ${PROJECT_SOURCE_DIR})
 
 install(TARGETS schiffbruch DESTINATION bin)
