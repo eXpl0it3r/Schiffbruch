@@ -1736,9 +1736,10 @@ void Treasure()
 //            lpDDSScape->Lock(nullptr, &ddsd, DDLOCK_WAIT, nullptr);
 //            lpDDSSchatzkarte->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr);
 
+            RGBSTRUCT rgbStruct;
             for (short i = 0; i < TREASUREMAP_WIDTH; i++) {
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
-                    Renderer::GetPixel(static_cast<short>(i + Landscape[SchatzPos.x][SchatzPos.y].xScreen - TREASUREMAP_WIDTH / 2 + TILE_SIZE_X / 2),
+                    rgbStruct = Renderer::GetPixel(static_cast<short>(i + Landscape[SchatzPos.x][SchatzPos.y].xScreen - TREASUREMAP_WIDTH / 2 + TILE_SIZE_X / 2),
                                        static_cast<short>(j + Landscape[SchatzPos.x][SchatzPos.y].yScreen - TREASUREMAP_HEIGHT / 2 + 30), &landscape);
 //                    printf("r %d g %d b %d\n", rgbStruct.r, rgbStruct.g, rgbStruct.b);
                     Renderer::PutPixel(i, j,
@@ -1766,15 +1767,11 @@ void Treasure()
             for (short i = 0; i < TREASUREMAP_WIDTH; i++) {
                 for (short j = 0; j < TREASUREMAP_HEIGHT; j++) {
                     if ((i > 0) && (i < TREASUREMAP_WIDTH - 1) && (j > 0) && (j < TREASUREMAP_HEIGHT - 1)) {
-                        Renderer::GetPixel(i - 1, j, &treasureMap);
-                        RGBSTRUCT rgbleft = rgbStruct;
-                        Renderer::GetPixel(i, j - 1, &treasureMap);
-                        RGBSTRUCT rgbtop = rgbStruct;
-                        Renderer::GetPixel(i + 1, j, &treasureMap);
-                        RGBSTRUCT rgbright = rgbStruct;
-                        Renderer::GetPixel(i, j + 1, &treasureMap);
-                        RGBSTRUCT rgbbottom = rgbStruct;
-                        Renderer::GetPixel(i, j, &treasureMap);
+                        RGBSTRUCT rgbleft = Renderer::GetPixel(i - 1, j, &treasureMap);
+                        RGBSTRUCT rgbtop = Renderer::GetPixel(i, j - 1, &treasureMap);
+                        RGBSTRUCT rgbright = Renderer::GetPixel(i + 1, j, &treasureMap);
+                        RGBSTRUCT rgbbottom = Renderer::GetPixel(i, j + 1, &treasureMap);
+                        rgbStruct = Renderer::GetPixel(i, j, &treasureMap);
                         Renderer::PutPixel(i, j,
                                                (rgbleft.r + rgbtop.r + rgbright.r + rgbbottom.r + rgbStruct.r) / 5,
                                                (rgbleft.g + rgbtop.g + rgbright.g + rgbbottom.g + rgbStruct.g) / 5,

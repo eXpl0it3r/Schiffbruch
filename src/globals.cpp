@@ -72,7 +72,6 @@ Coordinate Camera, // aktueller Kartenausschnitt
            Route[MAX_TILES_X * MAX_TILESY], // Liste der Routenpunkte
            RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
            SchatzPos; // Hier ist der Schatz vergraben
-RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 GUY Guy;
 BMP Bmp[SPRITE_COUNT];
 WAV Wav[25]; // Sound::COUNT

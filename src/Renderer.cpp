@@ -195,7 +195,7 @@ void PutPixel(short x, short y, uint8_t r, uint8_t g, uint8_t b, sf::Image *img)
 //    pixels[y * pitch + x * 2] = static_cast<WORD>(color);
 }
 
-void GetPixel(short x, short y, sf::Image *img)
+RGBSTRUCT GetPixel(short x, short y, sf::Image *img)
 {
 //    WORD *pixels = static_cast<WORD *>(ddsd->lpSurface);
 //    // DWORD pitch = ddsd->dwWidth;
@@ -205,16 +205,19 @@ void GetPixel(short x, short y, sf::Image *img)
     // TODO: more efficient
     if (x < 0 || y < 0 || x >= int(img->getSize().x) || y >= int(img->getSize().y)) {
         rgbStruct.r = 0;
-        return;
+        return{};
     }
     if (!img) {
-        return;
+        return{};
     }
+    RGBSTRUCT rgbStruct;
 
     sf::Color c = img->getPixel(x, y);
     rgbStruct.r = c.r;
     rgbStruct.g = c.g;
     rgbStruct.b = c.b;
+
+    return rgbStruct;
 }
 
 void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fruit)

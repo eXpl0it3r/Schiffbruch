@@ -53,7 +53,6 @@ extern Coordinate Camera, // aktueller Kartenausschnitt
        RouteKoor[2 * MAX_TILES_X * MAX_TILESY], // Liste der Routenkoordinaten
        SchatzPos; // Hier ist der Schatz vergraben
 
-extern RGBSTRUCT rgbStruct; // Hier werden die Farben eines Pixels zwischengespeichert
 extern GUY Guy;
 extern BMP Bmp[SPRITE_COUNT];
 extern WAV Wav[25]; // Sound::COUNT;
