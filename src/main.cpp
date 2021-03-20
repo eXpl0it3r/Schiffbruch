@@ -1,7 +1,8 @@
 #include "Application.hpp"
+//#include "miniwin.h"
 
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main(int argc, char *argv[])
 {
-    Application app("Landscape", hInstance);
+    Application app("schiffbruch");
     app.run();
 }
