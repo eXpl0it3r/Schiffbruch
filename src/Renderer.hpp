@@ -12,7 +12,7 @@ void DrawPanel(); // Zeichnet die Karte
 void DrawPicture(short x, short y, short i, RECT target, bool Reverse, short Fruit); // Zeichnet die Bmp-Bilder
 void DrawPaper(); // Zeichnet das Papier für den Text
 void HideText(short Bereich); // Löscht einen Breich in der Textsurface
-void DrawString(const char *string, short x, short y, short Art); // Schreibt einen String an eine gewünschte Stelle
+void DrawString(const std::string &string, short x, short y, short Art); // Schreibt einen String an eine gewünschte Stelle
 short DrawText(const int TEXT, short Bereich, short Art); // Schreibt einen Text in ein Rechteck
 void DrawSchatzkarte(); // Schatzkarte malen
 void LimitScroll(); // Verhindert das Scrollen aus dem Bild

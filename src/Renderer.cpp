@@ -684,7 +684,7 @@ void DrawPanel()
     BlitToScreen(lpDDSTextFeld);
 }
 
-void DrawString(const char *string, short x, short y, short Art)
+void DrawString(const std::string &string, short x, short y, short Art)
 {
     short Width = 0;
     short Height = 0;
@@ -699,11 +699,8 @@ void DrawString(const char *string, short x, short y, short Art)
         Height = FONT2_LETTER_HEIGHT;
     }
 
-    // Länge der Schrift ermitteln
-    std::size_t length = strlen(string);
-
     // Alle Zeichen durchgehen
-    for (std::size_t index = 0; index < length; index++) {
+    for (std::size_t index = 0; index < string.size(); index++) {
         // Korrekte indexNummer ermitteln
         short cindex = string[index] - ' ';
 
