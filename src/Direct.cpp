@@ -486,13 +486,13 @@ short CheckKey()
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
             Guy.IsActive = false;
             Guy.CurrentAction = Action::QUIT;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
             Guy.IsActive = false;
             Guy.CurrentAction = Action::RESTART;
         }

@@ -72,7 +72,7 @@ void UpdateMousePosition(short Button, short Push, short xDiff, short yDiff)
                     (Landscape[Erg.x][Erg.y].Object <= Tiles::BONFIRE)) {
                 // Baufortschrittanzeigen
                 Text += " (";
-                Text += std::to_string((Landscape[Erg.x][Erg.y].ConstructionActionNumber * 100) / Bmp[Landscape[Erg.x][Erg.y].Object].RequiredActionCases);
+                Text += std::to_string((Landscape[Erg.x][Erg.y].ConstructionActionStep * 100) / Bmp[Landscape[Erg.x][Erg.y].Object].RequiredActionCases);
                 Text += "%)";
                 // benötigte Rohstoffe anzeigen
                 World::RawMaterialsDescriptionString(Erg.x, Erg.y, -1);
@@ -196,7 +196,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
             Guy.IsActive = false;
             Guy.CurrentAction = Action::QUIT;
         }
@@ -206,7 +206,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
             Guy.IsActive = false;
             Guy.CurrentAction = Action::RESTART;
         }
@@ -216,7 +216,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
             Guy.IsActive = false;
             Guy.CurrentAction = Action::DAY_RESTART;
         }
@@ -337,7 +337,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
             Guy.CurrentAction = Action::CANCEL;
             Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
         }
@@ -350,7 +350,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) {
                 Guy.CurrentAction = Action::UNDOCK;
@@ -365,7 +365,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
             Guy.CurrentAction = Action::SEARCH;
         }
     } else if ((InRect(MousePosition.x, MousePosition.y, Bmp[Tiles::BUTTON_EAT].targetRect)) &&
@@ -375,7 +375,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BUSH) ||
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::FIELD)) &&
@@ -399,7 +399,7 @@ void MouseInPanel(short Button, short Push)
             PlaySound(Sound::CLICK2, 100);
 
             if (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) {
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::SLEEP;
             } else {
                 PapierText = Renderer::DrawText(NICHTAUFWASSERSCHLAFEN, TXTPAPIER, 1);
@@ -412,7 +412,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if (Guy.Inventory[Tiles::RAW_TREE_TRUNK] <= 10) {
                 if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
@@ -436,7 +436,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if (((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::RIVER_1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::FLOODGATE_6)) ||
@@ -453,7 +453,7 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::BONFIRE) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].AnimationPhase < Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].AnimationPhaseCount)) {
@@ -469,10 +469,10 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) {
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::LOOKOUT;
             } else {
                 PapierText = Renderer::DrawText(WELLENZUHOCH, TXTPAPIER, 1);
@@ -485,12 +485,12 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Terrain != 1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Type == 0) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1)) {
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::TREASURE;
             } else {
                 PapierText = Renderer::DrawText(GRABENBEDINGUNGEN, TXTPAPIER, 1);
@@ -503,11 +503,11 @@ void MouseInPanel(short Button, short Push)
 
         if ((Button == 0) && (Push == 1)) {
             PlaySound(Sound::CLICK2, 100);
-            Guy.ActionNumber = 0;
+            Guy.ActionStep = 0;
 
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::TREE_1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::SLINGSHOT;
             } else if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) ||
                        ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::HOUSE_1) &&
@@ -543,7 +543,7 @@ void MouseInPanel(short Button, short Push)
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Type == 0) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain == 4)) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::FIELD;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) && (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::FIELD)) {
@@ -573,7 +573,7 @@ void MouseInPanel(short Button, short Push)
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Type == 0) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Terrain != -1)) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::TENT;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -607,7 +607,7 @@ void MouseInPanel(short Button, short Push)
                      (Landscape[Guy.Pos.x][Guy.Pos.y - 1].Terrain == 1) ||
                      (Landscape[Guy.Pos.x + 1][Guy.Pos.y].Terrain == 1) ||
                      (Landscape[Guy.Pos.x][Guy.Pos.y + 1].Terrain == 1))) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::BOAT;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -637,7 +637,7 @@ void MouseInPanel(short Button, short Push)
 
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Type == 0)) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::PIPE;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -667,7 +667,7 @@ void MouseInPanel(short Button, short Push)
 
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Type == 0)) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::SOS_SIGN;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -699,7 +699,7 @@ void MouseInPanel(short Button, short Push)
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::TREE_4)) {
                 PapierText = Renderer::DrawText(BAUMZUKLEIN, TXTPAPIER, 1);
             } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::HOUSE1;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -733,7 +733,7 @@ void MouseInPanel(short Button, short Push)
             } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::TREE_BIG) {
                 PapierText = Renderer::DrawText(NICHTOHNELEITER, TXTPAPIER, 1);
             } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_1) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::HOUSE2;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -768,7 +768,7 @@ void MouseInPanel(short Button, short Push)
                        (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_1)) {
                 PapierText = Renderer::DrawText(NICHTOHNEPLATTFORM, TXTPAPIER, 1);
             } else if (Landscape[Guy.Pos.x][Guy.Pos.y].Object == Tiles::HOUSE_2) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::HOUSE3;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -798,7 +798,7 @@ void MouseInPanel(short Button, short Push)
 
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object == -1) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Type == 0)) {
-                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber = 0;
+                Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep = 0;
                 Bmp[Tiles::BUTTON_STOP].AnimationPhase = 0;
                 Guy.CurrentAction = Action::FIREPLACE;
             } else if ((Bmp[Tiles::BUTTON_CONTINUE].AnimationPhase != -1) &&
@@ -822,7 +822,7 @@ void MouseInPanel(short Button, short Push)
 
             if ((Landscape[Guy.Pos.x][Guy.Pos.y].Object >= Tiles::FIELD) &&
                     (Landscape[Guy.Pos.x][Guy.Pos.y].Object <= Tiles::BONFIRE)) {
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::DESTROY;
             } else {
                 PapierText = Renderer::DrawText(STRING_NOTHING_TO_DESTROY, TXTPAPIER, 1);

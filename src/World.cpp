@@ -146,7 +146,7 @@ void AddTime(short h, short m)
 
             if (rand() % static_cast<int>(1 / (Chance / 72000)) == 1) {
                 Guy.IsActive = false;
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::RESCUED;
                 break;
             }
@@ -170,7 +170,7 @@ void AddResource(short Art, float Anzahl) // Fügt wassser usw hinzu
     if ((Guy.ResourceAmount[Resources::Health] <= 0) && (Guy.CurrentAction != Action::DEATH) &&
             (Guy.CurrentAction != Action::DAY_END) && (s_GameState == State::GAME)) {
         Guy.IsActive = false;
-        Guy.ActionNumber = 0;
+        Guy.ActionStep = 0;
         Guy.CurrentAction = Action::DEATH;
     }
 }
@@ -353,8 +353,8 @@ bool CheckRawMaterials()
     }
 
     float GebrauchtTmp = Benoetigt / static_cast<float>(Bmp[Landscape[Guy.Pos.x][Guy.Pos.y].Object].RequiredActionCases); // Soviel Rohstoffe werden für diesen Schritt benötigt
-    short Gebraucht = static_cast<short>(GebrauchtTmp * Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber -
-                                         static_cast<short>(GebrauchtTmp * (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionNumber - 1))); // Soviel Rohstoffe werden für diesen Schritt benötigt
+    short Gebraucht = static_cast<short>(GebrauchtTmp * Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep -
+                                         static_cast<short>(GebrauchtTmp * (Landscape[Guy.Pos.x][Guy.Pos.y].ConstructionActionStep - 1))); // Soviel Rohstoffe werden für diesen Schritt benötigt
 
 
     while (true) {
@@ -385,7 +385,7 @@ bool CheckRawMaterials()
     }
 
     PapierText = Renderer::DrawText(ROHSTOFFNICHT, TXTPAPIER, 1);
-    Guy.ActionNumber = 0;
+    Guy.ActionStep = 0;
     Guy.CurrentAction = Action::CANCEL;
     Bmp[Tiles::BUTTON_STOP].AnimationPhase = -1;
     return false;
@@ -483,7 +483,7 @@ void Compute(short MinimumSize, short maximumSize)// Size of the island in numbe
                 Landscape[x][y].ObjectPosOffset.x = 0;
                 Landscape[x][y].ObjectPosOffset.y = 0;
                 Landscape[x][y].AnimationPhase = -1;
-                Landscape[x][y].ConstructionActionNumber = 0;
+                Landscape[x][y].ConstructionActionStep = 0;
                 Landscape[x][y].GPosAlt.x = 0;
                 Landscape[x][y].GPosAlt.y = 0;
 
@@ -1217,7 +1217,7 @@ void FillPipe()
                 Landscape[x][y].ObjectPosOffset.x = 0;
                 Landscape[x][y].ObjectPosOffset.y = 0;
                 Landscape[x][y].AnimationPhase = -1;
-                Landscape[x][y].ConstructionActionNumber = 0;
+                Landscape[x][y].ConstructionActionStep = 0;
             }
         }
     }

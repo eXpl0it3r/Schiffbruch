@@ -35,7 +35,7 @@ struct GUY {
     Coordinate OriginalPosition; // Die ursprünglich Position in der Kachel (für die Aktionsprozeduren)
     Coordinate ScreenPosition; // Absolute Position der Spielfigur
     short AnimationState = Tiles::INVALID; // Was macht er gerade? (Animation)(linkslaufen,rechtslaufen...,angeln..)
-    short ActionNumber; // Bei welcher Aktion (für die Aktionsprozeduren)
+    short ActionStep; // Bei welcher Aktion (für die Aktionsprozeduren)
     float ResourceAmount[3]; // Wieviel Wasservorrat usw
     short Inventory[SPRITE_COUNT]; // Welche Rohstoffe usw. besitzt man
 };
@@ -81,7 +81,7 @@ struct SCAPE {
     bool ReverseAnimation; // Wird die Objektanimation umgekehrt abgespielt (für flüsse)
     Coordinate ObjectPosOffset; // Die Koordinaten des Objekts (relativ zu xScreen und yScreen)
     float AnimationPhase; // Welche Animationsphase oder Bildversion
-    short ConstructionActionNumber; // Welche Aktionsnummer (um Baustellen vortzusetzen)
+    short ConstructionActionStep; // Welche Aktionsnummer (um Baustellen vortzusetzen)
     Coordinate GPosAlt; // Damit der Guy an der richtigen Stelle (x,y) weiterbaut
     short RequiredRawMaterials[SPRITE_COUNT]; //Anzahl des i.Rohstoffs, den man noch zum bauen braucht
     float FireTimer; //Bis jetzt nur fürs Feuer nötig

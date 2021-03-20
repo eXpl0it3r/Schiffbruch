@@ -2416,7 +2416,7 @@ void NewGame(bool neu)
         s_GameState = State::INTRO;
         Guy.IsActive = false;
         Guy.AnimationState = Tiles::GUY_SHIP;
-        Guy.ActionNumber = 0;
+        Guy.ActionStep = 0;
         Guy.CurrentAction = Action::INTRO;
     }
 

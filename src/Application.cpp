@@ -145,7 +145,7 @@ void Application::run()
                 }
 
                 Guy.IsActive = false;
-                Guy.ActionNumber = 0;
+                Guy.ActionStep = 0;
                 Guy.CurrentAction = Action::DAY_END;
             }
 
