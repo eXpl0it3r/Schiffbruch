@@ -804,18 +804,33 @@ short DrawText(const int TEXT, short Bereich, short Art)
             switch (scratch) {
             case 'a':
                 Anzahl = std::sprintf(StdString2, " %d", Tag);
+                // While the spacing of characters equals BWidth, the last char can be wider (=BLastCharWidth).
+                if (Posx + BWidth * (Anzahl - 1) + BLastCharWidth > TextBereich[Bereich].textRect.right) {
+                    Posx = static_cast<short>(TextBereich[Bereich].textRect.left) - BWidth;
+                    Posy += BHeight + 3;
+                }
                 DrawString(StdString2, Posx, Posy, Art);
                 Posx += BWidth * (Anzahl);
                 break;
 
             case 'b':
                 Anzahl = std::sprintf(StdString2, " %d", static_cast<short>(Guy.ResourceAmount[Resources::Health]));
+                // While the spacing of characters equals BWidth, the last char can be wider (=BLastCharWidth).
+                if (Posx + BWidth * (Anzahl - 1) + BLastCharWidth > TextBereich[Bereich].textRect.right) {
+                    Posx = static_cast<short>(TextBereich[Bereich].textRect.left) - BWidth;
+                    Posy += BHeight + 3;
+                }
                 DrawString(StdString2, Posx, Posy, Art);
                 Posx += BWidth * (Anzahl);
                 break;
 
             case 'c':
                 Anzahl = std::sprintf(StdString2, " %.2f", Chance);
+                // While the spacing of characters equals BWidth, the last char can be wider (=BLastCharWidth).
+                if (Posx + BWidth * (Anzahl - 1) + BLastCharWidth > TextBereich[Bereich].textRect.right) {
+                    Posx = static_cast<short>(TextBereich[Bereich].textRect.left) - BWidth;
+                    Posy += BHeight + 3;
+                }
                 DrawString(StdString2, Posx, Posy, Art);
                 Posx += BWidth * (Anzahl);
                 break;
