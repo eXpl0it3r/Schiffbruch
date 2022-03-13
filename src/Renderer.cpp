@@ -763,6 +763,7 @@ void DrawString(const std::string &string, short x, short y, short Art)
 short DrawText(const int TEXT, short Bereich, short Art)
 {
     short BWidth = 0;
+    short BLastCharWidth = 0;
     short BHeight = 0;
     const char *Text;
     int blank = ' ';
@@ -776,11 +777,13 @@ short DrawText(const int TEXT, short Bereich, short Art)
 
     if (Art == 1) {
         BWidth = FONT1_LETTER_SPACING;
+        BLastCharWidth = FONT1_LETTER_WIDTH;
         BHeight = FONT1_LETTER_HEIGHT;
     }
 
     if (Art == 2) {
         BWidth = FONT2_LETTER_SPACING;
+        BLastCharWidth = FONT2_LETTER_WIDTH;
         BHeight = FONT2_LETTER_HEIGHT;
     }
 
@@ -853,7 +856,8 @@ short DrawText(const int TEXT, short Bereich, short Art)
 
         strncpy(StdString, Text + Pos, (Posnext - Text) - Pos);
 
-        if (Posx + BWidth * ((Posnext - Text) - Pos) > TextBereich[Bereich].textRect.right) {
+        // While the spacing of characters equals BWidth, the last char can be wider (=BLastCharWidth).
+        if (Posx + BWidth * ((Posnext - Text) - Pos - 1) + BLastCharWidth > TextBereich[Bereich].textRect.right) {
             Posx = static_cast<short>(TextBereich[Bereich].textRect.left) - BWidth;
             Posy += BHeight + 3;
         }
