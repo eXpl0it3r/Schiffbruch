@@ -1,10 +1,23 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - .github/workflows/*
+      - src/**
+      - bin/**
+      - CMakeLists.txt
+  pull_request:
+    paths:
+      - .github/workflows/*
+      - src/**
+      - bin/**
+      - CMakeLists.txt
+
 
 jobs:
   build:
-    name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
+    name: ${{ matrix.platform.name }} ${{ matrix.config.name }} ${{ matrix.arch.name }}
     runs-on: ${{ matrix.platform.os }}
 
     strategy:
@@ -13,6 +26,9 @@ jobs:
         platform:
         - { name: Windows VS2019, os: windows-2019 }
         - { name: Windows VS2022, os: windows-2022 }
+        arch:
+        - { name: X86, flag: Win32 }
+        - { name: X64, flag: x64 }
         config:
         - { name: Shared, flags: -DBUILD_SHARED_LIBS=TRUE }
         - { name: Static, flags: -DBUILD_SHARED_LIBS=FALSE }
@@ -23,7 +39,7 @@ jobs:
 
     - name: Configure
       shell: bash
-      run: cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install ${{matrix.platform.flags}} ${{matrix.config.flags}}
+      run: cmake -A ${{ matrix.arch.flag }} -S . -B build -DCMAKE_INSTALL_PREFIX=install ${{ matrix.platform.flags }} ${{ matrix.config.flags }}
 
     - name: Build
       shell: bash
@@ -32,3 +48,38 @@ jobs:
     - name: Install
       shell: bash
       run: cmake --install build --config Release
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}
+        path: ./install/bin/*
+
+    - name: Get Artifact
+      id: get_artifact
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/download-artifact@v3
+      with:
+        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}
+
+    - name: Create Release
+      id: create_release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: true 
+
+    - name: Publish
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ steps.get_artifact.outputs.download-path }}
+        asset_name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}.zip
+        asset_content_type: application/zip
