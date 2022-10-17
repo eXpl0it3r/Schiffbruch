@@ -1,0 +1,34 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
+    runs-on: ${{ matrix.platform.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+        - { name: Windows VS2019, os: windows-2019 }
+        - { name: Windows VS2022, os: windows-2022 }
+        config:
+        - { name: Shared, flags: -DBUILD_SHARED_LIBS=TRUE }
+        - { name: Static, flags: -DBUILD_SHARED_LIBS=FALSE }
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure
+      shell: bash
+      run: cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install ${{matrix.platform.flags}} ${{matrix.config.flags}}
+
+    - name: Build
+      shell: bash
+      run: cmake --build build --config Release
+
+    - name: Install
+      shell: bash
+      run: cmake --install build --config Release
