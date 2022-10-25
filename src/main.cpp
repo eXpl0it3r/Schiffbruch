@@ -1,7 +1,7 @@
 #include "Application.hpp"
 
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main(int argc, char *argv[])
 {
-    Application app("Landscape", hInstance);
+    Application app("Schiffbruch");
     app.run();
 }

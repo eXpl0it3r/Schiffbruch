@@ -17,18 +17,19 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.platform.name }} ${{ matrix.config.name }} ${{ matrix.arch.name }}
+    name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
     runs-on: ${{ matrix.platform.os }}
 
     strategy:
       fail-fast: false
       matrix:
         platform:
-        - { name: Windows VS2019, os: windows-2019 }
-        - { name: Windows VS2022, os: windows-2022 }
-        arch:
-        - { name: X86, flag: Win32 }
-        - { name: X64, flag: x64 }
+        - { name: Windows VS2019 X86, os: windows-2019, flags: -A Win32 }
+        - { name: Windows VS2019 X64, os: windows-2019, flags: -A x64 }
+        - { name: Windows VS2022 X86, os: windows-2022, flags: -A Win32 }
+        - { name: Windows VS2022 X64, os: windows-2022, flags: -A x64 }
+        - { name: Linux GCC, os: ubuntu-latest }
+        - { name: Linux Clang, os: ubuntu-latest, flags: -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ }
         config:
         - { name: Shared, flags: -DBUILD_SHARED_LIBS=TRUE }
         - { name: Static, flags: -DBUILD_SHARED_LIBS=FALSE }
@@ -37,9 +38,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Install Linux Dependencies
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev libdrm-dev libgbm-dev
+
     - name: Configure
       shell: bash
-      run: cmake -A ${{ matrix.arch.flag }} -S . -B build -DCMAKE_INSTALL_PREFIX=install ${{ matrix.platform.flags }} ${{ matrix.config.flags }}
+      run: cmake -S . -B build -DCMAKE_INSTALL_PREFIX=install ${{ matrix.platform.flags }} ${{ matrix.config.flags }}
 
     - name: Build
       shell: bash
@@ -52,7 +57,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}
+        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}
         path: ./install/bin/*
 
     - name: Get Artifact
@@ -60,7 +65,7 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: actions/download-artifact@v3
       with:
-        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}
+        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}
 
     - name: Create Release
       id: create_release
@@ -81,5 +86,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ steps.get_artifact.outputs.download-path }}
-        asset_name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}.zip
+        asset_name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}.zip
         asset_content_type: application/zip
