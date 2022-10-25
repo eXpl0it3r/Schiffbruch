@@ -19,7 +19,7 @@
 
 #define MB_LEFT sf::Mouse::Left;
 
-constexpr auto M_PI = 3.14159265358979323846;
+constexpr auto PI = 3.14159265358979323846;
 
 namespace Renderer {
 
@@ -648,15 +648,15 @@ void DrawPanel()
     short diffy = static_cast<short>(Bmp[Tiles::SUN].targetRect.bottom) - static_cast<short>(Bmp[Tiles::SUN].targetRect.top) - Bmp[Tiles::SUN].Height / 2;
     short TagesZeit = (Hours * 10 + Minutes * 10 / 60);
 
-    DrawPicture(static_cast<short>(Bmp[Tiles::SUN].targetRect.left + diffx * cos(M_PI - M_PI * TagesZeit / 120) + diffx),
-                  static_cast<short>(Bmp[Tiles::SUN].targetRect.top + (-diffy * sin(M_PI - M_PI * TagesZeit / 120) + diffy)),
+    DrawPicture(static_cast<short>(Bmp[Tiles::SUN].targetRect.left + diffx * cos(PI - PI * TagesZeit / 120) + diffx),
+                  static_cast<short>(Bmp[Tiles::SUN].targetRect.top + (-diffy * sin(PI - PI * TagesZeit / 120) + diffy)),
                   Tiles::SUN, Bmp[Tiles::SUN].targetRect, false, -1);
 
     // Rettungsring
     short Ringtmp;
 
     if (Chance < 100) {
-        Ringtmp = static_cast<short>(100 * sin(M_PI / 200 * Chance));
+        Ringtmp = static_cast<short>(100 * sin(PI / 200 * Chance));
     } else {
         Ringtmp = 100;
     }
@@ -1069,7 +1069,7 @@ void ShowCredits()
         for (int z = 1; z < 10; z++) {
             if (CreditsList[CreditsNum][z].IsRunning) {
                 CreditsBlt(CreditsList[CreditsNum][z].Picture,
-                           static_cast<short>(100 * sin(M_PI / MAX_SCREEN_Y * (Bmp[CreditsList[CreditsNum][z].Picture].targetRect.top +
+                           static_cast<short>(100 * sin(PI / MAX_SCREEN_Y * (Bmp[CreditsList[CreditsNum][z].Picture].targetRect.top +
                                                         Bmp[CreditsList[CreditsNum][z].IsRunning].Height / 2))));
             }
         }

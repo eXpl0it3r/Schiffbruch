@@ -154,7 +154,7 @@ add_executable(Schiffbruch
 )
 
 target_compile_features(Schiffbruch PRIVATE cxx_std_17)
-target_link_libraries(Schiffbruch PRIVATE sfml-graphics sfml-audio sfml-main dxguid ddraw)
+target_link_libraries(Schiffbruch PRIVATE sfml-graphics sfml-audio)
 
 # Copy DLLs next to the executable
 if (WIN32 AND BUILD_SHARED_LIBS)
