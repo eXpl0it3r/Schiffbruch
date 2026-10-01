@@ -13,7 +13,18 @@ on:
       - src/**
       - bin/**
       - CMakeLists.txt
+  workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   build:
@@ -24,8 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-        - { name: Windows VS2019, os: windows-2019 }
-        - { name: Windows VS2022, os: windows-2022 }
+        - { name: Windows VS2026, os: windows-2025 }
         arch:
         - { name: X86, flag: Win32 }
         - { name: X64, flag: x64 }
@@ -35,51 +45,48 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
+      with:
+        persist-credentials: false
 
     - name: Configure
-      shell: bash
-      run: cmake -A ${{ matrix.arch.flag }} -S . -B build -DCMAKE_INSTALL_PREFIX=install ${{ matrix.platform.flags }} ${{ matrix.config.flags }}
+      env:
+        ARCH: ${{ matrix.arch.flag }}
+        CMAKE_FLAGS: ${{ matrix.config.flags }}
+      run: cmake -A "$ARCH" -S . -B build -DCMAKE_INSTALL_PREFIX=install $CMAKE_FLAGS
 
     - name: Build
-      shell: bash
       run: cmake --build build --config Release
 
     - name: Install
-      shell: bash
       run: cmake --install build --config Release
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v7
       with:
-        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}
+        name: Schiffbruch-${{ matrix.config.name }}-${{ matrix.arch.name }}
         path: ./install/bin/*
 
-    - name: Get Artifact
-      id: get_artifact
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: actions/download-artifact@v3
-      with:
-        name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}
+  release:
+    name: Release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write # Required to create the draft release
 
-    - name: Create Release
-      id: create_release
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@v8
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: true 
+        path: artifacts
 
-    - name: Publish
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: actions/upload-release-asset@v1
+    - name: Create Draft Release
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.get_artifact.outputs.download-path }}
-        asset_name: Schiffbruch-${{ matrix.platform.name }}-${{ matrix.config.name }}-${{ matrix.arch.name }}.zip
-        asset_content_type: application/zip
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        cd artifacts
+        for dir in */; do
+          (cd "$dir" && zip -qr "../${dir%/}.zip" .)
+        done
+        gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "Release $GITHUB_REF_NAME" --draft ./*.zip
